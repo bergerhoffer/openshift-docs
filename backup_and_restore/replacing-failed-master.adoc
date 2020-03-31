@@ -14,14 +14,5 @@ If you have lost the majority of your master hosts, leading to etcd quorum loss,
 If the TLS certificates are not valid on the member being replaced, then you must follow the procedure to xref:../backup_and_restore/disaster_recovery/scenario-3-expired-certs.adoc#dr-recovering-expired-certs[recover from expired control plane certificates] instead of this procedure.
 ====
 
-To replace a single master host:
-
-* xref:../backup_and_restore/replacing-failed-master.adoc#restore-remove-failed-master_replacing-failed-master-host[Remove the member from the etcd cluster].
-
-* xref:../backup_and_restore/replacing-failed-master.adoc#restore-add-master_replacing-failed-master-host[Add the member back to the etcd cluster].
-
-// Removing a failed master host from the cluster
-include::modules/restore-remove-failed-master.adoc[leveloffset=+1]
-
-// Adding a master host back to the cluster
-include::modules/restore-add-master.adoc[leveloffset=+1]
+// Replacing a single unhealthy member
+include::modules/restore-replace-single-member.adoc[leveloffset=+1]

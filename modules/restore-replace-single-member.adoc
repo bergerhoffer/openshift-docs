@@ -1,0 +1,322 @@
+// Module included in the following assemblies:
+//
+// * backup_and_restore/replacing-failed-master.adoc
+
+[id="restore-replace-single-member_{context}"]
+= Replacing a single unhealthy etcd member
+
+// TODO: Intro details. Depending on the status (situation 1 or 2)
+
+// TODO: or consider breaking into two procedures?
+
+.Prerequisites
+
+* Access to the cluster as a user with the cluster-admin role.
+// TODO: SSH access?
+
+// TODO: Need to do a backup! in step 1 or as a prereq? prereq in here or assembly?
+
+////
+ip-10-0-131-183.ec2.internal  ** Unhealthy
+ip-10-0-154-204.ec2.internal  ** Using to do stuff
+ip-10-0-164-97.ec2.internal
+////
+
+.Procedure
+
+. Identify the unhealthy member.
+
+.. Check the status of the `EtcdMembersAvailable` status condition using the following command:
++
+----
+$ oc get etcd -o=jsonpath='{range .items[0].status.conditions[?(@.type=="EtcdMembersAvailable")]}{.message}{"\n"}'
+----
+
+.. Review the output:
++
+----
+ip-10-0-164-97.ec2.internal,ip-10-0-154-204.ec2.internal members are available,  have not started, ip-10-0-131-183.ec2.internal are unhealthy,  are unknown
+----
++
+In this example, `ip-10-0-131-183.ec2.internal are unhealthy` indicates that the `ip-10-0-131-183.ec2.internal` etcd member is unhealthy.
+
+. Determine whether the *node is not running*, or whether the *node is running, but etcd is crashlooping*.
++
+The set of steps to restore the failed master depends on which of these scenarios your etcd member is in.
+
+.. Check whether the node is not running.
++
+If any of the following scenarios are true, then the *node is not running*.
+
+*** Check if the machine for the unhealthy member is not running.
++
+----
+$ oc get machines -A -ojsonpath='{range ..items[?(@.status.nodeRef.name=="ip-10-0-131-183.ec2.internal")]}{@.status.providerStatus.instanceState}{"\n"}'
+stopped <1>
+----
+<1> If this output is anything other than `Running`, then the *node is not running*.
+
+*** If the machine is running, then check whether the node is unreachable.
++
+----
+$ oc get nodes -o json | jq '.items[] | select(.spec.taints[]?.key=="node.kubernetes.io/unreachable") | .metadata.name' | uniq
+"Ip-10-0-139-134.ec2.internal" <1>
+----
+<1> If the node is listed, then the *node is not running*.
++
+// TODO: we didn't actually check for the particular node from step 1.
+
+*** If the node is still reachable, check whether the node is listed as `NotReady`:
++
+----
+$ oc get nodes -l node-role.kubernetes.io/master  | grep "NotReady"
+ip-10-0-139-134.ec2.internal   NotReady   master   122m   v1.17.1 <1>
+----
+<1> If the node is listed as `NotReady`, then the *node is not running*.
+
+.. Check whether the node is running, but etcd is crashlooping.
+
+... Verify that all master nodes are listed as `Ready`:
++
+----
+$ oc get nodes | grep master
+ip-10-0-140-253.ec2.internal   Ready    master   6h13m   v1.17.1
+ip-10-0-153-50.ec2.internal    Ready    master   6h13m   v1.17.1
+ip-10-0-173-245.ec2.internal   Ready    master   6h13m   v1.17.1
+----
+
+... Check whether the status of an etcd Pod is either `Error` or `CrashloopBackoff`:
++
+----
+$ oc get pods -n openshift-etcd
+NAME                                             READY   STATUS      RESTARTS   AGE
+etcd-ip-10-0-140-253.ec2.internal                2/3     Error       7          6h9m <1>
+etcd-ip-10-0-153-50.ec2.internal                 3/3     Running     0          6h6m
+etcd-ip-10-0-173-245.ec2.internal                3/3     Running     0          6h6m
+installer-2-ip-10-0-140-253.ec2.internal         0/1     Completed   0          6h9m
+installer-2-ip-10-0-153-50.ec2.internal          0/1     Completed   0          6h8m
+installer-2-ip-10-0-173-245.ec2.internal         0/1     Completed   0          6h6m
+revision-pruner-2-ip-10-0-140-253.ec2.internal   0/1     Completed   0          6h4m
+revision-pruner-2-ip-10-0-153-50.ec2.internal    0/1     Completed   0          6h4m
+revision-pruner-2-ip-10-0-173-245.ec2.internal   0/1     Completed   0          6h4m
+----
+<1> Since this status of this Pod is `Error`, then the *node is running, but etcd is crashlooping*.
++
+// TODO: Ask alay if we want to grep etcd like the other place
+
+. Replace the unhealthy member.
++
+Follow the appropriate steps depending on the status of the unhealthy member determined in the previous step.
+
+** If the *node is not running*, follow these steps:
+
+... Remove the unhealthy member.
+
+.... Pick a Pod not on the affected node:
++
+----
+$ oc get pods -n openshift-etcd | grep etcd
+etcd-ip-10-0-131-183.ec2.internal                3/3     Running     0          123m
+etcd-ip-10-0-154-204.ec2.internal                3/3     Running     0          124m
+etcd-ip-10-0-164-97.ec2.internal                 3/3     Running     0          123m
+----
+
+.... Connect to the running etcd container, passing in the name of a Pod that is not on the affected node:
++
+----
+$ oc rsh -n openshift-etcd etcd-ip-10-0-154-204.ec2.internal
+Defaulting container name to etcdctl.
+Use 'oc describe pod/etcd-ip-10-0-154-204.ec2.internal -n openshift-etcd' to see all of the containers in this pod.
+----
+
+.... View the member list:
++
+----
+sh-4.2# etcdctl member list -w table
+
++------------------+---------+------------------------------+---------------------------+---------------------------+
+|        ID        | STATUS  |             NAME             |        PEER ADDRS         |       CLIENT ADDRS        |
++------------------+---------+------------------------------+---------------------------+---------------------------+
+| 6fc1e7c9db35841d | started | ip-10-0-131-183.ec2.internal | https://10.0.131.183:2380 | https://10.0.131.183:2379 |
+| 757b6793e2408b6c | started |  ip-10-0-164-97.ec2.internal |  https://10.0.164.97:2380 |  https://10.0.164.97:2379 |
+| ca8c2990a0aa29d1 | started | ip-10-0-154-204.ec2.internal | https://10.0.154.204:2380 | https://10.0.154.204:2379 |
++------------------+---------+------------------------------+---------------------------+---------------------------+
+----
+
+.... Remove the unhealthy etcd member, providing the ID:
++
+----
+sh-4.2# etcdctl member remove 6fc1e7c9db35841d
+Member 6fc1e7c9db35841d removed from cluster baa565c8919b060e
+----
+
+.... Verify that the member was removed:
++
+----
+sh-4.2# etcdctl endpoint health --cluster
+https://10.0.154.204:2379 is healthy: successfully committed proposal: took = 16.698331ms
+https://10.0.164.97:2379 is healthy: successfully committed proposal: took = 16.621645ms
+----
+
+... Delete and recreate the master machine. After this machine is recreated, a new revision is forced and etcd scales up automatically.
++
+If you are running an installer-provision installation, or you used the Machine API to create your machines, follow these steps. Otherwise, you must create the new master using the same method that was used to originally create it.
+
+.... Obtain the machine for the unhealthy member.
++
+----
+$ oc get machines -n openshift-machine-api -o wide
+
+NAME                                                 PHASE     TYPE        REGION      ZONE         AGE     NODE                           PROVIDERID                              STATE
+clustername-8qw5l-master-0                  Running   m4.xlarge   us-east-1   us-east-1a   3h37m   ip-10-0-139-134.ec2.internal   aws:///us-east-1a/i-0ec2782f8287dfb7e   stopped <1>
+clustername-8qw5l-master-1                  Running   m4.xlarge   us-east-1   us-east-1b   3h37m   ip-10-0-154-133.ec2.internal   aws:///us-east-1b/i-096c349b700a19631   running
+clustername-8qw5l-master-2                  Running   m4.xlarge   us-east-1   us-east-1c   3h37m   ip-10-0-166-96.ec2.internal    aws:///us-east-1c/i-02626f1dba9ed5bba   running
+clustername-8qw5l-worker-us-east-1a-wbtgd   Running   m4.large    us-east-1   us-east-1a   3h28m   ip-10-0-129-226.ec2.internal   aws:///us-east-1a/i-010ef6279b4662ced   running
+clustername-8qw5l-worker-us-east-1b-lrdxb   Running   m4.large    us-east-1   us-east-1b   3h28m   ip-10-0-144-248.ec2.internal   aws:///us-east-1b/i-0cb45ac45a166173b   running
+clustername-8qw5l-worker-us-east-1c-pkg26   Running   m4.large    us-east-1   us-east-1c   3h28m   ip-10-0-170-181.ec2.internal   aws:///us-east-1c/i-06861c00007751b0a   running
+----
+<1> This is the master machine for the unhealthy node, `ip-10-0-131-183.ec2.internal`.
+
+.... Save the machine configuration to your local file system.
++
+----
+$ oc get machine clustername-8qw5l-master-0 -n openshift-machine-api -o yaml > new-master-machine.yaml
+----
+
+.... Edit the `new-master-machine.yaml` file.
+
+..... Remove the entire `status` section.
+
+..... Remove the `providerID` field.
+
+..... Change the `name` field to a new name.
++
+It is recommended to keep the same base name as the old machine and change the ending number to the next available number. In this example, `clustername-8qw5l-master-0` is changed to `clustername-8qw5l-master-3`.
+
+..... Update the `selfLink` field to use the new machine name from the previous step.
+
+.... Create the machine using the `new-master-machine.yaml` file.
++
+----
+$ oc apply -f new-master-machine.yaml
+----
+
+.... Delete the old machine now?
++
+//TODO: Is now okay to do so?
+
+// TODO: is there anything else we need to do here as a last verification step?
+
+** If the *node is running, but etcd is crashlooping*, follow these steps:
+
+... Debug the node that is crashlooping.
++
+// TODO: Do I need to add a step to get that node, or use it from the above step?
++
+In a terminal that has access to the cluster as a `cluster-admin` user, run the following command:
++
+----
+$ oc debug node/ip-10-0-140-253.ec2.internal
+----
+
+... Move the existing etcd Pod file out of the Kubelet manifest directory:
++
+----
+$ mv /etc/kubernetes/manifests/etcd-pod.yaml /var/lib/etcd-backup/
+----
++
+// TODO: is there a prompt? core@
++
+// TODO: do these need sudo?
+
+... Remove the etcd data directory of the etcd member and exit the node shell:
++
+----
+$ rm -rf /var/lib/etcd/member && exit
+----
++
+// TODO: Should we move this to a different location (like the other DR proc) instead of removing?
++
+// TODO: is it only the member directory, not the whole /var/lib/etcd directory?
++
+// TODO: Ask suresh - other DR proc says etcd data dir, but moves whole /var/lib/etcd, not a data subdir (if there is one)
+
+... Remove the unhealthy member.
+
+.... Pick a Pod not on the affected node:
++
+In a terminal that has access to the cluster as a `cluster-admin` user, run the following command:
++
+----
+$ oc get pods -n openshift-etcd | grep etcd
+etcd-ip-10-0-131-183.ec2.internal                3/3     Running     0          123m
+etcd-ip-10-0-154-204.ec2.internal                3/3     Running     0          124m
+etcd-ip-10-0-164-97.ec2.internal                 3/3     Running     0          123m
+----
++
+// TODO: update IPs
++
+// TODO: check w/ alay to add this step
+
+.... Connect to the running etcd container, passing in the name of a Pod that is not on the affected node:
++
+In a terminal that has access to the cluster as a `cluster-admin` user, run the following command:
++
+----
+$ oc rsh -n openshift-etcd etcd-ip-10-0-153-50.ec2.internal
+----
+
+.... View the member list:
++
+----
+sh-4.2# etcdctl member list -w table
+
++------------------+---------+------------------------------+---------------------------+---------------------------+
+|        ID        | STATUS  |             NAME             |        PEER ADDRS         |       CLIENT ADDRS        |
++------------------+---------+------------------------------+---------------------------+---------------------------+
+| 62bcf33650a7170a | started | ip-10-0-140-253.ec2.internal | https://10.0.140.253:2380 | https://10.0.140.253:2379 |
+| b78e2856655bc2eb | started |  ip-10-0-153-50.ec2.internal |  https://10.0.153.50:2380 |  https://10.0.153.50:2379 |
+| d022e10b498760d5 | started | ip-10-0-173-245.ec2.internal | https://10.0.173.245:2380 | https://10.0.173.245:2379 |
++------------------+---------+------------------------------+---------------------------+---------------------------+
+----
++
+// TODO: need to update the IPs in this table to be consistent
+
+.... Remove the unhealthy etcd member, providing the ID:
++
+----
+sh-4.2# etcdctl member remove b78e2856655bc2eb
+Member b78e2856655bc2eb removed from cluster ead669ce1fbfb346
+----
+
+.... Verify that the member was removed:
++
+----
+sh-4.2# etcdctl endpoint health --cluster
+https://10.0.173.245:2379 is healthy: successfully committed proposal: took = 15.387875ms
+https://10.0.153.50:2379 is healthy: successfully committed proposal: took = 17.773205ms
+----
+
+... Force etcd redeployment.
++
+In a terminal that has access to the cluster as a `cluster-admin` user, run the following command:
++
+----
+$ oc patch etcd cluster -p='{"spec": {"forceRedeploymentReason": "single-master-recovery-'"$( date --rfc-3339=ns )"'"}}' --type=merge <1>
+----
+<1> The `forceRedeploymentReason` value must be unique, which is why a timestamp is appended.
++
+// When the etcd cluster Operator performs a redeployment, the existing nodes are started with new Pods similar to the initial bootstrap scale up.
++
+// TODO: get alay to help add a similar statement. that the operator will try to scale etcd back to three pods
+
+... Verify that the new member is available and healthy.
++
+In a terminal that has access to the cluster as a `cluster-admin` user, run the following command:
++
+----
+$ oc get etcd  -o=jsonpath='{range .items[0].status.conditions[?(@.type=="EtcdMembersAvailable")]}{.message}{"\n"}'
+ip-10-0-140-253.ec2.internal,ip-10-0-173-245.ec2.internal,ip-10-0-153-50.ec2.internal members are available,  have not started,  are unhealthy,  are unknown
+----
++
+// TODO: should the new third master be a different IP than ever before? or the same as it was before?
