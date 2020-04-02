@@ -1,0 +1,28 @@
+// Module included in the following assemblies:
+//
+// * backup_and_restore/replacing-unhealthy-etcd-member.adoc
+
+[id="restore-identify-unhealthy-etcd-member_{context}"]
+= Identifying an unhealthy etcd member
+
+You can identify whether your cluster has an unhealthy etcd member.
+
+.Prerequisites
+
+* Access to the cluster as a user with the cluster-admin role.
+
+.Procedure
+
+. Check the status of the `EtcdMembersAvailable` status condition using the following command:
++
+----
+$ oc get etcd -o=jsonpath='{range .items[0].status.conditions[?(@.type=="EtcdMembersAvailable")]}{.message}{"\n"}'
+----
+
+. Review the output:
++
+----
+ip-10-0-164-97.ec2.internal,ip-10-0-154-204.ec2.internal members are available,  have not started, ip-10-0-131-183.ec2.internal are unhealthy,  are unknown
+----
++
+In this example, `ip-10-0-131-183.ec2.internal are unhealthy` indicates that the `ip-10-0-131-183.ec2.internal` etcd member is unhealthy.
