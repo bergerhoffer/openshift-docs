@@ -23,10 +23,10 @@ $ oc adm prune groups \
 |Indicate that pruning should occur, instead of performing a dry-run.
 
 .^|`--blacklist`
-|Path to the group blacklist file.
+|Path to the file containing the list of groups to exclude.
 
 .^|`--whitelist`
-|Path to the group whitelist file.
+|Path to the file containing the list of groups to include.
 
 .^|`--sync-config`
 |Path to the synchronization configuration file.

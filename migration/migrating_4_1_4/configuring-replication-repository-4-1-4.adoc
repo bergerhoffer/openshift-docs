@@ -20,7 +20,7 @@ The following storage providers are supported:
 
 The source and target clusters must have network access to the replication repository during migration.
 
-In a restricted environment, you can create an internally hosted replication repository. If you use a proxy server, you must ensure that your replication repository is whitelisted.
+In a restricted environment, you can create an internally hosted replication repository. If you use a proxy server, you must ensure that your replication repository is allowed.
 
 ifeval::["{product-version}" == "4.2"]
 :FeatureName: Configuring Multi-Cloud Object Gateway as a replication repository for migration

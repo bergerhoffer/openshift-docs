@@ -27,7 +27,7 @@ and "-". The default is the hashed internal key name for the route. |
 |`haproxy.router.openshift.io/rate-limit-connections.rate-tcp`| Limits the rate at which an IP address can make TCP connections. |
 |`haproxy.router.openshift.io/timeout` | Sets a server-side timeout for the route. (TimeUnits) | `ROUTER_DEFAULT_SERVER_TIMEOUT`
 |`router.openshift.io/haproxy.health.check.interval`| Sets the interval for the back-end health checks. (TimeUnits) | `ROUTER_BACKEND_CHECK_INTERVAL`
-|`haproxy.router.openshift.io/ip_whitelist` | Sets a whitelist for the route. |
+|`haproxy.router.openshift.io/ip_whitelist` | Sets a list to allow for the route. |
 |`haproxy.router.openshift.io/hsts_header` | Sets a Strict-Transport-Security header for the edge terminated or re-encrypt route. |
 |===
 

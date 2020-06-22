@@ -16,7 +16,7 @@ You can install the Cluster Application Migration Operator in a restricted envir
 
 . Configure the replication repository, an intermediate object storage that the CAM tool uses to migrate data.
 +
-The source and target clusters must have network access to the replication repository during migration. In a restricted environment, you can use an internally hosted S3 storage repository. If you use a proxy server, you must ensure that replication repository is whitelisted.
+The source and target clusters must have network access to the replication repository during migration. In a restricted environment, you can use an internally hosted S3 storage repository. If you use a proxy server, you must ensure that replication repository is allowed.
 
 . Add the source cluster to the CAM web console.
 . Add the replication repository to the CAM web console.
