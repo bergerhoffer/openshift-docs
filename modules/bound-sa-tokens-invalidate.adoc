@@ -1,0 +1,82 @@
+// Module included in the following assemblies:
+//
+// * authentication/bound-service-account-tokens.adoc
+
+:_content-type: PROCEDURE
+[id="bound-sa-tokens-invalidate_{context}"]
+= Invalidating bound service account tokens
+
+// In the unlikely event that it is necessary to invalidate all existing bound tokens, it will be necessary to delete both the signing secret (forcing rotation) and the configmap `openshift-kube-apiserver/bound-sa-token-signing-certs` (removing the ability to validate previously issued tokens). This is a nuclear option, as invalidating all bound tokens has the potential to break all workloads that depend on them until the kubelet refreshes their bound tokens at 80% of duration or pods are manually restarted (link to service ca manual restart instructions).
+
+If necessary, you can immediately invalidate all existing bound service account tokens.
+
+[WARNING]
+====
+// TODO
+
+Invalidating all existing bound service account token can break all workloads that depend on them, until the kubelet refreshes their bound tokens at 80% of duration or pods are manually restarted.
+====
+
+.Prerequisites
+
+* TODO
+
+// admin?
+
+.Procedure
+
+. Delete the signing secret to force rotation:
++
+[source,terminal]
+----
+$ TODO
+----
+
+. Delete the `openshift-kube-apiserver/bound-sa-token-signing-certs` config map to remove the ability to validate the previously issued tokens:
++
+[source,terminal]
+----
+$ oc delete configmap openshift-kube-apiserver/bound-sa-token-signing-certs
+----
++
+// TODO: check command
+
+. Optional: Manually restart all pods in the cluster so that the holder will request a new bound token.
++
+// TODO: Do we want these steps in here?
+
+.. Wait for a new revision of the Kubernetes API server pods to roll out. It can take several minutes for all nodes to update to the new revision. Run the following command:
++
+[source,terminal]
+----
+$ oc get kubeapiserver -o=jsonpath='{range .items[0].status.conditions[?(@.type=="NodeInstallerProgressing")]}{.reason}{"\n"}{.message}{"\n"}'
+----
++
+Review the `NodeInstallerProgressing` status condition for the Kubernetes API server to verify that all nodes are at the latest revision. The output shows `AllNodesAtLatestRevision` upon successful update:
++
+[source,terminal]
+----
+AllNodesAtLatestRevision
+3 nodes are at revision 12 <1>
+----
+<1> In this example, the latest revision number is `12`.
++
+If the output shows a message similar to one of the following messages, the update is still in progress. Wait a few minutes and try again.
+
+** `3 nodes are at revision 11; 0 nodes have achieved new revision 12`
+** `2 nodes are at revision 11; 1 nodes are at revision 12`
+
+.. Manually restart all pods in the cluster:
++
+[WARNING]
+====
+Be aware that running this command causes a service interruption, because it deletes every running pod in every namespace. These pods will automatically restart after they are deleted.
+====
++
+[source,terminal]
+----
+$ for I in $(oc get ns -o jsonpath='{range .items[*]} {.metadata.name}{"\n"} {end}'); \
+      do oc delete pods --all -n $I; \
+      sleep 1; \
+      done
+----

@@ -7,3 +7,34 @@
 = About bound service account tokens
 
 You can use bound service account tokens to limit the scope of permissions for a given service account token. These tokens are audience and time-bound. This facilitates the authentication of a service account to an IAM role and the generation of temporary credentials mounted to a pod. You can request bound service account tokens by using volume projection and the TokenRequest API.
+
+Bound service account tokens are JSON Web Tokens (JWT) that are issued by the Kubernetes API server. The Kubernetes API server is configured with a signing RSA keypair to use for bound tokens. The private key is used to sign the bound tokens it issues and the signature can be verified with the public key. The keypair is managed by the openshift-kube-apiserver-operator. The public keys used to verify bound tokens are accumulated to ensure that bound tokens issued with a previous keypair will remain valid until expiry.
+
+'''
+
+
+
+Any third party integration that wants to verify bound tokens issued by a cluster needs to watch the configmap `openshift-config-managed/bound-sa-token-signing-certs`. This configmap contains the public keys needed to validate issued tokens. In the event of rotation the new public key will be added to the configmap and this key will be required to verify tokens issued by the new private key. Deploying a 3rd party integration statically with only a fixed set of public key(s) risks being unable to verify bound tokens issued after keypair rotation.
+
+No automated rotation of the signing keypair is performed. Unlike TLS certs, RSA keypairs never expire. Also, the vulnerable private key should never appear outside the master nodes or the API. If either are compromised, the compromise of the signing keypair will be the least of a cluster operator's worries.
+
+Manual rotation of the signing keypair can be triggered by deletion of the secret `openshift-kube-apiserver-operator/next-bound-service-account-signing-key`. Manual rotation will prompt a 2-phase kube-apiserver rollout (once to distribute the new verifying public key to all nodes, second to update the private signing key). This ensures that apiservers only issue bound tokens that all other apiservers can verify. The duration of a single rollout can be up to 20 minutes, so the duration of 2 rollouts can be up to 40 minutes.
+
+
+////
+
+[done] - Bound tokens are JSON Web Tokens (JWT) issued by the kube-apiserver via the TokenRequest API (link to upstream?) or via volume projection (link to existing doc).
+
+- The apiserver is configured with a signing RSA keypair to use for bound tokens. The private key is used to sign the bound tokens it issues and the signature can be verified with the public key. The keypair is managed by the openshift-kube-apiserver-operator.
+
+- The public keys used to verify bound tokens are accumulated to ensure that bound tokens issued with a previous keypair will remain valid until expiry.
+
+- Any 3rd party integration that wants to verify bound tokens issued by a cluster needs to watch the configmap `openshift-config-managed/bound-sa-token-signing-certs`. This configmap contains the public keys needed to validate issued tokens. In the event of rotation the new public key will be added to the configmap and this key will be required to verify tokens issued by the new private key. Deploying a 3rd party integration statically with only a fixed set of public key(s) risks being unable to verify bound tokens issued after keypair rotation.
+
+- No automated rotation of the signing keypair is performed. Unlike TLS certs, RSA keypairs never expire. Also, the vulnerable private key should never appear outside the master nodes or the API. If either are compromised, the compromise of the signing keypair will be the least of a cluster operator's worries.
+
+- Manual rotation of the signing keypair can be triggered by deletion of the secret `openshift-kube-apiserver-operator/next-bound-service-account-signing-key`. Manual rotation will prompt a 2-phase kube-apiserver rollout (once to distribute the new verifying public key to all nodes, second to update the private signing key). This ensures that apiservers only issue bound tokens that all other apiservers can verify. The duration of a single rollout can be up to 20 minutes, so the duration of 2 rollouts can be up to 40 minutes.
+
+- In the unlikely event that it is necessary to invalidate all existing bound tokens, it will be necessary to delete both the signing secret (forcing rotation) and the configmap `openshift-kube-apiserver/bound-sa-token-signing-certs` (removing the ability to validate previously issued tokens). This is a nuclear option, as invalidating all bound tokens has the potential to break all workloads that depend on them until the kubelet refreshes their bound tokens at 80% of duration or pods are manually restarted (link to service ca manual restart instructions).
+
+////
