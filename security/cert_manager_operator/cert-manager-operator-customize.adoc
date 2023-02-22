@@ -1,0 +1,12 @@
+:_content-type: ASSEMBLY
+[id="cert-manager-operator-customize"]
+= Customizing the {cert-manager-operator}
+include::_attributes/common-attributes.adoc[]
+:context: cert-manager-operator-customize
+
+toc::[]
+
+// TODO: Add if there is anything we can customize with the operator itself.
+
+// Uninstalling the {cert-manager-operator}
+// include::modules/cert-manager-uninstall-console.adoc[leveloffset=+1]

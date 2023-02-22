@@ -10,10 +10,39 @@ The {cert-manager-operator} is a cluster-wide service that provides application 
 
 These release notes track the development of {cert-manager-operator}.
 
-:FeatureName: The {cert-manager-operator}
-include::snippets/technology-preview.adoc[leveloffset=+1]
-
 For more information, see xref:../../security/cert_manager_operator/index.adoc#cert-manager-operator-about[About the {cert-manager-operator}].
+
+[id="cert-manager-operator-release-notes-1.10.2"]
+== Release notes for {cert-manager-operator} 1.10.2
+
+// TODO: Confirm date closer to GA
+Issued: 2023-03-23
+
+The following advisory is available for the {cert-manager-operator} 1.10.2:
+
+// TODO: Update
+* link:https://access.redhat.com/errata/RHEA-2023:TODO[RHEA-2023:TODO]
+https://errata.devel.redhat.com/advisory/109104
+
+For more information, see the link:https://cert-manager.io/docs/release-notes/release-notes-1.10[cert-manager project release notes for v1.10].
+
+[id="cert-manager-operator-1.10.2-new-features-and-enhancements"]
+=== New features and enhancements
+
+// * This is the GA release of the {cert-manager-operator}.
+* TODO
+
+[id="cert-manager-operator-1.10.2-bug-fixes"]
+=== Bug fixes
+
+* TODO
+
+[id="cert-manager-operator-1.10.2-known-issues"]
+=== Known issues
+
+// TODO: Check if this is still appropriate to list
+* Using `Route` objects is not fully supported. Currently, {cert-manager-operator} integrates with `Route` objects by creating `Ingress` objects through the Ingress Controller. (link:https://issues.redhat.com/projects/CM/issues/CM-16[*CM-16*])
+* TODO: Any other known issues to list?
 
 [id="cert-manager-operator-release-notes-1.7.1-1"]
 == Release notes for {cert-manager-operator} 1.7.1-1 (Technology Preview)

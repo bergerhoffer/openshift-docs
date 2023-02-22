@@ -947,7 +947,12 @@ Topics:
     File: cert-manager-operator-release-notes
   - Name: Installing the cert-manager Operator for Red Hat OpenShift
     File: cert-manager-operator-install
-    # For GA release, add details here on requesting certificates, etc.
+  - Name: Customizing the cert-manager Operator for Red Hat OpenShift
+    File: cert-manager-operator-customize
+    # Setting up an issuer / cluster issuer (single assembly, or one per type)? Can't do any more sub directories so would need to be side-by-side
+    # Requesting certificates
+    # Whatever order/challenges are for?
+    # What else - see outline
   - Name: Uninstalling the cert-manager Operator for Red Hat OpenShift
     File: cert-manager-operator-uninstall
 - Name: Viewing audit logs
@@ -3763,7 +3768,7 @@ Topics:
   - Name: Installing the Serverless Operator
     File: install-serverless-operator
   - Name: Installing the Knative CLI
-    File: installing-kn    
+    File: installing-kn
   - Name: Installing Knative Serving
     File: installing-knative-serving
   - Name: Installing Knative Eventing
@@ -3980,12 +3985,12 @@ Topics:
   Dir: integrations
   Topics:
   - Name: Integrating Service Mesh with OpenShift Serverless
-    File: serverless-ossm-setup  
+    File: serverless-ossm-setup
   - Name: Integrating Serverless with the cost management service
     File: serverless-cost-management-integration
   - Name: Using NVIDIA GPU resources with serverless applications
     File: gpu-resources
-# Removing  
+# Removing
 - Name: Removing Serverless
   Dir: removing
   Topics:
