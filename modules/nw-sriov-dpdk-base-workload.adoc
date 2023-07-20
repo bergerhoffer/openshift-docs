@@ -54,6 +54,7 @@ spec:
           cpu: "16"
           hugepages-1Gi: 8Gi
           memory: 2Gi
+      # TODO: securityContext already set
       securityContext:
         capabilities:
           add:

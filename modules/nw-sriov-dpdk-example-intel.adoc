@@ -103,6 +103,7 @@ spec:
   containers:
   - name: testpmd
     image: <DPDK_image> <2>
+    # TODO: securityContext already set
     securityContext:
       runAsUser: 0
       capabilities:

@@ -23,6 +23,7 @@ spec:
   - name: testpmd
     image: <RDMA_image>
     imagePullPolicy: IfNotPresent
+    # TODO: securityContext already set
     securityContext:
       runAsUser: 0
       capabilities:
@@ -45,6 +46,7 @@ spec:
   containers:
   - name: testpmd
     image: <DPDK_image>
+    # TODO: securityContext already set
     securityContext:
       runAsUser: 0
       capabilities:

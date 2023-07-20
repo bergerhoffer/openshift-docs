@@ -110,6 +110,7 @@ spec:
   containers:
   - name: testpmd
     image: <RDMA_image> <2>
+    # TODO: securityContext already set
     securityContext:
       runAsUser: 0
       capabilities:

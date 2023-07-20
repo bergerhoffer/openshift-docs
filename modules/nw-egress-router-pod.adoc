@@ -80,6 +80,7 @@ spec:
   initContainers:
   - name: egress-router
     image: {egress-router-image-url}
+    # TODO: how to update this example, on initContainers
     securityContext:
       privileged: true
     env:
@@ -115,6 +116,7 @@ spec:
   initContainers:
   - name: egress-router
     image: {egress-router-image-url}
+      # TODO: how to update this example for already being set on initContainers?
     securityContext:
       privileged: true
     env:
@@ -150,6 +152,7 @@ metadata:
   annotations:
     pod.network.openshift.io/assign-macvlan: "true" <1>
 spec:
+  # TODO: how to update this example for already being set on initContainers?
   initContainers:
   - name: egress-router
     image: {egress-router-image-url}

@@ -33,9 +33,17 @@ metadata:
   annotations:
     k8s.v1.cni.cncf.io/networks: egress-router-redirect  <1>
 spec:
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
   containers:
     - name: egress-router-pod
       image: {egress-pod-image-name}
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: [ALL]
 ----
 <1> The specified network must match the name of the network attachment definition. You can specify a namespace, interface name, or both, by replacing the values in the following pattern: `<namespace>/<network>@<interface>`. By default, Multus adds a secondary network interface to the pod with a name such as `net1`, `net2`, and so on.
 

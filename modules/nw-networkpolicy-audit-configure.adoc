@@ -96,16 +96,16 @@ metadata:
   name: allow-from-same-namespace
 spec:
   podSelector: {}
-  policyTypes: 
+  policyTypes:
    - Ingress
    - Egress
   ingress:
     - from:
         - podSelector: {}
-  egress: 
-    - to: 
-       - namespaceSelector: 
-          matchLabels: 
+  egress:
+    - to:
+       - namespaceSelector:
+          matchLabels:
             namespace: verify-audit-logging
 EOF
 ----
@@ -127,12 +127,20 @@ kind: Pod
 metadata:
   name: client
 spec:
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
   containers:
     - name: client
       image: registry.access.redhat.com/rhel7/rhel-tools
       command: ["/bin/sh", "-c"]
       args:
         ["sleep inf"]
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: [ALL]
 EOF
 ----
 
@@ -147,12 +155,20 @@ kind: Pod
 metadata:
   name: ${name}
 spec:
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
   containers:
     - name: ${name}
       image: registry.access.redhat.com/rhel7/rhel-tools
       command: ["/bin/sh", "-c"]
       args:
         ["sleep inf"]
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: [ALL]
 EOF
 done
 ----

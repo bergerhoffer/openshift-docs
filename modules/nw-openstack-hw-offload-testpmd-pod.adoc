@@ -24,6 +24,7 @@ spec:
   - name: testpmd
     command: ["sleep", "99999"]
     image: registry.redhat.io/openshift4/dpdk-base-rhel8:v4.9
+    # TODO: how to update this example
     securityContext:
       capabilities:
         add: ["IPC_LOCK","SYS_ADMIN"]

@@ -171,6 +171,7 @@ spec:
   - name: podexample
     image: centos
     command: ["/bin/bash", "-c", "sleep INF"]
+    # TODO: how to update this example?
     securityContext:
       runAsUser: 2000
       runAsGroup: 3000
