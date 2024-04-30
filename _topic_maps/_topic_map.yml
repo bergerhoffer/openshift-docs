@@ -1279,8 +1279,16 @@ Topics:
   Topics:
   - Name: About OVN-Kubernetes network policy
     File: ovn-k-network-policy
-  - Name: AdminNetworkPolicy
-    File: ovn-k-anp
+  - Name: Admin network policy
+    Dir: AdminNetworkPolicy
+    Distros: openshift-enterprise, openshift-origin
+    Topics:
+    - Name: About AdminNetworkPolicy
+      File: ovn-k-anp
+    - Name: About BaselineAdminNetworkPolicy
+      File: ovn-k-banp
+    - Name: Logging for AdminNetworkPolicy
+      File: logging-anp-policy
   - Name: Network policy
     Dir: network_policy
     Distros: openshift-enterprise, openshift-origin
@@ -1299,8 +1307,6 @@ Topics:
       File: default-network-policy
     - Name: Configuring multitenant isolation with network policy
       File: multitenant-network-policy
-  - Name: BaselineAdminNetworkPolicy
-    File: ovn-k-banp
   - Name: Understanding the Ingress Node Firewall Operator
     File: ingress-node-firewall-operator
   - Name: Configuring an egress firewall for a project

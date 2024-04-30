@@ -1,0 +1,79 @@
+// Module included in the following assemblies:
+//
+// * networking/openshift_network_security/AdminNetworkPolicy/logging-anp-policy.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="nw-anp-audit-logging-concept_{context}"]
+= Audit logging
+
+The OVN-Kubernetes network plugin uses Open Virtual Network (OVN) access control list (ACL) to manage egress firewalls and network policies. Audit logging exposes allow and deny ACL events for `NetworkPolicy` and `BaselineAdminNetworkPolicy` custom resources (CR). In addition, it exposes allow, deny, and pass ACL event for `AdminNetworkPolicy` (ANP) CR.
+
+You can configure the destination for audit logs, such as a syslog server or a UNIX domain socket.
+Regardless of any additional configuration, an audit log is always saved to `/var/log/ovn/acl-audit-log.log` on each OVN-Kubernetes pod in the cluster.
+
+Audit logging is enabled per `AdminNetworkPolicy` CR by annotating the ANP policy with the `k8s.ovn.org/acl-logging` key as in the following example:
+
+.Example of annotation for `AdminNetworkPolicy` CR
+[%collapsible]
+====
+[source,yaml]
+----
+apiVersion: policy.networking.k8s.io/v1alpha1
+kind: AdminNetworkPolicy
+metadata:
+ annotations:
+  k8s.ovn.org/acl-logging: '{ "deny": "alert", "allow": "alert", "pass" : "warning" }'
+ name: anp-test
+spec:
+ priority: 5
+ subject:
+  namespaces:
+   matchLabels:
+     kubernetes.io/metadata.name: test
+ egress:
+ - name: "deny-ns-test1"
+  action: "Deny"
+  to:
+  - namespaces:
+    matchLabels:
+     kubernetes.io/metadata.name: test1
+ - name: "allow-ns-test2"
+  action: "Allow"
+  to:
+  - namespaces:
+    matchLabels:
+     kubernetes.io/metadata.name: test2
+ - name: "pass-ns-test3"
+  action: "Pass"
+  to:
+  - namespaces:
+    matchLabels:
+     kubernetes.io/metadata.name: test3
+----
+====
+
+The logging format is compatible with syslog as defined by RFC5424. The syslog facility is configurable and defaults to `local0`. An example log entry might resemble the following:
+
+.Example ACL deny log entry for an `AdminNetworkPolicy` CR
+[source,text]
+----
+83:00:34,dl_dst=0a:58:0a:83:00:33,nw_src=10.131.0.52,nw_dst=10.131.0.51,nw_tos=0,nw_ecn=0,nw_ttl=64,nw_frag=no,tp_src=53488,tp_dst=8080,tcp_flags=syn
+2024-04-10T16:31:08.164Z|00147|acl_log(ovn_pinctrl0)|INFO|name="BANP:default:Ingress:0", verdict=allow, severity=alert, direction=to-lport: tcp,vlan_tci=0x0000,dl_src=0a
+----
+
+The following table describes namespace annotation values:
+
+.Audit logging namespace annotation
+[cols=".^4,.^6a",options="header"]
+|====
+|Annotation|Value
+
+|`k8s.ovn.org/acl-logging`
+|
+You must specify at least one of `allow`, `deny`, or `pass` to enable audit logging for a namespace.
+
+`deny`:: Optional: Specify `alert`, `warning`, `notice`, `info`, or `debug`.
+`allow`:: Optional: Specify `alert`, `warning`, `notice`, `info`, or `debug`.
+`pass`:: Optional: Specify `alert`, `warning`, `notice`, `info`, or `debug`.
+
+|====
