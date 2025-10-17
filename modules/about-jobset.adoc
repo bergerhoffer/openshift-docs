@@ -1,0 +1,9 @@
+// Module included in the following assemblies:
+//
+// * ai_workloads/jobset_operator/index.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="js-about_{context}"]
+= About the {js-operator}
+
+The {js-operator} is based on the link:https://jobset.sigs.k8s.io/docs/overview/[JobSet] open source project.
