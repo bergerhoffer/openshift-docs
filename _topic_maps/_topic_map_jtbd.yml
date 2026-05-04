@@ -18,6 +18,9 @@
 #     - I don't see a way to make it work with a file and directory with secondary jobs - investigate whether nested assemblies could help solve that or not
 #     - Could potentially put the entire job as an assembly as a workaround, but that could be too much in one file (and bad for OKD/netlify preview)
 #     - Could have a index-like landing page with the job information that would get transformed to the top job content. Not sure what this should actually look like on the portal
+#
+# New structure notes:
+# - // TODO: The additional resources at the end of the assembly might be off. however, i think that in DITA it will be at the beginning anyways, so it might not matter (group pods)
 ---
 # Product category
 Name: Optimize
@@ -32,14 +35,62 @@ Topics:
   Topics:
   # Secondary jobs
   - Name: Ensure high availability by spreading pods
-    File: spread-pods
+    # File: spread-pods
+    Dir: spread_pods
+    Topics:
+    - Name: Placing pods relative to other pods using anti-affinity rules
+      File: placing-pods-relative-other-pods-anti-affinity-rules
+    - Name: Controlling pod placement by using pod topology spread constraints
+      File: controlling-pod-placement-pod-topology-spread-constraints
   - Name: Improve performance by grouping pods together
-    File: group-pods
+    # File: group-pods
+    Dir: group_pods
+    Topics:
+    - Name: Placing pods relative to other pods using affinity rules
+      File: placing-pods-relative-other-pods-affinity-rules
+    - Name: Controlling pod placement on nodes using node affinity rules
+      File: controlling-pod-placement-nodes-node-affinity-rules
   - Name: Manage resource utilization by adjusting node density
-    File: node-density
+    # File: node-density
+    Dir: node_density
+    Topics:
+    - Name: Scheduling pods using a scheduler profile
+      File: scheduling-pods-scheduler-profile
+    - Name: Including pod priority in pod scheduling decisions
+      File: including-pod-priority-pod-scheduling-decisions
+    - Name: Placing pods onto overcommited nodes
+      File: placing-pods-overcommited-nodes
   - Name: Match workloads to specific nodes by using node constraints
-    File: match-workloads
+    # File: match-workloads
+    Dir: match_workloads
+    Topics:
+    - Name: Controlling pod placement on nodes using node affinity rules
+      File: controlling-pod-placement-nodes-node-affinity-rules
+    - Name: Controlling pod placement using node taints
+      File: controlling-pod-placement-node-taints
+    - Name: Placing pods on specific nodes using node selectors
+      File: placing-pods-specific-nodes-node-selectors
   - Name: Maintain cluster balance by rescheduling pods
-    File: reschedule-pods
+    # File: reschedule-pods
+    Dir: reschedule_pods
+    Topics:
+    - Name: Descheduler overview
+      File: descheduler-overview
+    - Name: Descheduler Operator release notes
+      File: descheduler-operator-release-notes
+    - Name: Evicting pods using the descheduler
+      File: evicting-pods-descheduler
+    - Name: Uninstalling the descheduler Operator
+      File: uninstalling-descheduler-operator
   - Name: Extend scheduling behavior with a secondary scheduler
-    File: secondary-scheduler
+    # File: secondary-scheduler
+    Dir: secondary_scheduler
+    Topics:
+    - Name: Secondary scheduler overview
+      File: secondary-scheduler-overview
+    - Name: Secondary Scheduler Operator release notes
+      File: secondary-scheduler-operator-release-notes
+    - Name: Scheduling pods using a secondary scheduler
+      File: scheduling-pods-secondary-scheduler
+    - Name: Uninstalling the Secondary Scheduler Operator
+      File: uninstalling-secondary-scheduler-operator
