@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: secondary-scheduler-operator-release-notes
 
-toc::[]
+// toc::[]
 
 [role="_abstract"]
 Review the {secondary-scheduler-operator-full} release notes to track its development and learn what is new and changed with each release.

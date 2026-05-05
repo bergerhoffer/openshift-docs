@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: placing-pods-specific-nodes-node-selectors
 
-toc::[]
+// toc::[]
 
 include::snippets/about-node-selectors.adoc[]
 

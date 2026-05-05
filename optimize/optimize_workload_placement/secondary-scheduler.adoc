@@ -1,3 +1,6 @@
+// For nesting assemblies
+ifdef::context[:parent-context: {context}]
+
 :_mod-docs-content-type: ASSEMBLY
 [id="secondary-scheduler"]
 = Extend scheduling behavior with a secondary scheduler
@@ -9,10 +12,14 @@ toc::[]
 [role="_abstract"]
 When my application requires complex placement logic that the default scheduling framework doesn't support, I want to deploy a secondary scheduler, so that I can execute custom scheduling logic for specialized workloads.
 
-// include::secondary_scheduler/secondary-scheduler-overview.adoc[leveloffset=+1]
+include::nested_assemblies/secondary-scheduler-overview.adoc[leveloffset=+1]
 
-// include::secondary_scheduler/secondary-scheduler-operator-release-notes.adoc[leveloffset=+1]
+include::nested_assemblies/secondary-scheduler-operator-release-notes.adoc[leveloffset=+1]
 
-// include::secondary_scheduler/scheduling-pods-secondary-scheduler.adoc[leveloffset=+1]
+include::nested_assemblies/scheduling-pods-secondary-scheduler.adoc[leveloffset=+1]
 
-// include::secondary_scheduler/uninstalling-secondary-scheduler-operator.adoc[leveloffset=+1]
+include::nested_assemblies/uninstalling-secondary-scheduler-operator.adoc[leveloffset=+1]
+
+// For restoring the context for nested assemblies
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]

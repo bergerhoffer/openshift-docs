@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: placing-pods-overcommited-nodes
 
-toc::[]
+// toc::[]
 
 In an _overcommited_ state, the sum of the container compute resource requests and limits exceeds the resources available on the system.
 Overcommitment might be desirable in development environments where a trade-off of guaranteed performance for capacity is acceptable.

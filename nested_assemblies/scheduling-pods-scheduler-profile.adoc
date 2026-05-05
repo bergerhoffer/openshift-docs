@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: scheduling-pods-scheduler-profile
 
-toc::[]
+// toc::[]
 
 You can configure {product-title} to use a scheduling profile to schedule pods onto nodes within the cluster.
 

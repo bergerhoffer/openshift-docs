@@ -1,3 +1,6 @@
+// For nesting assemblies
+ifdef::context[:parent-context: {context}]
+
 :_mod-docs-content-type: ASSEMBLY
 [id="ha-spread-pods"]
 = Ensure high availability by spreading pods
@@ -11,6 +14,10 @@ toc::[]
 
 When I am deploying a critical application across a cluster, I want to ensure that pods never run in the same failure domain (node, rack, region, etc.), so that a single failure doesn't take my entire service offline.
 
-// include::spread_pods/placing-pods-relative-other-pods-anti-affinity-rules.adoc[leveloffset=+1]
+include::nested_assemblies/placing-pods-relative-other-pods-anti-affinity-rules.adoc[leveloffset=+1]
 
-// include::spread_pods/controlling-pod-placement-pod-topology-spread-constraints.adoc[leveloffset=+1]
+include::nested_assemblies/controlling-pod-placement-pod-topology-spread-constraints.adoc[leveloffset=+1]
+
+// For restoring the context for nested assemblies
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]

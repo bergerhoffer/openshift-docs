@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: placing-pods-relative-other-pods-affinity-rules
 
-toc::[]
+// toc::[]
 
 include::snippets/about-pod-affinity.adoc[]
 

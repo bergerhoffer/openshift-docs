@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: descheduler-operator-release-notes
 
-toc::[]
+// toc::[]
 
 [role="_abstract"]
 Review the {descheduler-operator} release notes to track its development and learn what is new and changed with each release.

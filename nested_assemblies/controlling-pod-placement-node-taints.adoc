@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: controlling-pod-placement-node-taints
 
-toc::[]
+// toc::[]
 
 Taints and tolerations allow the node to control which pods should (or should not) be scheduled on them.
 

@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: evicting-pods-descheduler
 
-toc::[]
+// toc::[]
 
 [role="_abstract"]
 You can run the descheduler in {product-title} by installing the {descheduler-operator} and setting the required profiles and other customizations.

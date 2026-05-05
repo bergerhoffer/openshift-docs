@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: controlling-pod-placement-nodes-node-affinity-rules
 
-toc::[]
+// toc::[]
 
 Affinity is a property of pods that controls the nodes on which they prefer to be scheduled.
 

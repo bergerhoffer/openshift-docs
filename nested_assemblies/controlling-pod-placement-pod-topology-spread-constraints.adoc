@@ -4,7 +4,7 @@
 include::_attributes/common-attributes.adoc[]
 :context: controlling-pod-placement-pod-topology-spread-constraints
 
-toc::[]
+// toc::[]
 
 You can use pod topology spread constraints to provide fine-grained control over the placement of your pods across nodes, zones, regions, or other user-defined topology domains. Distributing pods across failure domains can help to achieve high availability and more efficient resource utilization.
 

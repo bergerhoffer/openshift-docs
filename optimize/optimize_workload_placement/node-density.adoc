@@ -1,3 +1,6 @@
+// For nesting assemblies
+ifdef::context[:parent-context: {context}]
+
 :_mod-docs-content-type: ASSEMBLY
 [id="node-density"]
 = Manage resource utilization by adjusting node density
@@ -8,8 +11,12 @@ toc::[]
 
 When I need to minimize infrastructure costs by packing more workloads onto fewer nodes, I want to define clear resource boundaries and priorities, so that my most critical workloads are never starved of resources by less important services.
 
-// include::node_density/scheduling-pods-scheduler-profile.adoc[leveloffset=+1]
+include::nested_assemblies/scheduling-pods-scheduler-profile.adoc[leveloffset=+1]
 
-// include::node_density/including-pod-priority-pod-scheduling-decisions.adoc[leveloffset=+1]
+include::nested_assemblies/including-pod-priority-pod-scheduling-decisions.adoc[leveloffset=+1]
 
-// include::node_density/placing-pods-overcommited-nodes.adoc[leveloffset=+1]
+include::nested_assemblies/placing-pods-overcommited-nodes.adoc[leveloffset=+1]
+
+// For restoring the context for nested assemblies
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
