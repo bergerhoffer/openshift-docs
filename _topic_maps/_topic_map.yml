@@ -2860,56 +2860,71 @@ Topics:
     File: nodes-cma-autoscaling-custom-metrics
   - Name: Removing the Custom Metrics Autoscaler Operator
     File: nodes-cma-autoscaling-custom-removing
-- Name: Controlling pod placement onto nodes (scheduling)
-  Dir: scheduling
-  Distros: openshift-enterprise,openshift-origin
+# --- Start of new JTBD ---
+# Top job
+- Name: Optimize workload placement
+  # Can't have both a file/contents and directory
+  # File: optimize-workload-placement
+  Dir: optimize_workload_placement
   Topics:
-  - Name: About pod placement using the scheduler
-    File: nodes-scheduler-about
-  - Name: Scheduling pods using a scheduler profile
-    File: nodes-scheduler-profiles
-  - Name: Placing pods relative to other pods using pod affinity and anti-affinity rules
-    File: nodes-scheduler-pod-affinity
-  - Name: Controlling pod placement on nodes using node affinity rules
-    File: nodes-scheduler-node-affinity
-  - Name: Placing pods onto overcommited nodes
-    File: nodes-scheduler-overcommit
-  - Name: Controlling pod placement using node taints
-    File: nodes-scheduler-taints-tolerations
-  - Name: Placing pods on specific nodes using node selectors
-    File: nodes-scheduler-node-selectors
-  - Name: Controlling pod placement using pod topology spread constraints
-    File: nodes-scheduler-pod-topology-spread-constraints
-# - Name: Placing a pod on a specific node by name
-#   File: nodes-scheduler-node-names
-# - Name: Placing a pod in a specific project
-#   File: nodes-scheduler-node-projects
-# - Name: Keeping your cluster balanced using the descheduler
-#   File: nodes-scheduler-descheduler
-  - Name: Descheduler
-    Dir: descheduler
-    Distros: openshift-enterprise
-    Topics:
-    - Name: Descheduler overview
-      File: index
-    - Name: Descheduler release notes
-      File: nodes-descheduler-release-notes
-    - Name: Evicting pods using the descheduler
-      File: nodes-descheduler-configuring
-    - Name: Uninstalling the descheduler
-      File: nodes-descheduler-uninstalling
-  - Name: Secondary scheduler
-    Dir: secondary_scheduler
-    Distros: openshift-enterprise
-    Topics:
-    - Name: Secondary scheduler overview
-      File: index
-    - Name: Secondary Scheduler Operator release notes
-      File: nodes-secondary-scheduler-release-notes
-    - Name: Scheduling pods using a secondary scheduler
-      File: nodes-secondary-scheduler-configuring
-    - Name: Uninstalling the Secondary Scheduler Operator
-      File: nodes-secondary-scheduler-uninstalling
+  # Secondary jobs
+  - Name: Ensure high availability by spreading pods
+    File: spread-pods
+  - Name: Improve performance by grouping pods together
+    File: group-pods
+  - Name: Manage resource utilization by adjusting node density
+    File: node-density
+  - Name: Match workloads to specific nodes by using node constraints
+    File: match-workloads
+  - Name: Maintain cluster balance by rescheduling pods
+    File: reschedule-pods
+  - Name: Extend scheduling behavior with a secondary scheduler
+    File: secondary-scheduler
+# TODO: Fix OKD content too
+# - Name: Controlling pod placement onto nodes (scheduling)
+#   Dir: scheduling
+#   Distros: openshift-enterprise,openshift-origin
+#   Topics:
+#   - Name: About pod placement using the scheduler
+#     File: nodes-scheduler-about
+#   - Name: Scheduling pods using a scheduler profile
+#     File: nodes-scheduler-profiles
+#   - Name: Placing pods relative to other pods using pod affinity and anti-affinity rules
+#     File: nodes-scheduler-pod-affinity
+#   - Name: Controlling pod placement on nodes using node affinity rules
+#     File: nodes-scheduler-node-affinity
+#   - Name: Placing pods onto overcommited nodes
+#     File: nodes-scheduler-overcommit
+#   - Name: Controlling pod placement using node taints
+#     File: nodes-scheduler-taints-tolerations
+#   - Name: Placing pods on specific nodes using node selectors
+#     File: nodes-scheduler-node-selectors
+#   - Name: Controlling pod placement using pod topology spread constraints
+#     File: nodes-scheduler-pod-topology-spread-constraints
+#   - Name: Descheduler
+#     Dir: descheduler
+#     Distros: openshift-enterprise
+#     Topics:
+#     - Name: Descheduler overview
+#       File: index
+#     - Name: Descheduler release notes
+#       File: nodes-descheduler-release-notes
+#     - Name: Evicting pods using the descheduler
+#       File: nodes-descheduler-configuring
+#     - Name: Uninstalling the descheduler
+#       File: nodes-descheduler-uninstalling
+#   - Name: Secondary scheduler
+#     Dir: secondary_scheduler
+#     Distros: openshift-enterprise
+#     Topics:
+#     - Name: Secondary scheduler overview
+#       File: index
+#     - Name: Secondary Scheduler Operator release notes
+#       File: nodes-secondary-scheduler-release-notes
+#     - Name: Scheduling pods using a secondary scheduler
+#       File: nodes-secondary-scheduler-configuring
+#     - Name: Uninstalling the Secondary Scheduler Operator
+#       File: nodes-secondary-scheduler-uninstalling
 - Name: Using jobs and daemon sets
   Dir: jobs
   Topics:

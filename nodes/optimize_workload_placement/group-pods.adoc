@@ -1,0 +1,33 @@
+// For nesting assemblies
+ifdef::context[:parent-context: {context}]
+
+:_mod-docs-content-type: ASSEMBLY
+[id="group-pods"]
+= Improve performance by grouping pods together
+include::_attributes/common-attributes.adoc[]
+:context: group-pods
+
+toc::[]
+
+When my application components require frequent inter-service communication, I want to schedule them near each other, so that I can reduce network latency and improve overall transaction speed.
+
+// TODO: Need to split so that modules only reference affinity
+// TODO: Node affinity also included elsewhere, that make sense? Reason here is "Pulling pods toward specific nodes that have high-speed interconnects or local storage". Might need to mention that
+
+// TODO: The additional resources at the end of the assembly might be off. however, i think that in DITA it will be at the beginning anyways, so it might not matter
+
+include::nested_assemblies/placing-pods-relative-other-pods-affinity-rules.adoc[leveloffset=+1]
+
+include::nested_assemblies/controlling-pod-placement-nodes-node-affinity-rules.adoc[leveloffset=+1]
+
+ifndef::openshift-rosa,openshift-rosa-hcp,openshift-dedicated[]
+[id="nodes-scheduler-node-affinity-addtl-resources_{context}"]
+[role="_additional-resources"]
+== Additional resources
+
+* xref:../../nodes/nodes/nodes-nodes-working.adoc#nodes-nodes-working-updating_nodes-nodes-working[Understanding how to update labels on nodes]
+endif::openshift-rosa,openshift-rosa-hcp,openshift-dedicated[]
+
+// For restoring the context for nested assemblies
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]

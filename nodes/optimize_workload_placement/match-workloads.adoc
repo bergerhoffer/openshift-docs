@@ -1,0 +1,22 @@
+// For nesting assemblies
+ifdef::context[:parent-context: {context}]
+
+:_mod-docs-content-type: ASSEMBLY
+[id="match-workloads"]
+= Match workloads to specific nodes by using node constraints
+include::_attributes/common-attributes.adoc[]
+:context: match-workloads
+
+toc::[]
+
+When my applications require specialized hardware or specific environments, I want to target specific nodes for the pods to land, so that the workloads only run on nodes capable of supporting their requirements.
+
+include::nested_assemblies/controlling-pod-placement-nodes-node-affinity-rules.adoc[leveloffset=+1]
+
+include::nested_assemblies/controlling-pod-placement-node-taints.adoc[leveloffset=+1]
+
+include::nested_assemblies/placing-pods-specific-nodes-node-selectors.adoc[leveloffset=+1]
+
+// For restoring the context for nested assemblies
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]

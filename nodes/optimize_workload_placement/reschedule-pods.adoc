@@ -1,0 +1,24 @@
+// For nesting assemblies
+ifdef::context[:parent-context: {context}]
+
+:_mod-docs-content-type: ASSEMBLY
+[id="reschedule-pods"]
+= Maintain cluster balance by rescheduling pods
+include::_attributes/common-attributes.adoc[]
+:context: reschedule-pods
+
+toc::[]
+
+When my cluster's resource distribution has become uneven over time, I want to automatically redistribute pods, so that nodes aren't utilized unevenly.
+
+include::nested_assemblies/descheduler-overview.adoc[leveloffset=+1]
+
+include::nested_assemblies/descheduler-operator-release-notes.adoc[leveloffset=+1]
+
+include::nested_assemblies/evicting-pods-descheduler.adoc[leveloffset=+1]
+
+include::nested_assemblies/uninstalling-descheduler-operator.adoc[leveloffset=+1]
+
+// For restoring the context for nested assemblies
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
