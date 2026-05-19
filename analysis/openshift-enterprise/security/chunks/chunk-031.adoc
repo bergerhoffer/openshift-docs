@@ -1,0 +1,1615 @@
+= Tang server encryption key management
+:_mod-docs-content-type: ASSEMBLY
+// CNF-2127 assembly
+[id="nbde-managing-encryption-keys"]
+= Tang server encryption key management
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: nbde-implementation
+
+toc::[]
+
+
+The cryptographic mechanism to recreate the encryption key is based on the _blinded key_ stored on the node and the private key of the involved Tang servers.
+
+[NOTE]
+====
+To protect against the possibility of an attacker who has obtained both the Tang server private key and the node's encrypted disk, periodic rekeying is advisable.
+
+You must perform the rekeying operation for every node before you can delete the old key from the Tang server.
+====
+
+The following sections provide procedures for rekeying and deleting old keys.
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-backing-up-server-keys_{context}"]
+= Backing up keys for a Tang server
+
+The Tang server uses `/usr/libexec/tangd-keygen` to generate new keys and stores them in the `/var/db/tang` directory by default. To recover the Tang server in the event of a failure, back up this directory. The keys are sensitive and because they are able to perform the boot disk decryption of all hosts that have used them, the keys must be protected accordingly.
+
+.Procedure
+
+* Copy the backup key from the `/var/db/tang` directory to the temp directory from which you can restore the key.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-recovering-server-keys_{context}"]
+= Recovering keys for a Tang server
+
+You can recover the keys for a Tang server by accessing the keys from a backup.
+
+.Procedure
+
+* Restore the key from your backup folder to the `/var/db/tang/` directory.
++
+When the Tang server starts up, it advertises and uses these restored keys.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-rekeying-tang-servers_{context}"]
+= Rekeying Tang servers
+
+This procedure uses a set of three Tang servers, each with unique keys, as an example.
+
+Using redundant Tang servers reduces the chances of nodes failing to boot automatically.
+
+Rekeying a Tang server, and all associated NBDE-encrypted nodes, is a three-step procedure.
+
+.Prerequisites
+
+* A working Network-Bound Disk Encryption (NBDE) installation on one or more nodes.
+
+.Procedure
+
+. Generate a new Tang server key.
+. Rekey all NBDE-encrypted nodes so they use the new key.
+. Delete the old Tang server key.
++
+[NOTE]
+====
+Deleting the old key before all NBDE-encrypted nodes have completed their rekeying causes those nodes to become overly dependent on any other configured Tang servers.
+====
+
+.Example workflow for rekeying a Tang server
+image::179_OpenShift_NBDE_implementation_0821_4.png[Rekeying a Tang server]
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-generating-a-new-tang-server-key_{context}"]
+= Generating a new Tang server key
+
+.Prerequisites
+
+* A root shell on the Linux machine running the Tang server.
+
+* To facilitate verification of the Tang server key rotation, encrypt a small test file with the old key:
++
+[source,terminal]
+----
+# echo plaintext | clevis encrypt tang '{"url":"http://localhost:7500”}' -y >/tmp/encrypted.oldkey
+----
++
+* Verify that the encryption succeeded and the file can be decrypted to produce the same string `plaintext`:
++
+[source,terminal]
+----
+# clevis decrypt </tmp/encrypted.oldkey
+----
+
+.Procedure
+
+. Locate and access the directory that stores the Tang server key. This is usually the `/var/db/tang` directory. Check the currently advertised key thumbprint:
++
+[source,terminal]
+----
+# tang-show-keys 7500
+----
++
+.Example output
++
+[source,terminal]
+----
+36AHjNH3NZDSnlONLz1-V4ie6t8
+----
++
+. Enter the Tang server key directory:
++
+[source,terminal]
+----
+# cd /var/db/tang/
+----
+
+. List the current Tang server keys:
++
+[source,terminal]
+----
+# ls -A1
+----
++
+.Example output
+[source,terminal]
+----
+36AHjNH3NZDSnlONLz1-V4ie6t8.jwk
+gJZiNPMLRBnyo_ZKfK4_5SrnHYo.jwk
+----
++
+During normal Tang server operations, there are two `.jwk` files in this directory: one for signing and verification, and another for key derivation.
+
+. Disable advertisement of the old keys:
++
+[source,terminal]
+----
+# for key in *.jwk; do \
+  mv -- "$key" ".$key"; \
+done
+----
++
+New clients setting up Network-Bound Disk Encryption (NBDE) or requesting keys will no longer see the old keys. Existing clients can still access and use the old keys until they are deleted. The Tang server reads but does not advertise keys stored in UNIX hidden files, which start with the `.` character.
+
+. Generate a new key:
++
+[source,terminal]
+----
+# /usr/libexec/tangd-keygen /var/db/tang
+----
+
+. List the current Tang server keys to verify the old keys are no longer advertised, as they are now hidden files, and new keys are present:
++
+[source,terminal]
+----
+# ls -A1
+----
++
+.Example output
+[source,terminal]
+----
+.36AHjNH3NZDSnlONLz1-V4ie6t8.jwk
+.gJZiNPMLRBnyo_ZKfK4_5SrnHYo.jwk
+Bp8XjITceWSN_7XFfW7WfJDTomE.jwk
+WOjQYkyK7DxY_T5pMncMO5w0f6E.jwk
+----
++
+Tang automatically advertises the new keys.
++
+[NOTE]
+====
+More recent Tang server installations include a helper `/usr/libexec/tangd-rotate-keys` directory that takes care of disabling advertisement and generating the new keys simultaneously.
+====
+
+. If you are running multiple Tang servers behind a load balancer that share the same key material, ensure the changes made here are properly synchronized across the entire set of servers before proceeding.
+
+.Verification
+
+. Verify that the Tang server is advertising the new key, and not advertising the old key:
++
+[source,terminal]
+----
+# tang-show-keys 7500
+----
++
+.Example output
++
+[source,terminal]
+----
+WOjQYkyK7DxY_T5pMncMO5w0f6E
+----
+
+. Verify that the old key, while not advertised, is still available to decryption requests:
++
+[source,terminal]
+----
+# clevis decrypt </tmp/encrypted.oldkey
+----
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-rekeying-all-nbde-nodes_{context}"]
+= Rekeying all NBDE nodes
+
+You can rekey all of the nodes on a remote cluster by using a `DaemonSet` object without incurring any downtime to the remote cluster.
+
+[NOTE]
+====
+If a node loses power during the rekeying, it is possible that it might become unbootable, and must be redeployed via
+{rh-rhacm-first} or a GitOps pipeline.
+====
+
+.Prerequisites
+
+* `cluster-admin` access to all clusters with Network-Bound Disk Encryption (NBDE) nodes.
+* All Tang servers must be accessible to every NBDE node undergoing rekeying, even if the keys of a Tang server have not changed.
+* Obtain the Tang server URL and key thumbprint for every Tang server.
+
+.Procedure
+
+. Create a `DaemonSet` object based on the following template. This template sets up three redundant Tang servers, but can be easily adapted to other situations. Change the Tang server URLs and thumbprints in the `NEW_TANG_PIN` environment to suit your environment:
++
+[source,yaml]
+----
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: tang-rekey
+  namespace: openshift-machine-config-operator
+spec:
+  selector:
+    matchLabels:
+      name: tang-rekey
+  template:
+    metadata:
+      labels:
+        name: tang-rekey
+    spec:
+      containers:
+      - name: tang-rekey
+        image: registry.access.redhat.com/ubi9/ubi-minimal:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - "/sbin/chroot"
+        - "/host"
+        - "/bin/bash"
+        - "-ec"
+        args:
+        - |
+          rm -f /tmp/rekey-complete || true
+          echo "Current tang pin:"
+          clevis-luks-list -d $ROOT_DEV -s 1
+          echo "Applying new tang pin: $NEW_TANG_PIN"
+          clevis-luks-edit -f -d $ROOT_DEV -s 1 -c "$NEW_TANG_PIN"
+          echo "Pin applied successfully"
+          touch /tmp/rekey-complete
+          sleep infinity
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /host/tmp/rekey-complete
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        env:
+        - name: ROOT_DEV
+          value: /dev/disk/by-partlabel/root
+        - name: NEW_TANG_PIN
+          value: >-
+            {"t":1,"pins":{"tang":[
+              {"url":"http://tangserver01:7500","thp":"WOjQYkyK7DxY_T5pMncMO5w0f6E"},
+              {"url":"http://tangserver02:7500","thp":"I5Ynh2JefoAO3tNH9TgI4obIaXI"},
+              {"url":"http://tangserver03:7500","thp":"38qWZVeDKzCPG9pHLqKzs6k1ons"}
+            ]}}
+        volumeMounts:
+        - name: hostroot
+          mountPath: /host
+        securityContext:
+          privileged: true
+      volumes:
+      - name: hostroot
+        hostPath:
+          path: /
+      nodeSelector:
+        kubernetes.io/os: linux
+      priorityClassName: system-node-critical
+      restartPolicy: Always
+      serviceAccount: machine-config-daemon
+      serviceAccountName: machine-config-daemon
+----
++
+In this case, even though you are rekeying `tangserver01`, you must specify not only the new thumbprint for `tangserver01`, but also the current thumbprints for all other Tang servers.  Failure to specify all thumbprints for a rekeying operation opens up the opportunity for a man-in-the-middle attack.
+
+. To distribute the daemon set to every cluster that must be rekeyed, run the following command:
++
+[source,terminal]
+----
+$ oc apply -f tang-rekey.yaml
+----
++
+However, to run at scale, wrap the daemon set in an ACM policy. This ACM configuration must contain one policy to deploy the daemon set,
+a second policy to check that all the daemon set pods are READY, and a placement rule to apply it to the appropriate set of clusters.
+
+[NOTE]
+====
+After validating that the daemon set has successfully rekeyed all servers, delete the daemon set. If you do not delete the daemon set, it must be deleted before the next rekeying operation.
+====
+
+.Verification
+
+After you distribute the daemon set, monitor the daemon sets to ensure that the rekeying has completed successfully. The script in the example daemon set terminates with an error if the rekeying failed, and remains in the `CURRENT` state if successful. There is also a readiness probe that marks the pod as `READY` when the rekeying has completed successfully.
+
+* This is an example of the output listing for the daemon set before the rekeying has completed:
++
+[source,terminal]
+----
+$ oc get -n openshift-machine-config-operator ds tang-rekey
+----
++
+.Example output
++
+[source,terminal]
+----
+NAME         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+tang-rekey   1         1         0       1            0           kubernetes.io/os=linux   11s
+----
++
+* This is an example of the output listing for the daemon set after the rekeying has completed successfully:
++
+[source,terminal]
+----
+$ oc get -n openshift-machine-config-operator ds tang-rekey
+----
++
+.Example output
++
+[source,terminal]
+----
+NAME         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+tang-rekey   1         1         1       1            1           kubernetes.io/os=linux   13h
+----
+
+Rekeying usually takes a few minutes to complete.
+
+[NOTE]
+====
+If you use ACM policies to distribute the daemon sets to multiple clusters, you must include a compliance policy that checks every daemon set’s READY count is equal to the DESIRED count. In this way, compliance to such a policy demonstrates that all daemon set pods are READY and the rekeying has completed successfully. You could also use an ACM search to query all of the daemon sets' states.
+====
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-troubleshooting-temporary-error-conditions_{context}"]
+= Troubleshooting temporary rekeying errors for Tang servers
+
+To determine if the error condition from rekeying the Tang servers is temporary, perform the following procedure. Temporary error conditions might include:
+
+* Temporary network outages
+* Tang server maintenance
+
+Generally, when these types of temporary error conditions occur, you can wait until the daemon set succeeds in resolving the error or you can delete the daemon set and not try again until the temporary error condition has been resolved.
+
+.Procedure
+
+. Restart the pod that performs the rekeying operation using the normal Kubernetes pod restart policy.
+
+. If any of the associated Tang servers are unavailable, try rekeying until all the servers are back online.
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-troubleshooting-permanent-error-conditions_{context}"]
+= Troubleshooting permanent rekeying errors for Tang servers
+
+If, after rekeying the Tang servers, the `READY` count does not equal the `DESIRED` count after an extended period of time, it might indicate a permanent failure condition. In this case, the following conditions might apply:
+
+* A typographical error in the Tang server URL or thumbprint in the `NEW_TANG_PIN` definition.
+* The Tang server is decommissioned or the keys are permanently lost.
+
+.Prerequisites
+
+* The commands shown in this procedure can be run on the Tang server or on any Linux system that has network
+access to the Tang server.
+
+.Procedure
+
+. Validate the Tang server configuration by performing a simple encrypt and decrypt operation on each Tang
+server’s configuration as defined in the daemon set.
++
+This is an example of an encryption and decryption attempt with a bad thumbprint:
++
+[source,terminal]
+----
+$ echo "okay" | clevis encrypt tang \
+  '{"url":"http://tangserver02:7500","thp":"badthumbprint"}' | \
+  clevis decrypt
+----
++
+.Example output
++
+[source,terminal]
+----
+Unable to fetch advertisement: 'http://tangserver02:7500/adv/badthumbprint'!
+----
++
+This is an example of an encryption and decryption attempt with a good thumbprint:
++
+[source,terminal]
+----
+$ echo "okay" | clevis encrypt tang \
+  '{"url":"http://tangserver03:7500","thp":"goodthumbprint"}' | \
+  clevis decrypt
+----
++
+.Example output
+
++
+[source,terminal]
+----
+okay
+----
+
+. After you identify the root cause, remedy the underlying situation:
+
+.. Delete the non-working daemon set.
+.. Edit the daemon set definition to fix the underlying issue.  This might include any of the following actions:
++
+* Edit a Tang server entry to correct the URL and thumbprint.
+* Remove a Tang server that is no longer in service.
+* Add a new Tang server that is a replacement for a decommissioned server.
+
+. Distribute the updated daemon set again.
+
+[NOTE]
+====
+When replacing, removing, or adding a Tang server from a configuration, the rekeying operation will succeed as long as at least one original server is still functional, including the server currently being rekeyed. If none of the original Tang servers are functional or can be recovered, recovery of the system is impossible and you must redeploy the affected nodes.
+====
+
+.Verification
+
+Check the logs from each pod in the daemon set to determine whether the rekeying completed successfully. If the rekeying is not successful, the logs might indicate the failure condition.
+
+. Locate the name of the container that was created by the daemon set:
++
+[source,terminal]
+----
+$ oc get pods -A | grep tang-rekey
+----
++
+.Example output
+[source,terminal]
+----
+openshift-machine-config-operator  tang-rekey-7ks6h  1/1  Running   20 (8m39s ago)  89m
+----
+
+. Print the logs from the container. The following log is from a completed successful rekeying operation:
++
+[source,terminal]
+----
+$ oc logs tang-rekey-7ks6h
+----
++
+.Example output
+[source,terminal]
+----
+Current tang pin:
+1: sss '{"t":1,"pins":{"tang":[{"url":"http://10.46.55.192:7500"},{"url":"http://10.46.55.192:7501"},{"url":"http://10.46.55.192:7502"}]}}'
+Applying new tang pin: {"t":1,"pins":{"tang":[
+  {"url":"http://tangserver01:7500","thp":"WOjQYkyK7DxY_T5pMncMO5w0f6E"},
+  {"url":"http://tangserver02:7500","thp":"I5Ynh2JefoAO3tNH9TgI4obIaXI"},
+  {"url":"http://tangserver03:7500","thp":"38qWZVeDKzCPG9pHLqKzs6k1ons"}
+]}}
+Updating binding...
+Binding edited successfully
+Pin applied successfully
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-deleting-old-tang-server-keys_{context}"]
+= Deleting old Tang server keys
+
+.Prerequisites
+
+* A root shell on the Linux machine running the Tang server.
+
+.Procedure
+
+. Locate and access the directory where the Tang server key is stored. This is usually the `/var/db/tang` directory:
++
+[source,terminal]
+----
+# cd /var/db/tang/
+----
+
+. List the current Tang server keys, showing the advertised and unadvertised keys:
++
+[source,terminal]
+----
+# ls -A1
+----
++
+.Example output
+[source,terminal]
+----
+.36AHjNH3NZDSnlONLz1-V4ie6t8.jwk
+.gJZiNPMLRBnyo_ZKfK4_5SrnHYo.jwk
+Bp8XjITceWSN_7XFfW7WfJDTomE.jwk
+WOjQYkyK7DxY_T5pMncMO5w0f6E.jwk
+----
+
+. Delete the old keys:
++
+[source,terminal]
+----
+# rm .*.jwk
+----
+
+. List the current Tang server keys to verify the unadvertised keys are no longer present:
++
+[source,terminal]
+----
+# ls -A1
+----
++
+.Example output
+[source,terminal]
+----
+Bp8XjITceWSN_7XFfW7WfJDTomE.jwk
+WOjQYkyK7DxY_T5pMncMO5w0f6E.jwk
+----
+
+.Verification
+
+At this point, the server still advertises the new keys, but an attempt to decrypt based on the old key will fail.
+
+. Query the Tang server for the current advertised key thumbprints:
++
+[source,terminal]
+----
+# tang-show-keys 7500
+----
++
+.Example output
++
+[source,terminal]
+----
+WOjQYkyK7DxY_T5pMncMO5w0f6E
+----
+
+. Decrypt the test file created earlier to verify decryption against the old keys fails:
++
+[source,terminal]
+----
+# clevis decrypt </tmp/encryptValidation
+----
++
+.Example output
++
+[source,terminal]
+----
+Error communicating with the server!
+----
+
+If you are running multiple Tang servers behind a load balancer that share the same key material, ensure the changes made are properly synchronized across the entire set of servers before proceeding.
+
+:leveloffset!:
+
+
+
+
+= Disaster recovery considerations
+:_mod-docs-content-type: ASSEMBLY
+// CNF-2127 assembly
+[id="nbde-disaster-recovery-considerations"]
+= Disaster recovery considerations
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: nbde-implementation
+
+toc::[]
+
+This section describes several potential disaster situations and the procedures to respond to each of them. Additional situations will be added here as they are discovered or presumed likely to be possible.
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="nbde-loss-of-a-client-machine_{context}"]
+= Loss of a client machine
+
+The loss of a cluster node that uses the Tang server to decrypt its disk partition is _not_ a disaster. Whether the machine was stolen, suffered hardware failure, or another loss scenario is not important: the disks are encrypted and considered unrecoverable.
+
+However, in the event of theft, a precautionary rotation of the Tang server’s keys and rekeying of all remaining nodes would be prudent to ensure the disks remain unrecoverable even in the event the thieves subsequently gain access to the Tang servers.
+
+To recover from this situation, either reinstall or replace the node.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-loss-of-client-connectivity_{context}"]
+= Planning for a loss of client network connectivity
+
+The loss of network connectivity to an individual node will cause it to become unable to boot in an unattended fashion.
+
+If you are planning work that might cause a loss of network connectivity,
+you can reveal the passphrase for an onsite technician to use manually,
+and then rotate the keys afterwards to invalidate it:
+
+.Procedure
+
+. Before the network becomes unavailable, show the password used in the first slot `-s 1` of device `/dev/vda2` with this command:
++
+[source,terminal]
+----
+$ sudo clevis luks pass -d /dev/vda2 -s 1
+----
+
+. Invalidate that value and regenerate a new random boot-time passphrase with this command:
++
+[source,terminal]
+----
+$ sudo clevis luks regen -d /dev/vda2 -s 1
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="nbde-unexpected-loss-of-network-connectivity_{context}"]
+= Unexpected loss of network connectivity
+
+If the network disruption is unexpected and a node reboots, consider the following scenarios:
+
+* If any nodes are still online, ensure that they do not reboot until network connectivity is restored. This is not applicable for single-node clusters.
+* The node will remain offline until such time that either network connectivity is restored, or a pre-established passphrase is entered manually at the console. In exceptional circumstances, network administrators might be able to reconfigure network segments to reestablish access, but this is counter to the intent of NBDE, which is that lack of network access means lack of ability to boot.
+* The lack of network access at the node can reasonably be expected to impact that node’s ability to function as well as its ability to boot. Even if the node were to boot via manual intervention, the lack of network access would make it effectively useless.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-recovering-network-connectivity-manually_{context}"]
+= Recovering network connectivity manually
+
+A somewhat complex and manually intensive process is also available to the onsite technician for network recovery.
+
+.Procedure
+
+. The onsite technician extracts the Clevis header from the hard disks. Depending on BIOS lockdown, this might involve removing the disks and installing them in a lab machine.
+
+. The onsite technician transmits the Clevis headers to a colleague with legitimate access to the Tang network who then performs the decryption.
+
+. Due to the necessity of limited access to the Tang network, the technician should not be able to access that network via VPN or other remote connectivity.  Similarly, the technician cannot patch the remote server through to this network in order to decrypt the disks automatically.
+
+. The technician reinstalls the disk and manually enters the plain text passphrase provided by their colleague.
+
+. The machine successfully starts even without direct access to the Tang servers.  Note that the transmission of the key material from the install site to another site with network access must be done carefully.
+
+. When network connectivity is restored, the technician rotates the encryption keys.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="nbde-emergency-recovery-of-network-connectivity_{context}"]
+= Emergency recovery of network connectivity
+
+If you are unable to recover network connectivity manually, consider the following steps. Be aware that these steps are discouraged if other methods to recover network connectivity are available.
+
+* This method must only be performed by a highly trusted technician.
+* Taking the Tang server’s key material to the remote site is considered to be a breach of the key material and all servers must be rekeyed and re-encrypted.
+* This method must be used in extreme cases only, or as a proof of concept recovery method to demonstrate its viability.
+* Equally extreme, but theoretically possible, is to power the server in question with an Uninterruptible Power Supply (UPS), transport the server to a location with network connectivity to boot and decrypt the disks, and then restore the server at the original location on battery power to continue operation.
+* If you want to use a backup manual passphrase, you must create it before the failure situation occurs.
+* Just as attack scenarios become more complex with TPM and Tang compared to a stand-alone Tang installation, so emergency disaster recovery processes are also made more complex if leveraging the same method.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="nbde-loss-of-a-network-segment_{context}"]
+= Loss of a network segment
+
+The loss of a network segment, making a Tang server temporarily unavailable, has the following consequences:
+
+* {product-title} nodes continue to boot as normal, provided other servers are available.
+
+* New nodes cannot establish their encryption keys until the network segment is restored. In this case, ensure connectivity to remote geographic locations for the purposes of high availability and redundancy. This is because when you are installing a new node or rekeying an existing node, all of the Tang servers you are referencing in that operation must be available.
+
+A hybrid model for a vastly diverse network, such as five geographic regions in which each client is connected to the closest three clients is worth investigating.
+
+In this scenario, new clients are able to establish their encryption keys with the subset of servers that are reachable. For example, in the set of `tang1`, `tang2` and `tang3` servers, if `tang2` becomes unreachable clients can still establish their encryption keys with `tang1` and `tang3`, and at a later time re-establish with the full set. This can involve either a manual intervention or a more complex automation to be available.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="nbde-loss-of-a-tang-server_{context}"]
+= Loss of a Tang server
+
+The loss of an individual Tang server within a load balanced set of servers with identical key material is completely transparent to the clients.
+
+The temporary failure of all Tang servers associated with the same URL, that is, the entire load balanced set, can be considered the same as the loss of a network segment. Existing clients have the ability to decrypt their disk partitions so long as another preconfigured Tang server is available. New clients cannot enroll until at least one of these servers comes back online.
+
+You can mitigate the physical loss of a Tang server by either reinstalling the server or restoring the server from backups. Ensure that the backup and restore processes of the key material is adequately protected from unauthorized access.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// security/nbde-implementation-guide.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="nbde-compromise-of-key-material_{context}"]
+= Rekeying compromised key material
+
+If key material is potentially exposed to unauthorized third parties, such as through the physical theft of a Tang server or associated data, immediately rotate the keys.
+
+.Procedure
+
+. Rekey any Tang server holding the affected material.
+. Rekey all clients using the Tang server.
+. Destroy the original key material.
+. Scrutinize any incidents that result in unintended exposure of the master encryption key. If possible, take compromised nodes offline and re-encrypt their disks.
+
+[TIP]
+Reformatting and reinstalling on the same physical hardware, although slow, is easy to automate and test.
+
+:leveloffset!:
+
+

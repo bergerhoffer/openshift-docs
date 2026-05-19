@@ -1,0 +1,991 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="zero-trust-manager-configuration_{context}"]
+= Deploying Zero Trust Workload Identity Manager operands
+
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: zero-trust-manager-configuration
+
+
+toc::[]
+
+[role="_abstract"]
+Deploy the {zero-trust-full} operands by creating their custom resources in a specific order. Adhering to the sequence ensures the successful installation of components, such as the Security Production Identity Framework for Everyone (SPIRE) Server, SPIRE Agent, and Secure Production Identity Framework For Everyone (SPIFFE) CSI driver.
+
+You must deploy the operands in the following sequence to ensure successful installation:
+
+* `ZeroTrustWorkloadIdentityManager` CR
+
+* SPIRE Server
+
+* SPIRE Agent
+
+* SPIFFE CSI driver
+
+* SPIRE OIDC discovery provider
+
+// Deploying and configuring ZTWIM custom resource
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-configuration.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="zero-trust-manager-ztwim-cr_{context}"]
+= About the ZeroTrustWorkloadIdentityManager custom resource
+
+
+[role="_abstract"]
+The `ZeroTrustWorkloadIdentityManager` is the primary custom resource that initializes the SPIRE deployments. This primary resource defines the trust domain and cluster name to help ensure secure workload identity management.
+
+Reference the complete YAML specification to correctly structure the `ZeroTrustWorkloadIdentityManager` CR. This example helps you identify required fields and immutable parameters for your configuration.
+
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: ZeroTrustWorkloadIdentityManager
+metadata:
+ name: cluster
+ labels:
+   app.kubernetes.io/name: zero-trust-workload-identity-manager
+   app.kubernetes.io/managed-by: zero-trust-workload-identity-manager
+spec:
+  trustDomain: "example.com"
+  clusterName: "production-cluster"
+  bundleConfigMap: "spire-bundle"
+----
+where:
+
+`spec.trustDomain`:: Specifies the trust domain to be used for the SPIFFE identifiers. Must be a valid SPIFFE trust domain (lowercase alphanumeric, hyphens, and dots). Maximum length is 255 characters. After setting a value for the field, the field is immutable. Red{nbsp}Hat highly recommends to set this value to match your the base application URL (for example, `apps.mycluster.example.com`) of your {product-title} cluster. Using a different value might cause automatically generated OpenShift Routes or federation endpoints to be created with incorrect or mismatched hostnames later in the configuration process.
+
+`spec.clusterName`:: Specifies the name that identifies this cluster within the trust domain. Must be a valid DNS-1123 subdomain with a maximum length of 63 characters. Once set, this field is immutable.
+
+`spec.bundleConfigMap`:: Specifies the name of the ConfigMap that stores the SPIRE trust bundle. This ConfigMap contains the root certificates for the trust domain and is created and maintained by the Operator. Must be a valid Kubernetes name with a maximum length of 253 characters. This field is optional (defaults to `spire-bundle`) and once set, is immutable.
+
+
+
+
+:leveloffset!:
+
+// Deploying and configuring SPIRE Server
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-configuration.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-spire-server-config_{context}"]
+= Deploying the SPIRE Server
+
+[role="_abstract"]
+Deploy the SPIRE Server by configuring the `SpireServer` custom resource (CR). This establishes a central authority that manages and issues identities to the workloads in your cluster.
+
+.Prerequisites
+
+* You have access to the cluster as a user with the `cluster-admin` role.
+
+* You have installed {zero-trust-full} in the cluster.
+
+.Procedure
+
+. Create the `SpireServer` CR:
+
+.. Create a YAML file that defines the `SpireServer` CR, for example, `SpireServer.yaml`:
++
+The following is an example of a `SpireServer.yaml` file.
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+ name: cluster
+spec:
+  logLevel: "info"
+  logFormat: "text"
+  jwtIssuer: "https://oidc-discovery.apps.cluster.example.com"
+  caValidity: "24h"
+  defaultX509Validity: "1h"
+  defaultJWTValidity: "5m"
+  jwtKeyType: "rsa-2048"
+  caSubject:
+    country: "US"
+    organization: "Example Corporation"
+    commonName: "SPIRE Server CA"
+  persistence:
+    size: "5Gi"
+    accessMode: "ReadWriteOnce"
+    storageClass: "gp3-csi"
+  datastore:
+    databaseType: "sqlite3"
+    connectionString: "/run/spire/data/datastore.sqlite3"
+    tlsSecretName: ""
+    maxOpenConns: 100
+    maxIdleConns: 10
+    connMaxLifetime: 0
+    disableMigration: "false"
+----
+where:
+
+`metadata.name`:: Specifies that the value must be `cluster`.
+
+`spec.logLevel`:: Specifies the logging level for the SPIRE Server. The valid options are `debug`, `info`, `warn`, and `error`.
+
+`spec.logFormat`:: Specifies the logging format for the SPIRE Server. The valid options are `text` and `json`.
+
+`spec.jwtIssuer`:: Specifies the JWT issuer URL. Must be a valid HTTPS or HTTP URL with a maximum length of 512 characters.
+
+`spec.caValidity`:: Specifies the validity period (Time to Live (TTL)) for the SPIRE Server's CA certificate. This determines how long the server's root or intermediate certificate is valid. The format is a duration string (for example, `24h`, `168h`).
+
+`spec.defaultX509Validity`:: Specifies the default validity period (TTL) for X.509 SVIDs issued to workloads. This value is used if a specific TTL is not configured for a registration entry.
+
+`spec.defaultJWTValidity`:: Specifies thedefault validity period (TTL) for JWT SVIDs issued to workloads. This value is used if a specific TTL is not configured for a registration entry.
+
+`spec.wtKeyType`:: Specifies the key type used for JWT signing. The valid options are `rsa-2048`, `rsa-4096`, `ec-p256`, and `ec-p384`. This field is optional.
+
+`spec.caSubject.country`:: Specifies the country for the SPIRE Server certificate authority (CA). Must be an ISO 3166-1 alpha-2 country code (2 characters).
+
+`spec.caSubject.organization`:: Specifies the organization for the SPIRE Server CA. Maximum length is 64 characters.
+
+`spec.caSubject.commonName`:: Specifies the common name for the SPIRE Server CA. Maximum length is 255 characters.
+
+`spec.persistence.size`:: Specifies the size of the persistent volume (for example, `1Gi`, `5Gi`). Once set, this field is immutable.
+
+`spec.persistence.accessMode`:: Specifies the access mode for the persistent volume. The valid options are `ReadWriteOnce`, `ReadWriteOncePod`, and `ReadWriteMany`. Once set, this field is immutable.
+
+`spec.persistence.storageClass`::  Specifies the storage class to be used for the PVC. Once set, this field is immutable.
+
+`spec.datastore.databaseType`:: Specifies the type of database to use for the datastore. The valid options are `sql`, `sqlite3`, `postgres`, `mysql`, `aws_postgresql`, and `aws_mysql`.
+
+`spec.datastore.connectionString`:: Specifies the connection string for the database. For PostgreSQL with SSL, include `sslmode` and certificate paths (for example, `dbname=spire user=spire host=postgres.example.com sslmode=verify-full`).
+
+`spec.datastore.tlsSecretName`::  Specifies the name of a Kubernetes Secret containing TLS certificates for database connections. The Secret will be mounted at `/run/spire/db/certs`. This field is optional.
+
+`spec.datastore.maxOpenConns`:: Specifies the maximum number of open database connections. Must be between 1 and 10000.
+
+`spec.datastore.maxIdleConns`:: Specifies the maximum number of idle database connections in the pool. Must be between 0 and 10000.
+
+`spec.datastore.connMaxLifetime`:: Specifies the maximum lifetime of a database connection in seconds. A value of 0 means connections are not closed due to age.
+
+`spec.datastore.disableMigration`:: Specifies whether to disable automatic database migration. The valid options are `true` and `false`.
+
+.. Apply the configuration by running the following command:
++
+[source, terminal]
+----
+$ oc apply -f SpireServer.yaml
+----
+
+.Verification
+
+* Verify that the stateful set of SPIRE Server is ready and available by running the following command:
++
+[source,terminal]
+----
+$ oc get statefulset -l app.kubernetes.io/name=server -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME            READY   AGE
+spire-server    1/1     65s
+----
+
+* Verify that the status of the SPIRE Server pod is `Running` by running the following command:
++
+[source,terminal]
+----
+$ oc get po -l app.kubernetes.io/name=server -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME               READY   STATUS    RESTARTS        AGE
+spire-server-0     2/2     Running   1 (108s ago)    111s
+----
+
+* Verify that the persistent volume claim (PVC) is bound, by running the following command:
++
+[source,terminal]
+----
+$ oc get pvc -l app.kubernetes.io/name=server -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                        STATUS    VOLUME                                     CAPACITY   ACCESS MODES  STORAGECLASS  VOLUMEATTRIBUTECLASS  AGE
+spire-data-spire-server-0   Bound     pvc-27a36535-18a1-4fde-ab6d-e7ee7d3c2744   5Gi        RW0           gp3-csi       <unset>               22m
+----
+
+
+:leveloffset!:
+
+// Deploying and configuring SPIRE Agent
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-configuration.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-spire-agent-config_{context}"]
+= Deploying the SPIRE Agent
+
+[role="_abstract"]
+Use the `SpireAgent` custom resource to configure the SPIRE Agent `DaemonSet` on your nodes. This defines how the agent verifies workloads and manages identity attestation across your {product-title} cluster.
+
+
+.Prerequisites
+
+* You have access to the cluster as a user with the `cluster-admin` role.
+
+* You have installed {zero-trust-full} in the cluster.
+
+.Procedure
+
+. Create the `SpireAgent` CR:
+
+.. Create a YAML file that defines the `SpireAgent` CR, for example, `SpireAgent.yaml`:
++
+The following is an example of a `SpireAgent.yaml` file.
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireAgent
+metadata:
+ name: cluster
+spec:
+  socketPath: "/run/spire/agent-sockets"
+  logLevel: "info"
+  logFormat: "text"
+  nodeAttestor:
+    k8sPSATEnabled: "true"
+  workloadAttestors:
+    k8sEnabled: "true"
+    workloadAttestorsVerification:
+      type: "auto"
+      hostCertBasePath: "/etc/kubernetes"
+      hostCertFileName: "kubelet-ca.crt"
+    disableContainerSelectors: "false"
+    useNewContainerLocator: "true"
+----
+where:
+
+`metadata.name`:: Specifies that the value must be `cluster`.
+
+`spec.socketPath`:: Specifies the directory on the host where the SPIRE agent socket is created. This directory is shared with the SPIFFE CSI driver via the `hostPath` volume. Must match the `SpiffeCSIDriver.spec.agentSocketPath` for workloads to access the socket. Must be an absolute path with a maximum length of 256 characters.
+
+`spec.logLevel`:: Specifies the logging level for the SPIRE Server. The valid options are `debug`, `info`, `warn`, and `error`.
+
+`spec.logFormat`:: Specifies the logging format for the SPIRE Server. The valid options are `text` and `json`.
+
+`spec.nodeAttestor.k8sPSATEnabled`:: Specifies whether Kubernetes Projected Service Account Token (PSAT) node attestation is enabled. When enabled, the SPIRE agent uses K8s PSATs to prove its identity to the SPIRE server during node attestation. The valid options are `true` and `false`.
+
+`spec.workloadAttestors.k8sEnabled`:: Specifies whether the Kubernetes workload attestor is enabled. When enabled, the SPIRE agent can verify workload identities using Kubernetes pod information and service account tokens. The valid options are `true` and `false`.
+
+`spec.workloadAttestors.workloadAttestorsVerification.type`:: Specifies the kubelet certificate verification mode. The valid options are `auto`, `hostCert`, and `skip`.
+
+`spec.workloadAttestors.workloadAttestorsVerification.hostCertBasePath`:: Specifies the directory containing the kubelet CA certificate. Required when type is `hostCert`. Optional when type is `auto` (defaults to /etc/kubernetes if not specified).
+
+`spec.workloadAttestors.workloadAttestorsVerification.hostCertFileName`:: Specifies the file name for the kubelet's CA certificate. When combined with `hostCertBasePath`, forms the full path. Required when type is `hostCert`. Optional when type is `auto`. Defaults to `kubelet-ca.crt` if not specified.
+
+`spec.workloadAttestors.disableContainerSelectors`:: Specifies whether to disable container selectors in the Kubernetes workload attestor. Set to `true` if using `holdApplicationUntilProxyStarts` in Istio. The valid options are `true` and `false`.
+
+`spec.workloadAttestors.useNewContainerLocator`:: Specifies enabling the new container locator algorithm that has support for cgroups v2. The valid options are `true` and `false`.
+
+.. Apply the configuration by running the following command:
++
+[source, terminal]
+----
+$ oc apply -f SpireAgent.yaml
+----
+
+.Verification
+
+* Verify that the daemon set of the SPIRE Agent is ready and available by running the following command:
++
+[source,terminal]
+----
+$ oc get daemonset -l app.kubernetes.io/name=agent -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+spire-agent   3         3         3       3            3           <none>          10m
+----
+
+* Verify that the status of SPIRE Agent pods is `Running` by running the following command:
++
+[source,terminal]
+----
+$ oc get po -l app.kubernetes.io/name=agent -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                READY   STATUS    RESTARTS   AGE
+spire-agent-dp4jb   1/1     Running   0          12m
+spire-agent-nvwjm   1/1     Running   0          12m
+spire-agent-vtvlk   1/1     Running   0          12m
+----
+
+:leveloffset!:
+
+// Deploying and configuring SPIFFE CSI Driver
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-configuration.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-spire-csidriver-config_{context}"]
+= Deploying the SPIFFE Container Storage Interface driver
+
+[role="_abstract"]
+Configure the Container Storage Interface (CSI) driver using the `SpiffeCSIDriver` CR. This configuration mounts SPIFFE sockets directly into workload pods, which allows your applications to access the SPIFFE Workload API securely.
+
+.Prerequisites
+
+* You have access to the cluster as a user with the `cluster-admin` role.
+
+* You have installed {zero-trust-full} in the cluster.
+
+.Procedure
+
+. Create the `SpiffeCSIDriver` CR:
+
+.. Create a YAML file that defines the `SpiffeCSIDriver` CR object, for example, `SpiffeCSIDriver.yaml`:
++
+.Example `SpiffeCSIDriver.yaml`
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpiffeCSIDriver
+metadata:
+ name: cluster
+spec:
+  agentSocketPath: "/run/spire/agent-sockets"
+  pluginName: "csi.spiffe.io"
+----
+where:
+
+`metadata.name`:: Specifies that the name must be `cluster`.
+
+`spec.agentSocketPath`:: Specifies the path to the directory containing the SPIRE agent's Workload API socket. This directory is bind-mounted into workload containers by the CSI driver. The directory is shared between the SPIRE agent and CSI driver via a `hostPath` volume. Must be an absolute path with a maximum length of 256 characters. This value must match `SpireAgent.spec.socketPath` for workloads to access the socket.
+
+`spec.pluginName`:: Specifies the name of the CSI plugin. This sets the CSI driver name that is deployed to the cluster and used in `VolumeMount` configurations. Must match the driver name referenced in the workload pods. Must be a valid domain name format (for example, `csi.spiffe.io`) with a maximum length of 127 characters.
+
+.. Apply the configuration by running the following command:
++
+[source, terminal]
+----
+$ oc apply -f SpiffeCSIDriver.yaml
+----
+
+.Verification
+
+* Verify that the daemon set of the SPIFFE CSI driver is ready and available by running the following command:
++
+[source,terminal]
+----
+$ oc get daemonset -l app.kubernetes.io/name=spiffe-csi-driver -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                      DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+spire-spiffe-csi-driver   3         3         3       3            3           <none>          114s
+----
+
+* Verify that the status of SPIFFE Container Storage Interface (CSI) Driver pods is `Running` by running the following command:
++
+[source,terminal]
+----
+$ oc get po -l app.kubernetes.io/name=spiffe-csi-driver -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                            READY   STATUS    RESTARTS   AGE
+spire-spiffe-csi-driver-gpwcp   2/2     Running   0          2m37s
+spire-spiffe-csi-driver-rrbrd   2/2     Running   0          2m37s
+spire-spiffe-csi-driver-w6s6q   2/2     Running   0          2m37s
+----
+
+:leveloffset!:
+
+// Deploying and configuring OIDC Discovery Provider
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-configuration.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-oidc-config_{context}"]
+
+= Deploying the SPIRE OpenID Connect Discovery Provider
+
+[role="_abstract"]
+Deploy the SPIRE OpenID Connect (OIDC) Discovery Provider by configuring the `SpireOIDCDiscoveryProvider` CR. This allows you to define the trust domain and JSON web token (JWT) issuer for your cluster.
+
+.Prerequisites
+
+* You have access to the cluster as a user with the `cluster-admin` role.
+
+* You have installed {zero-trust-full} in the cluster.
+
+.Procedure
+
+. Create the `SpireOIDCDiscoveryProvider` CR:
+
+.. Create a YAML file that defines the `SpireOIDCDiscoveryProvider` CR, for example, `SpireOIDCDiscoveryProvider.yaml`:
++
+.Example `SpireOIDCDiscoveryProvider` YAML
+[source,yaml]
+----
+aapiVersion: operator.openshift.io/v1alpha1
+kind: SpireOIDCDiscoveryProvider
+metadata:
+ name: cluster
+spec:
+  logLevel: "info"
+  logFormat: "text"
+  csiDriverName: "csi.spiffe.io"
+  jwtIssuer: "https://oidc-discovery.apps.cluster.example.com"
+  replicaCount: 1
+  managedRoute: "true"
+  externalSecretRef: ""
+----
+where:
+
+`metadata.name`:: Specifies that the value must be `cluster`.
+
+`spec.logLevel`:: Specifies the logging level for the SPIRE Server. The valid options are `debug`, `info`, `warn`, and `error`.
+
+`spec.logFormat`:: Specifies the logging format for the SPIRE Server. The valid options are `text` and `json`.
+
+`spec.csiDriverName`:: Specifies the name of the CSI driver to use for mounting the Workload API socket. This must match the `SpiffeCSIDriver.spec.pluginName` value for the OIDC provider to access SPIFFE identities. Must be a valid DNS subdomain format (for example, `csi.spiffe.io`) with a maximum length of 127 characters.
+
+`spec.jwtIssuer`:: Specifies the JWT issuer URL. Must be a valid HTTPS or HTTP URL with a maximum length of 512 characters. This value must match the `SpireServer.spec.jwtIssuer` value.
+
+`spec.replicaCount`:: Specifies the number of replicas for the OIDC Discovery Provider deployment. Must be between 1 and 5.
+
+`spec.managedRoute`:: Specifies  whether the Operator automatically creates an OpenShift route for the OIDC Discovery Provider endpoints. Set to `true` to have the Operator automatically create and maintain an OpenShift route for OIDC discovery endpoints (`*.apps.`). Set to `false` for administrators to manually configure routes or ingress.
+
+`spec.externalSecretRef`:: Specifies a reference to an externally managed secret that contains the TLS certificate for the OIDC Discovery Provider route host. Must be a valid Kubernetes secret reference name with a maximum length of 253 characters. This field is optional.
+
+.. Apply the configuration by running the following command:
++
+[source, terminal]
+----
+$ oc apply -f SpireOIDCDiscoveryProvider.yaml
+----
+
+.Verification
+
+. Verify that the deployment of OIDC Discovery Provider is ready and available by running the following command:
++
+[source,terminal]
+----
+$ oc get deployment -l app.kubernetes.io/name=spiffe-oidc-discovery-provider -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                                    READY  UP-TO-DATE  AVAILABLE  AGE
+spire-spiffe-oidc-discovery-provider    1/1    1           1          2m58s
+----
+
+. Verify that the status of OIDC Discovery Provider pods is `Running` by running the following command:
++
+[source,terminal]
+----
+$ oc get po -l app.kubernetes.io/name=spiffe-oidc-discovery-provider -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                                                    READY   STATUS    RESTARTS   AGE
+spire-spiffe-oidc-discovery-provider-64586d599f-lcc94   2/2     Running   0          7m15s
+----
+
+:leveloffset!:
+
+
+// Deploying and configuring OIDC Discovery Provider
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-configuration.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="zero-trust-manager-verify-operands_{context}"]
+= Verify the health of the operands
+
+[role="_abstract"]
+View the status fields to verify the operational health of managed components. This information helps you confirm that the SPIRE Server, SPIRE Agent, SPIFFE CSI driver, and the SPIRE OIDC discovery provider operands are ready and functioning correctly.
+
+* To verify the operands, run the following command:
++
+[source,terminal]
+----
+oc get ZeroTrustWorkloadIdentityManager cluster -o yaml
+----
++
+.Example output
++
+[source,yaml]
+----
+status:
+  conditions:
+  - lastTransitionTime: "2025-12-16T10:59:06Z"
+    message: All components are ready
+    reason: Ready
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2025-12-16T10:59:06Z"
+    message: All operand CRs are ready
+    reason: Ready
+    status: "True"
+    type: OperandsAvailable
+  operands:
+  - kind: SpireServer
+    message: Ready
+    name: cluster
+    ready: "true"
+  - kind: SpireAgent
+    message: Ready
+    name: cluster
+    ready: "true"
+  - kind: SpiffeCSIDriver
+    message: Ready
+    name: cluster
+    ready: "true"
+  - kind: SpireOIDCDiscoveryProvider
+    message: Ready
+    name: cluster
+    ready: "true"
+   # ...
+----
+
+This status is reflected when all operands are healthy and stable.
+
+[IMPORTANT]
+====
+The Operator adds the owner reference for the `ZeroTrustWorkloadIdentityManager` CR on the other operands' CRs. This causes the operands' resources to be deleted once the `ZeroTrustWorkloadIdentityManager` CRs are deleted.
+====
+
+
+:leveloffset!:

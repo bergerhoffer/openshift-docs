@@ -1,0 +1,592 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="spo-release-notes"]
+= Security Profiles Operator release notes
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: spo-release-notes
+
+toc::[]
+
+[role="_abstract"]
+The Security Profiles Operator provides a way to define secure computing (http://kubernetes.io/docs/tutorials/security/seccomp/[seccomp]) and SELinux profiles as custom resources, synchronizing profiles to every node in a given namespace.
+
+These release notes track the development of the Security Profiles Operator in {product-title}.
+
+For an overview of the Security Profiles Operator, see xref:../../security/security_profiles_operator/spo-overview.adoc#spo-overview[Security Profiles Operator Overview].
+
+[id="spo-release-notes-0-10-0"]
+== Security Profiles Operator 0.10.0
+
+The following advisory is available for the Security Profiles Operator 0.10.0:
+link:http://access.redhat.com/errata/RHSA-2026:2852[RHSA-2026:2852 - OpenShift Security Profiles Operator update]
+
+[id="spo-0-10-0-bug-fixes"]
+=== Bug fixes
+
+* In some instances when Security Profiles Operator (SPO) 0.9.0 was used with {product-title} version 4.20 and above, SPO would create the `profilerecording` resource but the workload would fail. Failure of the workload prevented the creation of the needed container for running the Operator. With the 0.10.0 release of SPO. the `profilerecording` resource is reliably created, therefore the needed container for running the Operator is reliably created. link:https://issues.redhat.com/browse/CMP-3537[CMP-3537].
+
+* For version 0.9.0 of Security Profiles Operator (SPO), the `spod` pods would fail to run with the error message `fsmount:fscontext:proc/: could not get mount id: operation not permitted`. With the release of version 0.10.0, the `spod` pods run reliably. link:https://issues.redhat.com/browse/CMP-4007[CMP-4007].
+
+* In releases of SPO 0.9.0 and earlier, there was a bug in syntax of the `selinux` usage. With this release of SPO, the change is from `<policyName>_.process` to `<policyName>.process`. The new syntax omits the `_`. Examples in the documentation now show this updated usage. link:https://issues.redhat.com/browse/CMP-4104[CMP-4104]
+
+[id="spo-0-10-0-new-features-and-enhancements"]
+=== New features and enhancements
+
+* With the release of SPO v0.10.0, the Operator now supports {op-system-first} 10 containers. link:https://issues.redhat.com/browse/CMP-4033[CMP-4033]
+
+* In this release of the Security Profiles Operator, the Advanced Audit Logging Framework is available as a General Availability (GA) feature. The Advanced Audit Logging Framework uses the Audit JSON Log Enricher to capture and log terminal-based command activity in {op-system-first} containers, including `oc rsh`, `oc exec`, and `oc debug` commands. For more details, see link:https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html/security_and_compliance/security-profiles-operator#spo-audit-logging_spo-advanced[Advanced Audit Logging Framework].
+
+[id="spo-release-notes-0-9-0"]
+== Security Profiles Operator 0.9.0
+
+The following advisory is available for the Security Profiles Operator 0.9.0:
+link:http://access.redhat.com/errata/RHBA-2025:15655[RHBA-2025:15655 - OpenShift Security Profiles Operator update]
+
+This update manages security profiles as cluster-wide resources rather than namespace resources. To update Security Profiles Operator to a version later than 0.8.6 requires manual migration. For migration instructions, see link:http://access.redhat.com/articles/7130594[Security Profiles Operator 0.9.0 Update Migration Guide].
+
+[id="spo-0-9-0-bug-fixes"]
+=== Bug fixes
+
+* Before this update, the spod pods could fail to start and enter into a `CrashLoopBackOff` state due to an error in parsing the semanage configuration file. This issue is caused by a change to the RHEL 9 image naming convention beginning in {product-title} 4.19. (link:http://issues.redhat.com/browse/OCPBUGS-55829[OCPBUGS-55829])
+
+* Before this update, the Security Profiles Operator would fail to apply a `RawSelinuxProfile` to newly added nodes due to a reconciler type mismatch error. With this update, the operator now correctly handles `RawSelinuxProfile` objects and policies are applied to all nodes as expected. (link:http://issues.redhat.com/browse/OCPBUGS-33718[OCPBUGS-33718])
+
+[id="spo-release-notes-0-8-6"]
+== Security Profiles Operator 0.8.6
+
+The following advisory is available for the Security Profiles Operator 0.8.6:
+
+* link:http://access.redhat.com/errata/RHBA-2024:10380[RHBA-2024:10380 - OpenShift Security Profiles Operator update]
+
+This update includes upgraded dependencies in underlying base images.
+
+[id="spo-release-notes-0-8-5"]
+== Security Profiles Operator 0.8.5
+
+The following advisory is available for the Security Profiles Operator 0.8.5:
+
+* link:http://access.redhat.com/errata/RHBA-2024:5016[RHBA-2024:5016 - OpenShift Security Profiles Operator bug fix update]
+
+[id="spo-0-8-5-bug-fixes"]
+=== Bug fixes
+
+* When attempting to install the Security Profile Operator from the web console, the option to enable Operator-recommended cluster monitoring was unavailable for the namespace. With this update, you can now enabled Operator-recommend cluster monitoring in the namespace. (link:http://issues.redhat.com/browse/OCPBUGS-37794[OCPBUGS-37794])
+
+* Previously, the Security Profiles Operator would intermittently be not visible in the OperatorHub, which caused limited access to install the Operator via the web console. With this update, the Security Profiles Operator is present in the OperatorHub.
+
+[id="spo-release-notes-0-8-4"]
+== Security Profiles Operator 0.8.4
+
+The following advisory is available for the Security Profiles Operator 0.8.4:
+
+* link:http://access.redhat.com/errata/RHBA-2024:4781[RHBA-2024:4781 - OpenShift Security Profiles Operator bug fix update]
+
+This update addresses CVEs in underlying dependencies.
+
+[id="spo-0-8-4-new-features-and-enhancements"]
+=== New features and enhancements
+
+* You can now specify a default security profile in the `image` attribute of a `ProfileBinding` object by setting a wildcard. For more information, see xref:../../security/security_profiles_operator/spo-selinux.adoc#spo-binding-workloads_spo-selinux[Binding workloads to profiles with ProfileBindings (SELinux)] and xref:../../security/security_profiles_operator/spo-seccomp.adoc#spo-binding-workloads_spo-seccomp[Binding workloads to profiles with ProfileBindings (Seccomp)].
+
+[id="spo-release-notes-0-8-2"]
+== Security Profiles Operator 0.8.2
+
+The following advisory is available for the Security Profiles Operator 0.8.2:
+
+* link:http://access.redhat.com/errata/RHBA-2023:5958[RHBA-2023:5958 - OpenShift Security Profiles Operator bug fix update]
+
+[id="spo-0-8-2-bug-fixes"]
+=== Bug fixes
+
+* Previously, `SELinuxProfile` objects did not inherit custom attributes from the same namespace. With this update, the issue has now been resolved and `SELinuxProfile` object attributes are inherited from the same namespace as expected. (link:http://issues.redhat.com/browse/OCPBUGS-17164[OCPBUGS-17164])
+
+* Previously, RawSELinuxProfiles would hang during the creation process and would not reach an `Installed` state. With this update, the issue has been resolved and RawSELinuxProfiles are created successfully. (link:http://issues.redhat.com/browse/OCPBUGS-19744[*OCPBUGS-19744*])
+
+* Previously, patching the `enableLogEnricher` to `true` would cause the `seccompProfile` `log-enricher-trace` pods to be stuck in a `Pending` state. With this update, `log-enricher-trace` pods reach an `Installed` state as expected. (link:http://issues.redhat.com/browse/OCPBUGS-22182[OCPBUGS-22182])
+
+* Previously, the Security Profiles Operator generated high cardinality metrics, causing Prometheus pods using high amounts of memory. With this update, the following metrics will no longer apply in the Security Profiles Operator namespace:
++
+** `rest_client_request_duration_seconds`
+** `rest_client_request_size_bytes`
+** `rest_client_response_size_bytes`
++
+(link:http://issues.redhat.com/browse/OCPBUGS-22406[*OCPBUGS-22406*])
+
+[id="spo-release-notes-0-8-0"]
+== Security Profiles Operator 0.8.0
+
+The following advisory is available for the Security Profiles Operator 0.8.0:
+
+* link:http://access.redhat.com/errata/RHBA-2023:4689[RHBA-2023:4689 - OpenShift Security Profiles Operator bug fix update]
+
+[id="spo-0-8-0-bug-fixes"]
+=== Bug fixes
+
+* Previously, while trying to install Security Profiles Operator in a disconnected cluster, the secure hashes provided were incorrect due to a SHA relabeling issue. With this update, the SHAs provided work consistently with disconnected environments. (link:http://issues.redhat.com/browse/OCPBUGS-14404[*OCPBUGS-14404*])
+
+[id="spo-release-notes-0-7-1"]
+== Security Profiles Operator 0.7.1
+
+The following advisory is available for the Security Profiles Operator 0.7.1:
+
+* link:http://access.redhat.com/errata/RHSA-2023:2029[RHSA-2023:2029 - OpenShift Security Profiles Operator bug fix update]
+
+[id="spo-0-7-1-new-features-and-enhancements"]
+=== New features and enhancements
+
+* Security Profiles Operator (SPO) now automatically selects the appropriate `selinuxd` image for RHEL 8- and 9-based {op-system-first} systems.
++
+[IMPORTANT]
+====
+Users that mirror images for disconnected environments must mirror both `selinuxd` images provided by the Security Profiles Operator.
+====
+
+* You can now enable memory optimization inside of an `spod` daemon. For more information, see xref:../../security/security_profiles_operator/spo-advanced.adoc#spo-memory-optimization_spo-advanced[Enabling memory optimization in the spod daemon].
++
+[NOTE]
+====
+SPO memory optimization is not enabled by default.
+====
+
+* The daemon resource requirements are now configurable. For more information, see xref:../../security/security_profiles_operator/spo-advanced.adoc#spo-daemon-requirements_spo-advanced[Customizing daemon resource requirements].
+
+* The priority class name is now configurable in the `spod` configuration. For more information, see xref:../../security/security_profiles_operator/spo-advanced.adoc#spo-custom-priority-class_spo-advanced[Setting a custom priority class name for the spod daemon pod].
+
+[id="spo-0-7-1-deprecations"]
+=== Deprecated and removed features
+
+* The default `nginx-1.19.1` seccomp profile is now removed from the Security Profiles Operator deployment.
+
+[id="spo-0-7-1-bug-fixes"]
+=== Bug fixes
+
+* Previously, a Security Profiles Operator (SPO) SELinux policy did not inherit low-level policy definitions from the container template. If you selected another template, such as net_container, the policy would not work because it required low-level policy definitions that only existed in the container template. This issue occurred when the SPO SELinux policy attempted to translate SELinux policies from the SPO custom format to the Common Intermediate Language (CIL) format. With this update, the container template appends to any SELinux policies that require translation from SPO to CIL. Additionally, the SPO SELinux policy can inherit low-level policy definitions from any supported policy template. (link:http://issues.redhat.com/browse/OCPBUGS-12879[*OCPBUGS-12879*])
+
+
+[id="spo-0-7-1-known-issue"]
+=== Known issue
+
+* When uninstalling the Security Profiles Operator, the `MutatingWebhookConfiguration` object is not deleted and must be manually removed. As a workaround, delete the `MutatingWebhookConfiguration` object after uninstalling the Security Profiles Operator. These steps are defined in xref:../../security/security_profiles_operator/spo-uninstalling.adoc#spo-uninstalling[Uninstalling the Security Profiles Operator]. (link:http://issues.redhat.com/browse/OCPBUGS-4687[*OCPBUGS-4687*])
+
+[id="spo-release-notes-0-5-2"]
+== Security Profiles Operator 0.5.2
+
+The following advisory is available for the Security Profiles Operator 0.5.2:
+
+* link:http://access.redhat.com/errata/RHBA-2023:0788[RHBA-2023:0788 - OpenShift Security Profiles Operator bug fix update]
+
+This update addresses a CVE in an underlying dependency.
+
+
+[id="spo-0-5-2-known-issue"]
+=== Known issue
+
+* When uninstalling the Security Profiles Operator, the `MutatingWebhookConfiguration` object is not deleted and must be manually removed. As a workaround, delete the `MutatingWebhookConfiguration` object after uninstalling the Security Profiles Operator. These steps are defined in xref:../../security/security_profiles_operator/spo-uninstalling.adoc#spo-uninstalling[Uninstalling the Security Profiles Operator]. (link:http://issues.redhat.com/browse/OCPBUGS-4687[OCPBUGS-4687])
+
+[id="spo-release-notes-0-5-0"]
+== Security Profiles Operator 0.5.0
+
+The following advisory is available for the Security Profiles Operator 0.5.0:
+
+* link:http://access.redhat.com/errata/RHBA-2022:8762[RHBA-2022:8762 - OpenShift Security Profiles Operator bug fix update]
+
+
+[id="spo-0-5-0-known-issue"]
+=== Known issue
+
+* When uninstalling the Security Profiles Operator, the `MutatingWebhookConfiguration` object is not deleted and must be manually removed. As a workaround, delete the `MutatingWebhookConfiguration` object after uninstalling the Security Profiles Operator. These steps are defined in xref:../../security/security_profiles_operator/spo-uninstalling.adoc#spo-uninstalling[Uninstalling the Security Profiles Operator]. (link:http://issues.redhat.com/browse/OCPBUGS-4687[OCPBUGS-4687])

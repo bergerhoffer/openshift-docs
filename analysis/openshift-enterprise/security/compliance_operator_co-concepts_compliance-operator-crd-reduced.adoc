@@ -1,0 +1,1035 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="custom-resource-definitions"]
+= Understanding the Custom Resource Definitions
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: compliance-crd
+
+toc::[]
+
+The Compliance Operator in the {product-title} provides you with several Custom Resource Definitions (CRDs) to accomplish the compliance scans. To run a compliance scan, it leverages the predefined security policies, which are derived from the link:https://github.com/ComplianceAsCode/content[ComplianceAsCode] community project. The Compliance Operator converts these security policies into CRDs, which you can use to run compliance scans and get remediations for the issues found.
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="custom-resource-definitions-workflow_{context}"]
+= CRDs workflow
+
+The CRD provides you the following workflow to complete the compliance scans:
+
+. Define your compliance scan requirements
+. Configure the compliance scan settings
+. Process compliance requirements with compliance scans settings
+. Monitor the compliance scans
+. Check the compliance scan results
+
+:leveloffset!:
+
+[id="defining-compliance-scan-requirements_{context}"]
+== Defining the compliance scan requirements
+By default, the Compliance Operator CRDs include `ProfileBundle` and `Profile` objects, in which you can define and set the rules for your compliance scan requirements. You can also customize the default profiles by using a `TailoredProfile` object.
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="profile-bundle-object_{context}"]
+= ProfileBundle object
+
+When you install the Compliance Operator, it includes ready-to-run `ProfileBundle` objects. The Compliance Operator parses the `ProfileBundle` object and creates a `Profile` object for each profile in the bundle. It also parses `Rule` and `Variable` objects, which are used by the `Profile` object.
+
+
+.Example `ProfileBundle` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ProfileBundle
+  name: <profile bundle name>
+  namespace: openshift-compliance
+status:
+  dataStreamStatus: VALID <1>
+----
+<1> Indicates whether the Compliance Operator was able to parse the content files.
+
+[NOTE]
+====
+When the `contentFile` fails, an `errorMessage` attribute appears, which provides details of the error that occurred.
+====
+
+.Troubleshooting
+
+When you roll back to a known content image from an invalid image, the `ProfileBundle` object stops responding and displays `PENDING` state. As a workaround, you can move to a different image than the previous one. Alternatively, you can delete and re-create the `ProfileBundle` object to return to the working state.
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="profile-object_{context}"]
+= Profile object
+
+The `Profile` object defines the rules and variables that can be evaluated for a certain compliance standard. It contains parsed out details about an OpenSCAP profile, such as its XCCDF identifier and profile checks for a `Node` or `Platform` type. You can either directly use the `Profile` object or further customize it using a `TailorProfile` object.
+
+[NOTE]
+====
+You cannot create or modify the `Profile` object manually because it is derived from a single `ProfileBundle` object. Typically, a single `ProfileBundle` object can include several `Profile` objects.
+====
+
+.Example `Profile` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+description: <description of the profile>
+id: xccdf_org.ssgproject.content_profile_moderate <1>
+kind: Profile
+metadata:
+  annotations:
+    compliance.openshift.io/product: <product name>
+    compliance.openshift.io/product-type: Node <2>
+  creationTimestamp: "YYYY-MM-DDTMM:HH:SSZ"
+  generation: 1
+  labels:
+    compliance.openshift.io/profile-bundle: <profile bundle name>
+  name: rhcos4-moderate
+  namespace: openshift-compliance
+  ownerReferences:
+  - apiVersion: compliance.openshift.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ProfileBundle
+    name: <profile bundle name>
+    uid: <uid string>
+  resourceVersion: "<version number>"
+  selfLink: /apis/compliance.openshift.io/v1alpha1/namespaces/openshift-compliance/profiles/rhcos4-moderate
+  uid: <uid string>
+rules: <3>
+- rhcos4-account-disable-post-pw-expiration
+- rhcos4-accounts-no-uid-except-zero
+- rhcos4-audit-rules-dac-modification-chmod
+- rhcos4-audit-rules-dac-modification-chown
+title: <title of the profile>
+----
+<1> Specify the XCCDF name of the profile. Use this identifier when you define a `ComplianceScan` object as the value of the profile attribute of the scan.
+<2> Specify either a `Node` or `Platform`. Node profiles scan the cluster nodes and platform profiles scan the Kubernetes platform.
+<3> Specify the list of rules for the profile. Each rule corresponds to a single check.
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="rule-object_{context}"]
+= Rule object
+
+The `Rule` object, which forms the profiles, are also exposed as objects. Use the `Rule` object to define your compliance check requirements and specify how it could be fixed.
+
+.Example `Rule` object
+[source,yaml]
+----
+    apiVersion: compliance.openshift.io/v1alpha1
+    checkType: Platform <1>
+    description: <description of the rule>
+    id: xccdf_org.ssgproject.content_rule_configure_network_policies_namespaces <2>
+    instructions: <manual instructions for the scan>
+    kind: Rule
+    metadata:
+      annotations:
+        compliance.openshift.io/rule: configure-network-policies-namespaces
+        control.compliance.openshift.io/CIS-OCP: 5.3.2
+        control.compliance.openshift.io/NERC-CIP: CIP-003-3 R4;CIP-003-3 R4.2;CIP-003-3
+          R5;CIP-003-3 R6;CIP-004-3 R2.2.4;CIP-004-3 R3;CIP-007-3 R2;CIP-007-3 R2.1;CIP-007-3
+          R2.2;CIP-007-3 R2.3;CIP-007-3 R5.1;CIP-007-3 R6.1
+        control.compliance.openshift.io/NIST-800-53: AC-4;AC-4(21);CA-3(5);CM-6;CM-6(1);CM-7;CM-7(1);SC-7;SC-7(3);SC-7(5);SC-7(8);SC-7(12);SC-7(13);SC-7(18)
+      labels:
+        compliance.openshift.io/profile-bundle: ocp4
+      name: ocp4-configure-network-policies-namespaces
+      namespace: openshift-compliance
+    rationale: <description of why this rule is checked>
+    severity: high <3>
+    title: <summary of the rule>
+----
+<1> Specify the type of check this rule executes. `Node` profiles scan the cluster nodes and `Platform` profiles scan the Kubernetes platform. An empty value indicates there is no automated check.
+<2> Specify the XCCDF name of the rule, which is parsed directly from the datastream.
+<3> Specify the severity of the rule when it fails.
+
+[NOTE]
+====
+The `Rule` object gets an appropriate label for an easy identification of the associated `ProfileBundle` object. The `ProfileBundle` also gets specified in the `OwnerReferences` of this object.
+====
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="tailored-profile-object_{context}"]
+= TailoredProfile object
+
+Use the `TailoredProfile` object to modify the default `Profile` object based on your organization requirements. You can enable or disable rules, set variable values, and provide justification for the customization. After validation, the `TailoredProfile` object creates a `ConfigMap`, which can be referenced by a `ComplianceScan` object.
+
+[TIP]
+====
+You can use the `TailoredProfile` object by referencing it in a `ScanSettingBinding` object. For more information about `ScanSettingBinding`, see ScanSettingBinding object.
+====
+
+.Example `TailoredProfile` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: TailoredProfile
+metadata:
+  name: rhcos4-with-usb
+spec:
+  extends: rhcos4-moderate <1>
+  title: <title of the tailored profile>
+  disableRules:
+    - name: <name of a rule object to be disabled>
+      rationale: <description of why this rule is checked>
+status:
+  id: xccdf_compliance.openshift.io_profile_rhcos4-with-usb <2>
+  outputRef:
+    name: rhcos4-with-usb-tp <3>
+    namespace: openshift-compliance
+  state: READY <4>
+----
+
+<1> This is optional. Name of the `Profile` object upon which the `TailoredProfile` is built. If no value is set, a new profile is created from the `enableRules` list.
+<2> Specifies the XCCDF name of the tailored profile.
+<3> Specifies the `ConfigMap` name, which can be used as the value of the `tailoringConfigMap.name` attribute of a `ComplianceScan`.
+<4> Shows the state of the object such as `READY`, `PENDING`, and `FAILURE`. If the state of the object is `ERROR`, then the attribute `status.errorMessage` provides the reason for the failure.
+
+With the `TailoredProfile` object, it is possible to create a new `Profile` object using the `TailoredProfile` construct. To create a new `Profile`, set the following configuration parameters :
+
+* an appropriate title
+* `extends` value must be empty
+* scan type annotation on the `TailoredProfile` object:
++
+[source,yaml]
+----
+compliance.openshift.io/product-type: Platform/Node
+----
++
+[NOTE]
+====
+If you have not set the `product-type` annotation, the Compliance Operator defaults to `Platform` scan type. Adding the `-node` suffix to the name of the `TailoredProfile` object results in `node` scan type.
+====
+
+:leveloffset!:
+
+[id="configure-compliance-scan-settings_{context}"]
+== Configuring the compliance scan settings
+After you have defined the requirements of the compliance scan, you can configure it by specifying the type of the scan, occurrence of the scan, and location of the scan. To do so, Compliance Operator provides you with a `ScanSetting` object.
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="scan-setting-object_{context}"]
+= ScanSetting object
+
+Use the `ScanSetting` object to define and reuse the operational policies to run your scans.
+By default, the Compliance Operator creates the following `ScanSetting` objects:
+
+* *default* - it runs a scan every day at 1 AM on both master and worker nodes using a 1Gi Persistent Volume (PV) and keeps the last three results. Remediation is neither applied nor updated automatically.
+* *default-auto-apply* - it runs a scan every day at 1AM on both control plane and worker nodes using a 1Gi Persistent Volume (PV) and keeps the last three results. Both `autoApplyRemediations` and `autoUpdateRemediations` are set to true.
+
+.Example `ScanSetting` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+autoApplyRemediations: true <1>
+autoUpdateRemediations: true <2>
+kind: ScanSetting
+maxRetryOnTimeout: 3
+metadata:
+  creationTimestamp: "2022-10-18T20:21:00Z"
+  generation: 1
+  name: default-auto-apply
+  namespace: openshift-compliance
+  resourceVersion: "38840"
+  uid: 8cb0967d-05e0-4d7a-ac1c-08a7f7e89e84
+rawResultStorage:
+  nodeSelector:
+    node-role.kubernetes.io/master: ""
+  pvAccessModes:
+  - ReadWriteOnce
+  rotation: 3 <3>
+  size: 1Gi <4>
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+roles: <6>
+- master
+- worker
+scanTolerations:
+- operator: Exists
+schedule: 0 1 * * * <5>
+showNotApplicable: false
+strictNodeScan: true
+timeout: 30m
+----
+<1> Set to `true` to enable auto remediations. Set to `false` to disable auto remediations.
+<2> Set to `true` to enable auto remediations for content updates. Set to `false` to disable auto remediations for content updates.
+<3> Specify the number of stored scans in the raw result format. The default value is `3`. As the older results get rotated, the administrator must store the results elsewhere before the rotation happens.
+<4> Specify the storage size that should be created for the scan to store the raw results. The default value is `1Gi`
+<5> Specify how often the scan should be run in cron format.
++
+[NOTE]
+====
+To disable the rotation policy, set the value to `0`.
+====
+<6> Specify the `node-role.kubernetes.io` label value to schedule the scan for `Node` type. This value has to match the name of a `MachineConfigPool`.
+
+:leveloffset!:
+
+[id="process-compliance-requirements-with-compliance-settings_{context}"]
+== Processing the compliance scan requirements with compliance scans settings
+When you have defined the compliance scan requirements and configured the settings to run the scans, then the Compliance Operator processes it using the `ScanSettingBinding` object.
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="scan-setting-binding-object_{context}"]
+= ScanSettingBinding object
+
+Use the `ScanSettingBinding` object to specify your compliance requirements with reference to the `Profile` or `TailoredProfile` object. It is then linked to a `ScanSetting` object, which provides the operational constraints for the scan. Then the Compliance Operator generates the `ComplianceSuite` object based on the `ScanSetting` and `ScanSettingBinding` objects.
+
+.Example `ScanSettingBinding` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSettingBinding
+metadata:
+  name: <name of the scan>
+profiles: <1>
+  # Node checks
+  - name: rhcos4-with-usb
+    kind: TailoredProfile
+    apiGroup: compliance.openshift.io/v1alpha1
+  # Cluster checks
+  - name: ocp4-moderate
+    kind: Profile
+    apiGroup: compliance.openshift.io/v1alpha1
+settingsRef: <2>
+  name: my-companys-constraints
+  kind: ScanSetting
+  apiGroup: compliance.openshift.io/v1alpha1
+----
+
+<1> Specify the details of `Profile` or `TailoredProfile` object to scan your environment.
+<2> Specify the operational constraints, such as schedule and storage size.
+
+The creation of `ScanSetting` and `ScanSettingBinding` objects results in the compliance suite. To get the list of compliance suite, run the following command:
+[source,terminal]
+----
+$ oc get compliancesuites
+----
+
+[IMPORTANT]
+====
+If you delete `ScanSettingBinding`, then compliance suite also is deleted.
+====
+
+:leveloffset!:
+
+[id="track-compliance-scans_{context}"]
+== Tracking the compliance scans
+After the creation of compliance suite, you can monitor the status of the deployed scans using the `ComplianceSuite` object.
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="compliance-suite-object_{context}"]
+= ComplianceSuite object
+
+The `ComplianceSuite` object helps you keep track of the state of the scans. It contains the raw settings to create scans and the overall result.
+
+For `Node` type scans, you should map the scan to the `MachineConfigPool`, since it contains the remediations for any issues. If you specify a label, ensure it directly applies to a pool.
+
+.Example `ComplianceSuite` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ComplianceSuite
+metadata:
+  name: <name_of_the_suite>
+spec:
+  autoApplyRemediations: false <1>
+  schedule: "0 1 * * *" <2>
+  scans: <3>
+    - name: workers-scan
+      scanType: Node
+      profile: xccdf_org.ssgproject.content_profile_moderate
+      content: ssg-rhcos4-ds.xml
+      contentImage: registry.redhat.io/compliance/openshift-compliance-content-rhel8@sha256:45dc...
+      rule: "xccdf_org.ssgproject.content_rule_no_netrc_files"
+      nodeSelector:
+        node-role.kubernetes.io/worker: ""
+status:
+  Phase: DONE <4>
+  Result: NON-COMPLIANT <5>
+  scanStatuses:
+  - name: workers-scan
+    phase: DONE
+    result: NON-COMPLIANT
+----
+<1> Set to `true` to enable auto remediations. Set to `false` to disable auto remediations.
+<2> Specify how often the scan should be run in cron format.
+<3> Specify a list of scan specifications to run in the cluster.
+<4> Indicates the progress of the scans.
+<5> Indicates the overall verdict of the suite.
+
+The suite in the background creates the `ComplianceScan` object based on the `scans` parameter.
+You can programmatically fetch the `ComplianceSuites` events. To get the events for the suite, run the following command:
+[source,terminal]
+----
+$ oc get events --field-selector involvedObject.kind=ComplianceSuite,involvedObject.name=<name of the suite>
+----
+
+[IMPORTANT]
+====
+You might create errors when you manually define the `ComplianceSuite`, since it contains the XCCDF attributes.
+====
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="advance-compliance-scan-object_{context}"]
+= Advanced ComplianceScan Object
+
+The Compliance Operator includes options for advanced users for debugging or integrating with existing tooling. While it is recommended that you not create a `ComplianceScan` object directly, you can instead manage it using a `ComplianceSuite` object.
+
+.Example Advanced `ComplianceScan` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ComplianceScan
+metadata:
+  name: <name_of_the_compliance_scan>
+spec:
+  scanType: Node <1>
+  profile: xccdf_org.ssgproject.content_profile_moderate <2>
+  content: ssg-ocp4-ds.xml
+  contentImage: registry.redhat.io/compliance/openshift-compliance-content-rhel8@sha256:45dc... <3>
+  rule: "xccdf_org.ssgproject.content_rule_no_netrc_files" <4>
+  nodeSelector: <5>
+    node-role.kubernetes.io/worker: ""
+status:
+  phase: DONE <6>
+  result: NON-COMPLIANT <7>
+----
+
+<1> Specify either `Node` or `Platform`. Node profiles scan the cluster nodes and platform profiles scan the Kubernetes platform.
+<2> Specify the XCCDF identifier of the profile that you want to run.
+<3> Specify the container image that encapsulates the profile files.
+<4> It is optional. Specify the scan to run a single rule. This rule has to be identified with the XCCDF ID, and has to belong to the specified profile.
++
+[NOTE]
+====
+If you skip the `rule` parameter, then scan runs for all the available rules of the specified profile.
+====
+<5> If you are on the {product-title} and wants to generate a remediation, then nodeSelector label has to match the `MachineConfigPool` label.
++
+[NOTE]
+====
+If you do not specify `nodeSelector` parameter or match the `MachineConfig` label, scan will still run, but it will not create remediation.
+====
+<6> Indicates the current phase of the scan.
+<7> Indicates the verdict of the scan.
+
+[IMPORTANT]
+====
+If you delete a `ComplianceSuite` object, then all the associated scans get deleted.
+====
+
+When the scan is complete, it generates the result as Custom Resources of the `ComplianceCheckResult` object. However, the raw results are available in ARF format. These results are stored in a Persistent Volume (PV), which has a Persistent Volume Claim (PVC) associated with the name of the scan.
+You can programmatically fetch the `ComplianceScans` events. To generate events for the suite, run the following command:
+
+[source,terminal]
+----
+oc get events --field-selector involvedObject.kind=ComplianceScan,involvedObject.name=<name_of_the_compliance_scan>
+----
+
+:leveloffset!:
+
+[id="view-compliance-results_{context}"]
+== Viewing the compliance results
+When the compliance suite reaches the `DONE` phase, you can view the scan results and possible remediations.
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="compliance-check-result_{context}"]
+= ComplianceCheckResult object
+
+When you run a scan with a specific profile, several rules in the profiles are verified. For each of these rules, a `ComplianceCheckResult` object is created, which provides the state of the cluster for a specific rule.
+
+.Example `ComplianceCheckResult` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ComplianceCheckResult
+metadata:
+  labels:
+    compliance.openshift.io/check-severity: medium
+    compliance.openshift.io/check-status: FAIL
+    compliance.openshift.io/suite: example-compliancesuite
+    compliance.openshift.io/scan-name: workers-scan
+  name: workers-scan-no-direct-root-logins
+  namespace: openshift-compliance
+  ownerReferences:
+  - apiVersion: compliance.openshift.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ComplianceScan
+    name: workers-scan
+description: <description of scan check>
+instructions: <manual instructions for the scan>
+id: xccdf_org.ssgproject.content_rule_no_direct_root_logins
+severity: medium <1>
+status: FAIL <2>
+----
+
+<1> Describes the severity of the scan check.
+<2> Describes the result of the check. The possible values are:
+* PASS: check was successful.
+* FAIL: check was unsuccessful.
+* INFO: check was successful and found something not severe enough to be considered an error.
+* MANUAL: check cannot automatically assess the status and manual check is required.
+* INCONSISTENT: different nodes report different results.
+* ERROR: check run successfully, but could not complete.
+* NOTAPPLICABLE: check did not run as it is not applicable.
+
+To get all the check results from a suite, run the following command:
+[source,terminal]
+----
+oc get compliancecheckresults \
+-l compliance.openshift.io/suite=workers-compliancesuite
+----
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-crd.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="compliance-remediation-object_{context}"]
+= ComplianceRemediation object
+
+For a specific check you can have a datastream specified fix. However, if a Kubernetes fix is available, then the Compliance Operator creates a `ComplianceRemediation` object.
+
+.Example `ComplianceRemediation` object
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ComplianceRemediation
+metadata:
+  labels:
+    compliance.openshift.io/suite: example-compliancesuite
+    compliance.openshift.io/scan-name: workers-scan
+    machineconfiguration.openshift.io/role: worker
+  name: workers-scan-disable-users-coredumps
+  namespace: openshift-compliance
+  ownerReferences:
+  - apiVersion: compliance.openshift.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ComplianceCheckResult
+    name: workers-scan-disable-users-coredumps
+    uid: <UID>
+spec:
+  apply: false <1>
+  object:
+    current: <2>
+       apiVersion: machineconfiguration.openshift.io/v1
+       kind: MachineConfig
+       spec:
+         config:
+           ignition:
+             version: 2.2.0
+           storage:
+             files:
+             - contents:
+                 source: data:,%2A%20%20%20%20%20hard%20%20%20core%20%20%20%200
+               filesystem: root
+               mode: 420
+               path: /etc/security/limits.d/75-disable_users_coredumps.conf
+    outdated: {} <3>
+----
+
+<1> `true` indicates the remediation was applied. `false` indicates the remediation was not applied.
+<2> Includes the definition of the remediation.
+<3> Indicates remediation that was previously parsed from an earlier version of the content. The Compliance Operator still retains the outdated objects to give the administrator a chance to review the new remediations before applying them.
+
+To get all the remediations from a suite, run the following command:
+[source,terminal]
+----
+oc get complianceremediations \
+-l compliance.openshift.io/suite=workers-compliancesuite
+----
+
+To list all failing checks that can be remediated automatically, run the following command:
+[source,terminal]
+----
+oc get compliancecheckresults \
+-l 'compliance.openshift.io/check-status in (FAIL),compliance.openshift.io/automated-remediation'
+----
+
+To list all failing checks that can be remediated manually, run the following command:
+[source,terminal]
+----
+oc get compliancecheckresults \
+-l 'compliance.openshift.io/check-status in (FAIL),!compliance.openshift.io/automated-remediation'
+----
+
+:leveloffset!:

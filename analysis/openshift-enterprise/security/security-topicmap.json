@@ -1,0 +1,618 @@
+{
+  "name": "Security and compliance",
+  "dir": "security",
+  "distros": "openshift-enterprise,openshift-origin,openshift-aro",
+  "distro_filter": "openshift-enterprise",
+  "topics": [
+    {
+      "name": "Security and compliance overview",
+      "file": "index",
+      "rel_path": "index.adoc"
+    },
+    {
+      "name": "Understanding container security",
+      "file": "security-understanding",
+      "rel_path": "container_security/security-understanding.adoc"
+    },
+    {
+      "name": "Understanding host and VM security",
+      "file": "security-hosts-vms",
+      "rel_path": "container_security/security-hosts-vms.adoc"
+    },
+    {
+      "name": "Hardening Red Hat Enterprise Linux CoreOS",
+      "file": "security-hardening",
+      "rel_path": "container_security/security-hardening.adoc"
+    },
+    {
+      "name": "Container image signatures",
+      "file": "security-container-signature",
+      "rel_path": "container_security/security-container-signature.adoc"
+    },
+    {
+      "name": "Understanding compliance",
+      "file": "security-compliance",
+      "rel_path": "container_security/security-compliance.adoc"
+    },
+    {
+      "name": "Securing container content",
+      "file": "security-container-content",
+      "rel_path": "container_security/security-container-content.adoc"
+    },
+    {
+      "name": "Using container registries securely",
+      "file": "security-registries",
+      "rel_path": "container_security/security-registries.adoc"
+    },
+    {
+      "name": "Securing the build process",
+      "file": "security-build",
+      "rel_path": "container_security/security-build.adoc"
+    },
+    {
+      "name": "Deploying containers",
+      "file": "security-deploy",
+      "rel_path": "container_security/security-deploy.adoc"
+    },
+    {
+      "name": "Securing the container platform",
+      "file": "security-platform",
+      "rel_path": "container_security/security-platform.adoc"
+    },
+    {
+      "name": "Securing networks",
+      "file": "security-network",
+      "rel_path": "container_security/security-network.adoc"
+    },
+    {
+      "name": "Securing attached storage",
+      "file": "security-storage",
+      "rel_path": "container_security/security-storage.adoc"
+    },
+    {
+      "name": "Monitoring cluster events and logs",
+      "file": "security-monitoring",
+      "rel_path": "container_security/security-monitoring.adoc"
+    },
+    {
+      "name": "Replacing the default ingress certificate",
+      "file": "replacing-default-ingress-certificate",
+      "rel_path": "certificates/replacing-default-ingress-certificate.adoc"
+    },
+    {
+      "name": "Adding API server certificates",
+      "file": "api-server",
+      "rel_path": "certificates/api-server.adoc"
+    },
+    {
+      "name": "Securing service traffic using service serving certificates",
+      "file": "service-serving-certificate",
+      "rel_path": "certificates/service-serving-certificate.adoc"
+    },
+    {
+      "name": "Updating the CA bundle",
+      "file": "updating-ca-bundle",
+      "rel_path": "certificates/updating-ca-bundle.adoc"
+    },
+    {
+      "name": "User-provided certificates for the API server",
+      "file": "user-provided-certificates-for-api-server",
+      "rel_path": "certificate_types_descriptions/user-provided-certificates-for-api-server.adoc"
+    },
+    {
+      "name": "Proxy certificates",
+      "file": "proxy-certificates",
+      "rel_path": "certificate_types_descriptions/proxy-certificates.adoc"
+    },
+    {
+      "name": "Service CA certificates",
+      "file": "service-ca-certificates",
+      "rel_path": "certificate_types_descriptions/service-ca-certificates.adoc"
+    },
+    {
+      "name": "Node certificates",
+      "file": "node-certificates",
+      "rel_path": "certificate_types_descriptions/node-certificates.adoc"
+    },
+    {
+      "name": "Bootstrap certificates",
+      "file": "bootstrap-certificates",
+      "rel_path": "certificate_types_descriptions/bootstrap-certificates.adoc"
+    },
+    {
+      "name": "etcd certificates",
+      "file": "etcd-certificates",
+      "rel_path": "certificate_types_descriptions/etcd-certificates.adoc"
+    },
+    {
+      "name": "OLM certificates",
+      "file": "olm-certificates",
+      "rel_path": "certificate_types_descriptions/olm-certificates.adoc"
+    },
+    {
+      "name": "Aggregated API client certificates",
+      "file": "aggregated-api-client-certificates",
+      "rel_path": "certificate_types_descriptions/aggregated-api-client-certificates.adoc"
+    },
+    {
+      "name": "Machine Config Operator certificates",
+      "file": "machine-config-operator-certificates",
+      "rel_path": "certificate_types_descriptions/machine-config-operator-certificates.adoc"
+    },
+    {
+      "name": "User-provided certificates for default ingress",
+      "file": "user-provided-certificates-for-default-ingress",
+      "rel_path": "certificate_types_descriptions/user-provided-certificates-for-default-ingress.adoc"
+    },
+    {
+      "name": "Ingress certificates",
+      "file": "ingress-certificates",
+      "rel_path": "certificate_types_descriptions/ingress-certificates.adoc"
+    },
+    {
+      "name": "Monitoring and cluster logging Operator component certificates",
+      "file": "monitoring-and-cluster-logging-operator-component-certificates",
+      "rel_path": "certificate_types_descriptions/monitoring-and-cluster-logging-operator-component-certificates.adoc"
+    },
+    {
+      "name": "Control plane certificates",
+      "file": "control-plane-certificates",
+      "rel_path": "certificate_types_descriptions/control-plane-certificates.adoc"
+    },
+    {
+      "name": "Compliance Operator overview",
+      "file": "co-overview",
+      "rel_path": "compliance_operator/co-overview.adoc"
+    },
+    {
+      "name": "Compliance Operator release notes",
+      "file": "compliance-operator-release-notes",
+      "rel_path": "compliance_operator/compliance-operator-release-notes.adoc"
+    },
+    {
+      "name": "Compliance Operator support",
+      "file": "co-support",
+      "rel_path": "compliance_operator/co-support.adoc"
+    },
+    {
+      "name": "Understanding the Compliance Operator",
+      "file": "compliance-operator-understanding",
+      "rel_path": "compliance_operator/co-concepts/compliance-operator-understanding.adoc"
+    },
+    {
+      "name": "Understanding the Custom Resource Definitions",
+      "file": "compliance-operator-crd",
+      "rel_path": "compliance_operator/co-concepts/compliance-operator-crd.adoc"
+    },
+    {
+      "name": "Installing the Compliance Operator",
+      "file": "compliance-operator-installation",
+      "rel_path": "compliance_operator/co-management/compliance-operator-installation.adoc"
+    },
+    {
+      "name": "Updating the Compliance Operator",
+      "file": "compliance-operator-updating",
+      "rel_path": "compliance_operator/co-management/compliance-operator-updating.adoc"
+    },
+    {
+      "name": "Managing the Compliance Operator",
+      "file": "compliance-operator-manage",
+      "rel_path": "compliance_operator/co-management/compliance-operator-manage.adoc"
+    },
+    {
+      "name": "Uninstalling the Compliance Operator",
+      "file": "compliance-operator-uninstallation",
+      "rel_path": "compliance_operator/co-management/compliance-operator-uninstallation.adoc"
+    },
+    {
+      "name": "Supported compliance profiles",
+      "file": "compliance-operator-supported-profiles",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-supported-profiles.adoc"
+    },
+    {
+      "name": "Compliance Operator scans",
+      "file": "compliance-scans",
+      "rel_path": "compliance_operator/co-scans/compliance-scans.adoc"
+    },
+    {
+      "name": "Tailoring the Compliance Operator",
+      "file": "compliance-operator-tailor",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-tailor.adoc"
+    },
+    {
+      "name": "Retrieving Compliance Operator raw results",
+      "file": "compliance-operator-raw-results",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-raw-results.adoc"
+    },
+    {
+      "name": "Managing Compliance Operator remediation",
+      "file": "compliance-operator-remediation",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-remediation.adoc"
+    },
+    {
+      "name": "Performing advanced Compliance Operator tasks",
+      "file": "compliance-operator-advanced",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-advanced.adoc"
+    },
+    {
+      "name": "Troubleshooting Compliance Operator scans",
+      "file": "compliance-operator-troubleshooting",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-troubleshooting.adoc"
+    },
+    {
+      "name": "Using the oc-compliance plugin",
+      "file": "oc-compliance-plug-in-using",
+      "rel_path": "compliance_operator/co-scans/oc-compliance-plug-in-using.adoc"
+    },
+    {
+      "name": "File Integrity Operator Overview",
+      "file": "fio-overview",
+      "rel_path": "file_integrity_operator/fio-overview.adoc"
+    },
+    {
+      "name": "File Integrity Operator release notes",
+      "file": "file-integrity-operator-release-notes",
+      "rel_path": "file_integrity_operator/file-integrity-operator-release-notes.adoc"
+    },
+    {
+      "name": "File Integrity Operator support",
+      "file": "fio-support",
+      "rel_path": "file_integrity_operator/fio-support.adoc"
+    },
+    {
+      "name": "Installing the File Integrity Operator",
+      "file": "file-integrity-operator-installation",
+      "rel_path": "file_integrity_operator/file-integrity-operator-installation.adoc"
+    },
+    {
+      "name": "Updating the File Integrity Operator",
+      "file": "file-integrity-operator-updating",
+      "rel_path": "file_integrity_operator/file-integrity-operator-updating.adoc"
+    },
+    {
+      "name": "Understanding the File Integrity Operator",
+      "file": "file-integrity-operator-understanding",
+      "rel_path": "file_integrity_operator/file-integrity-operator-understanding.adoc"
+    },
+    {
+      "name": "Configuring the File Integrity Operator",
+      "file": "file-integrity-operator-configuring",
+      "rel_path": "file_integrity_operator/file-integrity-operator-configuring.adoc"
+    },
+    {
+      "name": "Performing advanced File Integrity Operator tasks",
+      "file": "file-integrity-operator-advanced-usage",
+      "rel_path": "file_integrity_operator/file-integrity-operator-advanced-usage.adoc"
+    },
+    {
+      "name": "Troubleshooting the File Integrity Operator",
+      "file": "file-integrity-operator-troubleshooting",
+      "rel_path": "file_integrity_operator/file-integrity-operator-troubleshooting.adoc"
+    },
+    {
+      "name": "Uninstalling the File Integrity Operator",
+      "file": "fio-uninstalling",
+      "rel_path": "file_integrity_operator/fio-uninstalling.adoc"
+    },
+    {
+      "name": "Security Profiles Operator overview",
+      "file": "spo-overview",
+      "rel_path": "security_profiles_operator/spo-overview.adoc"
+    },
+    {
+      "name": "Security Profiles Operator release notes",
+      "file": "spo-release-notes",
+      "rel_path": "security_profiles_operator/spo-release-notes.adoc"
+    },
+    {
+      "name": "Security Profiles Operator support",
+      "file": "spo-support",
+      "rel_path": "security_profiles_operator/spo-support.adoc"
+    },
+    {
+      "name": "Understanding the Security Profiles Operator",
+      "file": "spo-understanding",
+      "rel_path": "security_profiles_operator/spo-understanding.adoc"
+    },
+    {
+      "name": "Enabling the Security Profiles Operator",
+      "file": "spo-enabling",
+      "rel_path": "security_profiles_operator/spo-enabling.adoc"
+    },
+    {
+      "name": "Managing seccomp profiles",
+      "file": "spo-seccomp",
+      "rel_path": "security_profiles_operator/spo-seccomp.adoc"
+    },
+    {
+      "name": "Managing SELinux profiles",
+      "file": "spo-selinux",
+      "rel_path": "security_profiles_operator/spo-selinux.adoc"
+    },
+    {
+      "name": "Advanced Security Profiles Operator tasks",
+      "file": "spo-advanced",
+      "rel_path": "security_profiles_operator/spo-advanced.adoc"
+    },
+    {
+      "name": "Advanced Audit Logging Framework",
+      "file": "spo-logging",
+      "rel_path": "security_profiles_operator/spo-logging.adoc"
+    },
+    {
+      "name": "Troubleshooting the Security Profiles Operator",
+      "file": "spo-troubleshooting",
+      "rel_path": "security_profiles_operator/spo-troubleshooting.adoc"
+    },
+    {
+      "name": "Uninstalling the Security Profiles Operator",
+      "file": "spo-uninstalling",
+      "rel_path": "security_profiles_operator/spo-uninstalling.adoc"
+    },
+    {
+      "name": "NBDE Tang Server Operator overview",
+      "file": "nbde-tang-server-operator-overview",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-overview.adoc"
+    },
+    {
+      "name": "NBDE Tang Server Operator release notes",
+      "file": "nbde-tang-server-operator-release-notes",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-release-notes.adoc"
+    },
+    {
+      "name": "Understanding the NBDE Tang Server Operator",
+      "file": "nbde-tang-server-operator-understanding",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-understanding.adoc"
+    },
+    {
+      "name": "Installing the NBDE Tang Server Operator",
+      "file": "nbde-tang-server-operator-installing",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-installing.adoc"
+    },
+    {
+      "name": "Configuring and managing Tang servers using the NBDE Tang Server Operator",
+      "file": "nbde-tang-server-operator-configuring-managing",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-configuring-managing.adoc"
+    },
+    {
+      "name": "Identifying URL of a Tang server deployed with the NBDE Tang Server Operator",
+      "file": "nbde-tang-server-operator-identifying-url",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-identifying-url.adoc"
+    },
+    {
+      "name": "Understanding secrets management",
+      "file": "understanding-secrets-management",
+      "rel_path": "understanding-secrets-management.adoc"
+    },
+    {
+      "name": "cert-manager Operator for Red Hat OpenShift overview",
+      "file": "index",
+      "rel_path": "cert_manager_operator/index.adoc"
+    },
+    {
+      "name": "cert-manager Operator for Red Hat OpenShift release notes",
+      "file": "cert-manager-operator-release-notes",
+      "rel_path": "cert_manager_operator/cert-manager-operator-release-notes.adoc"
+    },
+    {
+      "name": "Installing the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-operator-install",
+      "rel_path": "cert_manager_operator/cert-manager-operator-install.adoc"
+    },
+    {
+      "name": "Configuring the egress proxy",
+      "file": "cert-manager-operator-proxy",
+      "rel_path": "cert_manager_operator/cert-manager-operator-proxy.adoc"
+    },
+    {
+      "name": "Customizing cert-manager by using the cert-manager Operator API fields",
+      "file": "cert-manager-customizing-api-fields",
+      "rel_path": "cert_manager_operator/cert-manager-customizing-api-fields.adoc"
+    },
+    {
+      "name": "Authenticating the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-authenticate",
+      "rel_path": "cert_manager_operator/cert-manager-authenticate.adoc"
+    },
+    {
+      "name": "Configuring an ACME issuer",
+      "file": "cert-manager-operator-issuer-acme",
+      "rel_path": "cert_manager_operator/cert-manager-operator-issuer-acme.adoc"
+    },
+    {
+      "name": "Configuring certificates with an issuer",
+      "file": "cert-manager-creating-certificate",
+      "rel_path": "cert_manager_operator/cert-manager-creating-certificate.adoc"
+    },
+    {
+      "name": "Securing routes with the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-securing-routes",
+      "rel_path": "cert_manager_operator/cert-manager-securing-routes.adoc"
+    },
+    {
+      "name": "Integrating the cert-manager Operator with Istio-CSR",
+      "file": "cert-manager-operator-integrating-istio",
+      "rel_path": "cert_manager_operator/cert-manager-operator-integrating-istio.adoc"
+    },
+    {
+      "name": "Network policy configuration for cert-manager Operator",
+      "file": "cert-manager-nw-policy",
+      "rel_path": "cert_manager_operator/cert-manager-nw-policy.adoc"
+    },
+    {
+      "name": "Distributing certificates by using trust-manager operand",
+      "file": "cert-manager-trust-manager",
+      "rel_path": "cert_manager_operator/cert-manager-trust-manager.adoc"
+    },
+    {
+      "name": "Monitoring the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-monitoring",
+      "rel_path": "cert_manager_operator/cert-manager-monitoring.adoc"
+    },
+    {
+      "name": "Configuring log levels for cert-manager and the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-log-levels",
+      "rel_path": "cert_manager_operator/cert-manager-log-levels.adoc"
+    },
+    {
+      "name": "Uninstalling the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-operator-uninstall",
+      "rel_path": "cert_manager_operator/cert-manager-operator-uninstall.adoc"
+    },
+    {
+      "name": "Zero Trust Workload Identity Manager overview",
+      "file": "zero-trust-manager-overview",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-overview.adoc"
+    },
+    {
+      "name": "Zero Trust Workload Identity Manager components",
+      "file": "zero-trust-manager-components",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-components.adoc"
+    },
+    {
+      "name": "Zero Trust Workload Identity Manager release notes",
+      "file": "zero-trust-manager-release-notes",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-release-notes.adoc"
+    },
+    {
+      "name": "Installing Zero Trust Workload Identity Manager",
+      "file": "zero-trust-manager-install",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-install.adoc"
+    },
+    {
+      "name": "Deploying Zero Trust Workload Identity Manager operands",
+      "file": "zero-trust-manager-configuration",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-configuration.adoc"
+    },
+    {
+      "name": "Configuring the egress proxy",
+      "file": "zero-trust-manager-proxy",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-proxy.adoc"
+    },
+    {
+      "name": "Configuring Zero Trust Workload Identity Manager OIDC Federation",
+      "file": "zero-trust-manager-oidc-federation",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-oidc-federation.adoc"
+    },
+    {
+      "name": "Configuring Zero Trust Workload Identity Manager SPIRE Federation",
+      "file": "zero-trust-manager-spire-federation",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc"
+    },
+    {
+      "name": "Enabling create-only mode for the Zero Trust Workload Identity Manager",
+      "file": "zero-trust-manager-reconciliation",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-reconciliation.adoc"
+    },
+    {
+      "name": "Monitoring Zero Trust Workload Identity Manager",
+      "file": "zero-trust-manager-monitoring",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-monitoring.adoc"
+    },
+    {
+      "name": "Uninstalling the Zero Trust Workload Identity Manager",
+      "file": "zero-trust-manager-uninstall",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-uninstall.adoc"
+    },
+    {
+      "name": "External Secrets Operator overview",
+      "file": "index",
+      "rel_path": "external_secrets_operator/index.adoc"
+    },
+    {
+      "name": "External Secrets Operator release notes",
+      "file": "external-secrets-operator-release-notes",
+      "rel_path": "external_secrets_operator/external-secrets-operator-release-notes.adoc"
+    },
+    {
+      "name": "Installing the External Secrets Operator",
+      "file": "external-secrets-operator-install",
+      "rel_path": "external_secrets_operator/external-secrets-operator-install.adoc"
+    },
+    {
+      "name": "Configuring Network Policy for the Operand",
+      "file": "external-secrets-operator-config-net-policy",
+      "rel_path": "external_secrets_operator/external-secrets-operator-config-net-policy.adoc"
+    },
+    {
+      "name": "Configuring the egress proxy",
+      "file": "external-secrets-operator-proxy",
+      "rel_path": "external_secrets_operator/external-secrets-operator-proxy.adoc"
+    },
+    {
+      "name": "Monitoring the External Secrets Operator for Red Hat OpenShift",
+      "file": "external-secrets-monitoring",
+      "rel_path": "external_secrets_operator/external-secrets-monitoring.adoc"
+    },
+    {
+      "name": "Customizing the External Secrets Operator for Red Hat OpenShift",
+      "file": "external-secrets-log-levels",
+      "rel_path": "external_secrets_operator/external-secrets-log-levels.adoc"
+    },
+    {
+      "name": "Uninstalling the External Secrets Operator",
+      "file": "external-secrets-operator-uninstall",
+      "rel_path": "external_secrets_operator/external-secrets-operator-uninstall.adoc"
+    },
+    {
+      "name": "External Secrets Operator APIs",
+      "file": "external-secrets-operator-api",
+      "rel_path": "external_secrets_operator/external-secrets-operator-api.adoc"
+    },
+    {
+      "name": "Migrating from the community External Secret Operator to the External Secret Operator For Red Hat OpenShift",
+      "file": "external-secrets-operator-migrate-downstream-upstream",
+      "rel_path": "external_secrets_operator/external-secrets-operator-migrate-downstream-upstream.adoc"
+    },
+    {
+      "name": "Viewing audit logs",
+      "file": "audit-log-view",
+      "rel_path": "audit-log-view.adoc"
+    },
+    {
+      "name": "Configuring the audit log policy",
+      "file": "audit-log-policy-config",
+      "rel_path": "audit-log-policy-config.adoc"
+    },
+    {
+      "name": "Configuring TLS security profiles",
+      "file": "tls-security-profiles",
+      "rel_path": "tls-security-profiles.adoc"
+    },
+    {
+      "name": "Configuring seccomp profiles",
+      "file": "seccomp-profiles",
+      "rel_path": "seccomp-profiles.adoc"
+    },
+    {
+      "name": "Allowing JavaScript-based access to the API server from additional hosts",
+      "file": "allowing-javascript-access-api-server",
+      "rel_path": "allowing-javascript-access-api-server.adoc"
+    },
+    {
+      "name": "Scanning pods for vulnerabilities",
+      "file": "pod-vulnerability-scan",
+      "rel_path": "pod-vulnerability-scan.adoc"
+    },
+    {
+      "name": "About disk encryption technology",
+      "file": "nbde-about-disk-encryption-technology",
+      "rel_path": "network_bound_disk_encryption/nbde-about-disk-encryption-technology.adoc"
+    },
+    {
+      "name": "Tang server installation considerations",
+      "file": "nbde-tang-server-installation-considerations",
+      "rel_path": "network_bound_disk_encryption/nbde-tang-server-installation-considerations.adoc"
+    },
+    {
+      "name": "Tang server encryption key management",
+      "file": "nbde-managing-encryption-keys",
+      "rel_path": "network_bound_disk_encryption/nbde-managing-encryption-keys.adoc"
+    },
+    {
+      "name": "Disaster recovery considerations",
+      "file": "nbde-disaster-recovery-considerations",
+      "rel_path": "network_bound_disk_encryption/nbde-disaster-recovery-considerations.adoc"
+    }
+  ]
+}

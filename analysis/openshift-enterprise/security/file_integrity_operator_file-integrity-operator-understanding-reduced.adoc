@@ -1,0 +1,865 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="understanding-file-integrity-operator"]
+= Understanding the File Integrity Operator
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: file-integrity-operator
+
+toc::[]
+
+The File Integrity Operator is an {product-title} Operator that continually runs file integrity checks on the cluster nodes. It deploys a daemon set that initializes and runs privileged advanced intrusion detection environment (AIDE) containers on each node, providing a status object with a log of files that are modified during the initial run of the daemon set pods.
+
+[IMPORTANT]
+====
+Currently, only {op-system-first} nodes are supported.
+====
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/file_integrity_operator/file-integrity-operator-understanding.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="understanding-file-integrity-custom-resource_{context}"]
+=  Creating the FileIntegrity custom resource
+
+[role="_abstract"]
+An instance of a `FileIntegrity` custom resource (CR) represents a set of continuous file integrity scans for one or more nodes.
+
+Each `FileIntegrity` CR is backed by a daemon set running AIDE on the nodes matching the `FileIntegrity` CR specification.
+
+[NOTE]
+====
+For all-in-one control plane and worker nodes, separate `FileIntegrity` CRs that use `node-role.kubernetes.io/master` and `node-role.kubernetes.io/worker` selectors can schedule many daemon sets that run Advanced Intrusion Detection Environment (AIDE) on the same nodes, because schedulable control plane nodes often have both labels. Redundant scans waste resources and can complicate file integrity monitoring. You can avoid this by using a single `FileIntegrity` CR whose `nodeSelector` targets each node only once for your cluster layout.
+====
+
+.Procedure
+
+. Create the following example `FileIntegrity` CR named `worker-fileintegrity.yaml` to enable scans on worker nodes:
++
+.Example FileIntegrity CR
+[source,yaml]
+----
+apiVersion: fileintegrity.openshift.io/v1alpha1
+kind: FileIntegrity
+metadata:
+  name: worker-fileintegrity
+  namespace: openshift-file-integrity
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
+  tolerations:
+    key: "myNode"
+    operator: "Exists"
+    effect: "NoSchedule"
+  config:
+    name: "myconfig"
+    namespace: "openshift-file-integrity"
+    key: "config"
+    gracePeriod: 20
+    maxBackups: 5
+    initialDelay: 60
+  debug: false
+status:
+  phase: Active
+----
+[horizontal]
+`spec.nodeSelector`:: Specifies the selector for scheduling node scans.
+`spec.tolerations`:: Specify `tolerations` to schedule on nodes with custom taints. When not specified, a default toleration allowing running on main and infra nodes is applied.
+`spec.config`:: Specify a `ConfigMap` containing an AIDE configuration to use.
+`spec.config.gracePeriod`:: The number of seconds to pause in between AIDE integrity checks. Frequent AIDE checks on a node might be resource intensive, so it can be useful to specify a longer interval. Default is 900 seconds (15 minutes).
+`spec.config.maxBackups`:: The maximum number of AIDE database and log backups (leftover from the re-init process) to keep on a node. Older backups beyond this number are automatically pruned by the daemon. Default is set to 5.
+`spec.config.initialDelay`:: The number of seconds to wait before starting the first AIDE integrity check. Default is set to 0.
+`status.phase`:: The running status of the `FileIntegrity` instance. Statuses are `Initializing`, `Pending`, or `Active`.
++
+[horizontal]
+`Initializing`:: The `FileIntegrity` object is currently initializing or re-initializing the AIDE database.
+`Pending`:: The `FileIntegrity` deployment is still being created.
+`Active`:: The scans are active and ongoing.
+
+. Apply the YAML file to the `openshift-file-integrity` namespace:
++
+[source,terminal]
+----
+$ oc apply -f worker-fileintegrity.yaml -n openshift-file-integrity
+----
+
+.Verification
+
+* Confirm the `FileIntegrity` object was created successfully by running the following command:
++
+[source,terminal]
+----
+$ oc get fileintegrities -n openshift-file-integrity
+----
++
+.Example output
++
+[source,terminal]
+----
+NAME                   AGE
+worker-fileintegrity   14s
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/file_integrity_operator/file-integrity-operator-understanding.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="checking-the-file-integrity-CR-status_{context}"]
+= Checking the FileIntegrity custom resource status
+
+The `FileIntegrity` custom resource (CR) reports its status through the .`status.phase` subresource.
+
+.Procedure
+
+* To query the `FileIntegrity` CR status, run:
++
+[source,terminal]
+----
+$ oc get fileintegrities/worker-fileintegrity  -o jsonpath="{ .status.phase }"
+----
++
+.Example output
+[source,terminal]
+----
+Active
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/file_integrity_operator/file-integrity-operator-understanding.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="file-integrity-CR-phases_{context}"]
+= FileIntegrity custom resource phases
+
+* `Pending` - The phase after the custom resource (CR) is created.
+* `Active` -  The phase when the backing daemon set is up and running.
+* `Initializing` - The phase when the AIDE database is being reinitialized.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/file_integrity_operator/file-integrity-operator-understanding.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="understanding-file-integrity-node-statuses-object_{context}"]
+= Understanding the FileIntegrityNodeStatuses object
+
+The scan results of the `FileIntegrity` CR are reported in another object called `FileIntegrityNodeStatuses`.
+
+[source,terminal]
+----
+$ oc get fileintegritynodestatuses
+----
+
+.Example output
+[source,terminal]
+----
+NAME                                                AGE
+worker-fileintegrity-ip-10-0-130-192.ec2.internal   101s
+worker-fileintegrity-ip-10-0-147-133.ec2.internal   109s
+worker-fileintegrity-ip-10-0-165-160.ec2.internal   102s
+----
+
+[NOTE]
+====
+It might take some time for the `FileIntegrityNodeStatus` object results to be available.
+====
+
+There is one result object per node. The `nodeName` attribute of each `FileIntegrityNodeStatus` object corresponds to the node being scanned. The
+status of the file integrity scan is represented in the `results` array, which holds scan conditions.
+
+[source,terminal]
+----
+$ oc get fileintegritynodestatuses.fileintegrity.openshift.io -ojsonpath='{.items[*].results}' | jq
+----
+
+The `fileintegritynodestatus` object reports the latest status of an AIDE run and exposes the status as `Failed`, `Succeeded`, or `Errored` in a `status` field.
+
+[source,terminal]
+----
+$ oc get fileintegritynodestatuses -w
+----
+
+.Example output
+[source,terminal]
+----
+NAME                                                               NODE                                         STATUS
+example-fileintegrity-ip-10-0-134-186.us-east-2.compute.internal   ip-10-0-134-186.us-east-2.compute.internal   Succeeded
+example-fileintegrity-ip-10-0-150-230.us-east-2.compute.internal   ip-10-0-150-230.us-east-2.compute.internal   Succeeded
+example-fileintegrity-ip-10-0-169-137.us-east-2.compute.internal   ip-10-0-169-137.us-east-2.compute.internal   Succeeded
+example-fileintegrity-ip-10-0-180-200.us-east-2.compute.internal   ip-10-0-180-200.us-east-2.compute.internal   Succeeded
+example-fileintegrity-ip-10-0-194-66.us-east-2.compute.internal    ip-10-0-194-66.us-east-2.compute.internal    Failed
+example-fileintegrity-ip-10-0-222-188.us-east-2.compute.internal   ip-10-0-222-188.us-east-2.compute.internal   Succeeded
+example-fileintegrity-ip-10-0-134-186.us-east-2.compute.internal   ip-10-0-134-186.us-east-2.compute.internal   Succeeded
+example-fileintegrity-ip-10-0-222-188.us-east-2.compute.internal   ip-10-0-222-188.us-east-2.compute.internal   Succeeded
+example-fileintegrity-ip-10-0-194-66.us-east-2.compute.internal    ip-10-0-194-66.us-east-2.compute.internal    Failed
+example-fileintegrity-ip-10-0-150-230.us-east-2.compute.internal   ip-10-0-150-230.us-east-2.compute.internal   Succeeded
+example-fileintegrity-ip-10-0-180-200.us-east-2.compute.internal   ip-10-0-180-200.us-east-2.compute.internal   Succeeded
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/file_integrity_operator/file-integrity-operator-understanding.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="file-integrity-node-status-types_{context}"]
+= FileIntegrityNodeStatus CR status types
+
+These conditions are reported in the results array of the corresponding `FileIntegrityNodeStatus` CR status:
+
+* `Succeeded` - The integrity check passed; the files and directories covered by the AIDE check have not been modified since the database was last initialized.
+
+* `Failed` - The integrity check failed; some files or directories covered by the AIDE check have been modified since the database was last initialized.
+
+* `Errored` - The AIDE scanner encountered an internal error.
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/file_integrity_operator/file-integrity-operator-understanding.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="file-integrity-node-status-success_{context}"]
+= FileIntegrityNodeStatus CR success example
+
+.Example output of a condition with a success status
+
+[source,terminal]
+----
+[
+  {
+    "condition": "Succeeded",
+    "lastProbeTime": "2020-09-15T12:45:57Z"
+  }
+]
+[
+  {
+    "condition": "Succeeded",
+    "lastProbeTime": "2020-09-15T12:46:03Z"
+  }
+]
+[
+  {
+    "condition": "Succeeded",
+    "lastProbeTime": "2020-09-15T12:45:48Z"
+  }
+]
+----
+
+In this case, all three scans succeeded and so far there are no other conditions.
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/file_integrity_operator/file-integrity-operator-understanding.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="file-integrity-node-status-failure_{context}"]
+= FileIntegrityNodeStatus CR failure status example
+
+To simulate a failure condition, modify one of the files AIDE tracks. For example, modify `/etc/resolv.conf` on one of the worker nodes:
+
+[source,terminal]
+----
+$ oc debug node/ip-10-0-130-192.ec2.internal
+----
+
+.Example output
+[source,terminal]
+----
+Creating debug namespace/openshift-debug-node-ldfbj ...
+Starting pod/ip-10-0-130-192ec2internal-debug ...
+To use host binaries, run `chroot /host`
+Pod IP: 10.0.130.192
+If you don't see a command prompt, try pressing enter.
+sh-4.2# echo "# integrity test" >> /host/etc/resolv.conf
+sh-4.2# exit
+
+Removing debug pod ...
+Removing debug namespace/openshift-debug-node-ldfbj ...
+----
+
+After some time, the `Failed` condition is reported in the results array of the corresponding `FileIntegrityNodeStatus` object. The previous `Succeeded` condition is retained, which allows you to pinpoint the time the check failed.
+
+[source,terminal]
+----
+$ oc get fileintegritynodestatuses.fileintegrity.openshift.io/worker-fileintegrity-ip-10-0-130-192.ec2.internal -ojsonpath='{.results}' | jq -r
+----
+
+Alternatively, if you are not mentioning the object name, run:
+
+[source,terminal]
+----
+$ oc get fileintegritynodestatuses.fileintegrity.openshift.io -ojsonpath='{.items[*].results}' | jq
+----
+
+.Example output
+[source,terminal]
+----
+[
+  {
+    "condition": "Succeeded",
+    "lastProbeTime": "2020-09-15T12:54:14Z"
+  },
+  {
+    "condition": "Failed",
+    "filesChanged": 1,
+    "lastProbeTime": "2020-09-15T12:57:20Z",
+    "resultConfigMapName": "aide-ds-worker-fileintegrity-ip-10-0-130-192.ec2.internal-failed",
+    "resultConfigMapNamespace": "openshift-file-integrity"
+  }
+]
+----
+
+The `Failed` condition points to a config map that gives more details about what exactly failed and why:
+
+[source,terminal]
+----
+$ oc describe cm aide-ds-worker-fileintegrity-ip-10-0-130-192.ec2.internal-failed
+----
+
+.Example output
+[source,terminal]
+----
+Name:         aide-ds-worker-fileintegrity-ip-10-0-130-192.ec2.internal-failed
+Namespace:    openshift-file-integrity
+Labels:       file-integrity.openshift.io/node=ip-10-0-130-192.ec2.internal
+              file-integrity.openshift.io/owner=worker-fileintegrity
+              file-integrity.openshift.io/result-log=
+Annotations:  file-integrity.openshift.io/files-added: 0
+              file-integrity.openshift.io/files-changed: 1
+              file-integrity.openshift.io/files-removed: 0
+
+Data
+
+integritylog:
+------
+AIDE 0.15.1 found differences between database and filesystem!!
+Start timestamp: 2020-09-15 12:58:15
+
+Summary:
+  Total number of files:  31553
+  Added files:                0
+  Removed files:            0
+  Changed files:            1
+
+
+---------------------------------------------------
+Changed files:
+---------------------------------------------------
+
+changed: /hostroot/etc/resolv.conf
+
+---------------------------------------------------
+Detailed information about changes:
+---------------------------------------------------
+
+
+File: /hostroot/etc/resolv.conf
+ SHA512   : sTQYpB/AL7FeoGtu/1g7opv6C+KT1CBJ , qAeM+a8yTgHPnIHMaRlS+so61EN8VOpg
+
+Events:  <none>
+----
+
+Due to the config map data size limit, AIDE logs over 1 MB are added to the failure config map as a base64-encoded gzip archive. Use the following command to extract the log:
+
+[source,terminal]
+----
+$ oc get cm <failure-cm-name> -o json | jq -r '.data.integritylog' | base64 -d | gunzip
+----
+
+[NOTE]
+====
+Compressed logs are indicated by the presence of a `file-integrity.openshift.io/compressed` annotation key in the config map.
+====
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/file_integrity_operator/file-integrity-operator-understanding.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="file-integrity-events_{context}"]
+= Understanding events
+
+Transitions in the status of the `FileIntegrity` and `FileIntegrityNodeStatus` objects are logged by _events_. The creation time of the event reflects the latest transition, such as `Initializing` to `Active`, and not necessarily the latest scan result. However, the newest event always reflects the most recent status.
+
+[source,terminal]
+----
+$ oc get events --field-selector reason=FileIntegrityStatus
+----
+
+.Example output
+[source,terminal]
+----
+LAST SEEN   TYPE     REASON                OBJECT                                MESSAGE
+97s         Normal   FileIntegrityStatus   fileintegrity/example-fileintegrity   Pending
+67s         Normal   FileIntegrityStatus   fileintegrity/example-fileintegrity   Initializing
+37s         Normal   FileIntegrityStatus   fileintegrity/example-fileintegrity   Active
+----
+
+When a node scan fails, an event is created with the `add/changed/removed` and config map information.
+
+[source,terminal]
+----
+$ oc get events --field-selector reason=NodeIntegrityStatus
+----
+
+.Example output
+[source,terminal]
+----
+LAST SEEN   TYPE      REASON                OBJECT                                MESSAGE
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-134-173.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-168-238.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-169-175.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-152-92.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-158-144.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-131-30.ec2.internal
+87m         Warning   NodeIntegrityStatus   fileintegrity/example-fileintegrity   node ip-10-0-152-92.ec2.internal has changed! a:1,c:1,r:0 \ log:openshift-file-integrity/aide-ds-example-fileintegrity-ip-10-0-152-92.ec2.internal-failed
+----
+
+Changes to the number of added, changed, or removed files results in a new event, even if the status of the node has not transitioned.
+
+[source,terminal]
+----
+$ oc get events --field-selector reason=NodeIntegrityStatus
+----
+
+.Example output
+[source,terminal]
+----
+LAST SEEN   TYPE      REASON                OBJECT                                MESSAGE
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-134-173.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-168-238.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-169-175.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-152-92.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-158-144.ec2.internal
+114m        Normal    NodeIntegrityStatus   fileintegrity/example-fileintegrity   no changes to node ip-10-0-131-30.ec2.internal
+87m         Warning   NodeIntegrityStatus   fileintegrity/example-fileintegrity   node ip-10-0-152-92.ec2.internal has changed! a:1,c:1,r:0 \ log:openshift-file-integrity/aide-ds-example-fileintegrity-ip-10-0-152-92.ec2.internal-failed
+40m         Warning   NodeIntegrityStatus   fileintegrity/example-fileintegrity   node ip-10-0-152-92.ec2.internal has changed! a:3,c:1,r:0 \ log:openshift-file-integrity/aide-ds-example-fileintegrity-ip-10-0-152-92.ec2.internal-failed
+----
+
+:leveloffset!:

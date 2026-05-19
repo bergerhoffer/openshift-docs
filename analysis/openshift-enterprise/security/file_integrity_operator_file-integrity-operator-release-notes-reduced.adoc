@@ -1,0 +1,700 @@
+//OpenShift File Integrity Operator Release Notes
+:_mod-docs-content-type: ASSEMBLY
+[id="file-integrity-operator-release-notes"]
+= File Integrity Operator release notes
+:context: file-integrity-operator-release-notes-v0
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+
+toc::[]
+
+The File Integrity Operator for {product-title} continually runs file integrity checks on {op-system} nodes.
+
+These release notes track the development of the File Integrity Operator in the {product-title}.
+
+For an overview of the File Integrity Operator, see xref:../../security/file_integrity_operator/file-integrity-operator-understanding.adoc#understanding-file-integrity-operator[Understanding the File Integrity Operator].
+
+To access the latest release, see xref:../../security/file_integrity_operator/file-integrity-operator-updating.adoc#olm-preparing-upgrade_file-integrity-operator-updating[Updating the File Integrity Operator].
+
+
+[id="file-integrity-operator-release-notes-1-3-8"]
+== OpenShift File Integrity Operator 1.3.8
+
+The following advisory is available for the OpenShift File Integrity Operator 1.3.8:
+
+* link:https://access.redhat.com/errata/RHSA-2025:23542[RHSA-2025:23542 OpenShift File Integrity Operator Update]
+
+[id="file-integrity-operator-1-3-8-bug-fixes"]
+=== Bug fixes
+
+* Previously, the file-integrity-operator pods and the aide pods running the database used by recently installed FIO would go into a terminating state, adding error log entries that were not useful. With this release, the pods needed by FIO do not go into terminating state unless a relevant error occurred or they completed their work.  (link:https://issues.redhat.com/browse/CMP-3757[*CMP-3757*])
+
+* This update includes upgraded dependencies in the underlying base images.
+
+[id="file-integrity-operator-release-notes-1-3-7"]
+== OpenShift File Integrity Operator 1.3.7
+
+The following advisory is available for the OpenShift File Integrity Operator 1.3.7:
+
+* link:https://access.redhat.com/errata/RHSA-2025:21913[RHSA-2025:21913 OpenShift File Integrity Operator Update]
+
+This update includes upgraded dependencies in underlying base images.
+
+[id="file-integrity-operator-release-notes-1-3-6"]
+== OpenShift File Integrity Operator 1.3.6
+
+The following advisory is available for the OpenShift File Integrity Operator 1.3.6:
+
+* link:https://access.redhat.com/errata/RHBA-2025:11535[RHBA-2025:11535 OpenShift File Integrity Operator Bug Fix Update]
+
+[id="file-integrity-operator-1-3-6-bug-fixes"]
+=== Bug fixes
+
+* Previously, running the `oc annotate fileintegrities/<fileintegrity-name> file-integrity.openshift.io/re-init-on-failed=` command would trigger a reinitialization on all nodes. Now, it only reinitializes the nodes where failures occurred. (link:https://issues.redhat.com/browse/OCPBUGS-18933[*OCPBUGS-18933*])
+
+* Previously, resetting FIO cleared the `NodeHasIntegrityFailure` alert. This occurred because the `metric file_integrity_operator_node_failed` setting was also reset. With this release, restarting FIO does not affect the `NodeHasIntegrityFailure` alert. (link:https://issues.redhat.com/browse/OCPBUGS-42807[*OCPBUGS-42807*])
+
+* Previously, when a new node was added to a cluster by scaling up the `machineset` object, FIO marked the new node as `Failed` before the node was ready. With this release FIO waits until the new node is ready. (link:https://issues.redhat.com/browse/OCPBUGS-36483[*OCPBUGS-36483*])
+
+* Previously, the Advanced Intrusion Detection Environment (AIDE) daemonset pods would constantly force-initialize the AIDE database. With this release, FIO initializes the AIDE database only once. (link:https://issues.redhat.com/browse/OCPBUGS-37300[*OCPBUGS-37300*])
+
+* Previously, some link paths in the Machine Config Operator (MCO) configuration, such as `/hostroot/etc/ipsec.d/openshift.conf` and `hostroot/etc/mco/internal-registry-pull-secret.json`, were modified during an MCO update. This led to failed file integrity checks on nodes after the update, which disrupted user experience. With this update, the modified file link paths in the MCO configuration have been updated. File integrity checks now pass after an update, helping to ensure a stable cluster. (link:https://issues.redhat.com/browse/OCPBUGS-41628[*OCPBUGS-41628*])
+
+[id="file-integrity-operator-release-notes-1-3-5"]
+== OpenShift File Integrity Operator 1.3.5
+
+The following advisory is available for the OpenShift File Integrity Operator 1.3.5:
+
+* link:https://access.redhat.com/errata/RHBA-2024:10366[RHBA-2024:10366 OpenShift File Integrity Operator Update]
+
+This update includes upgraded dependencies in underlying base images.
+
+[id="file-integrity-operator-release-notes-1-3-4"]
+== OpenShift File Integrity Operator 1.3.4
+
+The following advisory is available for the OpenShift File Integrity Operator 1.3.4:
+
+* link:https://access.redhat.com/errata/RHBA-2024:2946[RHBA-2024:2946 OpenShift File Integrity Operator Bug Fix and Enhancement Update]
+
+[id="file-integrity-operator-1-3-4-bug-fixes"]
+=== Bug fixes
+
+Previously, File Integrity Operator would issue a `NodeHasIntegrityFailure` alert due to multus certificate rotation. With this release, the alert and failing status are now correctly triggered. (link:https://issues.redhat.com/browse/OCPBUGS-31257[*OCPBUGS-31257*])
+
+[id="file-integrity-operator-release-notes-1-3-3"]
+== OpenShift File Integrity Operator 1.3.3
+
+The following advisory is available for the OpenShift File Integrity Operator 1.3.3:
+
+* link:https://access.redhat.com/errata/RHBA-2023:5652[RHBA-2023:5652 OpenShift File Integrity Operator Bug Fix and Enhancement Update]
+
+This update addresses a CVE in an underlying dependency.
+
+[id="file-integrity-operator-1-3-3-new-features-and-enhancements"]
+=== New features and enhancements
+
+* You can install and use the File Integrity Operator in an {product-title} cluster running in FIPS mode.
++
+--
+// Text snippet included in the following modules:
+//
+// * modules/agent-installer-fips-compliance.adoc
+// * modules/installation-aws-config-yaml.adoc
+// * modules/installation-aws-config-yaml.adoc
+// * modules/installation-azure-config-yaml.adoc
+// * modules/installation-azure-config-yaml.adoc
+// * modules/installation-azure-config-yaml.adoc
+// * modules/installation-azure-config-yaml.adoc
+// * modules/installation-azure-stack-hub-config-yaml.adoc
+// * modules/installation-bare-metal-config-yaml.adoc
+// * modules/installation-configuration-parameters.adoc
+// * modules/installation-gcp-config-yaml.adoc
+// * modules/installation-gcp-user-infra-shared-vpc-config-yaml.adoc
+// * modules/installation-ibm-cloud-config-yaml.adoc
+// * modules/installation-vsphere-config-yaml.adoc
+// * modules/machine-config-overview.adoc
+// * modules/rhel-compute-requirements.adoc
+// * modules/rosa-sts-interactive-cluster-creation-mode-options.adoc
+// * modules/security-compliance-nist.adoc
+//
+// Text snippet included in the following assemblies:
+//
+// * security/compliance_operator/compliance-operator-release-notes.adoc
+// * security/file_integrity_operator/file-integrity-operator-release-notes.adoc
+
+:_mod-docs-content-type: SNIPPET
+
+[IMPORTANT]
+====
+To enable FIPS mode for your cluster, you must run the installation program from a {op-system-base-full} computer configured to operate in FIPS mode. For more information about configuring FIPS mode on {op-system-base}, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/switching-rhel-to-fips-mode_security-hardening[Switching {op-system-base} to FIPS mode].
+
+When running {op-system-base-full} or {op-system-first} booted in FIPS mode, {product-title} core components use the {op-system-base} cryptographic libraries that have been submitted to NIST for FIPS 140-2/140-3 Validation on only the x86_64, ppc64le, and s390x architectures.
+====
+
+--
+
+[id="file-integrity-operator-1-3-3-bug-fixes"]
+=== Bug fixes
+
+* Previously, some FIO pods with private default mount propagation in combination with `hostPath: path: /` volume mounts would break the CSI driver relying on multipath. This problem has been fixed and the CSI driver works correctly. (link:https://access.redhat.com/solutions/7017081[Some OpenShift Operator pods blocking unmounting of CSI volumes when multipath is in use])
+
+* This update resolves CVE-2023-39325. (link:https://access.redhat.com/security/cve/CVE-2023-39325[*CVE-2023-39325*])
+
+[id="file-integrity-operator-release-notes-1-3-2"]
+== OpenShift File Integrity Operator 1.3.2
+
+The following advisory is available for the OpenShift File Integrity Operator 1.3.2:
+
+* link:https://access.redhat.com/errata/RHBA-2023:5107[RHBA-2023:5107 OpenShift File Integrity Operator Bug Fix Update]
+
+This update addresses a CVE in an underlying dependency.
+
+[id="file-integrity-operator-release-notes-1-3-1"]
+== OpenShift File Integrity Operator 1.3.1
+
+The following advisory is available for the OpenShift File Integrity Operator 1.3.1:
+
+* link:https://access.redhat.com/errata/RHBA-2023:3600[RHBA-2023:3600 OpenShift File Integrity Operator Bug Fix Update]
+
+[id="file-integrity-operator-1-3-1-new-features-and-enhancements"]
+=== New features and enhancements
+
+* FIO now includes kubelet certificates as default files, excluding them from issuing warnings when they're managed by {product-title}. (link:https://issues.redhat.com/browse/OCPBUGS-14348[*OCPBUGS-14348*])
+
+* FIO now correctly directs email to the address for Red Hat Technical Support. (link:https://issues.redhat.com/browse/OCPBUGS-5023[*OCPBUGS-5023*])
+
+[id="file-integrity-operator-1-3-1-bug-fixes"]
+=== Bug fixes
+
+* Previously, FIO would not clean up `FileIntegrityNodeStatus` CRDs when nodes are removed from the cluster. FIO has been updated to correctly clean up node status CRDs on node removal.  (link:https://issues.redhat.com/browse/OCPBUGS-4321[*OCPBUGS-4321*])
+
+* Previously, FIO would also erroneously indicate that new nodes failed integrity checks. FIO has been updated to correctly show node status CRDs when adding new nodes to the cluster. This provides correct node status notifications. (link:https://issues.redhat.com/browse/OCPBUGS-8502[*OCPBUGS-8502*])
+
+* Previously, when FIO was reconciling `FileIntegrity` CRDs, it would pause scanning until the reconciliation was done. This caused an overly aggressive re-initiatization process on nodes not impacted by the reconciliation. This problem also resulted in unnecessary daemonsets for machine config pools which are unrelated to the `FileIntegrity` being changed. FIO correctly handles these cases and only pauses AIDE scanning for nodes that are affected by file integrity changes. (link:https://issues.redhat.com/browse/CMP-1097[*CMP-1097*])
+
+[id="file-integrity-operator-1-3-1-known-issues"]
+=== Known Issues
+
+In FIO 1.3.1, increasing nodes in {ibm-z-name} clusters might result in `Failed` File Integrity node status. For more information, see link:https://access.redhat.com/solutions/7028861[Adding nodes in {ibm-power-name} clusters can result in failed File Integrity node status].
+
+[id="file-integrity-operator-release-notes-1-2-1"]
+== OpenShift File Integrity Operator 1.2.1
+
+The following advisory is available for the OpenShift File Integrity Operator 1.2.1:
+
+* link:https://access.redhat.com/errata/RHBA-2023:1684[RHBA-2023:1684 OpenShift File Integrity Operator Bug Fix Update]
+
+* This release includes updated container dependencies.
+
+[id="file-integrity-operator-release-notes-1-2-0"]
+== OpenShift File Integrity Operator 1.2.0
+
+The following advisory is available for the OpenShift File Integrity Operator 1.2.0:
+
+* link:https://access.redhat.com/errata/RHBA-2023:1273[RHBA-2023:1273 OpenShift File Integrity Operator Enhancement Update]
+
+[id="file-integrity-operator-1-2-0-new-features-and-enhancements"]
+=== New features and enhancements
+
+* The File Integrity Operator Custom Resource (CR) now contains an `initialDelay` feature that specifies the number of seconds to wait before starting the first AIDE integrity check. For more information, see xref:../../security/file_integrity_operator/file-integrity-operator-understanding.adoc#understanding-file-integrity-custom-resource_file-integrity-operator[Creating the FileIntegrity custom resource].
+
+* The File Integrity Operator is now stable and the release channel is upgraded to `stable`. Future releases will follow link:https://semver.org/[Semantic Versioning]. To access the latest release, see xref:../../security/file_integrity_operator/file-integrity-operator-updating.adoc#olm-preparing-upgrade_file-integrity-operator-updating[Updating the File Integrity Operator].
+
+[id="file-integrity-operator-release-notes-1-0-0"]
+== OpenShift File Integrity Operator 1.0.0
+
+The following advisory is available for the OpenShift File Integrity Operator 1.0.0:
+
+* link:https://access.redhat.com/errata/RHBA-2023:0037[RHBA-2023:0037 OpenShift File Integrity Operator Bug Fix Update]
+
+[id="file-integrity-operator-release-notes-0-1-32"]
+== OpenShift File Integrity Operator 0.1.32
+
+The following advisory is available for the OpenShift File Integrity Operator 0.1.32:
+
+* link:https://access.redhat.com/errata/RHBA-2022:7095[RHBA-2022:7095 OpenShift File Integrity Operator Bug Fix Update]
+
+[id="file-integrity-operator-0-1-32-bug-fixes"]
+=== Bug fixes
+
+* Previously, alerts issued by the File Integrity Operator did not set a namespace, making it difficult to understand from which namespace the alert originated. Now, the Operator sets the appropriate namespace, providing more information about the alert. (link:https://bugzilla.redhat.com/show_bug.cgi?id=2112394[*BZ#2112394*])
+
+* Previously, The File Integrity Operator did not update the metrics service on Operator startup, causing the metrics targets to be unreachable. With this release, the File Integrity Operator now ensures the metrics service is updated on Operator startup. (link:https://bugzilla.redhat.com/show_bug.cgi?id=2115821[*BZ#2115821*])
+
+[id="file-integrity-operator-release-notes-0-1-30"]
+== OpenShift File Integrity Operator 0.1.30
+
+The following advisory is available for the OpenShift File Integrity Operator 0.1.30:
+
+* link:https://access.redhat.com/errata/RHBA-2022:5538[RHBA-2022:5538 OpenShift File Integrity Operator Bug Fix and Enhancement Update]
+
+[id="file-integrity-operator-0-1-30-new-features-and-enhancements"]
+=== New features and enhancements
+
+* The File Integrity Operator is now supported on the following architectures:
++
+** {ibm-power-name}
+** {ibm-z-name} and {ibm-linuxone-name}
+
+[id="file-integrity-operator-0-1-30-bug-fixes"]
+=== Bug fixes
+
+* Previously, alerts issued by the File Integrity Operator did not set a namespace, making it difficult to understand where the alert originated. Now, the Operator sets the appropriate namespace, increasing understanding of the alert. (link:https://bugzilla.redhat.com/show_bug.cgi?id=2101393[*BZ#2101393*])
+
+[id="file-integrity-operator-release-notes-0-1-24"]
+== OpenShift File Integrity Operator 0.1.24
+
+The following advisory is available for the OpenShift File Integrity Operator 0.1.24:
+
+* link:https://access.redhat.com/errata/RHBA-2022:1331[RHBA-2022:1331 OpenShift File Integrity Operator Bug Fix]
+
+[id="file-integrity-operator-0-1-24-new-features-and-enhancements"]
+=== New features and enhancements
+
+* You can now configure the maximum number of backups stored in the `FileIntegrity` Custom Resource (CR) with the `config.maxBackups` attribute. This attribute specifies the number of AIDE database and log backups left over from the `re-init` process to keep on the node. Older backups beyond the configured number are automatically pruned. The default is set to five backups.
+
+[id="openshift-file-integrity-operator-0-1-24-bug-fixes"]
+=== Bug fixes
+
+* Previously, upgrading the Operator from versions older than 0.1.21 to 0.1.22 could cause the `re-init` feature to fail. This was a result of the Operator failing to update `configMap` resource labels. Now, upgrading to the latest version fixes the resource labels. (link:https://bugzilla.redhat.com/show_bug.cgi?id=2049206[*BZ#2049206*])
+
+* Previously, when enforcing the default `configMap` script contents, the wrong data keys were compared. This resulted in the `aide-reinit` script not being updated properly after an Operator upgrade, and caused the `re-init` process to fail. Now,`daemonSets` run to completion and the AIDE database `re-init` process executes successfully. (link:https://bugzilla.redhat.com/show_bug.cgi?id=2072058[*BZ#2072058*])
+
+[id="file-integrity-operator-release-notes-0-1-22"]
+== OpenShift File Integrity Operator 0.1.22
+
+The following advisory is available for the OpenShift File Integrity Operator 0.1.22:
+
+* link:https://access.redhat.com/errata/RHBA-2022:0142[RHBA-2022:0142 OpenShift File Integrity Operator Bug Fix]
+
+[id="openshift-file-integrity-operator-0-1-22-bug-fixes"]
+=== Bug fixes
+
+* Previously, a system with a File Integrity Operator installed might interrupt the {product-title} update, due to the  `/etc/kubernetes/aide.reinit` file. This occurred if the `/etc/kubernetes/aide.reinit` file was present, but later removed prior to the `ostree` validation. With this update, `/etc/kubernetes/aide.reinit` is moved to the `/run` directory so that it does not conflict with the {product-title} update. (link:https://bugzilla.redhat.com/show_bug.cgi?id=2033311[*BZ#2033311*])
+
+[id="file-integrity-operator-release-notes-0-1-21"]
+== OpenShift File Integrity Operator 0.1.21
+
+The following advisory is available for the OpenShift File Integrity Operator 0.1.21:
+
+* link:https://access.redhat.com/errata/RHBA-2021:4631[RHBA-2021:4631 OpenShift File Integrity Operator Bug Fix and Enhancement Update]
+
+[id="file-integrity-operator-0-1-21-new-features-and-enhancements"]
+=== New features and enhancements
+
+* The metrics related to `FileIntegrity` scan results and processing metrics are displayed on the monitoring dashboard on the web console. The results are labeled with the prefix of `file_integrity_operator_`.
++
+* If a node has an integrity failure for more than 1 second, the default `PrometheusRule` provided in the operator namespace alerts with a warning.
++
+* The following dynamic Machine Config Operator and Cluster Version Operator related filepaths are excluded from the default AIDE policy to help prevent false positives during node updates:
+ - /etc/machine-config-daemon/currentconfig
+ - /etc/pki/ca-trust/extracted/java/cacerts
+ - /etc/cvo/updatepayloads
+ - /root/.kube
++
+* The AIDE daemon process has stability improvements over v0.1.16, and is more resilient to errors that might occur when the AIDE database is initialized.
+
+[id="openshift-file-integrity-operator-0-1-21-bug-fixes"]
+=== Bug fixes
+
+* Previously, when the Operator automatically upgraded, outdated daemon sets were not removed. With this release, outdated daemon sets are removed during the automatic upgrade.
+
+[id="file-integrity-operator-release-notes_additional-resources"]
+[role="_additional-resources"]
+== Additional resources
+xref:../../security/file_integrity_operator/file-integrity-operator-understanding.adoc#understanding-file-integrity-operator[Understanding the File Integrity Operator]

@@ -1,0 +1,4677 @@
+= Configuring the egress proxy
+:_mod-docs-content-type: ASSEMBLY
+[id="zero-trust-manager-proxy_{context}"]
+= Configuring the egress proxy for the {zero-trust-full}
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: zero-trust-manager-proxy
+
+[role="_abstract"]
+Operator Lifecycle Manager (OLM) automatically configures managed Operators with proxy settings when you use a cluster-wide egress proxy. To support proxying HTTPS connections, you can inject certificate authority (CA) certificates into the {zero-trust-full}.
+
+// Injecting a custom CA certificate for the {cert-manager-operator}
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-proxy.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-proxy-support_{context}"]
+= Injecting a custom CA certificate for the {zero-trust-full}
+
+[role="_abstract"]
+Inject certificate authority (CA) certificates into the {zero-trust-full} to support proxying HTTPS connections. This configuration helps ensure that the Identity Manager can communicate securely when you enable a cluster-wide proxy.
+
+.Prerequisites
+
+* You have access to the cluster as a user with the `cluster-admin` role.
+
+* You have enabled the cluster-wide proxy for {product-title}.
+
+* You have installed {zero-trust-full} 1.0.0 or later.
+
+* You have deployed the SPIRE Server, SPIRE Agent, SPIFFE CSI Driver, and the SPIRE OIDC Discovery Provider operands in the cluster.
+
+.Procedure
+
+. Create a config map in the `zero-trust-workload-identity-manager` namespace by running the following command:
++
+[source,terminal]
+----
+$ oc create configmap trusted-ca -n zero-trust-workload-identity-manager
+----
+
+. Inject the CA bundle that is trusted by {product-title} into the config map by running the following command:
++
+[source,terminal]
+----
+$ oc label cm trusted-ca config.openshift.io/inject-trusted-cabundle=true -n zero-trust-workload-identity-manager
+----
+
+. Update the subscription for the {zero-trust-full} to use the config map by running the following command:
++
+[source,terminal]
+----
+$ oc -n zero-trust-workload-identity-manager patch subscription openshift-zero-trust-workload-identity-manager --type='merge' -p '{"spec":{"config":{"env":[{"name":"TRUSTED_CA_BUNDLE_CONFIGMAP","value":"trusted-ca"}]}}}'
+----
+
+.Verification
+
+. Verify that the operands have finished rolling out by running the following command:
++
+[source,terminal]
+----
+$ oc rollout status deployment/zero-trust-workload-identity-manager-controller-manager -n zero-trust-workload-identity-manager && \
+$ oc rollout status statefulset/spireserver -n zero-trust-workload-identity-manager && \
+$ oc rollout status daemonset/spire-agent -n zero-trust-workload-identity-manager && \
+$ oc rollout status deployment/spire-spiffe-oidc-discovery-provider -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+deployment "zero-trust-workload-identity-manager-controller-manager" successfully rolled out
+statefulset "spire-server" successfully rolled out
+daemonset "spire-agent" successfully rolled out
+deployment "spire-spiffe-oidc-discovery-provider" successfully rolled out
+----
+
+. Verify that the CA bundle was mounted as a volume by running the following command:
++
+[source,terminal]
+----
+$ oc get deployment zero-trust-workload-identity-manager -n zero-trust-workload-identity-manager -o=jsonpath={.spec.template.spec.'containers[0].volumeMounts'}
+----
++
+[source,terminal]
+----
+$ oc get statefulset spire-server -n zero-trust-workload-identity-manager -o jsonpath='{.spec.template.spec.containers[*].volumeMounts[?(@.name=="trusted-ca-bundle")]}'
+----
++
+[source,terminal]
+----
+$ oc get daemonset spire-agent -n zero-trust-workload-identity-manager -o jsonpath='{.spec.template.spec.containers[*].volumeMounts[?(@.name=="trusted-ca-bundle")]}'
+----
++
+[source,terminal]
+----
+$ oc get daemonset spire-spiffe-csi-driver -n zero-trust-workload-identity-manager -o jsonpath='{.spec.template.spec.containers[*].volumeMounts[?(@.name=="trusted-ca-bundle")]}'
+----
++
+.Example output
+[source,terminal]
+----
+[{{"mountPath":"/etc/pki/ca-trust/extracted/pem","name":"trusted-ca-bundle","readOnly":true}]
+----
+
+. Verify that the source of the CA bundle is the `trusted-ca` config map by running the following command:
++
+[source,terminal]
+----
+$ oc get deployment zero-trust-workload-identity-manager -n zero-trust-workload-identity-manager -o=jsonpath={.spec.template.spec.volumes}
+----
++
+[source,terminal]
+----
+$ oc get statefulset spire-server -n zero-trust-workload-identity-manager -o=jsonpath='{.spec.template.spec.volumes}' | jq '.[] | select(.name=="trusted-ca-bundle")'
+----
++
+[source,terminal]
+----
+$ oc get daemonset spire-agent -n zero-trust-workload-identity-manager -o=jsonpath='{.spec.template.spec.volumes}' | jq '.[] | select(.name=="trusted-ca-bundle")'
+----
++
+[source,terminal]
+----
+$ oc get deployment spire-spiffe-oidc-discovery-provider -n zero-trust-workload-identity-manager -o=jsonpath='{.spec.template.spec.volumes}' | jq '.[] | select(.name=="trusted-ca-bundle")'
+----
++
+.Example output
+[source,terminal]
+----
+{
+  "configMap": {
+    "defaultMode": 420,
+    "items": [
+      {
+        "key": "ca-bundle.crt",
+        "path": "tls-ca-bundle.pem"
+      }
+    ],
+    "name": "trusted-ca"
+  },
+  "name": "trusted-ca-bundle"
+}
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+[id="zero-trust-manager-proxy_additional-resources"]
+== Additional resources
+
+* xref:../../operators/admin/olm-configuring-proxy-support.adoc#olm-configuring-proxy-support[Configuring proxy support in Operator Lifecycle Manager]
+
+
+
+
+= Configuring Zero Trust Workload Identity Manager OIDC Federation
+:_mod-docs-content-type: ASSEMBLY
+[id="zero-trust-manager-oidc-federation"]
+= Zero Trust Workload Identity Manager OIDC federation
+
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+
+:context: zero-trust-manager-oidc-federation
+
+toc::[]
+
+[role="_abstract"]
+Ensure that your workloads can receive verifiable JSON Web Tokens (JWT-SVIDs) and allow external systems, such as cloud providers, to retrieve public keys from the discovery endpoint. Configure {zero-trust-full} to act as an OpenID Connect (OIDC) provider through the SPIRE server.
+
+The following providers are verified to work with SPIRE OIDC federation:
+
+* Azure Entra ID
+
+* Vault
+
+// About the Entra ID OIDC
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="zero-trust-manager-entraid-oidc-about_{context}"]
+
+= About the Entra ID OpenID Connect
+
+[role="_abstract"]
+Integrate Entra ID OpenID Connect (OIDC) with SPIRE to provide workloads with automatic, short-lived cryptographic identities. This configuration allows you to securely authenticate services without maintaining static secrets.
+
+
+
+
+:leveloffset!:
+
+// configure OIDC route
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-create-route-oidc_{context}"]
+= Configuring the external certificate for the managed OIDC discovery provider route
+
+[role="_abstract"]
+Configure the managed OIDC discovery provider route to use an externally managed TLS certificate. By referencing a TLS secret, you can secure the OIDC endpoint with your own certificate credentials.
+
+.Prerequisites
+
+* You have installed {zero-trust-full} 0.2.0 or later.
+
+* You have deployed the SPIRE Server, SPIRE Agent, SPIFFEE CSI Driver, and the SPIRE OIDC Discovery Provider operands in the cluster.
+
+* You have installed the {cert-manager-operator}. For more information, link:https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html-single/security_and_compliance/index#cert-manager-operator-install[Installing the cert-manager Operator for Red{nbsp}Hat OpenShift].
+
+* You have created a `ClusterIssuer` or `Issuer` configured with a publicly trusted CA service. For example, an Automated Certificate Management Environment (ACME) type `Issuer` with the "Let's Encrypt ACME" service. For more information, see link:https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html-single/security_and_compliance/index#cert-manager-operator-issuer-acme[Configuring an ACME issuer]
+
+.Procedure
+
+. Create a `Role` to provide the router service account permissions to read the referenced secret by running the following command:
++
+[source,terminal]
+----
+$ oc create role secret-reader \
+  --verb=get,list,watch \
+  --resource=secrets \
+  --resource-name=$TLS_SECRET_NAME \
+  -n zero-trust-workload-identity-manager
+----
+
+. Create a `RoleBinding` resource to bind the router service account with the newly created Role resource by running the following command:
++
+[source,terminal]
+----
+$ oc create rolebinding secret-reader-binding \
+  --role=secret-reader \
+  --serviceaccount=openshift-ingress:router \
+  -n zero-trust-workload-identity-manager
+----
+
+. Configure the `SpireOIDCDIscoveryProvider` Custom Resource (CR) object to reference the Secret generated in the earlier step by running the following command:
++
+[source,terminal]
+----
+$ oc patch SpireOIDCDiscoveryProvider cluster --type=merge -p='
+spec:
+  externalSecretRef: ${TLS_SECRET_NAME}
+'
+----
+
+.Verification
+
+. In the `SpireOIDCDiscoveryProvider` CR, check if the `ManageRouteReady` condition is set to `True` by running the following command:
++
+[source,terminal]
+----
+$ oc wait --for=jsonpath='{.status.conditions[?(@.type=="ManagedRouteReady")].status}'=True SpireOIDCDiscoveryProvider/cluster --timeout=120s
+----
+
+. Verify that the OIDC endpoint can be accessed securely through HTTPS by running the following command:
++
+[source,terminal]
+----
+$ curl https://$JWT_ISSUER_ENDPOINT/.well-known/openid-configuration
+
+{
+  "issuer": "https://$JWT_ISSUER_ENDPOINT",
+  "jwks_uri": "https://$JWT_ISSUER_ENDPOINT/keys",
+  "authorization_endpoint": "",
+  "response_types_supported": [
+    "id_token"
+  ],
+  "subject_types_supported": [],
+  "id_token_signing_alg_values_supported": [
+    "RS256",
+    "ES256",
+    "ES384"
+  ]
+}%
+----
+
+:leveloffset!:
+
+// disable a route
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-disabling-route_{context}"]
+= Disabling a managed route
+
+[role="_abstract"]
+If you want to fully control the behavior of exposing the OIDC Discovery Provider service, you can disable the managed route based on your requirements.
+
+.Procedure
+
+* To manually configure the OIDC Discovery Provider, set `managedRoute` to `false` by running the following command:
++
+[source,terminal]
+----
+$ oc patch SpireOIDCDiscoveryProvider cluster --type=merge -p='
+spec:
+  managedRoute: "false"
+----
+
+:leveloffset!:
+
+// configure Azure
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-configure-azure_{context}"]
+= Using Entra ID with {azure-first}
+
+[role="_abstract"]
+Configure your {azure-first} environment to enable Entra ID integration with {azure-short}. By defining variables and creating a resource group, you establish the infrastructure needed to securely manage workload identities.
+
+
+.Prerequisites
+
+* You have configured the SPIRE OIDC Discovery Provider Route to serve the TLS certificates from a publicly trusted CA.
+
+.Procedure
+
+. Log in to Azure by running the following command:
++
+[source,terminal]
+----
+$ az login
+----
+
+. Configure variables for your Azure subscription and tenant by running the following commands:
++
+[source,terminal]
+----
+$ export SUBSCRIPTION_ID=$(az account list --query "[?isDefault].id" -o tsv)
+----
++
+[source,terminal]
+----
+$ export TENANT_ID=$(az account list --query "[?isDefault].tenantId" -o tsv)
+----
++
+[source,terminal]
+----
+$ export LOCATION=centralus
+----
+where:
+
+`SUBSCRIPTION_ID`:: Specifies your unique subscription identifier.
+
+`TENANT_ID`:: Specifies the ID for your Azure Active Directory instance.
+
+`LOCATION`:: The Azure region where your resource is created.
+
+. Define resource variable names by running the following commands:
++
+[source,terminal]
+----
+$ export NAME=ztwim
+----
++
+[source,terminal]
+----
+$ export RESOURCE_GROUP="${NAME}-rg"
+----
++
+[source,terminal]
+----
+$ export STORAGE_ACCOUNT="${NAME}storage"
+----
++
+[source,terminal]
+----
+$ export STORAGE_CONTAINER="${NAME}storagecontainer"
+----
++
+[source,terminal]
+----
+$ export USER_ASSIGNED_IDENTITY_NAME="${NAME}-identity"
+----
+where:
+
+`NAME`:: Specifies A base name for all resources.
+
+`RESOURCE_GROUP`:: Specifies the name of the resource group.
+
+`STORAGE_ACCOUNT`:: Specifies the name for the storage account.
+
+`STORAGE_CONTAINER`:: Specifies the name for the storage container.
+
+`USER_ASSIGNED_IDENTITY_NAME`:: Specifies the name for a managed identity.
+
+. Create the resource group by running the following command:
++
+[source,terminal]
+----
+$ az group create \
+  --name "${RESOURCE_GROUP}" \
+  --location "${LOCATION}"
+----
+
+
+:leveloffset!:
+
+// configure azure blog
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-configure-azure-blob_{context}"]
+= Configuring Azure blob storage
+
+[role="_abstract"]
+Create a new {azure-first} storage account and container to provide a dedicated location for your content. Configuring this storage ensures that the {zero-trust-full} can successfully store and retrieve blobs for your environment.
+
+.Procedure
+
+. Create a new storage account that is used to store content by running the following command:
++
+[source,terminal]
+----
+$ az storage account create \
+  --name ${STORAGE_ACCOUNT} \
+  --resource-group ${RESOURCE_GROUP} \
+  --location ${LOCATION} \
+  --encryption-services blob
+----
+
+. Obtain the storage ID for the newly created storage account by running the following command:
++
+[source,terminal]
+----
+$ export STORAGE_ACCOUNT_ID=$(az storage account show -n ${STORAGE_ACCOUNT} -g ${RESOURCE_GROUP} --query id --out tsv)
+----
+
+. Create a storage container inside the newly created storage account to provide a location to support the storage of blobs by running the following command:
++
+[source,terminal]
+----
+$ az storage container create \
+  --account-name ${STORAGE_ACCOUNT} \
+  --name ${STORAGE_CONTAINER} \
+  --auth-mode login
+----
+
+:leveloffset!:
+
+// configure azure managed identity
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-configure-azure-identity_{context}"]
+= Configuring an Azure user managed identity
+
+[role="_abstract"]
+Create a user-assigned managed identity in Azure to manage access control for your resources. You must also obtain the Client ID to associate roles with the service principal.
+
+.Procedure
+
+. Create a new User Managed Identity and then obtain the Client ID of the related Service Principal associated with the User Managed Identity by running the following command:
++
+[source,terminal]
+----
+$ az identity create \
+  --name ${USER_ASSIGNED_IDENTITY_NAME} \
+  --resource-group ${RESOURCE_GROUP}
+----
++
+[source,terminal]
+----
+$ export IDENTITY_CLIENT_ID=$(az identity show --resource-group "${RESOURCE_GROUP}" --name "${USER_ASSIGNED_IDENTITY_NAME}" --query 'clientId' -otsv)
+----
+
+. Retrieve the `CLIENT_ID` of an Azure user-assigned managed identity and save it as an environment variable by running the following command:
++
+[source,terminal]
+----
+$ export IDENTITY_CLIENT_ID=$(az identity show --resource-group "${RESOURCE_GROUP}" --name "${USER_ASSIGNED_IDENTITY_NAME}" --query 'clientId' -otsv)
+----
+
+. Associate a role with the Service Principal associated with the User Managed Identity by running the following command:
++
+[source,terminal]
+----
+$ az role assignment create \
+  --role "Storage Blob Data Contributor" \
+  --assignee "${IDENTITY_CLIENT_ID}" \
+  --scope ${STORAGE_ACCOUNT_ID}
+----
+
+:leveloffset!:
+
+// create demo application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-create-demo-app_{context}"]
+= Creating the demonstration application
+
+[role="_abstract"]
+Create the demonstration application to verify that the entire system functions correctly. This process validates the configuration of your application secrets and namespaces.
+
+.Procedure
+
+. Set the application name and namespace by running the following commands:
++
+[source,terminal]
+----
+$ export APP_NAME=workload-app
+----
++
+[source,terminal]
+----
+$ export APP_NAMESPACE=demo
+----
+
+. Create the namespace by running the following command:
++
+[source,terminal]
+----
+$ oc create namespace $APP_NAMESPACE
+----
+
+. Create the application Secret by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f - << EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: $APP_NAME
+  namespace: $APP_NAMESPACE
+stringData:
+  AAD_AUTHORITY: https://login.microsoftonline.com/
+  AZURE_AUDIENCE: "api://AzureADTokenExchange"
+  AZURE_TENANT_ID: "${TENANT_ID}"
+  AZURE_CLIENT_ID: "${IDENTITY_CLIENT_ID}"
+  BLOB_STORE_ACCOUNT: "${STORAGE_ACCOUNT}"
+  BLOB_STORE_CONTAINER: "${STORAGE_CONTAINER}"
+EOF
+----
+
+:leveloffset!:
+
+// deploy demo application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-deploy-app_{context}"]
+= Deploying the workload application
+
+[role="_abstract"]
+Deploy the workload application to your cluster to validate the {zero-trust-full} environment. This application confirms that the SPIFFE Workload API is functioning and can successfully retrieve JWT tokens.
+
+.Prerequisites
+
+* The demonstration application has been created and deployed.
+
+.Procedure
+
+. To deploy the application, copy the entire command block provided and paste it directly into your terminal. Press *Enter*.
++
+[source,terminal]
+----
+$ oc apply -f - << EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: $APP_NAME
+  namespace: $APP_NAMESPACE
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: $APP_NAME
+  namespace: $APP_NAMESPACE
+spec:
+  selector:
+    matchLabels:
+      app: $APP_NAME
+  template:
+    metadata:
+      labels:
+        app: $APP_NAME
+        deployment: $APP_NAME
+    spec:
+      serviceAccountName: $APP_NAME
+      containers:
+        - name: $APP_NAME
+          image: "registry.redhat.io/ubi9/python-311:latest"
+          command:
+            - /bin/bash
+            - "-c"
+            - |
+              #!/bin/bash
+              pip install spiffe azure-cli
+
+              cat << EOF > /opt/app-root/src/get-spiffe-token.py
+              #!/opt/app-root/bin/python
+              from spiffe import JwtSource
+              import argparse
+              parser = argparse.ArgumentParser(description='Retrieve SPIFFE Token.')
+              parser.add_argument("-a", "--audience", help="The audience to include in the token", required=True)
+              args = parser.parse_args()
+              with JwtSource() as source:
+                jwt_svid = source.fetch_svid(audience={args.audience})
+                print(jwt_svid.token)
+              EOF
+
+              chmod +x /opt/app-root/src/get-spiffe-token.py
+              while true; do sleep 10; done
+          envFrom:
+          - secretRef:
+              name: $APP_NAME
+          env:
+            - name: SPIFFE_ENDPOINT_SOCKET
+              value: unix:///run/spire/sockets/spire-agent.sock
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: spiffe-workload-api
+              mountPath: /run/spire/sockets
+              readOnly: true
+      volumes:
+        - name: spiffe-workload-api
+          csi:
+            driver: csi.spiffe.io
+            readOnly: true
+EOF
+----
+
+.Verification
+. Ensure that the `workload-app` pod is running successfully by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -n $APP_NAMESPACE
+----
++
+.Example output
+[source, terminal]
+----
+NAME                             READY     STATUS      RESTARTS      AGE
+workload-app-5f8b9d685b-abcde    1/1       Running     0             60s
+----
+
+. Retrieve the SPIFFE JWT Token (SVID-JWT):
+
+.. Get the pod name dynamically by running the following command:
++
+[source,terminal]
+----
+$ POD_NAME=$(oc get pods -n $APP_NAMESPACE -l app=$APP_NAME -o jsonpath='{.items[0].metadata.name}')
+----
+
+.. Run the script inside the pod by running the following command:
++
+[source,terminal]
+----
+$ oc exec -it $POD_NAME -n $APP_NAMESPACE -- \
+  /opt/app-root/src/get-spiffe-token.py -a "api://AzureADTokenExchange"
+----
+
+:leveloffset!:
+
+// deploy demo application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-spiffe-identity-federation_{context}"]
+= Configuring Azure with the SPIFFE identity federation
+
+[role="_abstract"]
+Configure {azure-first} with SPIFFE identity federation to enable password-free, automated authentication for the demonstration application. This federates the User Managed Identity with the SPIFFE identity associated with your workload application.
+
+.Procedure
+
+* Federate the identities between the User Managed Identity and the SPIFFE identity associated with the workload application by running the following command:
++
+[source,terminal]
+----
+$ az identity federated-credential create \
+ --name ${NAME} \
+ --identity-name ${USER_ASSIGNED_IDENTITY_NAME} \
+ --resource-group ${RESOURCE_GROUP} \
+ --issuer https://$JWT_ISSUER_ENDPOINT \
+ --subject spiffe://$APP_DOMAIN/ns/$APP_NAMESPACE/sa/$APP_NAME \
+ --audience api://AzureADTokenExchange
+----
+
+:leveloffset!:
+
+// verify access to Azure Blob
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-verify-blob-access_{context}"]
+= Verifying that the application workload can access the content in the Azure Blob Storage
+
+[role="_abstract"]
+Verify that your application workload can connect to the Azure Blob Storage. By uploading a test file, you validate the authentication token and ensure that the workload has the correct permissions.
+
+
+.Prerequisites
+
+* An Azure Blob Storage has been created.
+
+.Procedure
+
+. Retrieve a JWT token from the SPIFFE Workload API by running the following command:
++
+[source,terminal]
+----
+$ oc rsh -n $APP_NAMESPACE deployment/$APP_NAME
+----
+
+. Create and export an environment variable named `TOKEN` by running the following command:
++
+[source,terminal]
+----
+$ export TOKEN=$(/opt/app-root/src/get-spiffe-token.py --audience=$AZURE_AUDIENCE)
+----
+
+. Log in to {azure-short} CLI included within the pod by running the following command:
++
+[source,terminal]
+----
+$ az login --service-principal \
+  -t ${AZURE_TENANT_ID} \
+  -u ${AZURE_CLIENT_ID} \
+  --federated-token ${TOKEN}
+----
+
+. Create a new file with the application workload pod and upload the file to the Blob Storage by running the following command:
++
+[source,terminal]
+----
+$ echo “Hello from OpenShift” > openshift-spire-federated-identities.txt
+----
+
+. Upload a file to the {azure-short} Blog Storage by running the following command:
++
+[source,terminal]
+----
+$ az storage blob upload \
+  --account-name ${BLOB_STORE_ACCOUNT} \
+  --container-name ${BLOB_STORE_CONTAINER} \
+  --name openshift-spire-federated-identities.txt \
+  --file openshift-spire-federated-identities.txt \
+  --auth-mode login
+----
+
+.Verification
+* Confirm the file uploaded successfully by listing the files contained by running the following command:
++
+[source,terminal]
+----
+$ az storage blob list \
+  --account-name ${BLOB_STORE_ACCOUNT} \
+  --container-name ${BLOB_STORE_CONTAINER} \
+  --auth-mode login \
+  -o table
+----
+
+:leveloffset!:
+
+
+// About the Vault OIDC
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="zero-trust-manager-vault-oidc-about_{context}"]
+
+= About Vault OpenID Connect
+
+[role="_abstract"]
+Use Vault OpenID Connect (OIDC) with SPIRE to securely authenticate workloads. Vault uses SPIRE as a trusted OIDC provider to validate workload identities. This configuration enables workloads to receive short-lived tokens to access secrets and perform actions within Vault.
+
+
+
+:leveloffset!:
+
+// Install the Vault OIDC
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-install-vault-oidc_{context}"]
+
+= Installing Vault
+
+[role="_abstract"]
+Install HashiCorp Vault to serve as an OpenID Connect (OIDC) provider. This establishes the necessary infrastructure to manage workload identities securely in your {zero-trust-full} environment.
+
+.Prerequisites
+
+* Configure a route. For more information, see link:https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html/ingress_and_load_balancing/routes#nw-configuring-routes[Configuring routes]
+
+* Helm is installed.
+
+* A command-line JSON processor for easily reading the output from the Vault API.
+
+* A HashiCorp Helm repository is added.
+
+.Procedure
+
+. Create the `vault-helm-value.yaml` file.
++
+[source,yaml]
+----
+global:
+  enabled: true
+  openshift: true
+  tlsDisable: true
+injector:
+  enabled: false
+server:
+  ui:
+    enabled: true
+  image:
+    repository: docker.io/hashicorp/vault
+    tag: "1.19.0"
+  dataStorage:
+    enabled: true
+    size: 1Gi
+  standalone:
+    enabled: true
+    config: |
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+      storage "file" {
+        path = "/vault/data"
+      }
+  extraEnvironmentVars: {}
+----
++
+* The `openshift` field optimizes the deployment for OpenShift-specific security contexts.
+
+* The `tlsDisable` field disables TLS for Kubernetes objects created by the chart.
+
+* The `datastorage.enabled` field creates a 1Gi persistent volume to store Vault data.
+
+* The `standalone.enabled` field deploys a single Vault pod.
+
+* The `tls_disabled` field tells the Vault server to not use TLS.
+
+. Run the `helm install` command:
++
+[source,terminal]
+----
+$ helm install vault hashicorp/vault \
+  --create-namespace -n vault \
+  --values ./vault-helm-value.yaml
+----
+
+. Expose the Vault service by running the following command:
++
+[source,terminal]
+----
+$ oc expose service vault -n vault
+----
+
+. Set the `VAULT_ADDR` environment variable to retrieve the hostname from the new route and then export it by running the following command:
++
+[source,terminal]
+----
+$ export VAULT_ADDR="http://$(oc get route vault -n vault -o jsonpath='{.spec.host}')"
+----
++
+[NOTE]
+====
+`http://` is prepended because TLS is disabled.
+====
+
+.Verification
+
+* To ensure your Vault instance is running, run the following command:
++
+[source,terminal]
+----
+$ curl -s $VAULT_ADDR/v1/sys/health | jq
+----
++
+.Example output
+
+[source,JSON]
+----
+{
+  "initialized": true,
+  "sealed": true,
+  "standby": true,
+  "performance_standby": false,
+  "replication_performance_mode": "disabled",
+  "replication_dr_mode": "disabled",
+  "server_time_utc": 1663786574,
+  "version": "1.19.0",
+  "cluster_name": "vault-cluster-a1b2c3d4",
+  "cluster_id": "5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b"
+}
+----
+
+:leveloffset!:
+
+// Initialize the Vault OIDC
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-initialize-vault-oidc_{context}"]
+
+= Initializing and unsealing Vault
+
+[role="_abstract"]
+To prepare a newly installed Vault server for operation, initialize and unseal it. This process loads the primary encryption key into memory so that Vault can decrypt data and protect other encryption keys.
+
+The steps to initialize a Vault server are:
+
+. Initialize and unseal Vault
+
+. Enable the key-value (KV) secrets engine and store a test secret
+
+. Configure JSON Web Token (JWT) authentication with SPIRE
+
+. Deploy a demonstration application
+
+. Authenticate and retrieve the secret
+
+.Prerequisites
+
+* Ensure that Vault is running.
+
+* Ensure that Vault is not initialized. You can only initialize a Vault server once.
+
+.Procedure
+
+. Open a remote shell into the `vault` pod by running the following command:
++
+[source,terminal]
+----
+$ oc rsh -n vault statefulset/vault
+----
+
+. Initialize Vault to get your unseal key and root token by running the following command:
++
+[source,terminal]
+----
+$ vault operator init -key-shares=1 -key-threshold=1 -format=json
+----
+
+. Export the unseal key and root token you received from the earlier command by running the following commands:
++
+[source,terminal]
+----
+$ export UNSEAL_KEY=<Your-Unseal-Key>
+----
++
+[source,terminal]
+----
+$ export ROOT_TOKEN=<Your-Root-Token>
+----
+
+. Unseal Vault using your unseal key by running the following command:
++
+[source,terminal]
+----
+$ vault operator unseal -format=json $UNSEAL_KEY
+----
+
+. Exit the pod by entering `exit`.
+
+.Verification
+
+* To verify that the Vault pod is ready, run the following command:
++
+[source,terminal]
+----
+$ oc get pod -n vault
+----
++
+.Example output
+[source, terminal]
+----
+NAME        READY        STATUS      RESTARTS     AGE
+vault-0     1/1          Running     0            65d
+----
+
+
+
+
+
+
+:leveloffset!:
+
+// Enable kv secret
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-vault-enable-kv_{context}"]
+= Enabling the key-value secrets engine and store a test secret
+
+[role="_abstract"]
+Enable the key-value secrets engine to create a secure, centralized location for managing credentials. You can also store a test secret to verify that the engine is working.
+
+
+.Prerequisites
+
+* Make sure that Vault is initialized and unsealed.
+
+.Procedure
+
+. Open another shell session in the `Vault` pod by running the following command:
++
+[source,terminal]
+----
+$ oc rsh -n vault statefulset/vault
+----
+
+. Export your root token again within this new session and log in by running the following command:
++
+[source,terminal]
+----
+$ export ROOT_TOKEN=<Your-Root-Token>
+----
++
+[source,terminal]
+----
+$ vault login "${ROOT_TOKEN}"
+----
+
+. Enable the KV secrets engine at the `secret/` path and create a test secret by running the following commands:
++
+[source,terminal]
+----
+$ export NAME=ztwim
+----
++
+[source,terminal]
+----
+$ vault secrets enable -path=secret kv
+----
++
+[source,terminal]
+----
+$ vault kv put secret/$NAME version=v0.1.0
+----
+
+.Verification
+
+* To verify that the secret is stored correctly, run the following command:
++
+[source,terminal]
+----
+$ vault kv get secret/$NAME
+----
+
+:leveloffset!:
+
+// Authenticate the JWT
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-vault-authenticate-jwt_{context}"]
+= Configuring JSON Web Token authentication with SPIRE
+
+[role="_abstract"]
+To help your applications securely log in to Vault using SPIFFE identities, configure JSON Web Token (JWT) authentication.
+
+.Prerequisites
+
+* Make sure that Vault is initialized and unsealed.
+
+* Ensure that a test secret is stored in the key-value secrets engine.
+
+.Procedure
+
+. On your local machine, retrieve the SPIRE Certificate Authority (CA) bundle and save it to a file by running the following command:
++
+[source,terminal]
+----
+$ oc get cm -n zero-trust-workload-identity-manager spire-bundle -o jsonpath='{ .data.bundle\.crt }' > oidc_provider_ca.pem
+----
+
+. Back in the Vault pod shell, create a temporary file and paste the contents of `oidc_provider_ca.pem` into it by running the following command:
++
+[source,terminal]
+----
+$ cat << EOF > /tmp/oidc_provider_ca.pem
+-----BEGIN CERTIFICATE-----
+<Paste-Your-Certificate-Content-Here>
+-----END CERTIFICATE-----
+EOF>
+----
+
+. Set up the necessary environment variables for the JWT configuration by running the following commands:
++
+[source,terminal]
+----
+$ export APP_DOMAIN=<Your-App-Domain>
+----
++
+[source,terminal]
+----
+$ export JWT_ISSUER_ENDPOINT="oidc-discovery.$APP_DOMAIN"
+----
++
+[source,terminal]
+----
+$ export OIDC_URL="https://$JWT_ISSUER_ENDPOINT"
+----
++
+[source,terminal]
+----
+$ export OIDC_CA_PEM="$(cat /tmp/oidc_provider_ca.pem)"
+----
+
+. Crate a new environment variable by running the following command:
++
+[source,terminal]
+----
+$ export ROLE="${NAME}-role"
+----
+
+. Enable the JWT authentication method by running the following command:
++
+[source,terminal]
+----
+$ vault auth enable jwt
+----
+
+. Configure you ODIC authentication method by running the following command:
++
+[source,terminal]
+----
+$ vault write auth/jwt/config \
+  oidc_discovery_url=$OIDC_URL \
+  oidc_discovery_ca_pem="$OIDC_CA_PEM" \
+  default_role=$ROLE
+----
+
+. Create a policy named `ztwim-policy` by running the following command:
++
+[source,terminal]
+----
+$ export POLICY="${NAME}-policy"
+----
+
+. Grant read access to the secret you created earlier by running the following command:
++
+[source,terminal]
+----
+$ vault policy write $POLICY -<<EOF
+path "secret/$NAME" {
+    capabilities = ["read"]
+}
+EOF
+----
+
+. Create the following environment variables by running the following commands:
++
+[source,terminal]
+----
+$ export APP_NAME=client
+----
++
+[source,terminal]
+----
+$ export APP_NAMESPACE=demo
+----
++
+[source,terminal]
+----
+$ export AUDIENCE=$APP_NAME
+----
+
+. Create a JWT role that binds the policy to workload with a specific SPIFFE ID by running the following command:
++
+[source,terminal]
+----
+$ vault write auth/jwt/role/$ROLE -<<EOF
+{
+  "role_type": "jwt",
+  "user_claim": "sub",
+  "bound_audiences": "$AUDIENCE",
+  "bound_claims_type": "glob",
+  "bound_claims": {
+    "sub": "spiffe://$APP_DOMAIN/ns/$APP_NAMESPACE/sa/$APP_NAME"
+  },
+  "token_ttl": "24h",
+  "token_policies": "$POLICY"
+}
+EOF
+----
+
+:leveloffset!:
+
+// deploy a demonstration application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-vault-deploy-demo_{context}"]
+
+= Deploying a demonstration application
+
+[role="_abstract"]
+Deploy a demonstration application to create a simple client that uses its SPIFFE identity to authenticate with Vault. By doing this you can verify that the client can successfully authenticate using the configured identity.
+
+.Procedure
+
+. On your local machine, set the environment variables for your application by running the following commands:
++
+[source,terminal]
+----
+$ export APP_NAME=client
+----
++
+[source,terminal]
+----
+$ export APP_NAMESPACE=demo
+----
++
+[source,terminal]
+----
+$ export AUDIENCE=$APP_NAME
+----
+
+. Apply the Kubernetes manifest to create the namespace, service account, and deployment for the demo app by running the following command. This deployment mounts the SPIFFE CSI driver socket.
++
+[source,terminal]
+----
+$ oc apply -f - <<EOF
+# ... (paste the full YAML from your provided code here) ...
+EOF>>
+----
+
+.Verification
+
+* Verify that the client deployment is ready by running the following command:
++
+[source,terminal]
+----
+$ oc get deploy -n $APP_NAMESPACE
+----
++
+.Example output
+[source, terminal]
+----
+NAME             READY        UP-TO-DATE      AVAILABLE     AGE
+frontend-app     2/2          2               2             120d
+backend-api      3/3          3               3             120d
+----
+
+:leveloffset!:
+
+// authenticate and retrieve secret
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-vault-authenticate-secret_{context}"]
+= Authenticating and retrieving the secret
+
+[role="_abstract"]
+Use the demonstration application to fetch a JWT token from the SPIFFE Workload API. Use the token to authenticate with Vault so that you can securely retrieve the secret and verify the workflow.
+
+.Procedure
+
+. Fetch a JWT-SVID by running the following command inside the running client pod:
++
+[source,terminal]
+----
+$ oc -n $APP_NAMESPACE exec -it $(oc get pod -o=jsonpath='{.items[*].metadata.name}' -l app=$APP_NAME -n $APP_NAMESPACE) \
+  -- /opt/spire/bin/spire-agent api fetch jwt \
+  -socketPath /run/spire/sockets/spire-agent.sock \
+  -audience $AUDIENCE
+----
+
+. Copy the token from the output and export it as an environment variable on your local machine by running the following command:
++
+[source,terminal]
+----
+$ export IDENTITY_TOKEN=<Your-JWT-Token>
+----
+
+. Crate a new environment variable by running the following command:
++
+[source,terminal]
+----
+$ export ROLE="${NAME}-role"
+----
+
+. Use `curl` to send the JWT token to the Vault login endpoint to get a Vault client token by running the following command:
++
+[source,terminal]
+----
+$ VAULT_TOKEN=$(curl -s --request POST --data '{ "jwt": "'"${IDENTITY_TOKEN}"'", "role": "'"${ROLE}"'"}' "${VAULT_ADDR}"/v1/auth/jwt/login | jq -r '.auth.client_token')
+----
+
+.Verification
+
+* Use the newly acquired Vault token to read the secret from the KV store by running the following command:
++
+[source,terminal]
+----
+$ curl -s -H "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/secret/$NAME | jq
+----
++
+You should see the contents of the secret (`"version": "v0.1.0"`) in the output, confirming the entire workflow is successful
+
+
+:leveloffset!:
+
+
+
+
+= Configuring Zero Trust Workload Identity Manager SPIRE Federation
+:_mod-docs-content-type: ASSEMBLY
+[id="zero-trust-manager-spire-federation_{context}"]
+= Zero Trust Workload Identity Manager SPIRE federation
+
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+
+:context: zero-trust-manager-spire-federation
+
+toc::[]
+
+[role="_abstract"]
+Configure SPIRE federation to enable workloads in different trust domains to securely authenticate each other across clusters, cloud providers, and organizational boundaries. By establishing trust relationships between separate SPIRE deployments, you can build a zero-trust architecture that spans multiple environments without compromising security or sharing secrets.
+
+Federation works by securely sharing trust bundles between SPIRE servers through dedicated federation endpoints. Each SPIRE deployment maintains its own trust domain and cryptographic identity, while being able to verify identities from federated trust domains. This approach enables cross-cluster communication, multi-cloud deployments, and secure integration with external partners.
+
+Setting up SPIRE federation involves the following high-level steps:
+
+. Choose an authentication profile: Select either `https_spiffe` or `https_web`.
+
+. Configure the bundle endpoints: Each cluster exposes its trust bundle through a federation endpoint secured by the chosen authentication profile.
+
+. Bootstrap the initial trust: Manually fetch and configure the initial trust bundle from each remote cluster.
+
+. Establish federation relationships: Create `ClusterFederatedTrustDomain` resources to define which clusters trust each other.
+
+. Configure automatic synchronization: The SPIRE Controller Manager automatically keeps trust bundles synchronized after initial setup.
+
+
+// configure endpoints
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="zero-trust-manager-configure-endpoints_{context}"]
+= Understanding bundle endpoint profiles
+
+[role="_abstract"]
+The bundle endpoint profile determines how your cluster exposes its trust bundle to other SPIRE deployments and how it authenticates remote clusters accessing the bundle. Choose the profile that best matches your security requirements and infrastructure.
+
+The {zero-trust-full} supports two authentication profiles for federation:
+
+https_spiffe:: Uses SPIFFE-based TLS authentication. The SPIRE server presents its own SVID (SPIFFE Verifiable Identity Document) to authenticate itself to remote SPIRE servers. This profile provides strong cryptographic identity verification and is ideal for federation between SPIRE deployments.
+
+https_web:: Uses standard Web PKI (X.509 certificates from public or private certificate Authorities). This profile supports both automatic certificate management via ACME (Let's Encrypt) and manual certificate management using tools like cert-manager.
+
+The following table summarizes the key differences between the two profiles:
+
+[cols="2,3,3",options="header"]
+|===
+|Criteria
+|https_spiffe
+|https_web
+
+|Authentication method
+|SPIFFE SVID (TLS)
+|X.509 certificate from CA
+
+|Certificate management
+|Automatic (SPIRE-managed)
+|ACME (automatic) or manual
+
+|Trust model
+|SPIFFE trust domain
+|Web PKI / CA trust
+
+|Best for
+|Internal SPIRE-to-SPIRE federation
+|External federation, public endpoints
+
+|Security level
+|Very high (cryptographic identity)
+|High (CA-based trust)
+
+|Setup complexity
+|Medium (requires SPIFFE IDs)
+|Low (ACME) to Medium (manual certs)
+|===
+
+[IMPORTANT]
+====
+After enablement, federation cannot be disabled. The bundle endpoint profile is immutable once configured. Changing the profile or disabling federation requires reinstallation of the system. However, peer configurations (`federatesWith`) remain dynamic and can be added or removed at any time. Plan your profile selection carefully based on your long-term federation requirements.
+====
+
+:leveloffset!:
+
+// configure YAML file
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="zero-trust-manager-config-example_{context}"]
+= Federation configuration examples
+
+[role="_abstract"]
+The following examples demonstrate different SPIRE federation configurations. Use these as templates when setting up federation between your clusters.
+
+Example 1: Using ACME for automatic certificate management::
+
+The following example shows how to configure federation using Let's Encrypt for automatic certificate provisioning and renewal:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: cluster1.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_web
+      refreshHint: 300
+      httpsWeb:
+        acme:
+          directoryUrl: https://acme-v02.api.letsencrypt.org/directory
+          domainName: federation.apps.cluster1.example.com
+          email: admin@example.com
+          tosAccepted: "true"
+    federatesWith:
+      - trustDomain: cluster2.example.com
+        bundleEndpointUrl: https://federation.apps.cluster2.example.com
+        bundleEndpointProfile: https_web
+      - trustDomain: cluster3.example.com
+        bundleEndpointUrl: https://federation.apps.cluster3.example.com
+        bundleEndpointProfile: https_web
+    managedRoute: "true"
+----
+
+* The `profile` field uses `https_web` profile for Web PKI certificate-based authentication.
+
+* The `directoryURL` field is used for the production directory. For testing, use staging URL `https://acme-staging-v02.api.letsencrypt.org/directory`
+
+Example 2: Using manual certificate management with cert-manager::
+
+The following example shows how to configure federation using externally managed certificates:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: cluster1.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_web
+      refreshHint: 300
+      httpsWeb:
+        servingCert:
+          fileSyncInterval: 86400
+          externalSecretRef: spire-server-federation-tls
+    federatesWith:
+      - trustDomain: cluster2.example.com
+        bundleEndpointUrl: https://federation.apps.cluster2.example.com
+        bundleEndpointProfile: https_web
+      - trustDomain: cluster3.example.com
+        bundleEndpointUrl: https://federation.apps.cluster3.example.com
+        bundleEndpointProfile: https_web
+    managedRoute: "true"
+----
+
+* The `fileSyncInterval` field checks for certificate updates every 24 hours.
+
+* The `externalSecretRef` field is the name of the Kubernetes Secret containing `tls.crt` and `tls.key`
+
+Example 3: Using https_spiffe profile for SPIRE-to-SPIRE federation::
+
+The following example shows how to configure federation using SPIFFE-based TLS authentication:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: cluster1.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_spiffe
+      refreshHint: 300
+    federatesWith:
+      - trustDomain: cluster2.example.com
+        bundleEndpointUrl: https://federation.apps.cluster2.example.com
+        bundleEndpointProfile: https_spiffe
+        endpointSpiffeId: spiffe://cluster2.example.com/spire/server
+      - trustDomain: cluster3.example.com
+        bundleEndpointUrl: https://federation.apps.cluster3.example.com
+        bundleEndpointProfile: https_spiffe
+        endpointSpiffeId: spiffe://cluster3.example.com/spire/server
+    managedRoute: "true"
+----
+
+* The `profile` field uses `https_spiffe` profile for SPIFFE-based TLS authentication.
+
+* The `endpointSiffeId` field contains the SPIFFE ID of the remote SPIRE server, required for identity validation.
+
+Example 4: Mixed federation with multiple authentication profiles::
+
+The following example shows a cluster federating with multiple remote clusters using different authentication profiles:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: internal-cluster.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_spiffe
+      refreshHint: 300
+    federatesWith:
+      # Internal cluster using SPIFFE TLS
+      - trustDomain: dev-cluster.example.com
+        bundleEndpointUrl: https://federation.apps.dev-cluster.example.com
+        bundleEndpointProfile: https_spiffe
+        endpointSpiffeId: spiffe://dev-cluster.example.com/spire/server
+      # External partner using Web PKI
+      - trustDomain: partner.example.com
+        bundleEndpointUrl: https://federation.partner.example.com
+        bundleEndpointProfile: https_web
+      # Another external partner using Web PKI
+      - trustDomain: vendor.example.com
+        bundleEndpointUrl: https://spire-federation.vendor.example.com
+        bundleEndpointProfile: https_web
+    managedRoute: "true"
+----
+
+* The `profile` field cluster exposes its bundle using `https_spiffe` profile.
+
+* The `bundleEndpointProfile` field cluster exposes its bundle using `https_spiffe` profile.
+
+
+
+
+:leveloffset!:
+
+// federation configuration
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-federation-configuration_{context}"]
+= Configuring SPIRE federation with the https_spiffe profile
+
+[role="_abstract"]
+The {zero-trust-full} includes SPIRE Federation support, allowing multiple independent SPIRE deployments to establish trust relationships. This procedure demonstrates how to configure federation using the `https_spiffe` profile, which uses SPIFFE-based TLS authentication between SPIRE servers.
+
+
+.Prerequisites
+
+* You have installed the OpenShift CLI (`oc`).
+
+* You have installed the {zero-trust-full} on all clusters that will participate in the federation.
+
+* You have `cluster-admin` privileges on all participating clusters.
+
+* You have network connectivity between the clusters you intend to federate.
+
+.Procedure
+
+. Configure the `SpireServer` custom resource on each cluster to enable federation with the `https_spiffe` profile. The `https_spiffe` profile uses SPIFFE-based TLS authentication, where SPIRE servers authenticate to each other using their own SPIFFE Verifiable Identity Documents (SVIDs).
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: cluster1.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_spiffe
+      refreshHint: 300
+    managedRoute: "true"
+----
+
+* The `spec.trustDomain` field sets a unique trust domain for each cluster.
+
+* The `spec.federation.bundleEnpoint.profile` field uses the `https_spiffe` profile for SPIFFE-based TLS authentication.
+
+* The `spec.federation.bundleEndpoint.refreshHint` field suggests intervals (in seconds) for remote servers to refresh the trust bundle. Range: 60-3600 seconds.
+
+* The `spec.federation.managedRoute` field enables automatic route creation by the Operator.
+
+. Apply the configuration changes by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f spire-server.yaml
+----
+
+. Check the status of the SPIRE Server by entering the following command. Wait for the `Ready` status to be returned.
++
+[source,terminal]
+----
+$ oc get spireserver cluster -w
+----
+
+. Verify that the federation route has been created:
++
+[source,terminal]
+----
+$ oc get route -n zero-trust-workload-identity-manager | grep federation
+----
++
+.Example output
+[source,terminal]
+----
+NAME                      HOST/PORT                                    PATH   SERVICES        PORT    TERMINATION
+spire-server-federation   federation.apps.cluster1.example.com               spire-server     8443    passthrough
+----
+
+. Fetch the trust bundle from each remote cluster's federation endpoint:
++
+[source,terminal]
+----
+$  curl -k https://federation.apps.cluster2.example.com > cluster2-bundle.json
+----
++
+[NOTE]
+====
+For `https_spiffe` profile, you might need to use the `-k` flag if the certificate is not trusted by your system's CA bundle:
+====
++
+The response contains the trust bundle in JSON Web Key Set (JWKS) format:
++
+.Example trust bundle
+[source,json]
+----
+{
+  "keys": [
+    {
+      "use": "x509-svid",
+      "kty": "RSA",
+      "n": "...",
+      "e": "AQAB",
+      "x5c": ["..."]
+    }
+  ],
+  "spiffe_sequence": 1,
+  "refresh_hint": 300
+}
+----
+
+. Create `ClusterFederatedTrustDomain` resources for each remote trust domain.
++
+.. On Cluster 1, create a resource to federate with Cluster 2:
++
+[source,yaml]
+----
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterFederatedTrustDomain
+metadata:
+  name: federation-to-cluster2
+spec:
+  trustDomain: <CLUSTER2_APPS_DOMAIN>
+  bundleEndpointURL: https://federation.<CLUSTER2_APPS_DOMAIN>
+  bundleEndpointProfile:
+    type: https_spiffe
+    endpointSPIFFEID: spiffe://<CLUSTER2_APPS_DOMAIN>/spire/server
+  className: zero-trust-workload-identity-manager-spire
+  trustDomainBundle: |
+    {
+      "keys": [
+        {
+          "use": "x509-svid",
+          "kty": "RSA",
+          "n": "...",
+          "e": "AQAB",
+          "x5c": ["..."]
+        }
+      ],
+      "spiffe_sequence": 1
+    }
+----
++
+where
+
+`<CLUSTER2_APPS_DOMAIN>`:: Specifies the trust domain of the external cluster you are federating with.
+
+`spec.bundleEndpointProfile.endpointSPIFFEID`:: Specifies the SPIFFE ID of the remote SPIRE server. Required for `https_spiffe` profile to validate the remote server's identity.
+
+`spec.trustDomainBundle`:: Specifies the complete trust bundle JSON that you fetched in the previous step.
+
+`spec.className`:: Specifies the name of a class to watch CRs for. Spire-controller-manager watches the resource only if `spec.className` is set to `zero-trust-workload-identity-manager-spire`.
+
+. Apply the `ClusterFederatedTrustDomain` resource by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f clusterfederatedtrustdomain.yaml
+----
+
+. Repeat steps 5-7 on each cluster for every remote cluster it should federate with. For bidirectional federation, each cluster needs a `ClusterFederatedTrustDomain` resource for every other cluster.
+
+. Update the `SpireServer` resource on each cluster to add the `federatesWith` configuration:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: cluster1.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_spiffe
+      refreshHint: 300
+    federatesWith:
+      - trustDomain: cluster2.example.com
+        bundleEndpointUrl: https://federation.apps.cluster2.example.com
+        bundleEndpointProfile: https_spiffe
+        endpointSpiffeId: spiffe://cluster2.example.com/spire/server
+      - trustDomain: cluster3.example.com
+        bundleEndpointUrl: https://federation.apps.cluster3.example.com
+        bundleEndpointProfile: https_spiffe
+        endpointSpiffeId: spiffe://cluster3.example.com/spire/server
+    managedRoute: "true"
+----
+
+* The `spec.federation.federatesWith` field lists all remote trust domains this cluster should federate with.
+
+. Apply the updated configuration by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f spireserver.yaml
+----
+
+.Verification
+
+. Verify that the `ClusterFederatedTrustDomain` resources have been created by running the following command:
++
+[source,terminal]
+----
+$ oc get clusterfederatedtrustdomains
+----
++
+.Example output
+[source,terminal]
+----
+NAME                  TRUST DOMAIN           ENDPOINT URL                                      AGE
+cluster2-federation   cluster2.example.com   https://federation.apps.cluster2.example.com     5m
+cluster3-federation   cluster3.example.com   https://federation.apps.cluster3.example.com     5m
+----
+
+. Check the status of a `ClusterFederatedTrustDomain` to ensure bundle synchronization is working by running the following command:
++
+[source,terminal]
+----
+$ oc describe clusterfederatedtrustdomain cluster2-federation
+----
++
+Look for successful status conditions indicating that the trust bundle has been synchronized.
+
+. Verify that the federation endpoint is accessible by running the following command:
++
+[source,terminal]
+----
+$ curl https://federation.apps.cluster1.example.com
+----
++
+You should receive a JSON response containing the trust bundle.
+
+. Check the SPIRE Server logs to confirm federation is active by running the following command:
++
+[source,terminal]
+----
+$ oc logs -n zero-trust-workload-identity-manager \
+    statefulset/spire-server -c spire-server --tail=50
+----
++
+Look for log messages indicating successful bundle synchronization with federated trust domains.
+
+
+
+:leveloffset!:
+
+// automatic management
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-automatic-management_{context}"]
+= Using SPIRE federation with Automatic Certificate Management Environment protocol
+
+[role="_abstract"]
+Using SPIRE federation with Automatic Certificate Management Environment (ACME) protocol provides automatic certificate provisioning from Let's Encrypt. ACME also enables automatic certificate renewal before expiration, eliminating manual certificate management overhead.
+
+.Prerequisites
+
+* You have installed the {zero-trust-full} on all clusters that will participate in the federation.
+
+* You have installed the OpenShift CLI (`oc`).
+
+* You have `cluster-admin` privileges on all participating clusters.
+
+* Your federation endpoints must be publicly accessible for Let's Encrypt HTTP-01 challenge validation.
+
+* You have network connectivity between all federated clusters.
+
+
+.Procedure
+
+. Configure the `SpireServer` custom resource on each cluster to enable federation with ACME certificate management.
++
+Create or update your `SpireServer` resource with the federation configuration:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: cluster1.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_web
+      refreshHint: 300
+      httpsWeb:
+        acme:
+          directoryUrl: https://acme-v02.api.letsencrypt.org/directory
+          domainName: federation.apps.cluster1.example.com
+          email: admin@example.com
+          tosAccepted: "true"
+    managedRoute: "true"
+----
+
+* The `spec.trustDomain` field sets a unique trust domain for each cluster (for example, `cluster1.example.com`, `cluster2.example.com`).
+
+* The `spec.federation.bundleEndpoint.profile` field uses the `https_web` profile for ACME-based certificate management.
+
+* The `spec.federation.bundleEndpoint.httpsWeb.acme.directoryUrl` field contains the Let's Encrypt production directory URL. For testing, use: `https://acme-staging-v02.api.letsencrypt.org/directory`.
+
+* The `spec.federation.bundleEndpoint.httpsWeb.acme.domainName` field is the domain name where your federation endpoint is accessible. This automatically sets to `federation.<cluster-apps-domain>` if `managedRoute` is set to "true".
+
+* The `spec.federation.bundleEndpoint.httpsWeb.acme.email` field is your email address for ACME account registration and certificate expiration notifications.
+
+* The `spec.federation.bundleEndpoint.httpsWeb.acme.tosAccepted` field accepts the Let's Encrypt Terms of Service.
+
+* The `spec.federation.managedRoute` field enables an automatic route creation by the operator for the federation bundle endpoint.
+
+. Apply the configuration to each cluster by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f spireserver.yaml
+----
+
+. Check the status of the SPIRE Server by entering the following command. Wait for the `Ready` status to be returned before proceeding to the next step.
++
+[source,terminal]
+----
+$ oc get spireserver cluster -w
+----
++
+.Example output
+[source,terminal]
+----
+NAME      STATUS   AGE
+cluster   Ready    5m
+----
+
+. Verify that the federation route has been created by running the following command:
++
+[source,terminal]
+----
+$ oc get route -n zero-trust-workload-identity-manager | grep federation
+----
++
+.Example output
+[source,terminal]
+----
+NAME                      HOST/PORT                                          PATH   SERVICES        PORT   TERMINATION
+spire-server-federation   federation.apps.cluster1.example.com                     spire-server     8443    passthrough
+----
+
+. On each cluster, fetch the trust bundle from the federation endpoint by running the following command:
++
+[source,terminal]
+----
+$ curl https://federation.apps.cluster1.example.com > cluster1-bundle.json
+----
++
+The response contains the trust bundle in JSON Web Key Set (JWKS) format:
++
+.Example trust bundle
+[source,json]
+----
+{
+  "keys": [
+    {
+      "use": "x509-svid",
+      "kty": "RSA",
+      "n": "...",
+      "e": "AQAB",
+      "x5c": ["..."]
+    }
+  ],
+  "spiffe_sequence": 1,
+  "refresh_hint": 300
+}
+----
+
+. Create `ClusterFederatedTrustDomain` resources to establish federation relationships.
++
+.. On Cluster 1, create resources to federate with Cluster 2 and Cluster 3:
++
+[source,yaml]
+----
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterFederatedTrustDomain
+metadata:
+  name: cluster2-federation
+spec:
+  trustDomain: cluster2.example.com
+  bundleEndpointURL: https://federation.apps.cluster2.example.com
+  bundleEndpointProfile:
+    type: https_web
+  className: zero-trust-workload-identity-manager-spire
+  trustDomainBundle: |
+    {
+      "keys": [...],
+      "spiffe_sequence": 1
+    }
+---
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterFederatedTrustDomain
+metadata:
+  name: cluster3-federation
+spec:
+  trustDomain: cluster3.example.com
+  bundleEndpointURL: https://federation.apps.cluster3.example.com
+  bundleEndpointProfile:
+    type: https_web
+   className: zero-trust-workload-identity-manager-spire
+  trustDomainBundle: |
+    {
+      "keys": [...],
+      "spiffe_sequence": 1
+    }
+----
+
+* The `spec.trustDomainBundle` field contains the complete trust bundle JSON that you fetched using `curl` in step 5.
+
+* The `spec.className` field contains the name of a class to watch CRs for. Spire-controller-manager watches the resource only if `spec.className` is set to `zero-trust-workload-identity-manager-spire`.
+
+. Apply the `ClusterFederatedTrustDomain` resources by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f cluster-federated-trust-domains.yaml
+----
+
+. Repeat steps 6 and 7 on each cluster to establish bidirectional federation. Each cluster needs `ClusterFederatedTrustDomain` resources for every other cluster it federates with.
+
+. Update the `SpireServer` resource on each cluster to add the `federatesWith` configuration:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  # ... existing configuration ...
+  federation:
+    bundleEndpoint:
+      # ... existing bundleEndpoint configuration ...
+    federatesWith:
+      - trustDomain: cluster2.example.com
+        bundleEndpointUrl: https://federation.apps.cluster2.example.com
+        bundleEndpointProfile: https_web
+      - trustDomain: cluster3.example.com
+        bundleEndpointUrl: https://federation.apps.cluster3.example.com
+        bundleEndpointProfile: https_web
+    managedRoute: "true"
+----
+
+* The `spec.federation.federatesWith` field lists all remote trust domains this cluster should federate with.
+
+. Apply the updated configuration by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f spireserver.yaml
+----
+
+.Verification
+
+. Verify that the `ClusterFederatedTrustDomain` resources have been created by running the following command:
++
+[source,terminal]
+----
+$ oc get clusterfederatedtrustdomains
+----
++
+.Example output
+[source,terminal]
+----
+NAME                  TRUST DOMAIN          ENDPOINT URL                                   AGE
+cluster2-federation   cluster2.example.com  https://federation.apps.cluster2.example.com   5m
+cluster3-federation   cluster3.example.com  https://federation.apps.cluster3.example.com   5m
+----
+
+. Check the status of a `ClusterFederatedTrustDomain` to ensure bundle synchronization is working by running the following command:
++
+[source,terminal]
+----
+$ oc describe clusterfederatedtrustdomain cluster2-federation
+----
++
+Look for `Successful` status conditions indicating that the trust bundle has been synchronized.
+
+. Verify that the federation endpoint is accessible and serving the trust bundle by running the following command:
++
+[source,terminal]
+----
+$ curl https://federation.apps.cluster1.example.com
+----
++
+You should receive a JSON response containing the trust bundle.
+
+. Check the SPIRE Server logs to confirm federation is active by running the following command:
++
+[source,terminal]
+----
+$ oc logs -n zero-trust-workload-identity-manager deployment/spire-server -c spire-server --tail=50
+----
++
+Look for log messages indicating successful bundle synchronization with federated trust domains.
+
+. Verify that all SPIRE components are running by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                    READY   STATUS    RESTARTS   AGE
+spire-agent-abcde       1/1     Running   0          10m
+spire-server-0          2/2     Running   0          10m
+----
+
+. Optional: Test cross-cluster workload authentication by deploying workloads with SPIFFE identities on different clusters and verifying they can authenticate to each other using the federated trust.
+
+
+
+:leveloffset!:
+
+// manual management
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-manual-management_{context}"]
+= Using SPIRE federation with manual certificate management
+
+[role="_abstract"]
+You can use SPIRE federation with custom certificate management using cert-manager or other certificate providers. This approach provides flexibility for organizations that require control over certificate issuance, support for internal certificate authorities (CAs), or integration with existing certificate management infrastructure.
+
+.Prerequisites
+
+* You have installed the {zero-trust-full} on all clusters that will participate in the federation.
+
+* You have installed the OpenShift CLI (`oc`).
+
+* You have `cluster-admin` privileges on all participating clusters.
+
+* You have installed the {cert-manager-operator}. For more information, see link:https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html/security_and_compliance/cert-manager-operator-for-red-hat-openshift[cert-manager Operator for Red Hat OpenShift].
+
+* Your federation endpoints must be publicly accessible for certificate validation.
+
+* You have network connectivity between all federated clusters.
+
+.Procedure
+
+. Install the cert-manager Operator on the cluster where you want to use externally managed certificates.
++
+Create a namespace and install the operator:
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager-operator
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: openshift-cert-manager-operator
+  namespace: cert-manager-operator
+spec:
+  upgradeStrategy: Default
+---
+apiVersion: operators.coreos.com/stable-v1
+kind: Subscription
+metadata:
+  name: openshift-cert-manager-operator
+  namespace: cert-manager-operator
+spec:
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  name: openshift-cert-manager-operator
+  channel: stable-v1
+----
+
+. Apply the cert-manager installation by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f cert-manager-install.yaml
+----
+
+. Check the status of the cert-manager Operator by entering the following command:
++
+[source,terminal]
+----
+$ oc get pods -n cert-manager
+----
++
+All cert-manager pods should be in `Running` status.
+
+. Create an Issuer for certificate provisioning.
++
+For Let's Encrypt with HTTP-01 challenge:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-http01
+  namespace: zero-trust-workload-identity-manager
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-account-key
+    solvers:
+      - http01:
+          ingress:
+            ingressClassName: openshift-default
+----
++
+Alternatively, for an internal CA:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: internal-ca
+  namespace: zero-trust-workload-identity-manager
+spec:
+  ca:
+    secretName: internal-ca-key-pair
+----
+
+. Apply the Issuer by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f issuer.yaml
+----
+
+. Determine the federation endpoint domain name.
++
+The federation route follows a predictable naming pattern if `managedRoute` is set to `true`. Get your cluster's application domain by running the following command:
++
+[source,terminal]
+----
+$ CLUSTER_DOMAIN=$(oc get ingresses.config/cluster -o jsonpath='{.spec.domain}')
+$ FEDERATION_DOMAIN="federation.${CLUSTER_DOMAIN}"
+$ echo "Federation domain will be: $FEDERATION_DOMAIN"
+----
++
+.Example output
+[source,terminal]
+----
+Federation domain will be: federation.apps.cluster1.example.com
+----
++
+[NOTE]
+====
+The federation route is created automatically if `managedRoute` is set to `true` when you apply the `SpireServer` configuration in a later step. The route name is `spire-server-federation` and the hostname is `federation.<cluster-apps-domain>`.
+====
+
+. Create a Certificate resource to request a TLS certificate.
++
+Use the federation domain determined in the previous step:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: spire-server-federation-tls
+  namespace: zero-trust-workload-identity-manager
+spec:
+  secretName: spire-server-federation-tls
+  duration: 2160h
+  renewBefore: 360h
+  commonName: federation.apps.cluster1.example.com
+  dnsNames:
+    - federation.apps.cluster1.example.com
+  usages:
+    - server auth
+    - digital signature
+    - key encipherment
+  issuerRef:
+    kind: Issuer
+    name: letsencrypt-http01
+----
+
+* The `secretName` field must match the `externalSecretRef` value in SpireServer.
+
+* The `duration` field shows how long a certificate is valid. Certificates are valid for 90 days.
+
+* The `renewBefore` field shows how many days a certificate must be renewed before it expires. Renew a certificate 15 days before expiration.
+
+* The `commonName` field must be replaced with your actual federation domain from the previous step.
+
+* The `dnsNames` field must match the `commonName` and the actual route `hostname` that was created.
+
+* The `name` field must reference the Issuer that was created earlier.
+
+. Apply the Certificate resource by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f certificate.yaml
+----
+
+. Monitor the certificate issuance by running the following command:
++
+[source,terminal]
+----
+$ oc get certificate spire-server-federation-tls \
+    -n zero-trust-workload-identity-manager -w
+----
++
+.Example output when ready
+[source,terminal]
+----
+NAME                            READY   SECRET                          AGE
+spire-server-federation-tls     True    spire-server-federation-tls     2m
+----
+
+. Create RBAC permissions for the OpenShift Ingress Router to access the certificate secret.
++
+Create a Role by running the following command:
++
+[source,terminal]
+----
+$ oc create role secret-reader \
+    --verb=get,list,watch \
+    --resource=secrets \
+    --resource-name=spire-server-federation-tls \
+    -n zero-trust-workload-identity-manager
+----
++
+Create a `RoleBinding` by running the following command:
++
+[source,terminal]
+----
+$ oc create rolebinding secret-reader-binding \
+    --role=secret-reader \
+    --serviceaccount=openshift-ingress:router \
+    -n zero-trust-workload-identity-manager
+----
+
+. Configure the `SpireServer` custom resource to use manual certificate management.
++
+Now that the certificate is ready, configure the SpireServer to reference it:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: cluster1.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_web
+      refreshHint: 300
+      httpsWeb:
+        servingCert:
+          fileSyncInterval: 86400
+          externalSecretRef: spire-server-federation-tls
+    managedRoute: "true"
+----
+
+* The `profile` field must use `https_web` profile for certificate-based authentication.
+
+* The `fileSyncInterval` field checks for certificate updates every 24 hours (86400 seconds). Range: 3600-7776000 seconds.
+
+* The `externalSecretRef` field is the name of the secret containing the TLS certificate and private key. Must match the certificate secret created in the previous steps.
+
+. Apply the configuration by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f spireserver.yaml
+----
+
+. Wait for the SPIRE Server to be ready:
++
+[source,terminal]
+----
+$ oc get spireserver cluster -n zero-trust-workload-identity-manager -w
+----
++
+Wait until the status shows `Ready`.
+
+. Verify that the federation route was created by running the following command:
++
+[source,terminal]
+----
+$ oc get route spire-server-federation -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                      HOST/PORT                                  PATH   SERVICES        PORT    TERMINATION
+spire-server-federation   federation.apps.cluster1.example.com              spire-server    8443    reencrypt
+----
++
+Verify that the route hostname matches the domain name used in your certificate.
+
+. Verify that the federation endpoint is accessible by running the following command:
++
+[source,terminal]
+----
+$ curl https://$(oc get route spire-server-federation \
+    -n zero-trust-workload-identity-manager \
+    -o jsonpath='{.spec.host}')
+----
++
+You should receive a JSON response containing the trust bundle.
+
+. Fetch the trust bundle from each federation endpoint that you want to federate with.
++
+For each remote cluster, fetch its trust bundle by running the following commands:
++
+[source,terminal]
+----
+$ curl https://federation.apps.cluster1.example.com > cluster1-bundle.json
+$ curl https://federation.apps.cluster2.example.com > cluster2-bundle.json
+----
++
+The trust bundle is in JSON Web Key Set (JWKS) format:
++
+.Example trust bundle
+[source,json]
+----
+{
+  "keys": [
+    {
+      "use": "x509-svid",
+      "kty": "RSA",
+      "n": "xGOzB...",
+      "e": "AQAB",
+      "x5c": ["MIIC..."]
+    }
+  ],
+  "spiffe_sequence": 1,
+  "refresh_hint": 300
+}
+----
+
+. Create `ClusterFederatedTrustDomain` resources for each remote trust domain you want to federate with:
++
+[source,yaml]
+----
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterFederatedTrustDomain
+metadata:
+  name: cluster1-federation
+spec:
+  trustDomain: cluster1.example.com
+  bundleEndpointURL: https://federation.apps.cluster1.example.com
+  bundleEndpointProfile:
+    type: https_web
+  className: zero-trust-workload-identity-manager-spire
+  trustDomainBundle: |
+    {
+      "keys": [
+        {
+          "use": "x509-svid",
+          "kty": "RSA",
+          "n": "xGOzB...",
+          "e": "AQAB",
+          "x5c": ["MIIC..."]
+        }
+      ],
+      "spiffe_sequence": 1
+    }
+---
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterFederatedTrustDomain
+metadata:
+  name: cluster2-federation
+spec:
+  trustDomain: cluster2.example.com
+  bundleEndpointURL: https://federation.apps.cluster2.example.com
+  bundleEndpointProfile:
+    type: https_web
+  className: zero-trust-workload-identity-manager-spire
+  trustDomainBundle: |
+    {
+      "keys": [...],
+      "spiffe_sequence": 1
+    }
+----
+
+* The `trustDomainBundle` field contains the complete trust bundle JSON that you fetched in the previous step.
+
+* The `spec.className` field contains the name of a class to watch CRs for. Spire-controller-manager watches the resource only if `spec.className` is set to `zero-trust-workload-identity-manager-spire`.
+
+. Apply the `ClusterFederatedTrustDomain` resources by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f clusterfederatedtrustdomains.yaml
+----
+
+. Update the `SpireServer` resource to add the `federatesWith` configuration:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: SpireServer
+metadata:
+  name: cluster
+spec:
+  trustDomain: cluster3.example.com
+  federation:
+    bundleEndpoint:
+      profile: https_web
+      refreshHint: 300
+      httpsWeb:
+        servingCert:
+          fileSyncInterval: 86400
+          externalSecretRef: spire-server-federation-tls
+    federatesWith:
+      - trustDomain: cluster1.example.com
+        bundleEndpointUrl: https://federation.apps.cluster1.example.com
+        bundleEndpointProfile: https_web
+
+      - trustDomain: cluster2.example.com
+        bundleEndpointUrl: https://federation.apps.cluster2.example.com
+        bundleEndpointProfile: https_web
+    managedRoute: "true"
+----
+
+* The `federatesWith` field lists all remote trust domains this cluster should federate with.
+
+. Apply the updated configuration by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f spireserver.yaml
+----
+
+. Repeat steps 1-15 on each cluster that participates in the federation, ensuring that:
++
+* Each cluster has cert-manager installed and configured
+* Each cluster has its own certificate created and ready before applying the `SpireServer` configuration
+* Each cluster has the RBAC for the ingress router configured
+* Each cluster has `ClusterFederatedTrustDomain` resources for every other cluster it federates with
+* Each cluster's `SpireServer` has the complete `federatesWith` list
+
+.Verification
+
+. Verify that the certificate has been issued successfully by running the following command:
++
+[source,terminal]
+----
+$ oc get certificate spire-server-federation-tls \
+    -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                            READY   SECRET                          AGE
+spire-server-federation-tls     True    spire-server-federation-tls     5m
+----
+
+. Check the certificate details and expiration by running the following command:
++
+[source,terminal]
+----
+$ oc get secret spire-server-federation-tls \
+    -n zero-trust-workload-identity-manager \
+    -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -noout -dates
+----
++
+.Example output
+[source,terminal]
+----
+notBefore=Dec 16 10:00:00 2025 GMT
+notAfter=Mar 16 10:00:00 2026 GMT
+----
+
+. Verify that the RBAC permissions are configured correctly by running the following command:
++
+[source,terminal]
+----
+$ oc get role,rolebinding -n zero-trust-workload-identity-manager \
+    | grep secret-reader
+----
++
+.Example output
+[source,terminal]
+----
+role.rbac.authorization.k8s.io/secret-reader
+rolebinding.rbac.authorization.k8s.io/secret-reader-binding
+----
++
+Verify the RoleBinding references the correct ServiceAccount by running the following command:
++
+[source,terminal]
+----
+$ oc describe rolebinding secret-reader-binding \
+    -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+Name:         secret-reader-binding
+Namespace:    zero-trust-workload-identity-manager
+Role:
+  Kind:  Role
+  Name:  secret-reader
+Subjects:
+  Kind            Name    Namespace
+  ----            ----    ---------
+  ServiceAccount  router  openshift-ingress
+----
+
+. Verify that the `ClusterFederatedTrustDomain` resources have been created by running the following command:
++
+[source,terminal]
+----
+$ oc get clusterfederatedtrustdomains
+----
++
+.Example output
+[source,terminal]
+----
+NAME                  TRUST DOMAIN           ENDPOINT URL                                      AGE
+cluster1-federation   cluster1.example.com   https://federation.apps.cluster1.example.com     5m
+cluster2-federation   cluster2.example.com   https://federation.apps.cluster2.example.com     5m
+----
+
+. Check the status of a `ClusterFederatedTrustDomain` to ensure bundle synchronization is working by running the following command:
++
+[source,terminal]
+----
+$ oc describe clusterfederatedtrustdomain cluster1-federation
+----
++
+Look for successful status conditions indicating that the trust bundle has been synchronized.
+
+. Verify that the federation endpoint is accessible and using the correct certificate by running the following command:
++
+[source,terminal]
+----
+$ curl -v https://$(oc get route spire-server-federation \
+    -n zero-trust-workload-identity-manager \
+    -o jsonpath='{.spec.host}')
+----
++
+In the output, verify that the certificate presented is issued by your configured CA (Let's Encrypt or internal CA).
+
+. Check the SPIRE Server logs to confirm that by running the following command:
++
+* Federation is active with remote trust domains
+* Trust bundles are being synchronized
+* The bundle endpoint is serving correctly
++
+[source,terminal]
+----
+$ oc logs -n zero-trust-workload-identity-manager \
+    statefulset/spire-server -c spire-server --tail=100
+----
++
+Look for log messages indicating successful federation bundle synchronization.
+
+. Verify that all SPIRE components are running by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -n zero-trust-workload-identity-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                                    READY   STATUS    RESTARTS   AGE
+spire-agent-abc123                      1/1     Running   0          10m
+spire-server-0                          2/2     Running   0          10m
+----
+
+. Optional: Test cross-cluster workload authentication by deploying workloads with SPIFFE identities on different clusters and verifying they can authenticate to each other using the federated trust.
+
+:leveloffset!:
+
+// federation field reference
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="zero-trust-manager-federation-field-reference_{context}"]
+= Federation configuration field reference
+
+[role="_abstract"]
+This reference provides detailed information about all configuration fields available for SPIRE federation in the `SpireServer` custom resource. Use this reference when customizing your federation setup.
+
+Top-level federation fields::
+
+[cols="2,1,1,2,3",options="header"]
+|===
+|Field
+|Type
+|Required
+|Default
+|Description
+
+|`federation.bundleEndpoint`
+|object
+|Yes
+|N/A
+|Configuration for this cluster's federation endpoint that exposes the trust bundle to remote clusters.
+
+|`federation.federatesWith`
+|array
+|No
+|`[]`
+|List of remote trust domains to federate with.
+
+|`federation.managedRoute`
+|string
+|No
+|`"true"`
+|Enable or disable automatic OpenShift Route creation. Set to `"true"` for operator-managed routes or `"false"` for manual route management.
+|===
+
+bundleEndpoint configuration fields::
+
+[cols="2,1,1,2,3",options="header"]
+|===
+|Field
+|Type
+|Required
+|Default
+|Description
+
+|`federation.bundleEndpoint.profile`
+|string (enum)
+|Yes
+|`https_spiffe`
+|Authentication profile for the bundle endpoint. Valid values: `https_spiffe` or `https_web`. This value is immutable after initial configuration.
+
+|`federation.bundleEndpoint.refreshHint`
+|integer
+|No
+|`300`
+|Suggested interval (in seconds) for remote servers to refresh the trust bundle. Valid range: 60-3600.
+
+|`federation.bundleEndpoint.httpsWeb`
+|object
+|Conditional
+|N/A
+|Required when `profile` is `https_web`. Contains certificate configuration.
+|===
+
+httpsWeb configuration fields::
+
+[cols="2,1,1,2,3",options="header"]
+|===
+|Field
+|Type
+|Required
+|Default
+|Description
+
+|`federation.bundleEndpoint.httpsWeb.acme`
+|object
+|Conditional
+|N/A
+|ACME configuration for automatic certificate management. Mutually exclusive with `servingCert`.
+
+|`federation.bundleEndpoint.httpsWeb.servingCert`
+|object
+|Conditional
+|N/A
+|Manual certificate configuration. Mutually exclusive with `acme`.
+|===
+
+ACME configuration fields::
+
+[cols="2,1,1,2,3",options="header"]
+|===
+|Field
+|Type
+|Required
+|Default
+|Description
+
+|`federation.bundleEndpoint.httpsWeb.acme.directoryUrl`
+|string
+|Yes
+|N/A
+|ACME directory URL. For Let's Encrypt production: `https://acme-v02.api.letsencrypt.org/directory`. For staging: `https://acme-staging-v02.api.letsencrypt.org/directory`
+
+|`federation.bundleEndpoint.httpsWeb.acme.domainName`
+|string
+|Yes
+|N/A
+|Fully qualified domain name for the certificate. Typically the federation endpoint hostname.
+
+|`federation.bundleEndpoint.httpsWeb.acme.email`
+|string
+|Yes
+|N/A
+|Email address for ACME account registration and certificate expiration notifications.
+
+|`federation.bundleEndpoint.httpsWeb.acme.tosAccepted`
+|string
+|No
+|`"false"`
+|Accept the ACME provider's Terms of Service. Must be `"true"` to obtain certificates.
+|===
+
+servingCert configuration fields::
+
+[cols="2,1,1,2,3",options="header"]
+|===
+|Field
+|Type
+|Required
+|Default
+|Description
+
+|`federation.bundleEndpoint.httpsWeb.servingCert.fileSyncInterval`
+|integer
+|No
+|`86400`
+|Interval (in seconds) to check for certificate updates. Valid range: 3600-7776000 (1 hour to 90 days).
+
+|`federation.bundleEndpoint.httpsWeb.servingCert.externalSecretRef`
+|string
+|Yes
+|N/A
+|Name of the Kubernetes Secret containing the TLS certificate (`tls.crt`) and private key (`tls.key`) for the federation route.
+|===
+
+federatesWith configuration fields::
+
+[cols="2,1,1,2,3",options="header"]
+|===
+|Field
+|Type
+|Required
+|Default
+|Description
+
+|`federation.federatesWith[].trustDomain`
+|string
+|Yes
+|N/A
+|Trust domain name of the remote SPIRE deployment (for example, `cluster2.example.com`).
+
+|`federation.federatesWith[].bundleEndpointUrl`
+|string
+|Yes
+|N/A
+|HTTPS URL of the remote federation endpoint (for example, `https://federation.apps.cluster2.example.com`).
+
+|`federation.federatesWith[].bundleEndpointProfile`
+|string (enum)
+|Yes
+|N/A
+|Authentication profile of the remote endpoint. Valid values: `https_spiffe` or `https_web`.
+
+|`federation.federatesWith[].endpointSpiffeId`
+|string
+|Conditional
+|N/A
+|SPIFFE ID of the remote SPIRE server (for example, `spiffe://cluster2.example.com/spire/server`). Required when `bundleEndpointProfile` is `https_spiffe`.
+|===
+
+Field validation rules::
+
+
+The following validation rules are enforced by the operator:
+
+* Profile immutability: The `bundleEndpoint.profile` field cannot be changed after initial configuration. Changing it requires deleting and recreating the `SpireServer` resource (re-installation of the system).
+
+* Mutual exclusivity: Within `httpsWeb`, only one of `acme` or `servingCert` can be specified.
+
+* Conditional requirements: When `profile` is `https_web`, the `httpsWeb` object must be present with either `acme` or `servingCert` configured.
+
+* SPIFFE ID requirement: When `bundleEndpointProfile` is `https_spiffe` in the `federatesWith` list, the `endpointSpiffeId` field is required.
+
+* Array limits: The `federatesWith` array supports a maximum of 50 entries.
+
+* Numeric ranges:
+
+** `refreshHint`: 60-3600 seconds
+
+** `fileSyncInterval`: 3600-7776000 seconds
+
+:leveloffset!:
+
+
+
+
+= Enabling create-only mode for the Zero Trust Workload Identity Manager
+:_mod-docs-content-type: ASSEMBLY
+[id="zero-trust-manager-reconciliation_{context}"]
+= Enabling create-only mode for the Zero Trust Workload Identity Manager
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: zero-trust-manager-reconciliation
+
+toc::[]
+
+[role="_abstract"]
+To pause Operator reconciliation, enable `create-only` mode by setting an environment variable in the subscription object. By setting this value, you can perform manual configurations or debug the operator without the controller overwriting your changes.
+
+The following scenarios are examples of when the `create-only` mode might be of use:
+
+**Manual Customization Required**: You need to customize operator-managed resources (ConfigMaps, Deployments, DaemonSets, etc.) with specific configurations that differ from the operator's defaults
+
+**Day 2 Operations**: After initial deployment, you want to prevent the operator from overwriting their manual changes during subsequent reconciliation cycles
+
+**Configuration Drift Prevention**: You want to maintain control over certain resource configurations while still benefiting from the operator's lifecycle management
+
+// Pause reconciliation
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manager/zero-trust-manager-reconciliation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-pause-reconciliation_{context}"]
+= Pausing Operator reconciliation
+
+[role="_abstract"]
+Pause reconciliation of the operands by enabling `create-only` mode. This setting prevents the Operator from automatically reverting your manual changes to the desired state. You can enable this mode by updating the Operator's subscription object.
+
+[IMPORTANT]
+====
+When `create-only` mode is disabled, the Operator overwrites the resources if any conflicts exist.
+====
+
+.Prerequisites
+
+* You have installed {zero-trust-full} on your machine.
+
+* You have installed the SPIRE Servers, Agents, SPIFFE Container Storage Interface (CSI), and an OpenID Connect (OIDC) Discovery Provider and are in running status.
+
+.Procedure
+
+* To pause reconciling the operands resources managed by the Operator, add the environment variable `CREATE_ONLY_MODE`: `true` in the subscription object by running the following command:
++
+[source,terminal]
+----
+$ oc -n $OPERATOR_NAMESPACE patch subscription openshift-zero-trust-workload-identity-manager --type='merge' -p '{"spec":{"config":{"env":[{"name":"CREATE_ONLY_MODE","value":"true"}]}}}'
+----
+
+.Verification
+* Check the status of the `SpireServer` resource to confirm that the `create-only` mode is active. The `status` must be `true` and the `reason` must be `CreateOnlyModeEnabled`.
++
+[source,terminal]
+----
+$ oc get SpireServer cluster -o yaml
+----
++
+The following is an example that confirms that the 'create-only' mode is active.
+[source,yaml]
+----
+status:
+  conditions:
+  - lastTransitionTime: "2025-12-23T11:36:58Z"
+    message: All components are ready
+    reason: Ready
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2025-12-23T11:36:58Z"
+    message: All operand CRs are ready
+    reason: Ready
+    status: "True"
+    type: OperandsAvailable
+  - lastTransitionTime: "2025-12-23T11:36:58Z"
+    message: create-only mode enabled
+    reason: CreateOnlyModeEnabled
+    status: "True"
+    type: CreateOnlyMode
+----
+
+[IMPORTANT]
+====
+The Operator updates the upgradeable condition to `false` in the `operatorCondition` resource. You might not be able to upgrade the Operator when in `create-only` mode.
+====
+
+
+:leveloffset!:
+
+// Removing {zero-trust-full} resources
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manager/zero-trust-manager-reconciliation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-restart-reconciliation_{context}"]
+
+= Resuming Operator reconciliation
+
+[role="_abstract"]
+To resume Operator reconciliation after manual configuration or debugging, disable the `create-only` mode. This allows the controller to resume managing resources and applying the desired state. You can disable this mode by setting the environment variable in the subscription object.
+
+.Prerequisites
+
+* You have enabled `create-only` mode on the {zero-trust-full}.
+
+* You have completed your manual configuration or debugging tasks.
+
+.Procedure
+
+* To restart reconciling the Operator-managed resources, add the environment variable `CREATE_ONLY_MODE`: `false` in the subscription object by running the following command:
++
+[source,terminal]
+----
+$ oc -n $OPERATOR_NAMESPACE patch subscription openshift-zero-trust-workload-identity-manager --type='merge' -p '{"spec":{"config":{"env":[{"name":"CREATE_ONLY_MODE","value":"false"}]}}}'
+----
+
+.Verification
+
+* Check the status of the `SpireServer` resource to confirm that `create-only` mode is disabled by running the following command:
++
+[source,terminal]
+----
+$ oc get SpireServer cluster -o yaml
+----
++
+.Example output
+[source,yaml]
+----
+status:
+ conditions:
+ - lastTransitionTime: "2025-12-23T11:40:00Z"
+   message: create-only mode disabled
+   reason: CreateOnlyModeDisabled
+   status: "False"
+   type: CreateOnlyMode
+----
+
+
+
+:leveloffset!:
+
+

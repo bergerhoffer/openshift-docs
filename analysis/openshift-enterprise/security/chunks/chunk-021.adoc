@@ -1,0 +1,4198 @@
+= Customizing cert-manager by using the cert-manager Operator API fields
+:_mod-docs-content-type: ASSEMBLY
+[id="cert-manager-customizing-api-fields"]
+= Customizing the cert-manager Operator by using the CertManager custom resource
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: cert-manager-customizing-api-fields
+
+toc::[]
+
+[role="_abstract"]
+After installing the {cert-manager-operator}, you can perform the following actions by configuring the `CertManager` custom resource (CR):
+
+* Configure the arguments to modify the behavior of the cert-manager components, such as the cert-manager controller, CA injector, and Webhook.
+* Set environment variables for the controller pod.
+* Define resource requests and limits to manage CPU and memory usage.
+* Configure scheduling rules to control where pods run in your cluster.
+
+.Example CertManager CR YAML file
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+spec:
+  controllerConfig:
+    overrideArgs:
+      - "--dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53"
+    overrideEnv:
+      - name: HTTP_PROXY
+        value: http://proxy.example.com:8080
+    overrideResources:
+      limits:
+        cpu: "200m"
+        memory: "512Mi"
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+    overrideScheduling:
+      nodeSelector:
+        custom: "label"
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+    overrideReplicas: 2
+#...
+
+  webhookConfig:
+    overrideArgs:
+#...
+    overrideResources:
+#...
+    overrideScheduling:
+#...
+    overrideReplicas:
+#...
+
+  cainjectorConfig:
+    overrideArgs:
+#...
+    overrideResources:
+#...
+    overrideScheduling:
+#...
+    overrideReplicas:
+#...
+----
+
+[WARNING]
+====
+To override unsupported arguments, you can add `spec.unsupportedConfigOverrides` section in the `CertManager` resource, but using `spec.unsupportedConfigOverrides` is unsupported.
+====
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-customizing-api-fields.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cert-manager-explanation-of-certmanager-cr-fields_{context}"]
+= Explanation of fields in the CertManager custom resource
+
+[role="_abstract"]
+To configure core components of the {cert-manager-operator}, use the CertManager custom resource (CR). You can define settings for the cert-manager controller, such as the spec.controllerConfig field, to customize your deployment.
+
+The core components of the {cert-manager-operator} are as follows:
+
+* Cert-manager controller: You can use the `spec.controllerConfig` field to configure the cert‑manager controller pod.
+* Webhook: You can use the `spec.webhookConfig` field to configure the webhook pod, which handles validation and mutation requests.
+* CA injector: You can use the `spec.cainjectorConfig` field to configure the CA injector pod.
+
+[id="cert-manager-common-configuration-fields_{context}"]
+== Common configurable fields in the CertManager CR for the cert-manager components
+
+The following table lists the common fields that you can configure in the `spec.controllerConfig`, `spec.webhookConfig`, and `spec.cainjectorConfig` sections in the `CertManager` CR.
+
+.Common configurable fields in the CertManager CR for the cert-manager components
+[cols=".^2,.^2,.^6a",options="header"]
+|====
+
+|Field|Type|Description
+
+|`overrideArgs`
+|`string`
+|You can override the supported arguments for the cert-manager components.
+
+|`overrideEnv`
+|`dict`
+|You can override the supported environment variables for the cert-manager controller. This field is only supported for the cert-manager controller component.
+
+|`overrideReplicas`
+|`int`
+|You can configure the replicas for the cert-manager components. The default value is `1`. For production environments, the following replica counts are recommended:
+
+* controller: 2
+
+* cainjector: 2
+
+* webhook: At least 3.
+
+For more information, see link:https://cert-manager.io/docs/installation/best-practice/#high-availability[High Availability].
+
+|`overrideResources`
+|`object`
+|You can configure the CPU and memory limits for the cert-manager components.
+
+|`overrideScheduling`
+|`object`
+|You can configure the pod scheduling constraints for the cert-manager components.
+
+|====
+
+[id="cert-manager-overridable-arguments_{context}"]
+== Overridable arguments for the cert-manager components
+
+You can configure the overridable arguments for the cert-manager components in the `spec.controllerConfig`, `spec.webhookConfig`, and `spec.cainjectorConfig` sections in the `CertManager` CR.
+
+The following table describes the overridable arguments for the cert-manager components:
+
+.Overridable arguments the cert-manager components
+[cols=".^5a,.^2,.^4a",options="header"]
+|====
+
+|Argument|Component|Description
+
+|`--dns01-recursive-nameservers=<server_address>`
+|Controller
+|Provide a comma-separated list of nameservers to query for the DNS-01 self check. The nameservers can be specified either as `<host>:<port>`, for example, `1.1.1.1:53`, or use DNS over HTTPS (DoH), for example, `\https://1.1.1.1/dns-query`.
+
+[NOTE]
+====
+DNS over HTTPS (DoH) is supported starting only from {cert-manager-operator} version 1.13.0 and later.
+====
+
+|`--dns01-recursive-nameservers-only`
+|Controller
+|Specify to only use recursive nameservers instead of checking the authoritative nameservers associated with that domain.
+
+|`--acme-http01-solver-nameservers=<host>:<port>`
+|Controller
+|Provide a comma-separated list of `<host>:<port>` nameservers to query for the Automated Certificate Management Environment (ACME) HTTP01 self check. For example, `--acme-http01-solver-nameservers=1.1.1.1:53`.
+
+|`--metrics-listen-address=<host>:<port>`
+|Controller
+|Specify the host and port for the metrics endpoint. The default value is `--metrics-listen-address=0.0.0.0:9402`.
+
+|`--issuer-ambient-credentials`
+|Controller
+|You can use this argument to configure an ACME Issuer to solve DNS-01 challenges by using ambient credentials.
+
+|`--enable-certificate-owner-ref`
+|Controller
+|This argument sets the certificate resource as an owner of the secret where the TLS certificate is stored. For more information, see "Deleting a TLS secret automatically upon Certificate removal".
+
+|`--acme-http01-solver-resource-limits-cpu`
+|Controller
+|Defines the maximum CPU limit for ACME HTTP‑01 solver pods. The default value is `100m`.
+
+|`--acme-http01-solver-resource-limits-memory`
+|Controller
+|Defines the maximum memory limit for ACME HTTP‑01 solver pods. The default value is `64Mi`.
+
+|`--acme-http01-solver-resource-request-cpu`
+|Controller
+|Defines the minimum CPU request for ACME HTTP‑01 solver pods. The default value is `10m`.
+
+|`--acme-http01-solver-resource-request-memory`
+|Controller
+|Defines the minimum memory request for ACME HTTP‑01 solver pods. The default value is `64Mi`.
+
+|`--certificate-request-minimum-backoff-duration`
+|Controller
+|Specify the minimum backoff duration for certificate requests. The default value is `1h0m0s`.
+
+|`--v=<verbosity_level>`
+|Controller, Webhook, CA injector
+|Specify the log level verbosity to determine the verbosity of log messages.
+
+|====
+
+[id="cert-manager-overridable-env-variables_{context}"]
+== Overridable environment variables for the cert-manager controller
+
+You can configure the overridable environment variables for the cert-manager controller in the `spec.controllerConfig.overrideEnv` field in the `CertManager` CR.
+
+The following table describes the overridable environment variables for the cert-manager controller:
+
+.Overridable environment variables for the cert-manager controller
+[cols=".^2,.^2",options="header"]
+|====
+
+|Environment variable|Description
+
+|`HTTP_PROXY`
+|Proxy server for outgoing HTTP requests.
+
+|`HTTPS_PROXY`
+|Proxy server for outgoing HTTPS requests.
+
+|`NO_PROXY`
+|Comma‑separated list of hosts that bypass the proxy.
+
+|====
+
+[id="cert-manager-overridable-resource-parameters_{context}"]
+== Overridable resource parameters for the cert-manager components
+
+You can configure the CPU and memory limits for the cert-manager components in the `spec.controllerConfig`, `spec.webhookConfig`, and `spec.cainjectorConfig` sections in the `CertManager` CR.
+
+The following table describes the overridable resource parameters for the cert-manager components:
+
+.Overridable resource parameters for the cert-manager components
+[cols=".^2,.^2",options="header"]
+|====
+
+|Field|Description
+
+|`overrideResources.limits.cpu`
+|Defines the maximum amount of CPU that a component pod can use.
+
+|`overrideResources.limits.memory`
+|Defines the maximum amount of memory that a component pod can use.
+
+|`overrideResources.requests.cpu`
+|Defines the minimum amount of CPU requested by the scheduler for a component pod.
+
+|`overrideResources.requests.memory`
+|Defines the minimum amount of memory requested by the scheduler for a component pod.
+
+|====
+
+[id="cert-manager-overridable-scheduling-parameters_{context}"]
+== Overridable scheduling parameters for the cert-manager components
+
+You can configure the pod scheduling constrainsts for the cert-manager components in the `spec.controllerConfig`, `spec.webhookConfig` field, and `spec.cainjectorConfig` sections in the `CertManager` CR.
+
+The following table describes the pod scheduling parameters for the cert-manager components:
+
+.Overridable scheduling parameters for the cert-manager components
+[cols=".^2,.^2",options="header"]
+|====
+
+|Field|Description
+
+|`overrideScheduling.nodeSelector`
+|Key‑value pairs to constrain pods to specific nodes.
+
+|`overrideScheduling.tolerations`
+|List of tolerations to schedule pods on tainted nodes.
+
+|====
+
+:leveloffset!:
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../security/cert_manager_operator/cert-manager-customizing-api-fields.adoc#cert-manager-override-flag-controller_cert-manager-customizing-api-fields[Deleting a TLS secret automatically upon Certificate removal]
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-customizing-api-fields.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-override-environment-variables_{context}"]
+= Customizing cert-manager by overriding environment variables from the cert-manager Operator API
+
+[role="_abstract"]
+To refine your deployment for specific operational requirements, override supported environment variables for the {cert-manager-operator}. You can customize these variables through the Operator API to apply configurations, such as proxy settings or system-level adjustments, that differ from the default values.
+
+You can override the supported environment variables for the {cert-manager-operator} by adding a `spec.controllerConfig` section in the `CertManager` resource.
+
+.Prerequisites
+
+* You have access to the {product-title} cluster as a user with the `cluster-admin` role.
+
+.Procedure
+
+. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideEnv:
+      - name: HTTP_PROXY
+        value: http://<proxy_url>
+      - name: HTTPS_PROXY
+        value: https://<proxy_url>
+      - name: NO_PROXY
+        value: <ignore_proxy_domains>
+----
++
+where:
++
+`HTTP_PROXY`:: Specifies the proxy server URL.
+`NO_PROXY`:: Specifies a comma separated list of domains. These domains are ignored by the proxy server.
++
+[NOTE]
+====
+For more information about the overridable environment variables, see "Overridable environment variables for the cert-manager components" in "Explanation of fields in the CertManager custom resource".
+====
+
+. Save your changes and quit the text editor to apply your changes.
+
+.Verification
+
+. Verify that the cert-manager controller pod is redeployed by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -l app.kubernetes.io/name=cert-manager -n cert-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                          READY   STATUS    RESTARTS   AGE
+cert-manager-bd7fbb9fc-wvbbt  1/1     Running   0          39s
+----
+
+. Verify that environment variables are updated for the cert-manager pod by running the following command:
++
+[source,terminal]
+----
+$ oc get pod <redeployed_cert-manager_controller_pod> -n cert-manager -o yaml
+----
++
+.Example output
+[source,yaml]
+----
+    env:
+    ...
+    - name: HTTP_PROXY
+      value: http://<PROXY_URL>
+    - name: HTTPS_PROXY
+      value: https://<PROXY_URL>
+    - name: NO_PROXY
+      value: <IGNORE_PROXY_DOMAINS>
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../security/cert_manager_operator/cert-manager-customizing-api-fields.adoc#cert-manager-explanation-of-certmanager-cr-fields_cert-manager-customizing-api-fields[Explanation of fields in the CertManager custom resource]
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-customizing-api-fields.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-override-arguments_{context}"]
+= Customizing cert-manager by overriding arguments from the cert-manager Operator API
+
+[role="_abstract"]
+You can override the supported arguments for the {cert-manager-operator} by adding a `spec.controllerConfig` section in the `CertManager` resource.
+
+.Prerequisites
+
+* You have access to the {product-title} cluster as a user with the `cluster-admin` role.
+
+.Procedure
+
+. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers=<server_address>'
+      - '--dns01-recursive-nameservers-only'
+      - '--acme-http01-solver-nameservers=<host>:<port>'
+      - '--v=<verbosity_level>'
+      - '--metrics-listen-address=<host>:<port>'
+      - '--issuer-ambient-credentials'
+      - '--acme-http01-solver-resource-limits-cpu=<quantity>'
+      - '--acme-http01-solver-resource-limits-memory=<quantity>'
+      - '--acme-http01-solver-resource-request-cpu=<quantity>'
+      - '--acme-http01-solver-resource-request-memory=<quantity>'
+      - '--certificate-request-minimum-backoff-duration=<duration>'
+  webhookConfig:
+    overrideArgs:
+      - '--v=<verbosity_level>'
+  cainjectorConfig:
+    overrideArgs:
+      - '--v=<verbosity_level>'
+----
++
+For information about the overridable aruguments, see "Overridable arguments for the cert-manager components" in "Explanation of fields in the CertManager custom resource".
+
+. Save your changes and quit the text editor to apply your changes.
+
+.Verification
+
+* Verify that arguments are updated for cert-manager pods by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -n cert-manager -o yaml
+----
++
+.Example output
+[source,yaml]
+----
+...
+  metadata:
+    name: cert-manager-6d4b5d4c97-kldwl
+    namespace: cert-manager
+...
+  spec:
+    containers:
+    - args:
+      - --acme-http01-solver-nameservers=1.1.1.1:53
+      - --cluster-resource-namespace=$(POD_NAMESPACE)
+      - --dns01-recursive-nameservers=1.1.1.1:53
+      - --dns01-recursive-nameservers-only
+      - --leader-election-namespace=kube-system
+      - --max-concurrent-challenges=60
+      - --metrics-listen-address=0.0.0.0:9042
+      - --v=6
+...
+  metadata:
+    name: cert-manager-cainjector-866c4fd758-ltxxj
+    namespace: cert-manager
+...
+  spec:
+    containers:
+    - args:
+      - --leader-election-namespace=kube-system
+      - --v=2
+...
+  metadata:
+    name: cert-manager-webhook-6d48f88495-c88gd
+    namespace: cert-manager
+...
+  spec:
+    containers:
+    - args:
+      ...
+      - --v=4
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../security/cert_manager_operator/cert-manager-customizing-api-fields.adoc#cert-manager-explanation-of-certmanager-cr-fields_cert-manager-customizing-api-fields[Explanation of fields in the CertManager custom resource]
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-customizing-api-fields.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-override-flag-controller_{context}"]
+= Deleting a TLS secret automatically upon Certificate removal
+
+[role="_abstract"]
+You can enable the `--enable-certificate-owner-ref` flag for the {cert-manager-operator} by adding a `spec.controllerConfig` section in the `CertManager` resource. The `--enable-certificate-owner-ref` flag sets the certificate resource as an owner of the secret where the TLS certificate is stored.
+
+[WARNING]
+====
+If you uninstall the {cert-manager-operator} or delete certificate resources from the cluster, the secret is deleted automatically. This might cause network connectivity issues depending upon where the certificate TLS secret is being used.
+====
+
+.Prerequisites
+
+* You have access to the {product-title} cluster as a user with the `cluster-admin` role.
+* You have installed version 1.12.0 or later of the {cert-manager-operator}.
+
+
+.Procedure
+
+. Check that the `Certificate` object and its secret are available by running the following command:
++
+[source,terminal]
+----
+$ oc get certificate
+----
++
+.Example output
+[source,terminal]
+----
+NAME                                             READY   SECRET                                           AGE
+certificate-from-clusterissuer-route53-ambient   True    certificate-from-clusterissuer-route53-ambient   8h
+----
+
+. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+# ...
+spec:
+# ...
+  controllerConfig:
+    overrideArgs:
+      - '--enable-certificate-owner-ref'
+----
+
+. Save your changes and quit the text editor to apply your changes.
+
+.Verification
+
+* Verify that the `--enable-certificate-owner-ref` flag is updated for cert-manager controller pod by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -l app.kubernetes.io/name=cert-manager -n cert-manager -o yaml
+----
++
+.Example output
+[source,yaml]
+----
+# ...
+  metadata:
+    name: cert-manager-6e4b4d7d97-zmdnb
+    namespace: cert-manager
+# ...
+  spec:
+    containers:
+    - args:
+      - --enable-certificate-owner-ref
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-customizing-api-fields.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-configure-cpu-memory_{context}"]
+= Overriding CPU and memory limits for the cert-manager components
+
+[role="_abstract"]
+To ensure stable resource allocation and operation, configure CPU and memory limits for {cert-manager-operator} components. You can set specific constraints for the cert-manager controller, CA injector, and Webhook to align with your specific cluster requirements.
+
+.Prerequisites
+
+* You have access to the {product-title} cluster as a user with the `cluster-admin` role.
+* You have installed version 1.12.0 or later of the {cert-manager-operator}.
+
+.Procedure
+
+. Check that the deployments of the cert-manager controller, CA injector, and Webhook are available by entering the following command:
++
+[source,terminal]
+----
+$ oc get deployment -n cert-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+cert-manager              1/1     1            1           53m
+cert-manager-cainjector   1/1     1            1           53m
+cert-manager-webhook      1/1     1            1           53m
+----
+
+. Before setting the CPU and memory limit, check the existing configuration for the cert-manager controller, CA injector, and Webhook by entering the following command:
++
+[source,terminal]
+----
+$ oc get deployment -n cert-manager -o yaml
+----
++
+.Example output
+[source,yaml]
+----
+# ...
+  metadata:
+    name: cert-manager
+    namespace: cert-manager
+# ...
+  spec:
+    template:
+      spec:
+        containers:
+        - name: cert-manager-controller
+          resources: {}
+# ...
+  metadata:
+    name: cert-manager-cainjector
+    namespace: cert-manager
+# ...
+  spec:
+    template:
+      spec:
+        containers:
+        - name: cert-manager-cainjector
+          resources: {}
+# ...
+  metadata:
+    name: cert-manager-webhook
+    namespace: cert-manager
+# ...
+  spec:
+    template:
+      spec:
+        containers:
+        - name: cert-manager-webhook
+          resources: {}
+# ...
+----
++
+The `spec.resources` field is empty by default. The cert-manager components do not have CPU and memory limits.
+
+. To configure the CPU and memory limits for the cert-manager controller, CA injector, and Webhook, enter the following command:
++
+[source,terminal]
+----
+$ oc patch certmanager.operator cluster --type=merge -p="
+spec:
+  controllerConfig:
+    overrideResources:
+      limits:
+        cpu: 200m
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 16Mi
+  webhookConfig:
+    overrideResources:
+      limits:
+        cpu: 200m
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 16Mi
+  cainjectorConfig:
+    overrideResources:
+      limits:
+        cpu: 200m
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 16Mi
+"
+----
++
+For information about the overridable resource parameters, see "Overridable resource parameters for the cert-manager components" in "Explanation of fields in the CertManager custom resource".
++
+.Example output
+[source,terminal]
+----
+certmanager.operator.openshift.io/cluster patched
+----
+
+.Verification
+
+. Verify that the CPU and memory limits are updated for the cert-manager components:
++
+[source,terminal]
+----
+$ oc get deployment -n cert-manager -o yaml
+----
++
+.Example output
+[source,yaml]
+----
+# ...
+  metadata:
+    name: cert-manager
+    namespace: cert-manager
+# ...
+  spec:
+    template:
+      spec:
+        containers:
+        - name: cert-manager-controller
+          resources:
+            limits:
+              cpu: 200m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+# ...
+  metadata:
+    name: cert-manager-cainjector
+    namespace: cert-manager
+# ...
+  spec:
+    template:
+      spec:
+        containers:
+        - name: cert-manager-cainjector
+          resources:
+            limits:
+              cpu: 200m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+# ...
+  metadata:
+    name: cert-manager-webhook
+    namespace: cert-manager
+# ...
+  spec:
+    template:
+      spec:
+        containers:
+        - name: cert-manager-webhook
+          resources:
+            limits:
+              cpu: 200m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+# ...
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../security/cert_manager_operator/cert-manager-customizing-api-fields.adoc#cert-manager-explanation-of-certmanager-cr-fields_cert-manager-customizing-api-fields[Explanation of fields in the CertManager custom resource]
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-customizing-api-fields.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-override-scheduling_{context}"]
+= Configuring scheduling overrides for cert-manager components
+
+[role="_abstract"]
+You can configure the pod scheduling from the {cert-manager-operator} API for the {cert-manager-operator} components, such as the cert-manager controller, CA injector, and Webhook.
+
+.Prerequisites
+
+* You have access to the {product-title} cluster as a user with the `cluster-admin` role.
+* You have installed version 1.15.0 or later of the {cert-manager-operator}.
+
+.Procedure
+
+* Update the `certmanager.operator` custom resource to configure pod scheduling overrides for the desired components by running the following command. Use the `overrideScheduling` field under the `controllerConfig`, `webhookConfig`, or `cainjectorConfig` sections to define `nodeSelector` and `tolerations` settings.
++
+[source,terminal]
+----
+$ oc patch certmanager.operator cluster --type=merge -p="
+spec:
+  controllerConfig:
+    overrideScheduling:
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ''
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+  webhookConfig:
+    overrideScheduling:
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ''
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+  cainjectorConfig:
+    overrideScheduling:
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ''
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule"
+"
+----
++
+For information about the overridable scheduling parameters, see "Overridable scheduling parameters for the cert-manager components" in "Explanation of fields in the CertManager custom resource".
+
+.Verification
+
+. Verify pod scheduling settings for `cert-manager` pods:
+
+.. Check the deployments in the `cert-manager` namespace to confirm they have the correct `nodeSelector` and `tolerations` by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -n cert-manager -o wide
+----
++
+.Example output
+[source,terminal]
+----
+NAME                                       READY   STATUS    RESTARTS   AGE   IP            NODE                         NOMINATED NODE   READINESS GATES
+cert-manager-58d9c69db4-78mzp              1/1     Running   0          10m   10.129.0.36   ip-10-0-1-106.ec2.internal   <none>           <none>
+cert-manager-cainjector-85b6987c66-rhzf7   1/1     Running   0          11m   10.128.0.39   ip-10-0-1-136.ec2.internal   <none>           <none>
+cert-manager-webhook-7f54b4b858-29bsp      1/1     Running   0          11m   10.129.0.35   ip-10-0-1-106.ec2.internal   <none>           <none>
+----
+
+.. Check the `nodeSelector` and `tolerations` settings applied to deployments by running the following command:
++
+[source,terminal]
+----
+$ oc get deployments -n cert-manager -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{.spec.template.spec.nodeSelector}{"\n"}{.spec.template.spec.tolerations}{"\n\n"}{end}'
+----
++
+.Example output
+[source,terminal]
+----
+cert-manager
+{"kubernetes.io/os":"linux","node-role.kubernetes.io/control-plane":""}
+[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}]
+
+cert-manager-cainjector
+{"kubernetes.io/os":"linux","node-role.kubernetes.io/control-plane":""}
+[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}]
+
+cert-manager-webhook
+{"kubernetes.io/os":"linux","node-role.kubernetes.io/control-plane":""}
+[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}]
+----
+
+. Verify pod scheduling events in the `cert-manager` namespace by running the following command:
++
+[source,terminal]
+----
+$ oc get events -n cert-manager --field-selector reason=Scheduled
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../security/cert_manager_operator/cert-manager-customizing-api-fields.adoc#cert-manager-explanation-of-certmanager-cr-fields_cert-manager-customizing-api-fields[Explanation of fields in the CertManager custom resource]
+
+
+
+
+= Authenticating the cert-manager Operator for Red Hat OpenShift
+:_mod-docs-content-type: ASSEMBLY
+[id="cert-manager-authenticate"]
+= Authenticating the {cert-manager-operator}
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: cert-manager-authenticate
+
+toc::[]
+
+[role="_abstract"]
+To enable the operator to manage components on your cloud provider, authenticate the {cert-manager-operator} by configuring cloud credentials. You can grant the Operator access to external services required for certificate issuance, such as DNS providers.
+
+//  on AWS
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-authenticate.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-configure-cloud-credentials-aws-non-sts_{context}"]
+= Authenticating on AWS
+
+[role="_abstract"]
+To securely access AWS resources from your applications, authenticate your workloads on AWS by using the {cert-manager-operator}.
+
+.Prerequisites
+
+* You have installed version 1.11.1 or later of the {cert-manager-operator}.
+* You have configured the Cloud Credential Operator to operate in _mint_ or _passthrough_ mode.
+
+.Procedure
+
+. Create a `CredentialsRequest` resource YAML file, for example, `sample-credential-request.yaml`, as follows:
++
+[source,yaml]
+----
+apiVersion: cloudcredential.openshift.io/v1
+kind: CredentialsRequest
+metadata:
+  name: cert-manager
+  namespace: openshift-cloud-credential-operator
+spec:
+  providerSpec:
+    apiVersion: cloudcredential.openshift.io/v1
+    kind: AWSProviderSpec
+    statementEntries:
+    - action:
+      - "route53:GetChange"
+      effect: Allow
+      resource: "arn:aws:route53:::change/*"
+    - action:
+      - "route53:ChangeResourceRecordSets"
+      - "route53:ListResourceRecordSets"
+      effect: Allow
+      resource: "arn:aws:route53:::hostedzone/*"
+    - action:
+      - "route53:ListHostedZonesByName"
+      effect: Allow
+      resource: "*"
+  secretRef:
+    name: aws-creds
+    namespace: cert-manager
+  serviceAccountNames:
+  - cert-manager
+----
+
+. Create a `CredentialsRequest` resource by running the following command:
++
+[source,terminal]
+----
+$ oc create -f sample-credential-request.yaml
+----
+
+. Update the subscription object for {cert-manager-operator} by running the following command:
++
+[source,terminal]
+----
+$ oc -n cert-manager-operator patch subscription openshift-cert-manager-operator --type=merge -p '{"spec":{"config":{"env":[{"name":"CLOUD_CREDENTIALS_SECRET_NAME","value":"aws-creds"}]}}}'
+----
+
+.Verification
+
+. Get the name of the redeployed cert-manager controller pod by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -l app.kubernetes.io/name=cert-manager -n cert-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                          READY   STATUS    RESTARTS   AGE
+cert-manager-bd7fbb9fc-wvbbt  1/1     Running   0          15m39s
+----
+
+. Verify that the cert-manager controller pod is updated with AWS credential volumes that are mounted under the path specified in `mountPath` by running the following command:
++
+[source,terminal]
+----
+$ oc get -n cert-manager pod/<cert-manager_controller_pod_name> -o yaml
+----
++
+.Example output
+[source,terminal]
+----
+...
+spec:
+  containers:
+  - args:
+    ...
+    - mountPath: /.aws
+      name: cloud-credentials
+  ...
+  volumes:
+  ...
+  - name: cloud-credentials
+    secret:
+      ...
+      secretName: aws-creds
+----
+
+:leveloffset!:
+
+// with AWS Security Token Service
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-authenticate.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-configure-cloud-credentials-aws-sts_{context}"]
+= Authenticating with AWS Security Token Service
+
+[role="_abstract"]
+To securely access AWS resources from your applications without managing long-lived keys, authenticate your workloads by using the AWS Security Token Service (STS).
+
+.Prerequisites
+
+* You have extracted and prepared the `ccoctl` binary.
+* You have configured an {product-title} cluster with AWS STS by using the Cloud Credential Operator in manual mode.
+
+.Procedure
+
+. Create a directory to store a `CredentialsRequest` resource YAML file by running the following command:
++
+[source,terminal]
+----
+$ mkdir credentials-request
+----
+
+. Create a `CredentialsRequest` resource YAML file under the `credentials-request` directory, such as, `sample-credential-request.yaml`, by applying the following yaml:
++
+[source,yaml]
+----
+apiVersion: cloudcredential.openshift.io/v1
+kind: CredentialsRequest
+metadata:
+  name: cert-manager
+  namespace: openshift-cloud-credential-operator
+spec:
+  providerSpec:
+    apiVersion: cloudcredential.openshift.io/v1
+    kind: AWSProviderSpec
+    statementEntries:
+    - action:
+      - "route53:GetChange"
+      effect: Allow
+      resource: "arn:aws:route53:::change/*"
+    - action:
+      - "route53:ChangeResourceRecordSets"
+      - "route53:ListResourceRecordSets"
+      effect: Allow
+      resource: "arn:aws:route53:::hostedzone/*"
+    - action:
+      - "route53:ListHostedZonesByName"
+      effect: Allow
+      resource: "*"
+  secretRef:
+    name: aws-creds
+    namespace: cert-manager
+  serviceAccountNames:
+  - cert-manager
+----
+
+. Use the `ccoctl` tool to process `CredentialsRequest` objects by running the following command:
++
+[source,terminal]
+----
+$ ccoctl aws create-iam-roles \
+    --name <user_defined_name> --region=<aws_region> \
+    --credentials-requests-dir=<path_to_credrequests_dir> \
+    --identity-provider-arn <oidc_provider_arn> --output-dir=<path_to_output_dir>
+----
++
+.Example output
+[source,terminal]
+----
+2023/05/15 18:10:34 Role arn:aws:iam::XXXXXXXXXXXX:role/<user_defined_name>-cert-manager-aws-creds created
+2023/05/15 18:10:34 Saved credentials configuration to: <path_to_output_dir>/manifests/cert-manager-aws-creds-credentials.yaml
+2023/05/15 18:10:35 Updated Role policy for Role <user_defined_name>-cert-manager-aws-creds
+----
++
+Copy the `<aws_role_arn>` from the output to use in the next step. For example, `"arn:aws:iam::XXXXXXXXXXXX:role/<user_defined_name>-cert-manager-aws-creds"`
+
+. Add the `eks.amazonaws.com/role-arn="<aws_role_arn>"` annotation to the service account by running the following command:
++
+[source,terminal]
+----
+$ oc -n cert-manager annotate serviceaccount cert-manager eks.amazonaws.com/role-arn="<aws_role_arn>"
+----
+
+. To create a new pod, delete the existing cert-manager controller pod by running the following command:
++
+[source,terminal]
+----
+$ oc delete pods -l app.kubernetes.io/name=cert-manager -n cert-manager
+----
++
+The AWS credentials are applied to a new cert-manager controller pod within a minute.
+
+.Verification
+
+. Get the name of the updated cert-manager controller pod by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -l app.kubernetes.io/name=cert-manager -n cert-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                          READY   STATUS    RESTARTS   AGE
+cert-manager-bd7fbb9fc-wvbbt  1/1     Running   0          39s
+----
+
+. Verify that AWS credentials are updated by running the following command:
++
+[source,terminal]
+----
+$ oc set env -n cert-manager po/<cert_manager_controller_pod_name> --list
+----
++
+.Example output
+[source,terminal]
+----
+# pods/cert-manager-57f9555c54-vbcpg, container cert-manager-controller
+# POD_NAMESPACE from field path metadata.namespace
+AWS_ROLE_ARN=XXXXXXXXXXXX
+AWS_WEB_IDENTITY_TOKEN_FILE=/var/run/secrets/eks.amazonaws.com/serviceaccount/token
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+[id="additional-resources_cert-manager-authenticate-gcp"]
+.Additional resources
+
+* xref:../../installing/installing_aws/ipi/installing-aws-customizations.adoc#cco-ccoctl-configuring_installing-aws-customizations[Configuring the Cloud Credential Operator utility]
+
+// on GCP
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-authenticate.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-configure-cloud-credentials-gcp-non-sts_{context}"]
+= Authenticating on {gcp-short}
+
+[role="_abstract"]
+To securely access {gcp-first} resources, authenticate your workloads on {gcp-short} by using the {cert-manager-operator}.
+
+.Prerequisites
+
+* You have installed version 1.11.1 or later of the {cert-manager-operator}.
+* You have configured the Cloud Credential Operator to operate in _mint_ or _passthrough_ mode.
+
+.Procedure
+
+. Create a `CredentialsRequest` resource YAML file, such as, `sample-credential-request.yaml` by applying the following yaml:
++
+[source,yaml]
+----
+apiVersion: cloudcredential.openshift.io/v1
+kind: CredentialsRequest
+metadata:
+  name: cert-manager
+  namespace: openshift-cloud-credential-operator
+spec:
+  providerSpec:
+    apiVersion: cloudcredential.openshift.io/v1
+    kind: GCPProviderSpec
+    predefinedRoles:
+    - roles/dns.admin
+  secretRef:
+    name: gcp-credentials
+    namespace: cert-manager
+  serviceAccountNames:
+  - cert-manager
+----
++
+[NOTE]
+====
+The `dns.admin` role provides admin privileges to the service account for managing {gcp-full} DNS resources. To ensure that the cert-manager runs with the service account that has the least privilege, you can create a custom role with the following permissions:
+
+* `dns.resourceRecordSets.*`
+* `dns.changes.*`
+* `dns.managedZones.list`
+====
+
+. Create a `CredentialsRequest` resource by running the following command:
++
+[source,terminal]
+----
+$ oc create -f sample-credential-request.yaml
+----
+
+. Update the subscription object for {cert-manager-operator} by running the following command:
++
+[source,terminal]
+----
+$ oc -n cert-manager-operator patch subscription openshift-cert-manager-operator --type=merge -p '{"spec":{"config":{"env":[{"name":"CLOUD_CREDENTIALS_SECRET_NAME","value":"gcp-credentials"}]}}}'
+----
+
+.Verification
+
+. Get the name of the redeployed cert-manager controller pod by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -l app.kubernetes.io/name=cert-manager -n cert-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                                       READY   STATUS    RESTARTS   AGE
+cert-manager-bd7fbb9fc-wvbbt               1/1     Running   0          15m39s
+----
+
+. Verify that the cert-manager controller pod is updated with {gcp-short} credential volumes that are mounted under the path specified in `mountPath` by running the following command:
++
+[source,terminal]
+----
+$ oc get -n cert-manager pod/<cert-manager_controller_pod_name> -o yaml
+----
++
+.Example output
+[source,terminal]
+----
+spec:
+  containers:
+  - args:
+    ...
+    volumeMounts:
+    ...
+    - mountPath: /.config/gcloud
+      name: cloud-credentials
+    ....
+  volumes:
+  ...
+  - name: cloud-credentials
+    secret:
+      ...
+      items:
+      - key: service_account.json
+        path: application_default_credentials.json
+      secretName: gcp-credentials
+----
+
+:leveloffset!:
+
+// with GCP Workload Identity
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-authenticate.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-configure-cloud-credentials-gcp-sts_{context}"]
+= Authenticating with {gcp-short} Workload Identity
+
+[role="_abstract"]
+To securely access {gcp-first} resources from your applications without managing long-lived keys, authenticate your workloads by using {gcp-short} Workload Identity.
+
+.Prerequisites
+
+* You extracted and prepared the `ccoctl` binary.
+* You have installed version 1.11.1 or later of the {cert-manager-operator}.
+* You have configured an {product-title} cluster with {gcp-short} Workload Identity by using the Cloud Credential Operator in a manual mode.
+
+.Procedure
+
+. Create a directory to store a `CredentialsRequest` resource YAML file by running the following command:
++
+[source,terminal]
+----
+$ mkdir credentials-request
+----
+
+. In the `credentials-request` directory, create a YAML file that contains the following `CredentialsRequest` manifest:
++
+[source,yaml]
+----
+apiVersion: cloudcredential.openshift.io/v1
+kind: CredentialsRequest
+metadata:
+  name: cert-manager
+  namespace: openshift-cloud-credential-operator
+spec:
+  providerSpec:
+    apiVersion: cloudcredential.openshift.io/v1
+    kind: GCPProviderSpec
+    predefinedRoles:
+    - roles/dns.admin
+  secretRef:
+    name: gcp-credentials
+    namespace: cert-manager
+  serviceAccountNames:
+  - cert-manager
+----
++
+[NOTE]
+====
+The `dns.admin` role provides admin privileges to the service account for managing {gcp-full} DNS resources. To ensure that the cert-manager runs with the service account that has the least privilege, you can create a custom role with the following permissions:
+
+* `dns.resourceRecordSets.*`
+* `dns.changes.*`
+* `dns.managedZones.list`
+====
+
+. Use the `ccoctl` tool to process `CredentialsRequest` objects by running the following command:
++
+[source,terminal]
+----
+$ ccoctl gcp create-service-accounts \
+    --name <user_defined_name> --output-dir=<path_to_output_dir> \
+    --credentials-requests-dir=<path_to_credrequests_dir> \
+    --workload-identity-pool <workload_identity_pool> \
+    --workload-identity-provider <workload_identity_provider> \
+    --project <gcp_project_id>
+----
++
+.Example command
+[source,terminal]
+----
+$ ccoctl gcp create-service-accounts \
+    --name abcde-20230525-4bac2781 --output-dir=/home/outputdir \
+    --credentials-requests-dir=/home/credentials-requests \
+    --workload-identity-pool abcde-20230525-4bac2781 \
+    --workload-identity-provider abcde-20230525-4bac2781 \
+    --project openshift-gcp-devel
+----
+
+. Apply the secrets generated in the manifests directory of your cluster by running the following command:
++
+[source,terminal]
+----
+$ ls <path_to_output_dir>/manifests/*-credentials.yaml | xargs -I{} oc apply -f {}
+----
+
+. Update the subscription object for {cert-manager-operator} by running the following command:
++
+[source,terminal]
+----
+$ oc -n cert-manager-operator patch subscription openshift-cert-manager-operator --type=merge -p '{"spec":{"config":{"env":[{"name":"CLOUD_CREDENTIALS_SECRET_NAME","value":"gcp-credentials"}]}}}'
+----
+
+.Verification
+
+. Get the name of the redeployed cert-manager controller pod by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -l app.kubernetes.io/name=cert-manager -n cert-manager
+----
++
+.Example output
+[source,terminal]
+----
+NAME                          READY   STATUS    RESTARTS   AGE
+cert-manager-bd7fbb9fc-wvbbt  1/1     Running   0          15m39s
+----
+
+. Verify that the cert-manager controller pod is updated with {gcp-short} workload identity credential volumes that are mounted under the path specified in `mountPath` by running the following command:
++
+[source,terminal]
+----
+$ oc get -n cert-manager pod/<cert-manager_controller_pod_name> -o yaml
+----
++
+.Example output
+[source,terminal]
+----
+spec:
+  containers:
+  - args:
+    ...
+    volumeMounts:
+    - mountPath: /var/run/secrets/openshift/serviceaccount
+      name: bound-sa-token
+      ...
+    - mountPath: /.config/gcloud
+      name: cloud-credentials
+  ...
+  volumes:
+  - name: bound-sa-token
+    projected:
+      ...
+      sources:
+      - serviceAccountToken:
+          audience: openshift
+          ...
+          path: token
+  - name: cloud-credentials
+    secret:
+      ...
+      items:
+      - key: service_account.json
+        path: application_default_credentials.json
+      secretName: gcp-credentials
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+[id="additional-resources_cert-manager-authenticate-gcp-workload-identity"]
+.Additional resources
+
+* xref:../../installing/installing_gcp/installing-gcp-customizations.adoc#cco-ccoctl-configuring_installing-gcp-customizations[Configuring the Cloud Credential Operator utility]
+
+* xref:../../authentication/managing_cloud_provider_credentials/cco-short-term-creds.adoc#cco-short-term-creds[Manual mode with short-term credentials for components]
+
+* xref:../../authentication/managing_cloud_provider_credentials/about-cloud-credential-operator.adoc#about-cloud-credential-operator-default_about-cloud-credential-operator[Default behavior of the Cloud Credential Operator]
+
+
+
+
+= Configuring an ACME issuer
+:_mod-docs-content-type: ASSEMBLY
+[id="cert-manager-operator-issuer-acme"]
+= Configuring an ACME issuer
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: cert-manager-operator-issuer-acme
+
+toc::[]
+
+[role="_abstract"]
+The {cert-manager-operator} supports using Automated Certificate Management Environment (ACME) CA servers, such as _Let's Encrypt_, to issue certificates. Explicit credentials are configured by specifying the secret details in the `Issuer` API object. Ambient credentials are extracted from the environment, metadata services, or local files which are not explicitly configured in the `Issuer` API object.
+
+[NOTE]
+====
+The `Issuer` object is namespace scoped. It can only issue certificates from the same namespace. You can also use the `ClusterIssuer` object to issue certificates across all namespaces in the cluster.
+
+.Example YAML file that defines the `ClusterIssuer` object
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: acme-cluster-issuer
+spec:
+  acme:
+    ...
+----
+====
+
+[NOTE]
+====
+By default, you can use the `ClusterIssuer` object with ambient credentials. To use the `Issuer` object with ambient credentials, you must enable the `--issuer-ambient-credentials` setting for the cert-manager controller.
+====
+
+// About ACME issuers
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cert-manager-acme-about_{context}"]
+= About ACME issuers
+
+[role="_abstract"]
+The ACME issuer type for the {cert-manager-operator} represents an Automated Certificate Management Environment (ACME) certificate authority (CA) server. ACME CA servers rely on a _challenge_ to verify that a client owns the domain names that the certificate is being requested for. If the challenge is successful, the {cert-manager-operator} can issue the certificate. If the challenge fails, the {cert-manager-operator} does not issue the certificate.
+
+[NOTE]
+====
+Private DNS zones are not supported with _Let’s Encrypt_ and internet ACME servers.
+====
+
+:leveloffset!:
+
+// Supported ACME challenges types
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cert-manager-acme-challenges-types_{context}"]
+= Supported ACME challenges types
+
+[role="_abstract"]
+To validate domain ownership with ACME issuers, you can use the challenge types supported by the {cert-manager-operator}.
+
+The {cert-manager-operator} supports the following challenge types for ACME issuers:
+
+HTTP-01:: With the HTTP-01 challenge type, you provide a computed key at an HTTP URL endpoint in your domain. If the ACME CA server can get the key from the URL, it can validate you as the owner of the domain.
++
+For more information, see link:https://cert-manager.io/docs/configuration/acme/http01/[HTTP01] in the upstream cert-manager documentation.
+
+[NOTE]
+====
+HTTP-01 requires that the Let's Encrypt servers can access the route of the cluster. If an internal or private cluster is behind a proxy, the HTTP-01 validations for certificate issuance fail.
+
+The HTTP-01 challenge is restricted to port 80. For more information, see link:https://letsencrypt.org/docs/challenge-types/#http-01-challenge[HTTP-01 challenge] (Let's Encrypt).
+====
+
+DNS-01:: With the DNS-01 challenge type, you provide a computed key at a DNS TXT record. If the ACME CA server can get the key by DNS lookup, it can validate you as the owner of the domain.
++
+For more information, see link:https://cert-manager.io/docs/configuration/acme/dns01/[DNS01] in the upstream cert-manager documentation.
+
+:leveloffset!:
+
+// Supported DNS-01 providers
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cert-manager-acme-dns-providers_{context}"]
+= Supported DNS-01 providers
+
+[role="_abstract"]
+To configure DNS-01 challenges for ACME issuers, you can validate domain ownership by integrating with supported services, such as Amazon Route 53, Azure DNS, and Google Cloud DNS, or by using Webhooks.
+
+The {cert-manager-operator} supports the following DNS-01 providers for ACME issuers:
+
+* Amazon Route 53
+* Azure DNS
++
+[NOTE]
+====
+The {cert-manager-operator} does not support using Microsoft Entra ID pod identities to assign a managed identity to a pod.
+====
+* {gcp-full} DNS
+* Webhook
++
+--
+Red Hat tests and supports DNS providers using an external webhook with cert-manager on {product-title}. The following DNS providers are tested and supported with {product-title}:
+
+** link:https://github.com/jb-dk/cert-manager-webhook-ibmcis[cert-manager-webhook-ibmcis]
+
+[NOTE]
+====
+Using a DNS provider that is not listed might work with {product-title}, but the provider was not tested by Red Hat and therefore is not supported by Red Hat.
+====
+--
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve HTTP01 challenges
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-http01_{context}"]
+= Configuring an ACME issuer to solve HTTP-01 challenges
+
+[role="_abstract"]
+You can use {cert-manager-operator} to set up an ACME issuer to solve HTTP-01 challenges. This procedure uses _Let's Encrypt_ as the ACME CA server.
+
+.Prerequisites
+
+* You have access to the cluster as a user with the `cluster-admin` role.
+* You have a service that you want to expose. In this procedure, the service is named `sample-workload`.
+
+.Procedure
+
+. Create an ACME cluster issuer.
+
+.. Create a YAML file, `acme-cluster-issuer.yaml`, that defines the `ClusterIssuer` object:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: <cluster_issuer_name>
+spec:
+  acme:
+    preferredChain: ""
+    privateKeySecretRef:
+      name: <secret_for_private_key>
+    server: <url>
+    solvers:
+    - http01:
+        ingress:
+          ingressClassName: <ingress_class_name>
+----
++
+where:
++
+`<cluster_issuer_name>`:: Specifies a name for the cluster issuer.
+`<secret_for_private_key>`:: Specifies the name of secret to store the ACME account private key in.
+`<url>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<ingress_class_name>`:: Specifies the Ingress class, for example, `openshift-default`.
+
+.. Optional: If you create the object without specifying `ingressClassName`, use the following command to patch the existing ingress:
++
+[source,terminal]
+----
+$ oc patch ingress/<ingress-name> --type=merge --patch '{"spec":{"ingressClassName":"openshift-default"}}' -n <namespace>
+----
+
+.. Create the `ClusterIssuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f acme-cluster-issuer.yaml
+----
+
+. Create an Ingress to expose the service of the user workload.
+
+.. Create a YAML file, for example, `namespace.yaml`, that defines a `Namespace` object:
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <ingress_namespace>
+----
++
+Replace `<ingress_namespace>` with the namespace for the Ingress.
+
+.. Create the `Namespace` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f namespace.yaml
+----
+
+.. Create a YAML file, for example, `ingress.yaml`, that defines the `Ingress` object:
++
+[source,yaml]
+----
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <ingress_name>
+  namespace: <ingress_namespace>
+  annotations:
+    cert-manager.io/cluster-issuer: <cluster_issuer_name>
+spec:
+  ingressClassName: <ingress_class_name>
+  tls:
+  - hosts:
+    - <tls_hostname>
+    secretName: <secret_name>
+  rules:
+  - host: <hostname>
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: <service_name>
+            port:
+              number: 80
+----
++
+where:
++
+`<ingress_name>`:: Specifies the name of the Ingress.
+`<ingress_namespace>`:: Specifies the namespace that you created for the Ingress.
+`<cluster_issuer_name>`:: Specifies the cluster issuer that you created.
+`<ingress_class_name>`:: Specifies the Ingress class name.
+`<tls_hostname>`:: Specifies the Subject Alternative Name (SAN) to be associated with the certificate. This name is used to add DNS names to the certificate.
+`<secret_name>`:: Specifies the secret that stores the certificate.
+`<hostname>`:: Specifies the host name. You can use the `<host_name>.<cluster_ingress_domain>` syntax to take advantage of the `*.<cluster_ingress_domain>` wildcard DNS record and serving certificate for the cluster. For example, you might use `apps.<cluster_base_domain>`. Otherwise, you must ensure that a DNS record exists for the chosen hostname.
+`<service_name>`:: Specifies the name of the service to expose. This example uses a service named `sample-workload`.
+
+.. Create the `Ingress` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f ingress.yaml
+----
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve DNS01 challenges by using explicit credentials on AWS
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-explicit-aws_{context}"]
+= Configuring an ACME issuer by using explicit credentials for AWS Route53
+
+[role="_abstract"]
+You can use {cert-manager-operator} to set up an Automated Certificate Management Environment (ACME) issuer to solve DNS-01 challenges by using explicit credentials on AWS. This procedure uses _Let's Encrypt_ as the ACME certificate authority (CA) server and shows how to solve DNS-01 challenges with Amazon Route 53.
+
+.Prerequisites
+
+* You must provide the explicit `accessKeyID` and `secretAccessKey` credentials. For more information, see link:https://cert-manager.io/docs/configuration/acme/dns01/route53/[Route53] in the upstream cert-manager documentation.
++
+[NOTE]
+====
+You can use Amazon Route 53 with explicit credentials in an {product-title} cluster that is not running on AWS.
+====
+
+.Procedure
+
+. Optional: Override the name server settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` names servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project <issuer_namespace>
+----
+
+. Create a secret to store your AWS credentials in by running the following command:
++
+[source,terminal]
+----
+$ oc create secret -n my-issuer-namespace generic aws-secret \
+  --from-literal=awsSecretAccessKey=<aws_secret_access_key>
+----
++
+Replace `<aws_secret_access_key>` with your AWS secret access key.
+
+. Create an issuer:
+
+.. Create a YAML file that defines the `Issuer` object:
++
+.Example `issuer.yaml` file
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <issuer_name>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    server: <server>
+    email: "<email_address>"
+    privateKeySecretRef:
+      name: <secret_private_key>
+    solvers:
+    - dns01:
+        route53:
+          accessKeyID: <aws_key_id>
+          hostedZoneID: <hosted_zone_id>
+          region: <region_name>
+          secretAccessKeySecretRef:
+            name: "<aws_secret>"
+            key: "<aws_secret_access_key>"
+----
++
+where:
++
+`<issuer_name>`:: Specifies a name for the issuer.
+`<issuer_namespace>`:: Specifies the namespace that you created for the issuer.
+`server`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<email_address>`:: Specifies your email address.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<aws_key_id>`:: Specifies your AWS key ID.
+`<hosted_zone_id>`:: Specifies your hosted zone ID.
+`<region_name>`:: Specifies the AWS region name. For example, `us-east-1`.
+`<aws_secret>`:: Specifies the name of the secret you created.
+`<aws_secret_access_key>`:: Specifies the key in the secret you created that stores your AWS secret access key.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+//Configuring an ACME issuer to solve DNS01 challenges by using ambient credentials on AWS
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-ambient-aws_{context}"]
+= Configuring an ACME issuer by using ambient credentials on AWS
+
+[role="_abstract"]
+You can use {cert-manager-operator} to set up an ACME issuer to solve DNS-01 challenges by using ambient credentials on AWS. This procedure uses _Let's Encrypt_ as the ACME CA server and shows how to solve DNS-01 challenges with Amazon Route 53.
+
+.Prerequisites
+
+* If your cluster is configured to use the AWS Security Token Service (STS), you followed the instructions from the _Configuring cloud credentials for the cert-manager Operator for Red Hat OpenShift for the AWS Security Token Service cluster_ section.
+* If your cluster does not use the AWS STS, you followed the instructions from the _Configuring cloud credentials for the cert-manager Operator for Red Hat OpenShift on AWS_ section.
+
+.Procedure
+
+. Optional: Override the name server settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` name servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project <issuer_namespace>
+----
+
+. Modify the `CertManager` resource to add the `--issuer-ambient-credentials` argument:
++
+[source,terminal]
+----
+$ oc patch certmanager/cluster \
+  --type=merge \
+  -p='{"spec":{"controllerConfig":{"overrideArgs":["--issuer-ambient-credentials"]}}}'
+----
+
+. Create an issuer:
+
+.. Create a YAML file that defines the `Issuer` object:
++
+.Example `issuer.yaml` file
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <issuer_name>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    server: <server>
+    email: "<email_address>"
+    privateKeySecretRef:
+      name: <secret_private_key>
+    solvers:
+    - dns01:
+        route53:
+          hostedZoneID: <hosted_zone_id>
+          region: us-east-1
+----
++
+where:
++
+`<issuer_name>`:: Specifies a name for the issuer.
+`<issuer_namespace>`:: Specifies the namespace that you created for the issuer.
+`<server>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<email_address>`:: Specifies your email address.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<hosted_zone_id>`:: Specifies your hosted zone ID.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve DNS01 challenges by using explicit credentials on GCP
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-explicit-gcp_{context}"]
+= Configuring an ACME issuer by using explicit credentials for {gcp-full} DNS
+
+[role="_abstract"]
+You can use the {cert-manager-operator} to set up an ACME issuer to solve DNS-01 challenges by using explicit credentials on {gcp-short}. This procedure uses _Let's Encrypt_ as the ACME CA server and shows how to solve DNS-01 challenges with {gcp-full} DNS.
+
+.Prerequisites
+
+* You have set up a {gcp-full} service account with a desired role for {gcp-full} DNS. For more information, see link:https://cert-manager.io/docs/configuration/acme/dns01/google/[{gcp-full} DNS] in the upstream cert-manager documentation.
++
+[NOTE]
+====
+You can use {gcp-full} DNS with explicit credentials in an {product-title} cluster that is not running on {gcp-short}.
+====
+
+.Procedure
+
+. Optional: Override the name server settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` name servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project my-issuer-namespace
+----
+
+. Create a secret to store your {gcp-short} credentials by running the following command:
++
+[source,terminal]
+----
+$ oc create secret generic clouddns-dns01-solver-svc-acct --from-file=service_account.json=<path/to/gcp_service_account.json> -n my-issuer-namespace
+----
+
+. Create an issuer:
+
+.. Create a YAML file, for example, `issuer.yaml`, that defines the `Issuer` object:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <acme_dns01_clouddns_issuer>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    preferredChain: ""
+    privateKeySecretRef:
+      name: <secret_private_key>
+    server: <server>
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: <project_id>
+          serviceAccountSecretRef:
+            name: <secret>
+            key: <service_account.json>
+----
++
+where:
++
+`<acme_dns01_clouddns_issuer>`:: Specifies a name for the issuer.
+`<issuer_namespace>`:: Specifies your issuer namespace.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<server>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<project_id>`:: Specifies the name of the {gcp-short} project that contains the Cloud DNS zone.
+`<secret>`:: Specifies the name of the secret you created.
+`<service_account.json>`:: Specifies the key in the secret you created that stores your {gcp-short} secret access key.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve DNS01 challenges by using ambient credentials on GCP
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-ambient-gcp_{context}"]
+= Configuring an ACME issuer by using ambient credentials on {gcp-short}
+
+[role="_abstract"]
+You can use the {cert-manager-operator} to set up an ACME issuer to solve DNS-01 challenges by using ambient credentials on {gcp-short}. This procedure uses _Let's Encrypt_ as the ACME CA server and shows how to solve DNS-01 challenges with {gcp-full} DNS.
+
+.Prerequisites
+
+* If your cluster is configured to use {gcp-short} Workload Identity, you followed the instructions from the _Configuring cloud credentials for the {cert-manager-operator} with {gcp-short} Workload Identity_ section.
+* If your cluster does not use {gcp-short} Workload Identity, you followed the instructions from the _Configuring cloud credentials for the {cert-manager-operator} on {gcp-short}_ section.
+
+.Procedure
+
+. Optional: Override the name server settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` name servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project <issuer_namespace>
+----
+
+. Modify the `CertManager` resource to add the `--issuer-ambient-credentials` argument:
++
+[source,terminal]
+----
+$ oc patch certmanager/cluster \
+  --type=merge \
+  -p='{"spec":{"controllerConfig":{"overrideArgs":["--issuer-ambient-credentials"]}}}'
+----
+
+. Create an issuer:
+
+.. Create a YAML file that defines the `Issuer` object:
++
+.Example `issuer.yaml` file
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <issuer_name>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    preferredChain: ""
+    privateKeySecretRef:
+      name: <secret_private_key>
+    server: <server>
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: <gcp_project_id>
+----
++
+where:
++
+`<issuer_name>`:: Specifies a name for the issuer.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<server>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<gcp_project_id>`:: Specifies the name of the {gcp-short} project that contains the Cloud DNS zone.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve DNS01 challenges by using explicit credentials on Microsoft Azure
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-explicit-azure_{context}"]
+= Configuring an ACME issuer by using explicit credentials for Microsoft Azure DNS
+
+[role="_abstract"]
+You can use {cert-manager-operator} to set up an ACME issuer to solve DNS-01 challenges by using explicit credentials on Microsoft Azure. This procedure uses _Let's Encrypt_ as the ACME CA server and shows how to solve DNS-01 challenges with Azure DNS.
+
+.Prerequisites
+
+* You have set up a service principal with desired role for Azure DNS. For more information, see link:https://cert-manager.io/docs/configuration/acme/dns01/azuredns/[Azure DNS] in the upstream cert-manager documentation.
++
+[NOTE]
+====
+You can follow this procedure for an {product-title} cluster that is not running on Microsoft Azure.
+====
+
+.Procedure
+
+. Optional: Override the nameserver settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` name servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project my-issuer-namespace
+----
+
+. Create a secret to store your Azure credentials in by running the following command:
++
+[source,terminal]
+----
+$ oc create secret generic <secret_name> --from-literal=<azure_secret_access_key_name>=<azure_secret_access_key_value> \
+    -n my-issuer-namespace
+----
++
+* Replace `<secret_name>` with your secret name.
+* Replace `<azure_secret_access_key_name>` with your Azure secret access key name.
+* Replace `<azure_secret_access_key_value>` with your Azure secret key.
+
+. Create an issuer:
+
+.. Create a YAML file, for example, `issuer.yaml`, that defines the `Issuer` object:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <acme-dns01-azuredns-issuer>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    preferredChain: ""
+    privateKeySecretRef:
+      name: <secret_private_key>
+    server: <server>
+    solvers:
+    - dns01:
+        azureDNS:
+          clientID: <azure_client_id>
+          clientSecretSecretRef:
+            name: <secret_name>
+            key: <azure_secret_access_key_name>
+          subscriptionID: <azure_subscription_id>
+          tenantID: <azure_tenant_id>
+          resourceGroupName: <azure_dns_zone_resource_group>
+          hostedZoneName: <azure_dns_zone>
+          environment: AzurePublicCloud
+----
++
+where:
++
+`<acme-dns01-azuredns-issuer>`:: Specifies a name for the issuer.
+`<issuer_namespace>`:: Specifies your issuer namespace.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<server>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<azure_client_id>`:: Specifies your Azure client ID.
+`<secret_name>`:: Specifies a name of the client secret.
+`<azure_secret_access_key_name>`:: Specifies the client secret key name.
+`<azure_subscription_id>`:: Specifies your Azure subscription ID.
+`<azure_tenant_id>`:: Specifies your Azure tenant ID.
+`<azure_dns_zone_resource_group>`:: Specifies the name of the Azure DNS zone resource group.
+`<azure_dns_zone>`:: Specifies the name of Azure DNS zone.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+[id="additional-resources_cert-manager-operator-issuer-acme"]
+== Additional resources
+
+* xref:../../security/cert_manager_operator/cert-manager-authenticate.adoc#cert-manager-configure-cloud-credentials-aws-sts_cert-manager-authenticate[Configuring cloud credentials for the {cert-manager-operator} for the AWS Security Token Service cluster]
+
+* xref:../../security/cert_manager_operator/cert-manager-authenticate.adoc#cert-manager-configure-cloud-credentials-aws-non-sts_cert-manager-authenticate[Configuring cloud credentials for the {cert-manager-operator} on AWS]
+
+* xref:../../security/cert_manager_operator/cert-manager-authenticate.adoc#cert-manager-configure-cloud-credentials-gcp-sts_cert-manager-authenticate[Configuring cloud credentials for the {cert-manager-operator} with {gcp-short} Workload Identity]
+
+* xref:../../security/cert_manager_operator/cert-manager-authenticate.adoc#cert-manager-configure-cloud-credentials-gcp-non-sts_cert-manager-authenticate[Configuring cloud credentials for the {cert-manager-operator} on {gcp-short}]
+
+
+
+
+= Configuring certificates with an issuer
+:_mod-docs-content-type: ASSEMBLY
+[id="cert-manager-creating-certificate"]
+= Configuring certificates with an issuer
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: cert-manager-creating-certificate
+
+toc::[]
+
+[role="_abstract"]
+By using the {cert-manager-operator}, you can manage certificates, handling tasks such as renewal and issuance, for workloads within the cluster, as well as components interacting externally to the cluster.
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-creating-certificate.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-certificate-mgmt_{context}"]
+= Creating certificates for user workloads
+
+[role="_abstract"]
+To secure communications for your applications, create and manage TLS certificates for your workloads by using the {cert-manager-operator}
+
+.Prerequisites
+
+* You have access to the cluster with `cluster-admin` privileges.
+* You have installed the {cert-manager-operator}.
+
+.Procedure
+
+. Create an issuer. For more information, see "Configuring an issuer" in the "Additional resources" section.
+
+. Create a certificate:
+
+.. Create a YAML file, for example, `certificate.yaml`, that defines the `Certificate` object:
++
+[source, yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: <tls_cert>
+  namespace: <issuer_namespace>
+spec:
+  isCA: false
+  commonName: '<common_name>'
+  secretName: <secret_name>
+  dnsNames:
+  - "<domain_name>"
+  issuerRef:
+    name: <issuer_name>
+    kind: Issuer
+----
++
+where:
++
+`<tls_cert>`:: Specifies a name for the certificate.
+`<issuer_namespace>`:: Specifies the namespace of the issuer.
+`<common_name>`:: Specifies the common name (CN).
+`<secret_name>`:: Specifies the name of the secret to create that contains the certificate.
+`<domain_name>`:: Specifies the domain name.
+`<issuer_name>`:: Specifies the name of the issuer.
+
+.. Create the `Certificate` object by running the following command:
++
+[source, terminal]
+----
+$ oc create -f certificate.yaml
+----
+
+.Verification
+
+* Verify that the certificate is created and ready to use by running the following command:
++
+[source, terminal]
+----
+$ oc get certificate -w -n <issuer_namespace>
+----
++
+Once certificate is in `Ready` status, workloads on your cluster can start using the generated certificate secret.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-creating-certificate.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-certificate-api-server_{context}"]
+= Creating certificates for the API server
+
+[role="_abstract"]
+To secure interactions with the cluster control plane, create TLS certificates for the API server by using the {cert-manager-operator}.
+
+.Prerequisites
+
+* You have access to the cluster with `cluster-admin` privileges.
+* You have installed version 1.13.0 or later of the {cert-manager-operator}.
+
+.Procedure
+
+. Create an issuer. For more information, see "Configuring an issuer" in the "Additional resources" section.
+
+. Create a certificate:
+
+.. Create a YAML file, for example, `certificate.yaml`, that defines the `Certificate` object:
++
+[source, yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: <tls_cert>
+  namespace: openshift-config
+spec:
+  isCA: false
+  commonName: "api.<cluster_base_domain>"
+  secretName: <secret_name>
+  dnsNames:
+  - "api.<cluster_base_domain>"
+  issuerRef:
+    name: <issuer_name>
+    kind: Issuer
+----
++
+where:
++
+`<tls_cert>`:: Specifies a name for the certificate.
+`<cluster_base_domain>`:: Specifies the common name (CN).
+`<secret_name>`:: Specifies the name of the secret to create that contains the certificate.
+`<issuer_name>`:: Specifies the name of the issuer.
+
+.. Create the `Certificate` object by running the following command:
++
+[source, terminal]
+----
+$ oc create -f certificate.yaml
+----
+
+. Add the API server named certificate. For more information, see "Adding an API server named certificate" section in the "Additional resources" section.
++
+[NOTE]
+====
+To ensure the certificates are updated, run the `oc login` command again after the certificate is created.
+====
+
+.Verification
+
+* Verify that the certificate is created and ready to use by running the following command:
++
+[source, terminal]
+----
+$ oc get certificate -w -n openshift-config
+----
++
+Once certificate is in `Ready` status, API server on your cluster can start using the generated certificate secret.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-creating-certificate.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-certificate-ingress_{context}"]
+= Creating certificates for the Ingress Controller
+
+[role="_abstract"]
+You can create a certificate for the Ingress Controller and then replace bootstrapped default self-signed certificates with cert-manager-managed external certificates.
+
+[NOTE]
+====
+Before using the procedure, ensure you understand the following Ingress Controller behaviors:
+
+* When certificates are renewed or rotated by using the cert-manager Operator, only the contents of the secret, such as the certificate and key, are updated. The secret name remains unchanged. Kubelet automatically propagates these updates to the mounted volume, allowing the router to detect the file changes and hot-reload the new certificate and key. As a result, no rolling update of the router deployment is triggered or required.
+
+* The secret name is referenced in the Ingress Controller configuration. If you want to replace the default ingress certificate or use different secret name in Ingress Controller configuration, you must patch or edit the configuration to apply the change. This operation triggers a rolling update for router pods where new router pods load the new cert/key pair.
+
+For more information, see this link:https://access.redhat.com/solutions/4542531[Red{nbsp}Hat Knowledgebase Solution].
+====
+
+.Prerequisites
+
+* You have access to the cluster with `cluster-admin` privileges.
+* You have installed version 1.13.0 or later of the {cert-manager-operator}.
+
+.Procedure
+
+. Create an issuer. For more information, see "Configuring an issuer" in the "Additional resources" section.
+
+. Create a certificate:
++
+.. Create a YAML file, for example, `certificate.yaml`, that defines the `Certificate` object:
++
+.Example `certificate.yaml` file
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: <tls_cert>
+  namespace: openshift-ingress
+spec:
+  isCA: false
+  commonName: "apps.<cluster_base_domain>"
+  secretName: <secret_name>
+  dnsNames:
+  - "apps.<cluster_base_domain>"
+  - "\*.apps.<cluster_base_domain>"
+  issuerRef:
+    name: <issuer_name>
+    kind: Issuer
+----
++
+where:
++
+`<tls_cert>`:: Specifies the name for the certificate.
+`<cluster_base_domain>`:: Specifies the common name (CN).
+`<secret_name>`:: Specifies the name of the secret to create that contains the certificate.
+`<cluster_base_domain>`:: Specifies the DNS name of the ingress.
+`<issuer_name>`:: Specifies the name of the issuer.
+
++
+.. Create the `Certificate` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f certificate.yaml
+----
+
+. Replace the default ingress certificate. For more information, see "Replacing the default ingress certificate" section in the "Additional resources" section.
+
+.Verification
+
+. Verify that the certificate is created and ready to use by running the following command:
++
+[source,terminal]
+----
+$ oc get certificate -n openshift-ingress
+----
+
+. Verify the definition and content of the secret object by running the following command:
++
+[source,terminal]
+----
+$ oc get secret <secretName> -n openshift-ingress
+----
+
+. Verify that the default TLS certificate has the correct configuration details for the Ingress Controller by running the following command:
++
+[source,terminal]
+----
+$ oc get ingresscontroller default -n openshift-ingress-operator -o yaml | grep -A2 defaultCertificate
+----
++
+After the certificate is in `Ready` status, the Ingress Controller on your cluster can start using the generated certificate secret.
+
+:leveloffset!:
+
+[role="_additional-resources"]
+[id="additional-resources_cert-manager-creating-certificate"]
+== Additional resources
+
+* xref:../../security/cert_manager_operator/index.adoc#cert-manager-issuer-types_cert-manager-operator-about[Supported issuer types]
+
+* xref:../../security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc#cert-manager-operator-issuer-acme[Configuring an ACME issuer]
+
+* xref:../../security/certificates/api-server.adoc#customize-certificates-api-add-named_api-server-certificates[Adding an API server named certificate]
+
+* xref:../../security/certificates/replacing-default-ingress-certificate.adoc#replacing-default-ingress[Replacing the default ingress certificate]
+
+

@@ -1,0 +1,1624 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="zero-trust-manager-oidc-federation"]
+= Zero Trust Workload Identity Manager OIDC federation
+
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+
+:context: zero-trust-manager-oidc-federation
+
+toc::[]
+
+[role="_abstract"]
+Ensure that your workloads can receive verifiable JSON Web Tokens (JWT-SVIDs) and allow external systems, such as cloud providers, to retrieve public keys from the discovery endpoint. Configure {zero-trust-full} to act as an OpenID Connect (OIDC) provider through the SPIRE server.
+
+The following providers are verified to work with SPIRE OIDC federation:
+
+* Azure Entra ID
+
+* Vault
+
+// About the Entra ID OIDC
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="zero-trust-manager-entraid-oidc-about_{context}"]
+
+= About the Entra ID OpenID Connect
+
+[role="_abstract"]
+Integrate Entra ID OpenID Connect (OIDC) with SPIRE to provide workloads with automatic, short-lived cryptographic identities. This configuration allows you to securely authenticate services without maintaining static secrets.
+
+
+
+
+:leveloffset!:
+
+// configure OIDC route
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-create-route-oidc_{context}"]
+= Configuring the external certificate for the managed OIDC discovery provider route
+
+[role="_abstract"]
+Configure the managed OIDC discovery provider route to use an externally managed TLS certificate. By referencing a TLS secret, you can secure the OIDC endpoint with your own certificate credentials.
+
+.Prerequisites
+
+* You have installed {zero-trust-full} 0.2.0 or later.
+
+* You have deployed the SPIRE Server, SPIRE Agent, SPIFFEE CSI Driver, and the SPIRE OIDC Discovery Provider operands in the cluster.
+
+* You have installed the {cert-manager-operator}. For more information, link:https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html-single/security_and_compliance/index#cert-manager-operator-install[Installing the cert-manager Operator for Red{nbsp}Hat OpenShift].
+
+* You have created a `ClusterIssuer` or `Issuer` configured with a publicly trusted CA service. For example, an Automated Certificate Management Environment (ACME) type `Issuer` with the "Let's Encrypt ACME" service. For more information, see link:https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html-single/security_and_compliance/index#cert-manager-operator-issuer-acme[Configuring an ACME issuer]
+
+.Procedure
+
+. Create a `Role` to provide the router service account permissions to read the referenced secret by running the following command:
++
+[source,terminal]
+----
+$ oc create role secret-reader \
+  --verb=get,list,watch \
+  --resource=secrets \
+  --resource-name=$TLS_SECRET_NAME \
+  -n zero-trust-workload-identity-manager
+----
+
+. Create a `RoleBinding` resource to bind the router service account with the newly created Role resource by running the following command:
++
+[source,terminal]
+----
+$ oc create rolebinding secret-reader-binding \
+  --role=secret-reader \
+  --serviceaccount=openshift-ingress:router \
+  -n zero-trust-workload-identity-manager
+----
+
+. Configure the `SpireOIDCDIscoveryProvider` Custom Resource (CR) object to reference the Secret generated in the earlier step by running the following command:
++
+[source,terminal]
+----
+$ oc patch SpireOIDCDiscoveryProvider cluster --type=merge -p='
+spec:
+  externalSecretRef: ${TLS_SECRET_NAME}
+'
+----
+
+.Verification
+
+. In the `SpireOIDCDiscoveryProvider` CR, check if the `ManageRouteReady` condition is set to `True` by running the following command:
++
+[source,terminal]
+----
+$ oc wait --for=jsonpath='{.status.conditions[?(@.type=="ManagedRouteReady")].status}'=True SpireOIDCDiscoveryProvider/cluster --timeout=120s
+----
+
+. Verify that the OIDC endpoint can be accessed securely through HTTPS by running the following command:
++
+[source,terminal]
+----
+$ curl https://$JWT_ISSUER_ENDPOINT/.well-known/openid-configuration
+
+{
+  "issuer": "https://$JWT_ISSUER_ENDPOINT",
+  "jwks_uri": "https://$JWT_ISSUER_ENDPOINT/keys",
+  "authorization_endpoint": "",
+  "response_types_supported": [
+    "id_token"
+  ],
+  "subject_types_supported": [],
+  "id_token_signing_alg_values_supported": [
+    "RS256",
+    "ES256",
+    "ES384"
+  ]
+}%
+----
+
+:leveloffset!:
+
+// disable a route
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-disabling-route_{context}"]
+= Disabling a managed route
+
+[role="_abstract"]
+If you want to fully control the behavior of exposing the OIDC Discovery Provider service, you can disable the managed route based on your requirements.
+
+.Procedure
+
+* To manually configure the OIDC Discovery Provider, set `managedRoute` to `false` by running the following command:
++
+[source,terminal]
+----
+$ oc patch SpireOIDCDiscoveryProvider cluster --type=merge -p='
+spec:
+  managedRoute: "false"
+----
+
+:leveloffset!:
+
+// configure Azure
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-configure-azure_{context}"]
+= Using Entra ID with {azure-first}
+
+[role="_abstract"]
+Configure your {azure-first} environment to enable Entra ID integration with {azure-short}. By defining variables and creating a resource group, you establish the infrastructure needed to securely manage workload identities.
+
+
+.Prerequisites
+
+* You have configured the SPIRE OIDC Discovery Provider Route to serve the TLS certificates from a publicly trusted CA.
+
+.Procedure
+
+. Log in to Azure by running the following command:
++
+[source,terminal]
+----
+$ az login
+----
+
+. Configure variables for your Azure subscription and tenant by running the following commands:
++
+[source,terminal]
+----
+$ export SUBSCRIPTION_ID=$(az account list --query "[?isDefault].id" -o tsv)
+----
++
+[source,terminal]
+----
+$ export TENANT_ID=$(az account list --query "[?isDefault].tenantId" -o tsv)
+----
++
+[source,terminal]
+----
+$ export LOCATION=centralus
+----
+where:
+
+`SUBSCRIPTION_ID`:: Specifies your unique subscription identifier.
+
+`TENANT_ID`:: Specifies the ID for your Azure Active Directory instance.
+
+`LOCATION`:: The Azure region where your resource is created.
+
+. Define resource variable names by running the following commands:
++
+[source,terminal]
+----
+$ export NAME=ztwim
+----
++
+[source,terminal]
+----
+$ export RESOURCE_GROUP="${NAME}-rg"
+----
++
+[source,terminal]
+----
+$ export STORAGE_ACCOUNT="${NAME}storage"
+----
++
+[source,terminal]
+----
+$ export STORAGE_CONTAINER="${NAME}storagecontainer"
+----
++
+[source,terminal]
+----
+$ export USER_ASSIGNED_IDENTITY_NAME="${NAME}-identity"
+----
+where:
+
+`NAME`:: Specifies A base name for all resources.
+
+`RESOURCE_GROUP`:: Specifies the name of the resource group.
+
+`STORAGE_ACCOUNT`:: Specifies the name for the storage account.
+
+`STORAGE_CONTAINER`:: Specifies the name for the storage container.
+
+`USER_ASSIGNED_IDENTITY_NAME`:: Specifies the name for a managed identity.
+
+. Create the resource group by running the following command:
++
+[source,terminal]
+----
+$ az group create \
+  --name "${RESOURCE_GROUP}" \
+  --location "${LOCATION}"
+----
+
+
+:leveloffset!:
+
+// configure azure blog
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-configure-azure-blob_{context}"]
+= Configuring Azure blob storage
+
+[role="_abstract"]
+Create a new {azure-first} storage account and container to provide a dedicated location for your content. Configuring this storage ensures that the {zero-trust-full} can successfully store and retrieve blobs for your environment.
+
+.Procedure
+
+. Create a new storage account that is used to store content by running the following command:
++
+[source,terminal]
+----
+$ az storage account create \
+  --name ${STORAGE_ACCOUNT} \
+  --resource-group ${RESOURCE_GROUP} \
+  --location ${LOCATION} \
+  --encryption-services blob
+----
+
+. Obtain the storage ID for the newly created storage account by running the following command:
++
+[source,terminal]
+----
+$ export STORAGE_ACCOUNT_ID=$(az storage account show -n ${STORAGE_ACCOUNT} -g ${RESOURCE_GROUP} --query id --out tsv)
+----
+
+. Create a storage container inside the newly created storage account to provide a location to support the storage of blobs by running the following command:
++
+[source,terminal]
+----
+$ az storage container create \
+  --account-name ${STORAGE_ACCOUNT} \
+  --name ${STORAGE_CONTAINER} \
+  --auth-mode login
+----
+
+:leveloffset!:
+
+// configure azure managed identity
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-configure-azure-identity_{context}"]
+= Configuring an Azure user managed identity
+
+[role="_abstract"]
+Create a user-assigned managed identity in Azure to manage access control for your resources. You must also obtain the Client ID to associate roles with the service principal.
+
+.Procedure
+
+. Create a new User Managed Identity and then obtain the Client ID of the related Service Principal associated with the User Managed Identity by running the following command:
++
+[source,terminal]
+----
+$ az identity create \
+  --name ${USER_ASSIGNED_IDENTITY_NAME} \
+  --resource-group ${RESOURCE_GROUP}
+----
++
+[source,terminal]
+----
+$ export IDENTITY_CLIENT_ID=$(az identity show --resource-group "${RESOURCE_GROUP}" --name "${USER_ASSIGNED_IDENTITY_NAME}" --query 'clientId' -otsv)
+----
+
+. Retrieve the `CLIENT_ID` of an Azure user-assigned managed identity and save it as an environment variable by running the following command:
++
+[source,terminal]
+----
+$ export IDENTITY_CLIENT_ID=$(az identity show --resource-group "${RESOURCE_GROUP}" --name "${USER_ASSIGNED_IDENTITY_NAME}" --query 'clientId' -otsv)
+----
+
+. Associate a role with the Service Principal associated with the User Managed Identity by running the following command:
++
+[source,terminal]
+----
+$ az role assignment create \
+  --role "Storage Blob Data Contributor" \
+  --assignee "${IDENTITY_CLIENT_ID}" \
+  --scope ${STORAGE_ACCOUNT_ID}
+----
+
+:leveloffset!:
+
+// create demo application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-create-demo-app_{context}"]
+= Creating the demonstration application
+
+[role="_abstract"]
+Create the demonstration application to verify that the entire system functions correctly. This process validates the configuration of your application secrets and namespaces.
+
+.Procedure
+
+. Set the application name and namespace by running the following commands:
++
+[source,terminal]
+----
+$ export APP_NAME=workload-app
+----
++
+[source,terminal]
+----
+$ export APP_NAMESPACE=demo
+----
+
+. Create the namespace by running the following command:
++
+[source,terminal]
+----
+$ oc create namespace $APP_NAMESPACE
+----
+
+. Create the application Secret by running the following command:
++
+[source,terminal]
+----
+$ oc apply -f - << EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: $APP_NAME
+  namespace: $APP_NAMESPACE
+stringData:
+  AAD_AUTHORITY: https://login.microsoftonline.com/
+  AZURE_AUDIENCE: "api://AzureADTokenExchange"
+  AZURE_TENANT_ID: "${TENANT_ID}"
+  AZURE_CLIENT_ID: "${IDENTITY_CLIENT_ID}"
+  BLOB_STORE_ACCOUNT: "${STORAGE_ACCOUNT}"
+  BLOB_STORE_CONTAINER: "${STORAGE_CONTAINER}"
+EOF
+----
+
+:leveloffset!:
+
+// deploy demo application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-deploy-app_{context}"]
+= Deploying the workload application
+
+[role="_abstract"]
+Deploy the workload application to your cluster to validate the {zero-trust-full} environment. This application confirms that the SPIFFE Workload API is functioning and can successfully retrieve JWT tokens.
+
+.Prerequisites
+
+* The demonstration application has been created and deployed.
+
+.Procedure
+
+. To deploy the application, copy the entire command block provided and paste it directly into your terminal. Press *Enter*.
++
+[source,terminal]
+----
+$ oc apply -f - << EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: $APP_NAME
+  namespace: $APP_NAMESPACE
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: $APP_NAME
+  namespace: $APP_NAMESPACE
+spec:
+  selector:
+    matchLabels:
+      app: $APP_NAME
+  template:
+    metadata:
+      labels:
+        app: $APP_NAME
+        deployment: $APP_NAME
+    spec:
+      serviceAccountName: $APP_NAME
+      containers:
+        - name: $APP_NAME
+          image: "registry.redhat.io/ubi9/python-311:latest"
+          command:
+            - /bin/bash
+            - "-c"
+            - |
+              #!/bin/bash
+              pip install spiffe azure-cli
+
+              cat << EOF > /opt/app-root/src/get-spiffe-token.py
+              #!/opt/app-root/bin/python
+              from spiffe import JwtSource
+              import argparse
+              parser = argparse.ArgumentParser(description='Retrieve SPIFFE Token.')
+              parser.add_argument("-a", "--audience", help="The audience to include in the token", required=True)
+              args = parser.parse_args()
+              with JwtSource() as source:
+                jwt_svid = source.fetch_svid(audience={args.audience})
+                print(jwt_svid.token)
+              EOF
+
+              chmod +x /opt/app-root/src/get-spiffe-token.py
+              while true; do sleep 10; done
+          envFrom:
+          - secretRef:
+              name: $APP_NAME
+          env:
+            - name: SPIFFE_ENDPOINT_SOCKET
+              value: unix:///run/spire/sockets/spire-agent.sock
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: spiffe-workload-api
+              mountPath: /run/spire/sockets
+              readOnly: true
+      volumes:
+        - name: spiffe-workload-api
+          csi:
+            driver: csi.spiffe.io
+            readOnly: true
+EOF
+----
+
+.Verification
+. Ensure that the `workload-app` pod is running successfully by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -n $APP_NAMESPACE
+----
++
+.Example output
+[source, terminal]
+----
+NAME                             READY     STATUS      RESTARTS      AGE
+workload-app-5f8b9d685b-abcde    1/1       Running     0             60s
+----
+
+. Retrieve the SPIFFE JWT Token (SVID-JWT):
+
+.. Get the pod name dynamically by running the following command:
++
+[source,terminal]
+----
+$ POD_NAME=$(oc get pods -n $APP_NAMESPACE -l app=$APP_NAME -o jsonpath='{.items[0].metadata.name}')
+----
+
+.. Run the script inside the pod by running the following command:
++
+[source,terminal]
+----
+$ oc exec -it $POD_NAME -n $APP_NAMESPACE -- \
+  /opt/app-root/src/get-spiffe-token.py -a "api://AzureADTokenExchange"
+----
+
+:leveloffset!:
+
+// deploy demo application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-spiffe-identity-federation_{context}"]
+= Configuring Azure with the SPIFFE identity federation
+
+[role="_abstract"]
+Configure {azure-first} with SPIFFE identity federation to enable password-free, automated authentication for the demonstration application. This federates the User Managed Identity with the SPIFFE identity associated with your workload application.
+
+.Procedure
+
+* Federate the identities between the User Managed Identity and the SPIFFE identity associated with the workload application by running the following command:
++
+[source,terminal]
+----
+$ az identity federated-credential create \
+ --name ${NAME} \
+ --identity-name ${USER_ASSIGNED_IDENTITY_NAME} \
+ --resource-group ${RESOURCE_GROUP} \
+ --issuer https://$JWT_ISSUER_ENDPOINT \
+ --subject spiffe://$APP_DOMAIN/ns/$APP_NAMESPACE/sa/$APP_NAME \
+ --audience api://AzureADTokenExchange
+----
+
+:leveloffset!:
+
+// verify access to Azure Blob
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-verify-blob-access_{context}"]
+= Verifying that the application workload can access the content in the Azure Blob Storage
+
+[role="_abstract"]
+Verify that your application workload can connect to the Azure Blob Storage. By uploading a test file, you validate the authentication token and ensure that the workload has the correct permissions.
+
+
+.Prerequisites
+
+* An Azure Blob Storage has been created.
+
+.Procedure
+
+. Retrieve a JWT token from the SPIFFE Workload API by running the following command:
++
+[source,terminal]
+----
+$ oc rsh -n $APP_NAMESPACE deployment/$APP_NAME
+----
+
+. Create and export an environment variable named `TOKEN` by running the following command:
++
+[source,terminal]
+----
+$ export TOKEN=$(/opt/app-root/src/get-spiffe-token.py --audience=$AZURE_AUDIENCE)
+----
+
+. Log in to {azure-short} CLI included within the pod by running the following command:
++
+[source,terminal]
+----
+$ az login --service-principal \
+  -t ${AZURE_TENANT_ID} \
+  -u ${AZURE_CLIENT_ID} \
+  --federated-token ${TOKEN}
+----
+
+. Create a new file with the application workload pod and upload the file to the Blob Storage by running the following command:
++
+[source,terminal]
+----
+$ echo “Hello from OpenShift” > openshift-spire-federated-identities.txt
+----
+
+. Upload a file to the {azure-short} Blog Storage by running the following command:
++
+[source,terminal]
+----
+$ az storage blob upload \
+  --account-name ${BLOB_STORE_ACCOUNT} \
+  --container-name ${BLOB_STORE_CONTAINER} \
+  --name openshift-spire-federated-identities.txt \
+  --file openshift-spire-federated-identities.txt \
+  --auth-mode login
+----
+
+.Verification
+* Confirm the file uploaded successfully by listing the files contained by running the following command:
++
+[source,terminal]
+----
+$ az storage blob list \
+  --account-name ${BLOB_STORE_ACCOUNT} \
+  --container-name ${BLOB_STORE_CONTAINER} \
+  --auth-mode login \
+  -o table
+----
+
+:leveloffset!:
+
+
+// About the Vault OIDC
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="zero-trust-manager-vault-oidc-about_{context}"]
+
+= About Vault OpenID Connect
+
+[role="_abstract"]
+Use Vault OpenID Connect (OIDC) with SPIRE to securely authenticate workloads. Vault uses SPIRE as a trusted OIDC provider to validate workload identities. This configuration enables workloads to receive short-lived tokens to access secrets and perform actions within Vault.
+
+
+
+:leveloffset!:
+
+// Install the Vault OIDC
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-install-vault-oidc_{context}"]
+
+= Installing Vault
+
+[role="_abstract"]
+Install HashiCorp Vault to serve as an OpenID Connect (OIDC) provider. This establishes the necessary infrastructure to manage workload identities securely in your {zero-trust-full} environment.
+
+.Prerequisites
+
+* Configure a route. For more information, see link:https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html/ingress_and_load_balancing/routes#nw-configuring-routes[Configuring routes]
+
+* Helm is installed.
+
+* A command-line JSON processor for easily reading the output from the Vault API.
+
+* A HashiCorp Helm repository is added.
+
+.Procedure
+
+. Create the `vault-helm-value.yaml` file.
++
+[source,yaml]
+----
+global:
+  enabled: true
+  openshift: true
+  tlsDisable: true
+injector:
+  enabled: false
+server:
+  ui:
+    enabled: true
+  image:
+    repository: docker.io/hashicorp/vault
+    tag: "1.19.0"
+  dataStorage:
+    enabled: true
+    size: 1Gi
+  standalone:
+    enabled: true
+    config: |
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+      storage "file" {
+        path = "/vault/data"
+      }
+  extraEnvironmentVars: {}
+----
++
+* The `openshift` field optimizes the deployment for OpenShift-specific security contexts.
+
+* The `tlsDisable` field disables TLS for Kubernetes objects created by the chart.
+
+* The `datastorage.enabled` field creates a 1Gi persistent volume to store Vault data.
+
+* The `standalone.enabled` field deploys a single Vault pod.
+
+* The `tls_disabled` field tells the Vault server to not use TLS.
+
+. Run the `helm install` command:
++
+[source,terminal]
+----
+$ helm install vault hashicorp/vault \
+  --create-namespace -n vault \
+  --values ./vault-helm-value.yaml
+----
+
+. Expose the Vault service by running the following command:
++
+[source,terminal]
+----
+$ oc expose service vault -n vault
+----
+
+. Set the `VAULT_ADDR` environment variable to retrieve the hostname from the new route and then export it by running the following command:
++
+[source,terminal]
+----
+$ export VAULT_ADDR="http://$(oc get route vault -n vault -o jsonpath='{.spec.host}')"
+----
++
+[NOTE]
+====
+`http://` is prepended because TLS is disabled.
+====
+
+.Verification
+
+* To ensure your Vault instance is running, run the following command:
++
+[source,terminal]
+----
+$ curl -s $VAULT_ADDR/v1/sys/health | jq
+----
++
+.Example output
+
+[source,JSON]
+----
+{
+  "initialized": true,
+  "sealed": true,
+  "standby": true,
+  "performance_standby": false,
+  "replication_performance_mode": "disabled",
+  "replication_dr_mode": "disabled",
+  "server_time_utc": 1663786574,
+  "version": "1.19.0",
+  "cluster_name": "vault-cluster-a1b2c3d4",
+  "cluster_id": "5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b"
+}
+----
+
+:leveloffset!:
+
+// Initialize the Vault OIDC
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-initialize-vault-oidc_{context}"]
+
+= Initializing and unsealing Vault
+
+[role="_abstract"]
+To prepare a newly installed Vault server for operation, initialize and unseal it. This process loads the primary encryption key into memory so that Vault can decrypt data and protect other encryption keys.
+
+The steps to initialize a Vault server are:
+
+. Initialize and unseal Vault
+
+. Enable the key-value (KV) secrets engine and store a test secret
+
+. Configure JSON Web Token (JWT) authentication with SPIRE
+
+. Deploy a demonstration application
+
+. Authenticate and retrieve the secret
+
+.Prerequisites
+
+* Ensure that Vault is running.
+
+* Ensure that Vault is not initialized. You can only initialize a Vault server once.
+
+.Procedure
+
+. Open a remote shell into the `vault` pod by running the following command:
++
+[source,terminal]
+----
+$ oc rsh -n vault statefulset/vault
+----
+
+. Initialize Vault to get your unseal key and root token by running the following command:
++
+[source,terminal]
+----
+$ vault operator init -key-shares=1 -key-threshold=1 -format=json
+----
+
+. Export the unseal key and root token you received from the earlier command by running the following commands:
++
+[source,terminal]
+----
+$ export UNSEAL_KEY=<Your-Unseal-Key>
+----
++
+[source,terminal]
+----
+$ export ROOT_TOKEN=<Your-Root-Token>
+----
+
+. Unseal Vault using your unseal key by running the following command:
++
+[source,terminal]
+----
+$ vault operator unseal -format=json $UNSEAL_KEY
+----
+
+. Exit the pod by entering `exit`.
+
+.Verification
+
+* To verify that the Vault pod is ready, run the following command:
++
+[source,terminal]
+----
+$ oc get pod -n vault
+----
++
+.Example output
+[source, terminal]
+----
+NAME        READY        STATUS      RESTARTS     AGE
+vault-0     1/1          Running     0            65d
+----
+
+
+
+
+
+
+:leveloffset!:
+
+// Enable kv secret
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-vault-enable-kv_{context}"]
+= Enabling the key-value secrets engine and store a test secret
+
+[role="_abstract"]
+Enable the key-value secrets engine to create a secure, centralized location for managing credentials. You can also store a test secret to verify that the engine is working.
+
+
+.Prerequisites
+
+* Make sure that Vault is initialized and unsealed.
+
+.Procedure
+
+. Open another shell session in the `Vault` pod by running the following command:
++
+[source,terminal]
+----
+$ oc rsh -n vault statefulset/vault
+----
+
+. Export your root token again within this new session and log in by running the following command:
++
+[source,terminal]
+----
+$ export ROOT_TOKEN=<Your-Root-Token>
+----
++
+[source,terminal]
+----
+$ vault login "${ROOT_TOKEN}"
+----
+
+. Enable the KV secrets engine at the `secret/` path and create a test secret by running the following commands:
++
+[source,terminal]
+----
+$ export NAME=ztwim
+----
++
+[source,terminal]
+----
+$ vault secrets enable -path=secret kv
+----
++
+[source,terminal]
+----
+$ vault kv put secret/$NAME version=v0.1.0
+----
+
+.Verification
+
+* To verify that the secret is stored correctly, run the following command:
++
+[source,terminal]
+----
+$ vault kv get secret/$NAME
+----
+
+:leveloffset!:
+
+// Authenticate the JWT
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-vault-authenticate-jwt_{context}"]
+= Configuring JSON Web Token authentication with SPIRE
+
+[role="_abstract"]
+To help your applications securely log in to Vault using SPIFFE identities, configure JSON Web Token (JWT) authentication.
+
+.Prerequisites
+
+* Make sure that Vault is initialized and unsealed.
+
+* Ensure that a test secret is stored in the key-value secrets engine.
+
+.Procedure
+
+. On your local machine, retrieve the SPIRE Certificate Authority (CA) bundle and save it to a file by running the following command:
++
+[source,terminal]
+----
+$ oc get cm -n zero-trust-workload-identity-manager spire-bundle -o jsonpath='{ .data.bundle\.crt }' > oidc_provider_ca.pem
+----
+
+. Back in the Vault pod shell, create a temporary file and paste the contents of `oidc_provider_ca.pem` into it by running the following command:
++
+[source,terminal]
+----
+$ cat << EOF > /tmp/oidc_provider_ca.pem
+-----BEGIN CERTIFICATE-----
+<Paste-Your-Certificate-Content-Here>
+-----END CERTIFICATE-----
+EOF>
+----
+
+. Set up the necessary environment variables for the JWT configuration by running the following commands:
++
+[source,terminal]
+----
+$ export APP_DOMAIN=<Your-App-Domain>
+----
++
+[source,terminal]
+----
+$ export JWT_ISSUER_ENDPOINT="oidc-discovery.$APP_DOMAIN"
+----
++
+[source,terminal]
+----
+$ export OIDC_URL="https://$JWT_ISSUER_ENDPOINT"
+----
++
+[source,terminal]
+----
+$ export OIDC_CA_PEM="$(cat /tmp/oidc_provider_ca.pem)"
+----
+
+. Crate a new environment variable by running the following command:
++
+[source,terminal]
+----
+$ export ROLE="${NAME}-role"
+----
+
+. Enable the JWT authentication method by running the following command:
++
+[source,terminal]
+----
+$ vault auth enable jwt
+----
+
+. Configure you ODIC authentication method by running the following command:
++
+[source,terminal]
+----
+$ vault write auth/jwt/config \
+  oidc_discovery_url=$OIDC_URL \
+  oidc_discovery_ca_pem="$OIDC_CA_PEM" \
+  default_role=$ROLE
+----
+
+. Create a policy named `ztwim-policy` by running the following command:
++
+[source,terminal]
+----
+$ export POLICY="${NAME}-policy"
+----
+
+. Grant read access to the secret you created earlier by running the following command:
++
+[source,terminal]
+----
+$ vault policy write $POLICY -<<EOF
+path "secret/$NAME" {
+    capabilities = ["read"]
+}
+EOF
+----
+
+. Create the following environment variables by running the following commands:
++
+[source,terminal]
+----
+$ export APP_NAME=client
+----
++
+[source,terminal]
+----
+$ export APP_NAMESPACE=demo
+----
++
+[source,terminal]
+----
+$ export AUDIENCE=$APP_NAME
+----
+
+. Create a JWT role that binds the policy to workload with a specific SPIFFE ID by running the following command:
++
+[source,terminal]
+----
+$ vault write auth/jwt/role/$ROLE -<<EOF
+{
+  "role_type": "jwt",
+  "user_claim": "sub",
+  "bound_audiences": "$AUDIENCE",
+  "bound_claims_type": "glob",
+  "bound_claims": {
+    "sub": "spiffe://$APP_DOMAIN/ns/$APP_NAMESPACE/sa/$APP_NAME"
+  },
+  "token_ttl": "24h",
+  "token_policies": "$POLICY"
+}
+EOF
+----
+
+:leveloffset!:
+
+// deploy a demonstration application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-vault-deploy-demo_{context}"]
+
+= Deploying a demonstration application
+
+[role="_abstract"]
+Deploy a demonstration application to create a simple client that uses its SPIFFE identity to authenticate with Vault. By doing this you can verify that the client can successfully authenticate using the configured identity.
+
+.Procedure
+
+. On your local machine, set the environment variables for your application by running the following commands:
++
+[source,terminal]
+----
+$ export APP_NAME=client
+----
++
+[source,terminal]
+----
+$ export APP_NAMESPACE=demo
+----
++
+[source,terminal]
+----
+$ export AUDIENCE=$APP_NAME
+----
+
+. Apply the Kubernetes manifest to create the namespace, service account, and deployment for the demo app by running the following command. This deployment mounts the SPIFFE CSI driver socket.
++
+[source,terminal]
+----
+$ oc apply -f - <<EOF
+# ... (paste the full YAML from your provided code here) ...
+EOF>>
+----
+
+.Verification
+
+* Verify that the client deployment is ready by running the following command:
++
+[source,terminal]
+----
+$ oc get deploy -n $APP_NAMESPACE
+----
++
+.Example output
+[source, terminal]
+----
+NAME             READY        UP-TO-DATE      AVAILABLE     AGE
+frontend-app     2/2          2               2             120d
+backend-api      3/3          3               3             120d
+----
+
+:leveloffset!:
+
+// authenticate and retrieve secret
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/zero_trust_workload_identity_manageer/zero-trust-manager-oidc-federation.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="zero-trust-manager-vault-authenticate-secret_{context}"]
+= Authenticating and retrieving the secret
+
+[role="_abstract"]
+Use the demonstration application to fetch a JWT token from the SPIFFE Workload API. Use the token to authenticate with Vault so that you can securely retrieve the secret and verify the workflow.
+
+.Procedure
+
+. Fetch a JWT-SVID by running the following command inside the running client pod:
++
+[source,terminal]
+----
+$ oc -n $APP_NAMESPACE exec -it $(oc get pod -o=jsonpath='{.items[*].metadata.name}' -l app=$APP_NAME -n $APP_NAMESPACE) \
+  -- /opt/spire/bin/spire-agent api fetch jwt \
+  -socketPath /run/spire/sockets/spire-agent.sock \
+  -audience $AUDIENCE
+----
+
+. Copy the token from the output and export it as an environment variable on your local machine by running the following command:
++
+[source,terminal]
+----
+$ export IDENTITY_TOKEN=<Your-JWT-Token>
+----
+
+. Crate a new environment variable by running the following command:
++
+[source,terminal]
+----
+$ export ROLE="${NAME}-role"
+----
+
+. Use `curl` to send the JWT token to the Vault login endpoint to get a Vault client token by running the following command:
++
+[source,terminal]
+----
+$ VAULT_TOKEN=$(curl -s --request POST --data '{ "jwt": "'"${IDENTITY_TOKEN}"'", "role": "'"${ROLE}"'"}' "${VAULT_ADDR}"/v1/auth/jwt/login | jq -r '.auth.client_token')
+----
+
+.Verification
+
+* Use the newly acquired Vault token to read the secret from the KV store by running the following command:
++
+[source,terminal]
+----
+$ curl -s -H "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/secret/$NAME | jq
+----
++
+You should see the contents of the secret (`"version": "v0.1.0"`) in the output, confirming the entire workflow is successful
+
+
+:leveloffset!:

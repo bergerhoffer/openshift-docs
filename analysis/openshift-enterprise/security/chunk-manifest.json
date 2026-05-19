@@ -1,0 +1,341 @@
+[
+  {
+    "num": 1,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-001.adoc",
+    "titles": [
+      "Security and compliance overview",
+      "Understanding container security",
+      "Understanding host and VM security",
+      "Hardening Red Hat Enterprise Linux CoreOS"
+    ],
+    "lines": 2091
+  },
+  {
+    "num": 2,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-002.adoc",
+    "titles": [
+      "Container image signatures",
+      "Understanding compliance",
+      "Securing container content",
+      "Using container registries securely"
+    ],
+    "lines": 2859
+  },
+  {
+    "num": 3,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-003.adoc",
+    "titles": [
+      "Securing the build process",
+      "Deploying containers",
+      "Securing the container platform",
+      "Securing networks"
+    ],
+    "lines": 2422
+  },
+  {
+    "num": 4,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-004.adoc",
+    "titles": [
+      "Securing attached storage",
+      "Monitoring cluster events and logs",
+      "Replacing the default ingress certificate",
+      "Adding API server certificates"
+    ],
+    "lines": 2114
+  },
+  {
+    "num": 5,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-005.adoc",
+    "titles": [
+      "Securing service traffic using service serving certificates",
+      "Updating the CA bundle",
+      "User-provided certificates for the API server",
+      "Proxy certificates"
+    ],
+    "lines": 2432
+  },
+  {
+    "num": 6,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-006.adoc",
+    "titles": [
+      "Service CA certificates",
+      "Node certificates",
+      "Bootstrap certificates",
+      "etcd certificates"
+    ],
+    "lines": 1882
+  },
+  {
+    "num": 7,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-007.adoc",
+    "titles": [
+      "OLM certificates",
+      "Aggregated API client certificates",
+      "Machine Config Operator certificates",
+      "User-provided certificates for default ingress"
+    ],
+    "lines": 1786
+  },
+  {
+    "num": 8,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-008.adoc",
+    "titles": [
+      "Ingress certificates",
+      "Monitoring and cluster logging Operator component certificates",
+      "Control plane certificates",
+      "Compliance Operator overview"
+    ],
+    "lines": 1794
+  },
+  {
+    "num": 9,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-009.adoc",
+    "titles": [
+      "Compliance Operator release notes",
+      "Compliance Operator support",
+      "Understanding the Compliance Operator",
+      "Understanding the Custom Resource Definitions"
+    ],
+    "lines": 3462
+  },
+  {
+    "num": 10,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-010.adoc",
+    "titles": [
+      "Installing the Compliance Operator",
+      "Updating the Compliance Operator",
+      "Managing the Compliance Operator",
+      "Uninstalling the Compliance Operator"
+    ],
+    "lines": 2425
+  },
+  {
+    "num": 11,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-011.adoc",
+    "titles": [
+      "Supported compliance profiles",
+      "Compliance Operator scans",
+      "Tailoring the Compliance Operator",
+      "Retrieving Compliance Operator raw results"
+    ],
+    "lines": 3108
+  },
+  {
+    "num": 12,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-012.adoc",
+    "titles": [
+      "Managing Compliance Operator remediation",
+      "Performing advanced Compliance Operator tasks",
+      "Troubleshooting Compliance Operator scans",
+      "Using the oc-compliance plugin"
+    ],
+    "lines": 3815
+  },
+  {
+    "num": 13,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-013.adoc",
+    "titles": [
+      "File Integrity Operator Overview",
+      "File Integrity Operator release notes",
+      "File Integrity Operator support",
+      "Installing the File Integrity Operator"
+    ],
+    "lines": 2152
+  },
+  {
+    "num": 14,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-014.adoc",
+    "titles": [
+      "Updating the File Integrity Operator",
+      "Understanding the File Integrity Operator",
+      "Configuring the File Integrity Operator",
+      "Performing advanced File Integrity Operator tasks"
+    ],
+    "lines": 2615
+  },
+  {
+    "num": 15,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-015.adoc",
+    "titles": [
+      "Troubleshooting the File Integrity Operator",
+      "Uninstalling the File Integrity Operator",
+      "Security Profiles Operator overview",
+      "Security Profiles Operator release notes"
+    ],
+    "lines": 1937
+  },
+  {
+    "num": 16,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-016.adoc",
+    "titles": [
+      "Security Profiles Operator support",
+      "Understanding the Security Profiles Operator",
+      "Enabling the Security Profiles Operator",
+      "Managing seccomp profiles"
+    ],
+    "lines": 2460
+  },
+  {
+    "num": 17,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-017.adoc",
+    "titles": [
+      "Managing SELinux profiles",
+      "Advanced Security Profiles Operator tasks",
+      "Advanced Audit Logging Framework",
+      "Troubleshooting the Security Profiles Operator"
+    ],
+    "lines": 4007
+  },
+  {
+    "num": 18,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-018.adoc",
+    "titles": [
+      "Uninstalling the Security Profiles Operator",
+      "NBDE Tang Server Operator overview",
+      "NBDE Tang Server Operator release notes",
+      "Understanding the NBDE Tang Server Operator"
+    ],
+    "lines": 1711
+  },
+  {
+    "num": 19,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-019.adoc",
+    "titles": [
+      "Installing the NBDE Tang Server Operator",
+      "Configuring and managing Tang servers using the NBDE Tang Server Operator",
+      "Identifying URL of a Tang server deployed with the NBDE Tang Server Operator",
+      "Understanding secrets management"
+    ],
+    "lines": 2189
+  },
+  {
+    "num": 20,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-020.adoc",
+    "titles": [
+      "cert-manager Operator for Red Hat OpenShift overview",
+      "cert-manager Operator for Red Hat OpenShift release notes",
+      "Installing the cert-manager Operator for Red Hat OpenShift",
+      "Configuring the egress proxy"
+    ],
+    "lines": 2202
+  },
+  {
+    "num": 21,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-021.adoc",
+    "titles": [
+      "Customizing cert-manager by using the cert-manager Operator API fields",
+      "Authenticating the cert-manager Operator for Red Hat OpenShift",
+      "Configuring an ACME issuer",
+      "Configuring certificates with an issuer"
+    ],
+    "lines": 4198
+  },
+  {
+    "num": 22,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-022.adoc",
+    "titles": [
+      "Securing routes with the cert-manager Operator for Red Hat OpenShift",
+      "Integrating the cert-manager Operator with Istio-CSR",
+      "Network policy configuration for cert-manager Operator",
+      "Distributing certificates by using trust-manager operand"
+    ],
+    "lines": 3060
+  },
+  {
+    "num": 23,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-023.adoc",
+    "titles": [
+      "Monitoring the cert-manager Operator for Red Hat OpenShift",
+      "Configuring log levels for cert-manager and the cert-manager Operator for Red Hat OpenShift",
+      "Uninstalling the cert-manager Operator for Red Hat OpenShift",
+      "Zero Trust Workload Identity Manager overview"
+    ],
+    "lines": 2288
+  },
+  {
+    "num": 24,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-024.adoc",
+    "titles": [
+      "Zero Trust Workload Identity Manager components",
+      "Zero Trust Workload Identity Manager release notes",
+      "Installing Zero Trust Workload Identity Manager",
+      "Deploying Zero Trust Workload Identity Manager operands"
+    ],
+    "lines": 2897
+  },
+  {
+    "num": 25,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-025.adoc",
+    "titles": [
+      "Configuring the egress proxy",
+      "Configuring Zero Trust Workload Identity Manager OIDC Federation",
+      "Configuring Zero Trust Workload Identity Manager SPIRE Federation",
+      "Enabling create-only mode for the Zero Trust Workload Identity Manager"
+    ],
+    "lines": 4677
+  },
+  {
+    "num": 26,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-026.adoc",
+    "titles": [
+      "Monitoring Zero Trust Workload Identity Manager",
+      "Uninstalling the Zero Trust Workload Identity Manager",
+      "External Secrets Operator overview",
+      "External Secrets Operator release notes"
+    ],
+    "lines": 2650
+  },
+  {
+    "num": 27,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-027.adoc",
+    "titles": [
+      "Installing the External Secrets Operator",
+      "Configuring Network Policy for the Operand",
+      "Configuring the egress proxy",
+      "Monitoring the External Secrets Operator for Red Hat OpenShift"
+    ],
+    "lines": 2799
+  },
+  {
+    "num": 28,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-028.adoc",
+    "titles": [
+      "Customizing the External Secrets Operator for Red Hat OpenShift",
+      "Uninstalling the External Secrets Operator",
+      "External Secrets Operator APIs",
+      "Migrating from the community External Secret Operator to the External Secret Operator For Red Hat OpenShift"
+    ],
+    "lines": 3976
+  },
+  {
+    "num": 29,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-029.adoc",
+    "titles": [
+      "Viewing audit logs",
+      "Configuring the audit log policy",
+      "Configuring TLS security profiles",
+      "Configuring seccomp profiles"
+    ],
+    "lines": 3166
+  },
+  {
+    "num": 30,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-030.adoc",
+    "titles": [
+      "Allowing JavaScript-based access to the API server from additional hosts",
+      "Scanning pods for vulnerabilities",
+      "About disk encryption technology",
+      "Tang server installation considerations"
+    ],
+    "lines": 2292
+  },
+  {
+    "num": 31,
+    "path": "/home/ahoffer/git/openshift-docs/analysis/openshift-enterprise/security/chunks/chunk-031.adoc",
+    "titles": [
+      "Tang server encryption key management",
+      "Disaster recovery considerations"
+    ],
+    "lines": 1615
+  }
+]
