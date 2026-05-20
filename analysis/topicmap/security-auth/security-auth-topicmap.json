@@ -1,0 +1,798 @@
+{
+  "name": "Security and compliance + Authentication and authorization",
+  "dirs": [
+    "security",
+    "authentication"
+  ],
+  "books": [
+    {
+      "name": "Security and compliance",
+      "dir": "security",
+      "distros": "openshift-enterprise,openshift-origin,openshift-aro",
+      "topic_count": 123
+    },
+    {
+      "name": "Authentication and authorization",
+      "dir": "authentication",
+      "distros": "openshift-enterprise,openshift-origin",
+      "topic_count": 32
+    }
+  ],
+  "topics": [
+    {
+      "name": "Security and compliance overview",
+      "file": "index",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding container security",
+      "file": "security-understanding",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding host and VM security",
+      "file": "security-hosts-vms",
+      "book_dir": "security"
+    },
+    {
+      "name": "Hardening Red Hat Enterprise Linux CoreOS",
+      "file": "security-hardening",
+      "book_dir": "security"
+    },
+    {
+      "name": "Container image signatures",
+      "file": "security-container-signature",
+      "book_dir": "security"
+    },
+    {
+      "name": "Hardening Fedora CoreOS",
+      "file": "security-hardening",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding compliance",
+      "file": "security-compliance",
+      "book_dir": "security"
+    },
+    {
+      "name": "Securing container content",
+      "file": "security-container-content",
+      "book_dir": "security"
+    },
+    {
+      "name": "Using container registries securely",
+      "file": "security-registries",
+      "book_dir": "security"
+    },
+    {
+      "name": "Securing the build process",
+      "file": "security-build",
+      "book_dir": "security"
+    },
+    {
+      "name": "Deploying containers",
+      "file": "security-deploy",
+      "book_dir": "security"
+    },
+    {
+      "name": "Securing the container platform",
+      "file": "security-platform",
+      "book_dir": "security"
+    },
+    {
+      "name": "Securing networks",
+      "file": "security-network",
+      "book_dir": "security"
+    },
+    {
+      "name": "Securing attached storage",
+      "file": "security-storage",
+      "book_dir": "security"
+    },
+    {
+      "name": "Monitoring cluster events and logs",
+      "file": "security-monitoring",
+      "book_dir": "security"
+    },
+    {
+      "name": "Replacing the default ingress certificate",
+      "file": "replacing-default-ingress-certificate",
+      "book_dir": "security"
+    },
+    {
+      "name": "Adding API server certificates",
+      "file": "api-server",
+      "book_dir": "security"
+    },
+    {
+      "name": "Securing service traffic using service serving certificates",
+      "file": "service-serving-certificate",
+      "book_dir": "security"
+    },
+    {
+      "name": "Updating the CA bundle",
+      "file": "updating-ca-bundle",
+      "book_dir": "security"
+    },
+    {
+      "name": "User-provided certificates for the API server",
+      "file": "user-provided-certificates-for-api-server",
+      "book_dir": "security"
+    },
+    {
+      "name": "Proxy certificates",
+      "file": "proxy-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "Service CA certificates",
+      "file": "service-ca-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "Node certificates",
+      "file": "node-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "Bootstrap certificates",
+      "file": "bootstrap-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "etcd certificates",
+      "file": "etcd-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "OLM certificates",
+      "file": "olm-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "Aggregated API client certificates",
+      "file": "aggregated-api-client-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "Machine Config Operator certificates",
+      "file": "machine-config-operator-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "User-provided certificates for default ingress",
+      "file": "user-provided-certificates-for-default-ingress",
+      "book_dir": "security"
+    },
+    {
+      "name": "Ingress certificates",
+      "file": "ingress-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "Monitoring and cluster logging Operator component certificates",
+      "file": "monitoring-and-cluster-logging-operator-component-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "Control plane certificates",
+      "file": "control-plane-certificates",
+      "book_dir": "security"
+    },
+    {
+      "name": "Compliance Operator overview",
+      "file": "co-overview",
+      "book_dir": "security"
+    },
+    {
+      "name": "Compliance Operator release notes",
+      "file": "compliance-operator-release-notes",
+      "book_dir": "security"
+    },
+    {
+      "name": "Compliance Operator support",
+      "file": "co-support",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding the Compliance Operator",
+      "file": "compliance-operator-understanding",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding the Custom Resource Definitions",
+      "file": "compliance-operator-crd",
+      "book_dir": "security"
+    },
+    {
+      "name": "Installing the Compliance Operator",
+      "file": "compliance-operator-installation",
+      "book_dir": "security"
+    },
+    {
+      "name": "Updating the Compliance Operator",
+      "file": "compliance-operator-updating",
+      "book_dir": "security"
+    },
+    {
+      "name": "Managing the Compliance Operator",
+      "file": "compliance-operator-manage",
+      "book_dir": "security"
+    },
+    {
+      "name": "Uninstalling the Compliance Operator",
+      "file": "compliance-operator-uninstallation",
+      "book_dir": "security"
+    },
+    {
+      "name": "Supported compliance profiles",
+      "file": "compliance-operator-supported-profiles",
+      "book_dir": "security"
+    },
+    {
+      "name": "Compliance Operator scans",
+      "file": "compliance-scans",
+      "book_dir": "security"
+    },
+    {
+      "name": "Tailoring the Compliance Operator",
+      "file": "compliance-operator-tailor",
+      "book_dir": "security"
+    },
+    {
+      "name": "Retrieving Compliance Operator raw results",
+      "file": "compliance-operator-raw-results",
+      "book_dir": "security"
+    },
+    {
+      "name": "Managing Compliance Operator remediation",
+      "file": "compliance-operator-remediation",
+      "book_dir": "security"
+    },
+    {
+      "name": "Performing advanced Compliance Operator tasks",
+      "file": "compliance-operator-advanced",
+      "book_dir": "security"
+    },
+    {
+      "name": "Troubleshooting Compliance Operator scans",
+      "file": "compliance-operator-troubleshooting",
+      "book_dir": "security"
+    },
+    {
+      "name": "Using the oc-compliance plugin",
+      "file": "oc-compliance-plug-in-using",
+      "book_dir": "security"
+    },
+    {
+      "name": "File Integrity Operator Overview",
+      "file": "fio-overview",
+      "book_dir": "security"
+    },
+    {
+      "name": "File Integrity Operator release notes",
+      "file": "file-integrity-operator-release-notes",
+      "book_dir": "security"
+    },
+    {
+      "name": "File Integrity Operator support",
+      "file": "fio-support",
+      "book_dir": "security"
+    },
+    {
+      "name": "Installing the File Integrity Operator",
+      "file": "file-integrity-operator-installation",
+      "book_dir": "security"
+    },
+    {
+      "name": "Updating the File Integrity Operator",
+      "file": "file-integrity-operator-updating",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding the File Integrity Operator",
+      "file": "file-integrity-operator-understanding",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring the File Integrity Operator",
+      "file": "file-integrity-operator-configuring",
+      "book_dir": "security"
+    },
+    {
+      "name": "Performing advanced File Integrity Operator tasks",
+      "file": "file-integrity-operator-advanced-usage",
+      "book_dir": "security"
+    },
+    {
+      "name": "Troubleshooting the File Integrity Operator",
+      "file": "file-integrity-operator-troubleshooting",
+      "book_dir": "security"
+    },
+    {
+      "name": "Uninstalling the File Integrity Operator",
+      "file": "fio-uninstalling",
+      "book_dir": "security"
+    },
+    {
+      "name": "Security Profiles Operator overview",
+      "file": "spo-overview",
+      "book_dir": "security"
+    },
+    {
+      "name": "Security Profiles Operator release notes",
+      "file": "spo-release-notes",
+      "book_dir": "security"
+    },
+    {
+      "name": "Security Profiles Operator support",
+      "file": "spo-support",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding the Security Profiles Operator",
+      "file": "spo-understanding",
+      "book_dir": "security"
+    },
+    {
+      "name": "Enabling the Security Profiles Operator",
+      "file": "spo-enabling",
+      "book_dir": "security"
+    },
+    {
+      "name": "Managing seccomp profiles",
+      "file": "spo-seccomp",
+      "book_dir": "security"
+    },
+    {
+      "name": "Managing SELinux profiles",
+      "file": "spo-selinux",
+      "book_dir": "security"
+    },
+    {
+      "name": "Advanced Security Profiles Operator tasks",
+      "file": "spo-advanced",
+      "book_dir": "security"
+    },
+    {
+      "name": "Advanced Audit Logging Framework",
+      "file": "spo-logging",
+      "book_dir": "security"
+    },
+    {
+      "name": "Troubleshooting the Security Profiles Operator",
+      "file": "spo-troubleshooting",
+      "book_dir": "security"
+    },
+    {
+      "name": "Uninstalling the Security Profiles Operator",
+      "file": "spo-uninstalling",
+      "book_dir": "security"
+    },
+    {
+      "name": "NBDE Tang Server Operator overview",
+      "file": "nbde-tang-server-operator-overview",
+      "book_dir": "security"
+    },
+    {
+      "name": "NBDE Tang Server Operator release notes",
+      "file": "nbde-tang-server-operator-release-notes",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding the NBDE Tang Server Operator",
+      "file": "nbde-tang-server-operator-understanding",
+      "book_dir": "security"
+    },
+    {
+      "name": "Installing the NBDE Tang Server Operator",
+      "file": "nbde-tang-server-operator-installing",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring and managing Tang servers using the NBDE Tang Server Operator",
+      "file": "nbde-tang-server-operator-configuring-managing",
+      "book_dir": "security"
+    },
+    {
+      "name": "Identifying URL of a Tang server deployed with the NBDE Tang Server Operator",
+      "file": "nbde-tang-server-operator-identifying-url",
+      "book_dir": "security"
+    },
+    {
+      "name": "Understanding secrets management",
+      "file": "understanding-secrets-management",
+      "book_dir": "security"
+    },
+    {
+      "name": "cert-manager Operator for Red Hat OpenShift overview",
+      "file": "index",
+      "book_dir": "security"
+    },
+    {
+      "name": "cert-manager Operator for Red Hat OpenShift release notes",
+      "file": "cert-manager-operator-release-notes",
+      "book_dir": "security"
+    },
+    {
+      "name": "Installing the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-operator-install",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring the egress proxy",
+      "file": "cert-manager-operator-proxy",
+      "book_dir": "security"
+    },
+    {
+      "name": "Customizing cert-manager by using the cert-manager Operator API fields",
+      "file": "cert-manager-customizing-api-fields",
+      "book_dir": "security"
+    },
+    {
+      "name": "Authenticating the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-authenticate",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring an ACME issuer",
+      "file": "cert-manager-operator-issuer-acme",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring certificates with an issuer",
+      "file": "cert-manager-creating-certificate",
+      "book_dir": "security"
+    },
+    {
+      "name": "Securing routes with the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-securing-routes",
+      "book_dir": "security"
+    },
+    {
+      "name": "Integrating the cert-manager Operator with Istio-CSR",
+      "file": "cert-manager-operator-integrating-istio",
+      "book_dir": "security"
+    },
+    {
+      "name": "Network policy configuration for cert-manager Operator",
+      "file": "cert-manager-nw-policy",
+      "book_dir": "security"
+    },
+    {
+      "name": "Distributing certificates by using trust-manager operand",
+      "file": "cert-manager-trust-manager",
+      "book_dir": "security"
+    },
+    {
+      "name": "Monitoring the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-monitoring",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring log levels for cert-manager and the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-log-levels",
+      "book_dir": "security"
+    },
+    {
+      "name": "Uninstalling the cert-manager Operator for Red Hat OpenShift",
+      "file": "cert-manager-operator-uninstall",
+      "book_dir": "security"
+    },
+    {
+      "name": "Zero Trust Workload Identity Manager overview",
+      "file": "zero-trust-manager-overview",
+      "book_dir": "security"
+    },
+    {
+      "name": "Zero Trust Workload Identity Manager components",
+      "file": "zero-trust-manager-components",
+      "book_dir": "security"
+    },
+    {
+      "name": "Zero Trust Workload Identity Manager release notes",
+      "file": "zero-trust-manager-release-notes",
+      "book_dir": "security"
+    },
+    {
+      "name": "Installing Zero Trust Workload Identity Manager",
+      "file": "zero-trust-manager-install",
+      "book_dir": "security"
+    },
+    {
+      "name": "Deploying Zero Trust Workload Identity Manager operands",
+      "file": "zero-trust-manager-configuration",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring the egress proxy",
+      "file": "zero-trust-manager-proxy",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring Zero Trust Workload Identity Manager OIDC Federation",
+      "file": "zero-trust-manager-oidc-federation",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring Zero Trust Workload Identity Manager SPIRE Federation",
+      "file": "zero-trust-manager-spire-federation",
+      "book_dir": "security"
+    },
+    {
+      "name": "Enabling create-only mode for the Zero Trust Workload Identity Manager",
+      "file": "zero-trust-manager-reconciliation",
+      "book_dir": "security"
+    },
+    {
+      "name": "Monitoring Zero Trust Workload Identity Manager",
+      "file": "zero-trust-manager-monitoring",
+      "book_dir": "security"
+    },
+    {
+      "name": "Uninstalling the Zero Trust Workload Identity Manager",
+      "file": "zero-trust-manager-uninstall",
+      "book_dir": "security"
+    },
+    {
+      "name": "External Secrets Operator overview",
+      "file": "index",
+      "book_dir": "security"
+    },
+    {
+      "name": "External Secrets Operator release notes",
+      "file": "external-secrets-operator-release-notes",
+      "book_dir": "security"
+    },
+    {
+      "name": "Installing the External Secrets Operator",
+      "file": "external-secrets-operator-install",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring Network Policy for the Operand",
+      "file": "external-secrets-operator-config-net-policy",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring the egress proxy",
+      "file": "external-secrets-operator-proxy",
+      "book_dir": "security"
+    },
+    {
+      "name": "Monitoring the External Secrets Operator for Red Hat OpenShift",
+      "file": "external-secrets-monitoring",
+      "book_dir": "security"
+    },
+    {
+      "name": "Customizing the External Secrets Operator for Red Hat OpenShift",
+      "file": "external-secrets-log-levels",
+      "book_dir": "security"
+    },
+    {
+      "name": "Uninstalling the External Secrets Operator",
+      "file": "external-secrets-operator-uninstall",
+      "book_dir": "security"
+    },
+    {
+      "name": "External Secrets Operator APIs",
+      "file": "external-secrets-operator-api",
+      "book_dir": "security"
+    },
+    {
+      "name": "Migrating from the community External Secret Operator to the External Secret Operator For Red Hat OpenShift",
+      "file": "external-secrets-operator-migrate-downstream-upstream",
+      "book_dir": "security"
+    },
+    {
+      "name": "Viewing audit logs",
+      "file": "audit-log-view",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring the audit log policy",
+      "file": "audit-log-policy-config",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring TLS security profiles",
+      "file": "tls-security-profiles",
+      "book_dir": "security"
+    },
+    {
+      "name": "Configuring seccomp profiles",
+      "file": "seccomp-profiles",
+      "book_dir": "security"
+    },
+    {
+      "name": "Allowing JavaScript-based access to the API server from additional hosts",
+      "file": "allowing-javascript-access-api-server",
+      "book_dir": "security"
+    },
+    {
+      "name": "Scanning pods for vulnerabilities",
+      "file": "pod-vulnerability-scan",
+      "book_dir": "security"
+    },
+    {
+      "name": "About disk encryption technology",
+      "file": "nbde-about-disk-encryption-technology",
+      "book_dir": "security"
+    },
+    {
+      "name": "Tang server installation considerations",
+      "file": "nbde-tang-server-installation-considerations",
+      "book_dir": "security"
+    },
+    {
+      "name": "Tang server encryption key management",
+      "file": "nbde-managing-encryption-keys",
+      "book_dir": "security"
+    },
+    {
+      "name": "Disaster recovery considerations",
+      "file": "nbde-disaster-recovery-considerations",
+      "book_dir": "security"
+    },
+    {
+      "name": "Authentication and authorization overview",
+      "file": "index",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Understanding authentication",
+      "file": "understanding-authentication",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring the internal OAuth server",
+      "file": "configuring-internal-oauth",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring OAuth clients",
+      "file": "configuring-oauth-clients",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Managing user-owned OAuth access tokens",
+      "file": "managing-oauth-access-tokens",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Understanding identity provider configuration",
+      "file": "understanding-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring an htpasswd identity provider",
+      "file": "configuring-htpasswd-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring a Keystone identity provider",
+      "file": "configuring-keystone-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring an LDAP identity provider",
+      "file": "configuring-ldap-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring a basic authentication identity provider",
+      "file": "configuring-basic-authentication-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring a request header identity provider",
+      "file": "configuring-request-header-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring a GitHub or GitHub Enterprise identity provider",
+      "file": "configuring-github-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring a GitLab identity provider",
+      "file": "configuring-gitlab-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring a Google identity provider",
+      "file": "configuring-google-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Configuring an OpenID Connect identity provider",
+      "file": "configuring-oidc-identity-provider",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Enabling direct authentication with an OIDC identity provider",
+      "file": "external-auth",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Using RBAC to define and apply permissions",
+      "file": "using-rbac",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Removing the kubeadmin user",
+      "file": "remove-kubeadmin",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Understanding and creating service accounts",
+      "file": "understanding-and-creating-service-accounts",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Using service accounts in applications",
+      "file": "using-service-accounts-in-applications",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Using a service account as an OAuth client",
+      "file": "using-service-accounts-as-oauth-client",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Scoping tokens",
+      "file": "tokens-scoping",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Using bound service account tokens",
+      "file": "bound-service-account-tokens",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Managing security context constraints",
+      "file": "managing-security-context-constraints",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Understanding and managing pod security admission",
+      "file": "understanding-and-managing-pod-security-admission",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Impersonating the system:admin user",
+      "file": "impersonating-system-admin",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Syncing LDAP groups",
+      "file": "ldap-syncing",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "About the Cloud Credential Operator",
+      "file": "about-cloud-credential-operator",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Mint mode",
+      "file": "cco-mode-mint",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Passthrough mode",
+      "file": "cco-mode-passthrough",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Manual mode with long-term credentials for components",
+      "file": "cco-mode-manual",
+      "book_dir": "authentication"
+    },
+    {
+      "name": "Manual mode with short-term credentials for components",
+      "file": "cco-short-term-creds",
+      "book_dir": "authentication"
+    }
+  ]
+}

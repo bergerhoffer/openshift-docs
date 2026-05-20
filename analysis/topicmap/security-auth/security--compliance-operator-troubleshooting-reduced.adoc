@@ -1,0 +1,1044 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="compliance-operator-troubleshooting"]
+= Troubleshooting Compliance Operator scans
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: compliance-troubleshooting
+
+toc::[]
+
+This section describes how to troubleshoot the Compliance Operator. The information can be useful either to diagnose a problem or provide information in a bug report. Some general tips:
+
+* The Compliance Operator emits Kubernetes events when something important happens. You can either view all events in the cluster using the command:
++
+[source,terminal]
+----
+ $ oc get events -n openshift-compliance
+----
++
+Or view events for an object like a scan using the command:
++
+[source,terminal]
+----
+$ oc describe -n openshift-compliance compliancescan/cis-compliance
+----
+
+* The Compliance Operator consists of several controllers, approximately one per API object. It could be useful to filter only those controllers that correspond to the API object having issues. If a `ComplianceRemediation` cannot be applied, view the messages from the `remediationctrl` controller. You can filter the messages from a single controller by parsing with `jq`:
++
+[source,terminal]
+----
+$ oc -n openshift-compliance logs compliance-operator-775d7bddbd-gj58f \
+    | jq -c 'select(.logger == "profilebundlectrl")'
+----
+
+* The timestamps are logged as seconds since UNIX epoch in UTC. To convert them to a human-readable date, use `date -d @timestamp --utc`, for example:
++
+[source,terminal]
+----
+$ date -d @1596184628.955853 --utc
+----
+
+* Many custom resources, most importantly `ComplianceSuite` and `ScanSetting`, allow the `debug` option to be set. Enabling this option increases verbosity of the OpenSCAP scanner pods, as well as some other helper pods.
+
+* If a single rule is passing or failing unexpectedly, it could be helpful to run a single scan or a suite with only that rule to find the rule ID from the corresponding `ComplianceCheckResult` object and use it as the `rule` attribute value in a `Scan` CR. Then, together with the `debug` option enabled, the `scanner` container logs in the scanner pod would show the raw OpenSCAP logs.
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-scans/compliance-operator-troubleshooting.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="compliance-anatomy_{context}"]
+= Anatomy of a scan
+
+The following sections outline the components and stages of Compliance Operator scans.
+
+[id="compliance-anatomy-compliance-sources_{context}"]
+== Compliance sources
+The compliance content is stored in `Profile` objects that are generated from a `ProfileBundle` object. The Compliance Operator creates a `ProfileBundle` object for the cluster and another for the cluster nodes.
+
+[source,terminal]
+----
+$ oc get -n openshift-compliance profilebundle.compliance
+----
+
+[source,terminal]
+----
+$ oc get -n openshift-compliance profile.compliance
+----
+
+The `ProfileBundle` objects are processed by deployments labeled with the `Bundle` name. To troubleshoot an issue with the `Bundle`, you can find the deployment and view logs of the pods in a deployment:
+
+[source,terminal]
+----
+$ oc logs -n openshift-compliance -lprofile-bundle=ocp4 -c profileparser
+----
+
+[source,terminal]
+----
+$ oc get -n openshift-compliance deployments,pods -lprofile-bundle=ocp4
+----
+
+[source,terminal]
+----
+$ oc logs -n openshift-compliance pods/<pod-name>
+----
+
+[source,terminal]
+----
+$ oc describe -n openshift-compliance pod/<pod-name> -c profileparser
+----
+
+[id="compliance-anatomy-scan-setting-scan-binding-lifecycle_{context}"]
+== The ScanSetting and ScanSettingBinding objects lifecycle and debugging
+With valid compliance content sources, the high-level `ScanSetting` and `ScanSettingBinding` objects can be used to generate `ComplianceSuite` and `ComplianceScan` objects:
+
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: my-companys-constraints
+debug: true
+# For each role, a separate scan will be created pointing
+# to a node-role specified in roles
+roles:
+  - worker
+---
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSettingBinding
+metadata:
+  name: my-companys-compliance-requirements
+profiles:
+  # Node checks
+  - name: rhcos4-e8
+    kind: Profile
+    apiGroup: compliance.openshift.io/v1alpha1
+  # Cluster checks
+  - name: ocp4-e8
+    kind: Profile
+    apiGroup: compliance.openshift.io/v1alpha1
+settingsRef:
+  name: my-companys-constraints
+  kind: ScanSetting
+  apiGroup: compliance.openshift.io/v1alpha1
+----
+
+Both `ScanSetting` and `ScanSettingBinding` objects are handled by the same controller tagged with `logger=scansettingbindingctrl`.  These objects have no status. Any issues are communicated in form of events:
+
+[source,terminal]
+----
+Events:
+  Type     Reason        Age    From                    Message
+  ----     ------        ----   ----                    -------
+  Normal   SuiteCreated  9m52s  scansettingbindingctrl  ComplianceSuite openshift-compliance/my-companys-compliance-requirements created
+----
+
+Now a `ComplianceSuite` object is created. The flow continues to reconcile the newly created `ComplianceSuite`.
+
+[id="compliance-suite-lifecycle-debugging_{context}"]
+== ComplianceSuite custom resource lifecycle and debugging
+The `ComplianceSuite` CR is a wrapper around `ComplianceScan` CRs. The `ComplianceSuite` CR is handled by controller tagged with `logger=suitectrl`.
+This controller handles creating scans from a suite, reconciling and aggregating individual Scan statuses into a single Suite status. If a suite is set to execute periodically, the `suitectrl` also handles creating a `CronJob` CR that re-runs the scans in the suite after the initial run is done:
+
+[source,terminal]
+----
+$ oc get cronjobs
+----
+
+.Example output
+[source,terminal]
+----
+NAME                                           SCHEDULE    SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+<cron_name>                                    0 1 * * *   False     0        <none>          151m
+----
+
+For the most important issues, events are emitted. View them with `oc describe compliancesuites/<name>`. The `Suite` objects also have a `Status` subresource that is updated when any of `Scan` objects that belong to this suite update their `Status` subresource. After all expected scans are created, control is passed to the scan controller.
+
+[id="compliance-scan-lifecycle-debugging_{context}"]
+== ComplianceScan custom resource lifecycle and debugging
+The `ComplianceScan` CRs are handled by the `scanctrl` controller. This is also where the actual scans happen and the scan results are created. Each scan goes through several phases:
+
+[id="compliance-scan-pending-phase_{context}"]
+=== Pending phase
+The scan is validated for correctness in this phase. If some parameters like storage size are invalid, the scan transitions to DONE with ERROR result, otherwise proceeds to the Launching phase.
+
+[id="compliance-scan-launching-phase_{context}"]
+=== Launching phase
+In this phase, several config maps that contain either environment for the scanner pods or directly the script that the scanner pods will be evaluating. List the config maps:
+
+[source,terminal]
+----
+$ oc -n openshift-compliance get cm \
+-l compliance.openshift.io/scan-name=rhcos4-e8-worker,complianceoperator.openshift.io/scan-script=
+----
+
+These config maps will be used by the scanner pods. If you ever needed to modify the scanner behavior, change the scanner debug level or print the raw results, modifying the config maps is the way to go. Afterwards, a persistent volume claim is created per scan to store the raw ARF results:
+
+[source,terminal]
+----
+$ oc get pvc -n openshift-compliance -lcompliance.openshift.io/scan-name=rhcos4-e8-worker
+----
+
+The PVCs are mounted by a per-scan `ResultServer` deployment. A `ResultServer` is a simple HTTP server where the individual scanner pods upload the full ARF results to. Each server can run on a different node. The full ARF results might be very large and you cannot presume that it would be possible to create a volume that could be mounted from multiple nodes at the same time. After the scan is finished, the `ResultServer` deployment is scaled down. The PVC with the raw results can be mounted from another custom pod and the results can be fetched or inspected. The traffic between the scanner pods and the `ResultServer` is protected by mutual TLS protocols.
+
+Finally, the scanner pods are launched in this phase; one scanner pod for a `Platform` scan instance and one scanner pod per matching node for a `node` scan instance. The per-node pods are labeled with the node name. Each pod is always labeled with the `ComplianceScan` name:
+
+[source,terminal]
+----
+$ oc get pods -lcompliance.openshift.io/scan-name=rhcos4-e8-worker,workload=scanner --show-labels
+----
+
+.Example output
+[source,terminal]
+----
+NAME                                                              READY   STATUS      RESTARTS   AGE   LABELS
+rhcos4-e8-worker-ip-10-0-169-90.eu-north-1.compute.internal-pod   0/2     Completed   0          39m   compliance.openshift.io/scan-name=rhcos4-e8-worker,targetNode=ip-10-0-169-90.eu-north-1.compute.internal,workload=scanner
+----
++
+The scan then proceeds to the Running phase.
+
+[id="compliance-scan-running-phase_{context}"]
+=== Running phase
+The running phase waits until the scanner pods finish. The following terms and processes are in use in the running phase:
+
+* *init container*: There is one init container called `content-container`. It runs the *contentImage* container and executes a single command that copies the *contentFile* to the `/content` directory shared with the other containers in this pod.
+
+* *scanner*: This container runs the scan. For node scans, the container mounts the node filesystem as `/host` and mounts the content delivered by the init container. The container also mounts the `entrypoint` `ConfigMap` created in the Launching phase and executes it. The default script in the entrypoint `ConfigMap` executes OpenSCAP and stores the result files in the `/results` directory shared between the pod's containers. Logs from this pod can be viewed to determine what the OpenSCAP scanner checked. More verbose output can be viewed with the `debug` flag.
+
+* *logcollector*: The logcollector container waits until the scanner container finishes. Then, it uploads the full ARF results to the `ResultServer` and separately uploads the XCCDF results along with scan result and OpenSCAP result code as a `ConfigMap.` These result config maps are labeled with the scan name (`compliance.openshift.io/scan-name=rhcos4-e8-worker`):
++
+[source,terminal]
+----
+$ oc describe cm/rhcos4-e8-worker-ip-10-0-169-90.eu-north-1.compute.internal-pod
+----
++
+.Example output
+[source,terminal]
+----
+      Name:         rhcos4-e8-worker-ip-10-0-169-90.eu-north-1.compute.internal-pod
+      Namespace:    openshift-compliance
+      Labels:       compliance.openshift.io/scan-name-scan=rhcos4-e8-worker
+                    complianceoperator.openshift.io/scan-result=
+      Annotations:  compliance-remediations/processed:
+                    compliance.openshift.io/scan-error-msg:
+                    compliance.openshift.io/scan-result: NON-COMPLIANT
+                    OpenSCAP-scan-result/node: ip-10-0-169-90.eu-north-1.compute.internal
+
+      Data
+      ====
+      exit-code:
+      ----
+      2
+      results:
+      ----
+      <?xml version="1.0" encoding="UTF-8"?>
+      ...
+----
+
+Scanner pods for `Platform` scans are similar, except:
+
+* There is one extra init container called `api-resource-collector` that reads the OpenSCAP content provided by the content-container init, container, figures out which API resources the content needs to examine and stores those API resources to a shared directory where the `scanner` container would read them from.
+
+* The `scanner` container does not need to mount the host file system.
+
+When the scanner pods are done, the scans move on to the Aggregating phase.
+
+[id="compliance-scan-aggregating-phase_{context}"]
+=== Aggregating phase
+In the aggregating phase, the scan controller spawns yet another pod called the aggregator pod. Its purpose it to take the result `ConfigMap` objects, read the results and for each check result create the corresponding Kubernetes object. If the check failure can be automatically remediated, a `ComplianceRemediation` object is created. To provide human-readable metadata for the checks and remediations, the aggregator pod also mounts the OpenSCAP content using an init container.
+
+When a config map is processed by an aggregator pod, it is labeled the `compliance-remediations/processed` label. The result of this phase are `ComplianceCheckResult` objects:
+
+[source,terminal]
+----
+$ oc get compliancecheckresults -lcompliance.openshift.io/scan-name=rhcos4-e8-worker
+----
+
+.Example output
+[source,terminal]
+----
+NAME                                                       STATUS   SEVERITY
+rhcos4-e8-worker-accounts-no-uid-except-zero               PASS     high
+rhcos4-e8-worker-audit-rules-dac-modification-chmod        FAIL     medium
+----
+and `ComplianceRemediation` objects:
+
+[source,terminal]
+----
+$ oc get complianceremediations -lcompliance.openshift.io/scan-name=rhcos4-e8-worker
+----
+
+.Example output
+[source,terminal]
+----
+NAME                                                       STATE
+rhcos4-e8-worker-audit-rules-dac-modification-chmod        NotApplied
+rhcos4-e8-worker-audit-rules-dac-modification-chown        NotApplied
+rhcos4-e8-worker-audit-rules-execution-chcon               NotApplied
+rhcos4-e8-worker-audit-rules-execution-restorecon          NotApplied
+rhcos4-e8-worker-audit-rules-execution-semanage            NotApplied
+rhcos4-e8-worker-audit-rules-execution-setfiles            NotApplied
+----
+
+After these CRs are created, the aggregator pod exits and the scan moves on to the Done phase.
+
+[id="compliance-scan-done-phase_{context}"]
+=== Done phase
+In the final scan phase, the scan resources are cleaned up if needed and the `ResultServer` deployment is either scaled down (if the scan was one-time) or deleted if the scan is continuous; the next scan instance would then recreate the deployment again.
+
+It is also possible to trigger a re-run of a scan in the Done phase by annotating it:
+
+[source,terminal]
+----
+$ oc -n openshift-compliance \
+annotate compliancescans/rhcos4-e8-worker compliance.openshift.io/rescan=
+----
+
+After the scan reaches the Done phase, nothing else happens on its own unless the remediations are set to be applied automatically with `autoApplyRemediations: true`. The {product-title} administrator would now review the remediations and apply them as needed. If the remediations are set to be applied automatically, the `ComplianceSuite` controller takes over in the Done phase, pauses the machine config pool to which the scan maps to and applies all the remediations in one go. If a remediation is applied, the `ComplianceRemediation` controller takes over.
+
+[id="compliance-remediation-lifecycle-debugging_{context}"]
+== ComplianceRemediation controller lifecycle and debugging
+The example scan has reported some findings. One of the remediations can be enabled by toggling its `apply` attribute to `true`:
+
+[source,terminal]
+----
+$ oc patch complianceremediations/rhcos4-e8-worker-audit-rules-dac-modification-chmod --patch '{"spec":{"apply":true}}' --type=merge
+----
+
+The `ComplianceRemediation` controller (`logger=remediationctrl`) reconciles the modified object. The result of the reconciliation is change of status of the remediation object that is reconciled, but also a change of the rendered per-suite `MachineConfig` object that contains all the applied remediations.
+
+The `MachineConfig` object always begins with `75-` and is named after the scan and the suite:
+
+[source,terminal]
+----
+$ oc get mc | grep 75-
+----
+
+.Example output
+[source,terminal]
+----
+75-rhcos4-e8-worker-my-companys-compliance-requirements                                                3.2.0             2m46s
+----
+
+The remediations the `mc` currently consists of are listed in the machine config's annotations:
+
+[source,terminal]
+----
+$ oc describe mc/75-rhcos4-e8-worker-my-companys-compliance-requirements
+----
+
+.Example output
+[source,terminal]
+----
+Name:         75-rhcos4-e8-worker-my-companys-compliance-requirements
+Labels:       machineconfiguration.openshift.io/role=worker
+Annotations:  remediation/rhcos4-e8-worker-audit-rules-dac-modification-chmod:
+----
+
+The `ComplianceRemediation` controller's algorithm works like this:
+
+* All currently applied remediations are read into an initial remediation set.
+* If the reconciled remediation is supposed to be applied, it is added to the set.
+* A `MachineConfig` object is rendered from the set and annotated with names  of remediations in the set. If the set is empty (the last remediation was unapplied), the rendered `MachineConfig` object is removed.
+* If and only if the rendered machine config is different from the one already applied in the cluster, the applied MC is updated (or created, or deleted).
+* Creating or modifying a `MachineConfig` object triggers a reboot of nodes that match the `machineconfiguration.openshift.io/role` label - see the Machine Config Operator documentation for more details.
+
+The remediation loop ends once the rendered machine config is updated, if needed, and the reconciled remediation object status is updated. In our case, applying the remediation would trigger a reboot. After the reboot, annotate the scan to re-run it:
+
+[source,terminal]
+----
+$ oc -n openshift-compliance \
+annotate compliancescans/rhcos4-e8-worker compliance.openshift.io/rescan=
+----
+
+The scan will run and finish. Check for the remediation to pass:
+
+[source,terminal]
+----
+$ oc -n openshift-compliance \
+get compliancecheckresults/rhcos4-e8-worker-audit-rules-dac-modification-chmod
+----
+
+.Example output
+[source,terminal]
+----
+NAME                                                  STATUS   SEVERITY
+rhcos4-e8-worker-audit-rules-dac-modification-chmod   PASS     medium
+----
+
+[id="compliance-operator-useful-labels_{context}"]
+== Useful labels
+
+Each pod that is spawned by the Compliance Operator is labeled specifically with the scan it belongs to and the work it does. The scan identifier is labeled with the `compliance.openshift.io/scan-name` label. The workload identifier is labeled with the `workload` label.
+
+The Compliance Operator schedules the following workloads:
+
+* *scanner*: Performs the compliance scan.
+
+* *resultserver*: Stores the raw results for the compliance scan.
+
+* *aggregator*: Aggregates the results, detects inconsistencies and outputs result objects (checkresults and remediations).
+
+* *suitererunner*: Will tag a suite to be re-run (when a schedule is set).
+
+* *profileparser*: Parses a datastream and creates the appropriate profiles, rules and variables.
+
+When debugging and logs are required for a certain workload, run:
+
+[source,terminal]
+----
+$ oc logs -l workload=<workload_name> -c <container_name>
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-scans/compliance-operator-troubleshooting.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="compliance-increasing-operator-limits_{context}"]
+= Increasing Compliance Operator resource limits
+
+In some cases, the Compliance Operator might require more memory than the default limits allow. The best way to mitigate this issue is to set custom resource limits.
+
+To increase the default memory and CPU limits of scanner pods, see _`ScanSetting` Custom resource_.
+
+.Procedure
+
+. To increase the Operator's memory limits to 500 Mi, create the following patch file named `co-memlimit-patch.yaml`:
++
+[source,yaml]
+----
+spec:
+  config:
+    resources:
+      limits:
+        memory: 500Mi
+----
+
+. Apply the patch file:
++
+[source,terminal]
+----
+$ oc patch sub compliance-operator -nopenshift-compliance --patch-file co-memlimit-patch.yaml --type=merge
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-scans/compliance-operator-troubleshooting.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="operator-resource-constraints_{context}"]
+= Configuring Operator resource constraints
+
+The `resources` field defines Resource Constraints for all the containers in the Pod created by the Operator Lifecycle Manager (OLM).
+
+[NOTE]
+====
+Resource Constraints applied in this process overwrites the existing resource constraints.
+====
+
+.Procedure
+
+* Inject a request of 0.25 cpu and 64 Mi of memory, and a limit of 0.5 cpu and 128 Mi of memory in each container by editing the `Subscription` object:
++
+[source,yaml]
+----
+kind: Subscription
+metadata:
+  name: compliance-operator
+  namespace: openshift-compliance
+spec:
+  package: package-name
+  channel: stable
+  config:
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-scans/compliance-operator-troubleshooting.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="co-scansetting-resources_{context}"]
+= Configuring ScanSetting resources
+
+When using the Compliance Operator in a cluster that contains more than 500 MachineConfigs, the `ocp4-pci-dss-api-checks-pod` pod may pause in the `init` phase when performing a `Platform` scan.
+
+[NOTE]
+====
+Resource constraints applied in this process overwrites the existing resource constraints.
+====
+
+.Procedure
+
+. Confirm the `ocp4-pci-dss-api-checks-pod` pod is stuck in the `Init:OOMKilled` status:
++
+[source,terminal]
+----
+$ oc get pod ocp4-pci-dss-api-checks-pod -w
+----
++
+.Example output
+[source,terminal]
+----
+NAME                          READY   STATUS     RESTARTS        AGE
+ocp4-pci-dss-api-checks-pod   0/2     Init:1/2   8 (5m56s ago)   25m
+ocp4-pci-dss-api-checks-pod   0/2     Init:OOMKilled   8 (6m19s ago)   26m
+----
+
+. Edit the  `scanLimits` attribute in the `ScanSetting` CR to increase the available memory for the `ocp4-pci-dss-api-checks-pod` pod:
++
+[source,yaml]
+----
+timeout: 30m
+strictNodeScan: true
+metadata:
+  name: default
+  namespace: openshift-compliance
+kind: ScanSetting
+showNotApplicable: false
+rawResultStorage:
+  nodeSelector:
+    node-role.kubernetes.io/master: ''
+  pvAccessModes:
+    - ReadWriteOnce
+  rotation: 3
+  size: 1Gi
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+schedule: 0 1 * * *
+roles:
+  - master
+  - worker
+apiVersion: compliance.openshift.io/v1alpha1
+maxRetryOnTimeout: 3
+scanTolerations:
+  - operator: Exists
+scanLimits:
+  memory: 1024Mi <1>
+----
+<1> The default setting is `500Mi`.
+
+. Apply the `ScanSetting` CR to your cluster:
++
+[source,terminal]
+----
+$ oc apply -f scansetting.yaml
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-scans/compliance-operator-troubleshooting.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="compliance-timeout_{context}"]
+= Configuring ScanSetting timeout
+
+The `ScanSetting` object has a timeout option that can be specified in the `ComplianceScanSetting` object as a duration string, such as `1h30m`. If the scan does not finish within the specified timeout, the scan reattempts until the `maxRetryOnTimeout` limit is reached.
+
+.Procedure
+
+* To set a `timeout` and `maxRetryOnTimeout` in ScanSetting, modify an existing `ScanSetting` object:
++
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: default
+  namespace: openshift-compliance
+rawResultStorage:
+  rotation: 3
+  size: 1Gi
+roles:
+- worker
+- master
+scanTolerations:
+- effect: NoSchedule
+  key: node-role.kubernetes.io/master
+  operator: Exists
+schedule: '0 1 * * *'
+timeout: '10m0s' <1>
+maxRetryOnTimeout: 3 <2>
+----
+<1> The `timeout` variable is defined as a duration string, such as `1h30m`. The default value is `30m`. To disable the timeout, set the value to `0s`.
+<2> The `maxRetryOnTimeout` variable defines how many times a retry is attempted. The default value is `3`.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-support.adoc
+// * support/getting-support.adoc
+// * distr_tracing/distributed-tracing-release-notes.adoc
+// * service_mesh/v2x/ossm-support.adoc
+// * service_mesh/v2x/ossm-troubleshooting-istio.adoc
+// * service_mesh/v1x/servicemesh-release-notes.adoc
+// * osd_architecture/osd-support.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-0.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-1.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-2.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-3.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-4.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-5.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-6.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-7.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-8.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-2-9.adoc
+// * distr_tracing/distr_tracing_rn/distr-tracing-rn-3-0.adoc
+// * microshift_support/microshift-getting-support.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="support_{context}"]
+= Getting support
+
+[role="_abstract"]
+If you experience difficulty with a procedure described in this documentation, or with {product-title} in general, visit the link:http://access.redhat.com[Red Hat Customer Portal].
+
+From the Customer Portal, you can:
+
+* Search or browse through the Red Hat Knowledgebase of articles and solutions relating to Red Hat products.
+* Submit a support case to Red Hat Support.
+* Access other product documentation.
+
+To identify issues with your cluster, you can use {red-hat-lightspeed} in {cluster-manager-url}. {red-hat-lightspeed} provides details about issues and, if available, information on how to solve a problem.
+
+// TODO: verify that these settings apply for Service Mesh and OpenShift virtualization, etc.
+If you have a suggestion for improving this documentation or have found an
+error, submit a link:https://issues.redhat.com/secure/CreateIssueDetails!init.jspa?pid=12332330&summary=Documentation_issue&issuetype=1&components=12367614&priority=10200&versions=12385624[Jira issue] for the most relevant documentation component. Please provide specific details, such as the section name and {product-title} version.
+
+:leveloffset!:

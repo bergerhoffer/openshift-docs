@@ -1,0 +1,5229 @@
+{
+  "books": [
+    {
+      "name": "Security and compliance",
+      "dir": "security",
+      "distros": "openshift-enterprise,openshift-origin,openshift-aro",
+      "topic_count": 123
+    },
+    {
+      "name": "Authentication and authorization",
+      "dir": "authentication",
+      "distros": "openshift-enterprise,openshift-origin",
+      "topic_count": 32
+    }
+  ],
+  "combined_doc": "security-auth-combined.adoc",
+  "assemblies": [
+    {
+      "file": "index.adoc",
+      "rel_path": "index.adoc",
+      "topic_name": "Security and compliance overview",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-understanding.adoc",
+      "rel_path": "container_security/security-understanding.adoc",
+      "topic_name": "Understanding container security",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-understanding-containers.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-understanding-openshift.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-hosts-vms.adoc",
+      "rel_path": "container_security/security-hosts-vms.adoc",
+      "topic_name": "Understanding host and VM security",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-hosts-vms-rhcos.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-hosts-vms-vs-containers.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-hosts-vms-openshift.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-hardening.adoc",
+      "rel_path": "container_security/security-hardening.adoc",
+      "topic_name": "Hardening Red Hat Enterprise Linux CoreOS",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-hardening-what.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-hardening-how.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-container-signature.adoc",
+      "rel_path": "container_security/security-container-signature.adoc",
+      "topic_name": "Container image signatures",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/containers-signature-verify-enable.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/containers-signature-verify-application.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/containers-signature-verify-unsigned.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/containers-signature-verify-skopeo.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-hardening.adoc",
+      "rel_path": "container_security/security-hardening.adoc",
+      "topic_name": "Hardening Fedora CoreOS",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-hardening-what.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-hardening-how.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-compliance.adoc",
+      "rel_path": "container_security/security-compliance.adoc",
+      "topic_name": "Understanding compliance",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-compliance-nist.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-container-content.adoc",
+      "rel_path": "container_security/security-container-content.adoc",
+      "topic_name": "Securing container content",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-container-content-inside.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-container-content-universal.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-container-content-scanning.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-container-content-external-scanning.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-registries.adoc",
+      "rel_path": "container_security/security-registries.adoc",
+      "topic_name": "Using container registries securely",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-registries-where.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-registries-immutable.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-registries-ecosystem.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-registries-openshift.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-registries-quay.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-build.adoc",
+      "rel_path": "container_security/security-build.adoc",
+      "topic_name": "Securing the build process",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-build-once.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-build-management.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-build-inputs.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-build-designing.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-build-knative.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-deploy.adoc",
+      "rel_path": "container_security/security-deploy.adoc",
+      "topic_name": "Deploying containers",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-deploy-trigger.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-deploy-image-sources.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-deploy-signature.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-deploy-secrets.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-deploy-continuous.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-platform.adoc",
+      "rel_path": "container_security/security-platform.adoc",
+      "topic_name": "Securing the container platform",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-platform-multi-tenancy.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-platform-admission.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-platform-authentication.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-platform-certificates.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-network.adoc",
+      "rel_path": "container_security/security-network.adoc",
+      "topic_name": "Securing networks",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-network-namespaces.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-network-policies.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-network-multiple-pod.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-network-isolating.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-network-ingress.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-network-egress.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-storage.adoc",
+      "rel_path": "container_security/security-storage.adoc",
+      "topic_name": "Securing attached storage",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-storage-persistent.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-storage-shared.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-storage-block.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "security-monitoring.adoc",
+      "rel_path": "container_security/security-monitoring.adoc",
+      "topic_name": "Monitoring cluster events and logs",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-monitoring-events.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-monitoring-cluster-logging.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-monitoring-audit-logging.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "replacing-default-ingress-certificate.adoc",
+      "rel_path": "certificates/replacing-default-ingress-certificate.adoc",
+      "topic_name": "Replacing the default ingress certificate",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/customize-certificates-understanding-default-router.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-replace-default-router.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "api-server.adoc",
+      "rel_path": "certificates/api-server.adoc",
+      "topic_name": "Adding API server certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/customize-certificates-api-add-named.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "service-serving-certificate.adoc",
+      "rel_path": "certificates/service-serving-certificate.adoc",
+      "topic_name": "Securing service traffic using service serving certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/customize-certificates-understanding-service-serving.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-add-service-serving.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-add-service-serving-configmap.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-add-service-serving-apiservice.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-add-service-serving-crd.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-add-service-serving-mutating-webhook.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-add-service-serving-validating-webhook.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-rotate-service-serving.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/customize-certificates-manually-rotate-service-ca.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "updating-ca-bundle.adoc",
+      "rel_path": "certificates/updating-ca-bundle.adoc",
+      "topic_name": "Updating the CA bundle",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/ca-bundle-understanding.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/ca-bundle-replacing.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "user-provided-certificates-for-api-server.adoc",
+      "rel_path": "certificate_types_descriptions/user-provided-certificates-for-api-server.adoc",
+      "topic_name": "User-provided certificates for the API server",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "proxy-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/proxy-certificates.adoc",
+      "topic_name": "Proxy certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "service-ca-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/service-ca-certificates.adoc",
+      "topic_name": "Service CA certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "node-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/node-certificates.adoc",
+      "topic_name": "Node certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "bootstrap-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/bootstrap-certificates.adoc",
+      "topic_name": "Bootstrap certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "etcd-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/etcd-certificates.adoc",
+      "topic_name": "etcd certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/rotating-certificate-authority.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/removing-unused-ca-bundle.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/etcd-cert-alerts-metrics-signer.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "olm-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/olm-certificates.adoc",
+      "topic_name": "OLM certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "aggregated-api-client-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/aggregated-api-client-certificates.adoc",
+      "topic_name": "Aggregated API client certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "machine-config-operator-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/machine-config-operator-certificates.adoc",
+      "topic_name": "Machine Config Operator certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        },
+        {
+          "module": "snippets/mcs-endpoint-limitation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "user-provided-certificates-for-default-ingress.adoc",
+      "rel_path": "certificate_types_descriptions/user-provided-certificates-for-default-ingress.adoc",
+      "topic_name": "User-provided certificates for default ingress",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "ingress-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/ingress-certificates.adoc",
+      "topic_name": "Ingress certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "monitoring-and-cluster-logging-operator-component-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/monitoring-and-cluster-logging-operator-component-certificates.adoc",
+      "topic_name": "Monitoring and cluster logging Operator component certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "control-plane-certificates.adoc",
+      "rel_path": "certificate_types_descriptions/control-plane-certificates.adoc",
+      "topic_name": "Control plane certificates",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "co-overview.adoc",
+      "rel_path": "compliance_operator/co-overview.adoc",
+      "topic_name": "Compliance Operator overview",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-release-notes.adoc",
+      "rel_path": "compliance_operator/compliance-operator-release-notes.adoc",
+      "topic_name": "Compliance Operator release notes",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        },
+        {
+          "module": "snippets/fips-snippet.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "co-support.adoc",
+      "rel_path": "compliance_operator/co-support.adoc",
+      "topic_name": "Compliance Operator support",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/support.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-must-gather.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-understanding.adoc",
+      "rel_path": "compliance_operator/co-concepts/compliance-operator-understanding.adoc",
+      "topic_name": "Understanding the Compliance Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-profile-types.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-crd.adoc",
+      "rel_path": "compliance_operator/co-concepts/compliance-operator-crd.adoc",
+      "topic_name": "Understanding the Custom Resource Definitions",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-crd-workflow.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-crd-profile-bundle.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-profile.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-rule.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-tailored-profile.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-scan-setting.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-scan-setting-binding.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-compliance-suite.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-advanced-compliance-scan.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-compliance-check-result.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/compliance-crd-compliance-remediation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-installation.adoc",
+      "rel_path": "compliance_operator/co-management/compliance-operator-installation.adoc",
+      "topic_name": "Installing the Compliance Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-operator-console-installation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-operator-cli-installation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-operator-rosa-installation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-operator-hcp-install.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-updating.adoc",
+      "rel_path": "compliance_operator/co-management/compliance-operator-updating.adoc",
+      "topic_name": "Updating the Compliance Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/olm-preparing-upgrade.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/olm-changing-update-channel.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/olm-approving-pending-upgrade.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-manage.adoc",
+      "rel_path": "compliance_operator/co-management/compliance-operator-manage.adoc",
+      "topic_name": "Managing the Compliance Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-profilebundle.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-update.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-uninstallation.adoc",
+      "rel_path": "compliance_operator/co-management/compliance-operator-uninstallation.adoc",
+      "topic_name": "Uninstalling the Compliance Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-operator-uninstall.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-operator-cli-uninstall.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-supported-profiles.adoc",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-supported-profiles.adoc",
+      "topic_name": "Supported compliance profiles",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-supported-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-profile-types.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-scans.adoc",
+      "rel_path": "compliance_operator/co-scans/compliance-scans.adoc",
+      "topic_name": "Compliance Operator scans",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/running-compliance-scans.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-custom-storage.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/running-compliance-scans-worker-node.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-scansetting-cr.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-operator-hcp-mgmt-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-applying-resource-requests-and-limits.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-scheduling-pods-with-resource-requests.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-tailor.adoc",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-tailor.adoc",
+      "topic_name": "Tailoring the Compliance Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-new-tailored-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-tailored-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-raw-results.adoc",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-raw-results.adoc",
+      "topic_name": "Retrieving Compliance Operator raw results",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-results.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-remediation.adoc",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-remediation.adoc",
+      "topic_name": "Managing Compliance Operator remediation",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-filtering-results.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-review.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-apply-remediation-for-customized-mcp.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-evaluate-kubeletconfig-rules.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-custom-node-pools.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-kubeletconfig-sub-pool-remediation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-applying.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-manual.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-updating.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-unapplying.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-removing-kubeletconfig.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-inconsistent.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-advanced.adoc",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-advanced.adoc",
+      "topic_name": "Performing advanced Compliance Operator tasks",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-objects.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-priorityclass.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-raw-tailored.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-rescan.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-custom-storage.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-apply-remediations-from-scans.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-auto-update-remediations.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-custom-scc.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "compliance-operator-troubleshooting.adoc",
+      "rel_path": "compliance_operator/co-scans/compliance-operator-troubleshooting.adoc",
+      "topic_name": "Troubleshooting Compliance Operator scans",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/compliance-anatomy.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-increasing-operator-limits.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/operator-resource-constraints.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/co-scansetting-resources.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/compliance-timeout.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/support.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "oc-compliance-plug-in-using.adoc",
+      "rel_path": "compliance_operator/co-scans/oc-compliance-plug-in-using.adoc",
+      "topic_name": "Using the oc-compliance plugin",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/oc-compliance-installing.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oc-compliance-fetching-raw-results.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oc-compliance-rerunning-scans.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oc-compliance-using-scan-setting-bindings.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oc-compliance-printing-controls.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oc-compliance-fetching-compliance-remediation-details.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oc-compliance-viewing-compliance-check-result-details.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "fio-overview.adoc",
+      "rel_path": "file_integrity_operator/fio-overview.adoc",
+      "topic_name": "File Integrity Operator Overview",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "file-integrity-operator-release-notes.adoc",
+      "rel_path": "file_integrity_operator/file-integrity-operator-release-notes.adoc",
+      "topic_name": "File Integrity Operator release notes",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        },
+        {
+          "module": "snippets/fips-snippet.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "fio-support.adoc",
+      "rel_path": "file_integrity_operator/fio-support.adoc",
+      "topic_name": "File Integrity Operator support",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/support.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "file-integrity-operator-installation.adoc",
+      "rel_path": "file_integrity_operator/file-integrity-operator-installation.adoc",
+      "topic_name": "Installing the File Integrity Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/file-integrity-operator-installing-web-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-operator-installing-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "file-integrity-operator-updating.adoc",
+      "rel_path": "file_integrity_operator/file-integrity-operator-updating.adoc",
+      "topic_name": "Updating the File Integrity Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/olm-preparing-upgrade.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/olm-changing-update-channel.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/olm-approving-pending-upgrade.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "file-integrity-operator-understanding.adoc",
+      "rel_path": "file_integrity_operator/file-integrity-operator-understanding.adoc",
+      "topic_name": "Understanding the File Integrity Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/file-integrity-understanding-file-integrity-cr.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/checking-file-intergrity-cr-status.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-CR-phases.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-understanding-file-integrity-node-statuses-object.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-node-status.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-node-status-success.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/file-integrity-node-status-failure.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/file-integrity-events.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "file-integrity-operator-configuring.adoc",
+      "rel_path": "file_integrity_operator/file-integrity-operator-configuring.adoc",
+      "topic_name": "Configuring the File Integrity Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/file-integrity-operator-viewing-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-important-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-examine-default-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-understanding-default-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-supplying-custom-aide-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-operator-defining-custom-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-operator-changing-custom-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "file-integrity-operator-advanced-usage.adoc",
+      "rel_path": "file_integrity_operator/file-integrity-operator-advanced-usage.adoc",
+      "topic_name": "Performing advanced File Integrity Operator tasks",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/file-integrity-operator-reinitializing-database.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-operator-machine-config-integration.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/file-integrity-operator-exploring-daemon-sets.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "file-integrity-operator-troubleshooting.adoc",
+      "rel_path": "file_integrity_operator/file-integrity-operator-troubleshooting.adoc",
+      "topic_name": "Troubleshooting the File Integrity Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "fio-uninstalling.adoc",
+      "rel_path": "file_integrity_operator/fio-uninstalling.adoc",
+      "topic_name": "Uninstalling the File Integrity Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/fio-uninstall-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-overview.adoc",
+      "rel_path": "security_profiles_operator/spo-overview.adoc",
+      "topic_name": "Security Profiles Operator overview",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-release-notes.adoc",
+      "rel_path": "security_profiles_operator/spo-release-notes.adoc",
+      "topic_name": "Security Profiles Operator release notes",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-support.adoc",
+      "rel_path": "security_profiles_operator/spo-support.adoc",
+      "topic_name": "Security Profiles Operator support",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/support.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-understanding.adoc",
+      "rel_path": "security_profiles_operator/spo-understanding.adoc",
+      "topic_name": "Understanding the Security Profiles Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/spo-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-enabling.adoc",
+      "rel_path": "security_profiles_operator/spo-enabling.adoc",
+      "topic_name": "Enabling the Security Profiles Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/spo-installing.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-installing-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-logging-verbosity.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-seccomp.adoc",
+      "rel_path": "security_profiles_operator/spo-seccomp.adoc",
+      "topic_name": "Managing seccomp profiles",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/spo-creating-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-applying-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-binding-workloads.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/spo-recording-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-container-profile-instances.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-selinux.adoc",
+      "rel_path": "security_profiles_operator/spo-selinux.adoc",
+      "topic_name": "Managing SELinux profiles",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/spo-creating-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-applying-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-selinux-permissive.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/spo-binding-workloads.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/spo-replicating-controllers.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/spo-recording-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-container-profile-instances.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/spo-selinux-runasany.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-advanced.adoc",
+      "rel_path": "security_profiles_operator/spo-advanced.adoc",
+      "topic_name": "Advanced Security Profiles Operator tasks",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/spo-restrict-syscalls.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-base-syscalls.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-memory-optimzation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-daemon-requirements.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-custom-priority-class.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-using-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-runtime-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/spo-log-enricher.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-enricher-app-trace.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/spo-configuring-webhooks.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-logging.adoc",
+      "rel_path": "security_profiles_operator/spo-logging.adoc",
+      "topic_name": "Advanced Audit Logging Framework",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/spo-log-enrich.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-kube-api-compare.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-enabling.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-json-enrich.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-tune-rot.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-adv-pod.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-mon-audit.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-debug.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-correlate.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-enrich-out.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-kube-api-out.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-corr-key.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-corr-log.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-webhook.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/spo-log-disable.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-troubleshooting.adoc",
+      "rel_path": "security_profiles_operator/spo-troubleshooting.adoc",
+      "topic_name": "Troubleshooting the Security Profiles Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/spo-inspecting-seccomp-profiles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "spo-uninstalling.adoc",
+      "rel_path": "security_profiles_operator/spo-uninstalling.adoc",
+      "topic_name": "Uninstalling the Security Profiles Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/spo-uninstall-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-tang-server-operator-overview.adoc",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-overview.adoc",
+      "topic_name": "NBDE Tang Server Operator overview",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-tang-server-operator-release-notes.adoc",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-release-notes.adoc",
+      "topic_name": "NBDE Tang Server Operator release notes",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-tang-server-operator-understanding.adoc",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-understanding.adoc",
+      "topic_name": "Understanding the NBDE Tang Server Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-tang-server-operator-installing.adoc",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-installing.adoc",
+      "topic_name": "Installing the NBDE Tang Server Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nbde-tang-server-operator-installing-web-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-tang-server-operator-installing-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-tang-server-operator-configuring-managing.adoc",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-configuring-managing.adoc",
+      "topic_name": "Configuring and managing Tang servers using the NBDE Tang Server Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nbde-tang-server-operator-deploying.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-tang-server-operator-rotating-keys.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-tang-server-operator-removing-hidden-keys.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-tang-server-operator-identifying-url.adoc",
+      "rel_path": "nbde_tang_server_operator/nbde-tang-server-operator-identifying-url.adoc",
+      "topic_name": "Identifying URL of a Tang server deployed with the NBDE Tang Server Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nbde-tang-server-operator-identifying-url-web-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-tang-server-operator-identifying-url-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "understanding-secrets-management.adoc",
+      "rel_path": "understanding-secrets-management.adoc",
+      "topic_name": "Understanding secrets management",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/secrets-management-operators.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/secrets-management-use-case.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "index.adoc",
+      "rel_path": "cert_manager_operator/index.adoc",
+      "topic_name": "cert-manager Operator for Red Hat OpenShift overview",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-issuer-types.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-request-methods.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-supported-versions.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-fips-support.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-operator-release-notes.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-operator-release-notes.adoc",
+      "topic_name": "cert-manager Operator for Red Hat OpenShift release notes",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-operator-install.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-operator-install.adoc",
+      "topic_name": "Installing the cert-manager Operator for Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-install-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-install-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-operator-update-channels.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-operator-proxy.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-operator-proxy.adoc",
+      "topic_name": "Configuring the egress proxy",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-proxy-support.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-customizing-api-fields.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-customizing-api-fields.adoc",
+      "topic_name": "Customizing cert-manager by using the cert-manager Operator API fields",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-explanation-of-certmanager-cr-fields.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-override-environment-variables.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-override-arguments.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-override-flag-controller.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-configure-cpu-memory.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-override-scheduling.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-authenticate.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-authenticate.adoc",
+      "topic_name": "Authenticating the cert-manager Operator for Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-configure-cloud-credentials-aws-non-sts.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-configure-cloud-credentials-aws-sts.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-configure-cloud-credentials-gcp-non-sts.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-configure-cloud-credentials-gcp-sts.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-operator-issuer-acme.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-operator-issuer-acme.adoc",
+      "topic_name": "Configuring an ACME issuer",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-acme-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-acme-challenges-types.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-acme-dns-providers.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-acme-http01.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-acme-dns01-explicit-aws.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-acme-dns01-ambient-aws.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-acme-dns01-explicit-gcp.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-acme-dns01-ambient-gcp.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-acme-dns01-explicit-azure.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-creating-certificate.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-creating-certificate.adoc",
+      "topic_name": "Configuring certificates with an issuer",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-certificate-mgmt.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-certificate-api-server.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-certificate-ingress.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-securing-routes.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-securing-routes.adoc",
+      "topic_name": "Securing routes with the cert-manager Operator for Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-configuring-routes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-operator-integrating-istio.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-operator-integrating-istio.adoc",
+      "topic_name": "Integrating the cert-manager Operator with Istio-CSR",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-istio-creating-issuer.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-istio-csr-installing.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-istio-csr-setting-log-level.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-istio-csr-config-namespace-sel.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-istio-csr-config-ca-cert.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cert-manager-istio-csr-uninstalling.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-nw-policy.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-nw-policy.adoc",
+      "topic_name": "Network policy configuration for cert-manager Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-nw-policy-rules.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-nw-policy-params.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-nw-policy-examples.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-nw-policy-verify.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-trust-manager.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-trust-manager.adoc",
+      "topic_name": "Distributing certificates by using trust-manager operand",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "snippets/technology-preview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-trust-manager-install.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-configure-trust-bundle.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-trust-manager-uninstall.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-trust-manager-fields.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-monitoring.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-monitoring.adoc",
+      "topic_name": "Monitoring the cert-manager Operator for Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-enable-user-workload-monitor.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-enable-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-query-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-config-metrics-collection.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-query-metrics-for-istio-csr-operand.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-log-levels.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-log-levels.adoc",
+      "topic_name": "Configuring log levels for cert-manager and the cert-manager Operator for Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-enable-operand-log-level.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-enable-operator-log-level.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cert-manager-operator-uninstall.adoc",
+      "rel_path": "cert_manager_operator/cert-manager-operator-uninstall.adoc",
+      "topic_name": "Uninstalling the cert-manager Operator for Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/cert-manager-uninstall-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/cert-manager-remove-resources-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-overview.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-overview.adoc",
+      "topic_name": "Zero Trust Workload Identity Manager overview",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-about-spiffe.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-about-spire.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-about-agent.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-about-attestation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-components.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-components.adoc",
+      "topic_name": "Zero Trust Workload Identity Manager components",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-about-csi-driver.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-about-oidc-provider.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-about-controller-manager.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-server-agent-telemetry.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-how-it-works.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-release-notes.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-release-notes.adoc",
+      "topic_name": "Zero Trust Workload Identity Manager release notes",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-ga-1-0-0-rns.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-tp-0-2-0-rns.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-tp-0-1-0-rns.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-install.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-install.adoc",
+      "topic_name": "Installing Zero Trust Workload Identity Manager",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-install-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-install-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-configuration.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-configuration.adoc",
+      "topic_name": "Deploying Zero Trust Workload Identity Manager operands",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-ztwim-cr.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-spire-server-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-spire-agent-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-spiffe-csidriver-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-oidc-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-verify-operands.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-proxy.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-proxy.adoc",
+      "topic_name": "Configuring the egress proxy",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-proxy-support.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-oidc-federation.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-oidc-federation.adoc",
+      "topic_name": "Configuring Zero Trust Workload Identity Manager OIDC Federation",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-entraid-oidc-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-create-route-oidc.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-disabling-route.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-configure-azure.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-config-azure-blob.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-config-azure-identity.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-create-demo-app.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-deploy-app.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-spiffe-identity-federation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-verify-blob-access.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-vault-oidc-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-install-vault-oidc.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-initialize-vault-oidc.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-vault-enable-kv.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-vault-authenticate-jwt.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-vault-deploy-demo.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/zero-trust-manager-vault-authenticate-secret.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-spire-federation.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc",
+      "topic_name": "Configuring Zero Trust Workload Identity Manager SPIRE Federation",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-configure-endpoints.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-config-example.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-federation-configuration.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-automatic-management.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-manual-management.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-federation-field-reference.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-reconciliation.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-reconciliation.adoc",
+      "topic_name": "Enabling create-only mode for the Zero Trust Workload Identity Manager",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-pause-reconciliation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-restart-reconciliation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-monitoring.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-monitoring.adoc",
+      "topic_name": "Monitoring Zero Trust Workload Identity Manager",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-enable-monitoring.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-enable-metrics-server.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-enable-metrics-agent.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-enable-metrics-operator.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-query-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-available-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "zero-trust-manager-uninstall.adoc",
+      "rel_path": "zero_trust_workload_identity_manager/zero-trust-manager-uninstall.adoc",
+      "topic_name": "Uninstalling the Zero Trust Workload Identity Manager",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/zero-trust-manager-uninstall-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/zero-trust-manager-uninstall-resources.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "index.adoc",
+      "rel_path": "external_secrets_operator/index.adoc",
+      "topic_name": "External Secrets Operator overview",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-provider-types.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-fips-support.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-proxy-considerations.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-operator-release-notes.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-operator-release-notes.adoc",
+      "topic_name": "External Secrets Operator release notes",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-operator-rn-1-1.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-rn-1-0.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-rn-0-1.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-operator-install.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-operator-install.adoc",
+      "topic_name": "Installing the External Secrets Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-operator-limitations.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-install-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-install-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operand-install-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-update-channels.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-stablev1-channel.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/external-secrets-operator-stablev1-y-channel.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-operator-config-net-policy.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-operator-config-net-policy.adoc",
+      "topic_name": "Configuring Network Policy for the Operand",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-operator-egress-allow-all-traffic.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-egress-specific-provider.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-ingress-egress-rules.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-operator-proxy.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-operator-proxy.adoc",
+      "topic_name": "Configuring the egress proxy",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-operator-configure-proxy.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-monitoring.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-monitoring.adoc",
+      "topic_name": "Monitoring the External Secrets Operator for Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-enable-user-workload-monitor.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-enable-operator-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-query-operator-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-enable-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-query-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-log-levels.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-log-levels.adoc",
+      "topic_name": "Customizing the External Secrets Operator for Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-enable-operator-log-level.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-enable-operand-log-level.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-cert-manager-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-bit-warden-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-adding-custom-annotations.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-configure-history-limit.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-set-custom-variables.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-operator-uninstall.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-operator-uninstall.adoc",
+      "topic_name": "Uninstalling the External Secrets Operator",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-operator-uninstall-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-remove-resources.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-remove-resources-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-operator-api.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-operator-api.adoc",
+      "topic_name": "External Secrets Operator APIs",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "snippets/technology-preview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets-manager-list.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets-manager.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets-list.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets-manager-spec.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets-manager-status.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets-spec.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets-status.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-global-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-controller-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-controller-status.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-external-secrets-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-bitwarden-secret.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-web-hook-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-cert-manager-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-cert-providers-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-object-reference.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-secret-reference.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-condition.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-conditional-status.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-mode.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-plugins-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-proxy-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-component-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/eso-deployment-config.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-secrets-operator-migrate-downstream-upstream.adoc",
+      "rel_path": "external_secrets_operator/external-secrets-operator-migrate-downstream-upstream.adoc",
+      "topic_name": "Migrating from the community External Secret Operator to the External Secret Operator For Red Hat OpenShift",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/external-secrets-operator-delete-upstream-operatorconfig.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-uninstall-upstream-eso.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-uninstall-helm.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/external-secrets-operator-uninstall-olm.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/external-secrets-operator-uninstall-raw-manifests.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/external-secrets-operator-eso-install.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-secrets-operator-create-externalsecretsconfig.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "audit-log-view.adoc",
+      "rel_path": "audit-log-view.adoc",
+      "topic_name": "Viewing audit logs",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nodes-nodes-audit-log-basic.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nodes-nodes-audit-log-basic-viewing.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-audit-log-filtering.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/gathering-data-audit-logs.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        },
+        {
+          "module": "_attributes/attributes-openshift-dedicated.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "audit-log-policy-config.adoc",
+      "rel_path": "audit-log-policy-config.adoc",
+      "topic_name": "Configuring the audit log policy",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nodes-nodes-audit-config-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nodes-nodes-audit-policy.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nodes-nodes-audit-policy-custom.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nodes-nodes-audit-policy-disable.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "tls-security-profiles.adoc",
+      "rel_path": "tls-security-profiles.adoc",
+      "topic_name": "Configuring TLS security profiles",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/tls-profiles-understanding.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/tls-profiles-view-details.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/tls-profiles-ingress-configuring.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/tls-profiles-kubernetes-configuring.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/tls-profiles-kubelet-configuring.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "seccomp-profiles.adoc",
+      "rel_path": "seccomp-profiles.adoc",
+      "topic_name": "Configuring seccomp profiles",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/configuring-default-seccomp-profile.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/creating-custom-seccomp-profile.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/setting-custom-seccomp-profile.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/applying-custom-seccomp-profile.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "allowing-javascript-access-api-server.adoc",
+      "rel_path": "allowing-javascript-access-api-server.adoc",
+      "topic_name": "Allowing JavaScript-based access to the API server from additional hosts",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/auth-allowing-javascript-access-api-server.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "pod-vulnerability-scan.adoc",
+      "rel_path": "pod-vulnerability-scan.adoc",
+      "topic_name": "Scanning pods for vulnerabilities",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/security-pod-scan-cso.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-pod-scan-cso-using.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-pod-scan-query-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/removing-cso-operator.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-about-disk-encryption-technology.adoc",
+      "rel_path": "network_bound_disk_encryption/nbde-about-disk-encryption-technology.adoc",
+      "topic_name": "About disk encryption technology",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nbde-disk-encryption-technology-comparison.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-key-escrow.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-tpm-encryption.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-network-bound-disk-encryption.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-secret-sharing-encryption.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-using-tang-servers-for-disk-encryption.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-locating-the-tang-servers.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-deciding-the-number-of-tang-servers-to-use.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-logging-considerations.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-tang-server-installation-considerations.adoc",
+      "rel_path": "network_bound_disk_encryption/nbde-tang-server-installation-considerations.adoc",
+      "topic_name": "Tang server installation considerations",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nbde-installation-scenarios.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-compute-requirements.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-automatic-start-at-boot.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-http-versus-https.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-managing-encryption-keys.adoc",
+      "rel_path": "network_bound_disk_encryption/nbde-managing-encryption-keys.adoc",
+      "topic_name": "Tang server encryption key management",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nbde-backing-up-server-keys.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-recovering-server-keys.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-rekeying-tang-servers.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-generating-a-new-tang-server-key.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-rekeying-all-nbde-nodes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-troubleshooting-temporary-error-conditions.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-troubleshooting-permanent-error-conditions.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/nbde-deleting-old-tang-server-keys.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "nbde-disaster-recovery-considerations.adoc",
+      "rel_path": "network_bound_disk_encryption/nbde-disaster-recovery-considerations.adoc",
+      "topic_name": "Disaster recovery considerations",
+      "book_dir": "security",
+      "includes": [
+        {
+          "module": "modules/nbde-loss-of-a-client-machine.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-loss-of-client-connectivity.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-unexpected-loss-of-network-connectivity.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-recovering-network-connectivity-manually.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-emergency-recovery-of-network-connectivity.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-loss-of-a-network-segment.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-loss-of-a-tang-server.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/nbde-compromise-of-key-material.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "index.adoc",
+      "rel_path": "index.adoc",
+      "topic_name": "Authentication and authorization overview",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/authentication-authorization-common-terms.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "understanding-authentication.adoc",
+      "rel_path": "understanding-authentication.adoc",
+      "topic_name": "Understanding authentication",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/rbac-users.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-groups.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-api-authentication.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-server-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/oauth-token-requests.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/authentication-api-impersonation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+3"
+        },
+        {
+          "module": "modules/authentication-prometheus-system-metrics.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+3"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-internal-oauth.adoc",
+      "rel_path": "configuring-internal-oauth.adoc",
+      "topic_name": "Configuring the internal OAuth server",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/oauth-server-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-internal-tokens.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-internal-options.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-configuring-internal-oauth.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-configuring-token-inactivity-timeout.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-customizing-the-oauth-server-URL.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-server-metadata.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-troubleshooting-api-events.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-oauth-clients.adoc",
+      "rel_path": "configuring-oauth-clients.adoc",
+      "topic_name": "Configuring OAuth clients",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/oauth-default-clients.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-register-additional-client.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-configuring-token-inactivity-timeout-clients.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "managing-oauth-access-tokens.adoc",
+      "rel_path": "managing-oauth-access-tokens.adoc",
+      "topic_name": "Managing user-owned OAuth access tokens",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/oauth-list-tokens.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-view-details-tokens.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/oauth-delete-tokens.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/unauthenticated-users-cluster-role-binding.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "understanding-identity-provider.adoc",
+      "rel_path": "understanding-identity-provider.adoc",
+      "topic_name": "Understanding identity provider configuration",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/authentication-remove-kubeadmin.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-parameters.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-default-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-provisioning-user-lookup-mapping.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-htpasswd-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-htpasswd-identity-provider.adoc",
+      "topic_name": "Configuring an htpasswd identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-htpasswd-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-creating-htpasswd-file-linux.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/identity-provider-creating-htpasswd-file-windows.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/identity-provider-htpasswd-secret.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-htpasswd-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-htpasswd-update-users.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-configuring-using-web-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-keystone-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-keystone-identity-provider.adoc",
+      "topic_name": "Configuring a Keystone identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-keystone-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-secret-tls.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-config-map.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-keystone-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-ldap-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-ldap-identity-provider.adoc",
+      "topic_name": "Configuring an LDAP identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-about-ldap.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-ldap-secret.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-config-map.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-ldap-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-basic-authentication-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-basic-authentication-identity-provider.adoc",
+      "topic_name": "Configuring a basic authentication identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-about-basic-authentication.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-secret-tls.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-config-map.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-basic-authentication-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/example-apache-httpd-configuration.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-basic-authentication-troubleshooting.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-request-header-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-request-header-identity-provider.adoc",
+      "topic_name": "Configuring a request header identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-about-request-header.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-config-map.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-request-header-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-apache-custom-proxy-configuration.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/identity-provider-configuring-apache-request-header.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-github-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-github-identity-provider.adoc",
+      "topic_name": "Configuring a GitHub or GitHub Enterprise identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-github-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-registering-github.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-secret.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-config-map.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-github-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-gitlab-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-gitlab-identity-provider.adoc",
+      "topic_name": "Configuring a GitLab identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-gitlab-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-secret.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-config-map.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-gitlab-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-google-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-google-identity-provider.adoc",
+      "topic_name": "Configuring a Google identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-google-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-secret.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-google-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "configuring-oidc-identity-provider.adoc",
+      "rel_path": "identity_providers/configuring-oidc-identity-provider.adoc",
+      "topic_name": "Configuring an OpenID Connect identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/identity-provider-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-oidc-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-oidc-supported.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-secret.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-config-map.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-oidc-CR.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-add.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/identity-provider-configuring-using-web-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "external-auth.adoc",
+      "rel_path": "external-auth.adoc",
+      "topic_name": "Enabling direct authentication with an OIDC identity provider",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/external-auth-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-auth-disabled-resources.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/external-auth-providers.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/external-auth-configuring.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/external-auth-fields.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/external-auth-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/external-auth-disabling.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "using-rbac.adoc",
+      "rel_path": "using-rbac.adoc",
+      "topic_name": "Using RBAC to define and apply permissions",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/rbac-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-projects-namespaces.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-default-projects.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-viewing-cluster-roles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-viewing-local-roles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-adding-roles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-creating-local-role.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-creating-cluster-role.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-local-role-binding-commands.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-cluster-role-binding-commands.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rbac-creating-cluster-admin.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rosa-create-cluster-admins.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/rosa-create-dedicated-cluster-admins.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/osd-grant-admin-privileges.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/unauthenticated-users-cluster-role-binding-con.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "remove-kubeadmin.adoc",
+      "rel_path": "remove-kubeadmin.adoc",
+      "topic_name": "Removing the kubeadmin user",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/authentication-kubeadmin.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/authentication-remove-kubeadmin.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "understanding-and-creating-service-accounts.adoc",
+      "rel_path": "understanding-and-creating-service-accounts.adoc",
+      "topic_name": "Understanding and creating service accounts",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/service-accounts-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/service-account-auto-secret-removed.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/service-accounts-enabling-authentication.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/service-accounts-creating.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/service-accounts-configuration-parameters.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/service-accounts-granting-roles.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "using-service-accounts-in-applications.adoc",
+      "rel_path": "using-service-accounts-in-applications.adoc",
+      "topic_name": "Using service accounts in applications",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/service-accounts-overview.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/service-accounts-default.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/service-account-auto-secret-removed.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/service-accounts-creating.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/service-accounts-using-credentials-inside-a-container.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "using-service-accounts-as-oauth-client.adoc",
+      "rel_path": "using-service-accounts-as-oauth-client.adoc",
+      "topic_name": "Using a service account as an OAuth client",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/service-accounts-as-oauth-clients.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "tokens-scoping.adoc",
+      "rel_path": "tokens-scoping.adoc",
+      "topic_name": "Scoping tokens",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/tokens-scoping-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/unauthenticated-users-cluster-role-binding.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "bound-service-account-tokens.adoc",
+      "rel_path": "bound-service-account-tokens.adoc",
+      "topic_name": "Using bound service account tokens",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/bound-sa-tokens-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/bound-sa-tokens-configuring.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/bound-sa-tokens-configuring-externally.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "managing-security-context-constraints.adoc",
+      "rel_path": "managing-security-context-constraints.adoc",
+      "topic_name": "Managing security context constraints",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/security-context-constraints-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-pre-allocated-values.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-example.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-creating.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-requiring.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-rbac.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-command-reference.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "understanding-and-managing-pod-security-admission.adoc",
+      "rel_path": "understanding-and-managing-pod-security-admission.adoc",
+      "topic_name": "Understanding and managing pod security admission",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/security-context-constraints-psa-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-psa-coexistence.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/security-context-constraints-psa-synchronization.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-psa-sync-exclusions.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/security-context-constraints-psa-opting.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-psa-label.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-psa-rectifying.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/security-context-constraints-psa-alert-eval.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "impersonating-system-admin.adoc",
+      "rel_path": "impersonating-system-admin.adoc",
+      "topic_name": "Impersonating the system:admin user",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/authentication-api-impersonation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/impersonation-system-admin-user.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/impersonation-system-admin-group.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/impersonation-multiple-groups-web-console.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/starting-impersonation-users-groups-pages.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/stopping-impersonation.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/unauthenticated-users-cluster-role-binding.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "ldap-syncing.adoc",
+      "rel_path": "ldap-syncing.adoc",
+      "topic_name": "Syncing LDAP groups",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/ldap-syncing-about.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/ldap-syncing-config-rfc2307.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-config-activedir.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-config-augmented-activedir.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-running.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/ldap-syncing-running-all-ldap.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-running-openshift.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-running-subset.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-pruning.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/ldap-auto-syncing.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/ldap-syncing-examples.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/ldap-syncing-rfc2307.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-rfc2307-user-defined.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-rfc2307-user-defined-error.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-activedir.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-augmented-activedir.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-nesting.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/ldap-syncing-spec.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "about-cloud-credential-operator.adoc",
+      "rel_path": "managing_cloud_provider_credentials/about-cloud-credential-operator.adoc",
+      "topic_name": "About the Cloud Credential Operator",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/cco-determine-mode-gui.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-determine-mode-cli.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cco-mode-mint.adoc",
+      "rel_path": "managing_cloud_provider_credentials/cco-mode-mint.adoc",
+      "topic_name": "Mint mode",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/admin-credentials-root-secret-formats.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/manually-rotating-cloud-creds.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cco-mode-passthrough.adoc",
+      "rel_path": "managing_cloud_provider_credentials/cco-mode-passthrough.adoc",
+      "topic_name": "Passthrough mode",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/admin-credentials-root-secret-formats.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+1"
+        },
+        {
+          "module": "modules/manually-rotating-cloud-creds.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cco-mode-manual.adoc",
+      "rel_path": "managing_cloud_provider_credentials/cco-mode-manual.adoc",
+      "topic_name": "Manual mode with long-term credentials for components",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    },
+    {
+      "file": "cco-short-term-creds.adoc",
+      "rel_path": "managing_cloud_provider_credentials/cco-short-term-creds.adoc",
+      "topic_name": "Manual mode with short-term credentials for components",
+      "book_dir": "authentication",
+      "includes": [
+        {
+          "module": "modules/cco-short-term-creds-auth-flow-aws.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-format-aws.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-component-permissions-aws.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-aws-olm.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-workloads.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-auth-flow-gcp.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-format-gcp.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-component-permissions-gcp.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-gcp-olm.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-workloads.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-auth-flow-azure.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-format-azure.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-component-permissions-azure.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-azure-olm.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "modules/cco-short-term-creds-workloads.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": "+2"
+        },
+        {
+          "module": "_attributes/common-attributes.adoc",
+          "type": "UNKNOWN",
+          "leveloffset": ""
+        }
+      ]
+    }
+  ]
+}

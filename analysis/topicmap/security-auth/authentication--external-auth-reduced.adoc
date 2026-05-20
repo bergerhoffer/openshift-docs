@@ -1,0 +1,974 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="external-auth"]
+= Enabling direct authentication with an external OIDC identity provider
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: external-auth
+
+toc::[]
+
+While the built-in OpenShift OAuth server supports integration with a variety of identity providers, including external OpenID Connect (OIDC) identity providers, it is limited to the capabilities of the OAuth server itself. You can configure {product-title} to use an external OIDC identity provider directly to issue tokens for authentication, which replaces the built-in OpenShift OAuth server.
+
+// About direct authentication with an external OIDC identity provider
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * authentication/external-auth.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="external-auth-about_{context}"]
+= About direct authentication with an external OIDC identity provider
+
+[role="_abstract"]
+You can enable direct integration with an external OpenID Connect (OIDC) identity provider to issue tokens for authentication. This bypasses the built-in OAuth server and uses the external identity provider directly.
+
+By integrating directly with an external OIDC provider, you can leverage the advanced capabilities of your preferred OIDC provider instead of being limited by the capabilities of the built-in OAuth server. Your organization can manage users and groups from a single interface, while also streamlining authentication across multiple clusters and in hybrid environments. You can also integrate with existing tools and solutions.
+
+// TODO: Add back in if we test machine-to-machine workflows in the future
+// You can also facilitate machine-to-machine workflows and integrate with existing tools and solutions.
+
+[IMPORTANT]
+====
+Currently, you may configure only one OIDC provider for direct authentication.
+====
+
+After switching to direct authentication, existing authentication configuration is not guaranteed to be preserved. Prior to enabling direct authentication, back up any existing user, group, oauthclient, or identity provider configuration in case you need to revert back to using the built-in OAuth server for authentication.
+
+Before replacing the built-in OAuth server with an external provider, ensure that you have access to a long-lived method of logging in with cluster administrator permissions, such as one of the following:
+
+* a certificate-based user `kubeconfig` file, such as the one generated by the installation program
+* a long-lived service account token `kubeconfig` file
+* a certificate-based service account `kubeconfig` file
+
+If there are any issues with the external identity provider, you need one of these methods to gain access to the {product-title} cluster in an emergency situation.
+
+:leveloffset!:
+
+// Disabled OAuth resources
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * authentication/external-auth.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="external-auth-disabled-resources_{context}"]
+= Disabled OAuth resources
+
+[role="_abstract"]
+When you enable direct authentication, several OAuth resources are intentionally removed.
+
+[IMPORTANT]
+====
+Ensure that you do not rely on these removed resources before configuring direct authentication.
+====
+
+The following resources are unavailable when direct authentication is configured:
+
+* OpenShift OAuth server and OpenShift OAuth API server
+* User and group APIs (`*.user.openshift.io`)
+* OAuth APIs (`*.oauth.openshift.io`)
+* OAuth server and client configurations
+
+:leveloffset!:
+
+// Direct authentication identity providers
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * authentication/external-auth.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="external-auth-providers_{context}"]
+= Direct authentication identity providers
+
+Direct authentication has been tested with the following OpenID Connect (OIDC) identity providers:
+
+* Active Directory Federation Services for Windows Server
+* GitLab
+* Google
+* Keycloak
+* Microsoft Entra ID
+* Okta
+* Ping Identity
+* Red Hat Single Sign-On
+
+[NOTE]
+====
+Red{nbsp}Hat does not test all factors associated with third-party identity provider functionality. For more information about third-party support, see the link:https://access.redhat.com/third-party-software-support[Red{nbsp}Hat third-party support policy].
+====
+
+:leveloffset!:
+
+// Configuring an external OIDC identity provider for direct authentication
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * authentication/external-auth.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="external-auth-configuring_{context}"]
+= Configuring an external OIDC identity provider for direct authentication
+
+You can configure {product-title} to directly use an external OIDC identity provider to issue tokens for authentication.
+
+.Prerequisites
+
+* You have configured your external authentication provider.
++
+This procedure uses Keycloak as the identity provider and assumes that you have the following clients configured:
+
+** A confidential client for the web console called `console-test` with the valid redirect URIs set to [x-]`https://<openshift_console_route>/auth/callback`
+
+** A public client for the {oc-first} called `oc-cli-test` with the valid redirect URIs set to [x-]`http://localhost:8080`
+
+* You have access to the `kubeconfig` file generated by the installation program for the cluster.
+* You have backed up any existing authentication configuration, in case you need to revert back to using the built-in OAuth server for authentication.
+* You have the {product-title} web console enabled on the cluster.
++
+[NOTE]
+====
+If the web console is not enabled in your cluster, see "Example OIDC provider configuration for CLI clients only" for an example configuration without the web console client.
+====
+
+.Procedure
+
+. Ensure that you are using the `kubeconfig` file generated by the installation program, or another long-lived method of logging in as a cluster administrator.
+
+. Create a secret that allows you to authenticate with the web console by running the following command:
++
+[source,terminal]
+----
+$ oc create secret generic console-secret \
+    --from-literal=clientSecret=<secret_value> \// <1>
+    -n openshift-config
+----
+<1> Replace `<secret_value>` with the value of the secret for the `console-test` client in your identity provider.
+
+. Optional: Create a config map that contains the provider's certificate authority bundle by running the following command:
++
+[source,terminal]
+----
+$ oc create configmap keycloak-oidc-ca --from-file=ca-bundle.crt=my-directory/ca-bundle.crt \// <1>
+    -n openshift-config
+----
+<1> Specify the path to your provider's `ca-bundle.crt` file.
+
+. Edit the authentication configuration by running the following command:
++
+[source,terminal]
+----
+$ oc edit authentication.config/cluster
+----
+
+. Update the authentication configuration by setting the `type` field to `OIDC`, configuring the `oidcProviders` field for your provider, and setting the `webhookTokenAuthenticator` field to `null`:
++
+[source,yaml]
+----
+apiVersion: config.openshift.io/v1
+kind: Authentication
+metadata:
+# ...
+spec:
+  type: OIDC # <1>
+  webhookTokenAuthenticator: null # <2>
+  oidcProviders: # <3>
+  - claimMappings:
+      extra: # <4>
+      - key: example.com/role
+        valueExpression: claims.?role.orValue("unknown")
+      groups:
+        claim: groups # <5>
+        prefix: 'oidc-groups-test:'
+      uid: # <6>
+        claim: "sub"
+      username:
+        claim: email #<7>
+        prefixPolicy: Prefix
+        prefix:
+          prefixString: 'oidc-user-test:'
+    issuer:
+      audiences: # <8>
+      - console-test
+      - oc-cli-test
+      issuerCertificateAuthority:
+        name: keycloak-oidc-ca # <9>
+      issuerURL: https://keycloak-keycloak.apps.example.com/realms/master # <10>
+    name: 'keycloak-oidc-server' # <11>
+    oidcClients:
+    - clientID: oc-cli-test # <12>
+      componentName: cli
+      componentNamespace: openshift-console
+    - clientID: console-test # <13>
+      clientSecret:
+        name: console-secret # <14>
+      componentName: console
+      componentNamespace: openshift-console
+      extraScopes: # <15>
+        - email
+        - profile
+----
+<1> Must be set to `OIDC` to indicate to use an external OIDC identity provider.
+<2> Must be set to `null` when `type` is set to `OIDC`.
+<3> The OIDC provider configuration. Currently, only one OIDC provider configuration is allowed.
+<4> An optional field for configuring the mappings used to construct the extra attributes for the cluster identity.
+<5> The name of the claim to construct group names for the cluster identity.
+<6> An optional field for configuring the claim mapping used to construct the uid for the cluster identity.
+<7> The name of the claim to construct usernames for the cluster identity.
+<8> The list of audiences that this authentication provider issues tokens for.
+<9> The name of the config map that contains the `ca-bundle.crt` key. If unset, system trust is used instead.
+<10> The URL for the token issuer.
+<11> The name for external OIDC provider.
+<12> The client ID that your provider uses for the {oc-first}.
+<13> The client ID that your provider uses for the {product-title} web console.
+<14> The name of the secret that stores the secret value for the console client.
+<15> The extra scopes to request. Some providers, such as GitLab, might require extra scopes in order to log in through the web console properly.
++
+For more details on all available parameters, see "OIDC provider configuration parameters".
+
+. Exit and save the changes to apply the new configuration.
+
+. Wait for the cluster to roll out new revisions to all nodes.
+
+.. Check the Kubernetes API server Operator status by running the following command:
++
+[source,terminal]
+----
+$ oc get co kube-apiserver
+----
++
+.Example output
+[source,terminal]
+----
+NAME             VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+kube-apiserver   4.21.0    True        True          False      85m     NodeInstallerProgressing: 2 node are at revision 8; 1 node is at revision 10
+----
++
+The message in the preceding example shows that one node has progressed to the new revision and two nodes have not yet updated. It can take 20 minutes or more to roll out the new revision to all nodes, depending on the size of your cluster.
+
+.. To troubleshoot any issues, you can also check the Cluster Authentication Operator and `kube-apiserver` pod logs for errors.
+
+.Verification
+
+. Verify that you can log in to the {oc-first} by authenticating with your identity provider:
+
+.. Log in by running the following command:
++
+[source,terminal]
+----
+$ oc login --exec-plugin=oc-oidc \// <1>
+    --issuer-url=https://keycloak-keycloak.apps.example.com/realms/master \// <2>
+    --client-id=oc-cli-test \// <3>
+    --extra-scopes=email --callback-port=8080 \
+    --oidc-certificate-authority my-directory/ca-bundle.crt <4>
+----
+<1> Specify `oc-oidc` as the exec plugin type. Only a value of `oc-oidc` is allowed.
+<2> Specify the issuer URL for your identity provider.
+<3> Specify client ID for the {oc-first}.
+<4> Specify the path to the `ca-bundle.crt` file on your local machine.
++
+.Example output
+[source,terminal]
+----
+Please visit the following URL in your browser: http://localhost:8080
+----
+
+.. Open http://localhost:8080 in a browser.
+
+.. Authenticate with credentials from your identity provider.
++
+After successfully authenticating, you should see a message similar to the following output in your terminal:
++
+[source,terminal]
+----
+Logged into "https://api.my-cluster.example.com:6443" as "oidc-user-test:user1@example.com" from an external oidc issuer.
+----
+
+. Verify that you can log in to the {product-title} web console by authenticating with your identity provider:
+
+.. Open the web console URL for your cluster in a browser.
++
+You are redirected to your identity provider to log in.
+
+.. Authenticate with credentials from your identity provider.
++
+Verify that you logged in successfully and are redirected to the {product-title} web console.
+
+:leveloffset!:
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../authentication/external-auth.adoc#external-auth-cli_external-auth[Example OIDC provider configuration for CLI clients only]
+
+// OIDC provider configuration parameters
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * authentication/external-auth.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="external-auth-fields_{context}"]
+= OIDC provider configuration parameters
+
+// Note: Because this is tech preview, the API docs won't contain this information, so we're including this table now. Consider whether to continue including this table or not once it's GA and in the API docs.
+
+The following table lists all available OIDC provider parameters for direct authentication:
+
+.`oidcProviders` configuration
+[cols="1,2",options="header"]
+|===
+|Parameter
+|Description
+
+|`claimMappings`
+|Configures the rules to be used by the Kubernetes API server for translating claims in a JSON web token (JWT), issued by the identity provider, to a cluster identity.
+
+|`claimMappings.extra`
+|An optional field for configuring the mappings used to construct the extra attribute for the cluster identity. When omitted, no extra attributes will be present on the cluster identity. Key values for extra mappings must be unique. A maximum of 32 extra attribute mappings may be provided.
+
+|`claimMappings.extra.key`
+a|A required field that specifies the string to use as the extra attribute key. The following restrictions apply:
+
+* Key must be a domain-prefix path (e.g `example.org/foo`).
+* Key must not exceed 510 characters in length.
+* Key must contain the `/` character, separating the domain and path characters.
+* Key must not be empty.
+* The domain portion of the key (string of characters before the `/`) must be a valid RFC1123 subdomain.
+* It must not exceed 253 characters in length.
+* It must start and end with an alphanumeric character.
+* It must only contain lower case alphanumeric characters and `-` or `.`.
+* It must not use the reserved domains, or be subdomains of, `kubernetes.io`, `k8s.io`, and `openshift.io`.
+* The path portion of the key (string of characters after the `/`) must not be empty and must consist of at least one alphanumeric character, percent-encoded octets, `-`, `.`, `_`, `~`, `!`, `$`, `&`, `'`, `(`, `)`, `*`, `+`, `,`, `;`, `=`, and `:`.
+* Domain portion of the key must not exceed 256 characters in length.
+
+|`claimMappings.extra.valueExpression`
+a|A required field to specify the CEL expression to extract the extra attribute value from claims of a JWT token. The `valueExpression` field must produce a string or string array value. The following restrictions apply:
+
+* CEL expressions that return "", [], and null are treated as the extra mapping not being present.
+* Empty string values within an array are filtered out. For example, [`one`, ``, `three`] becomes [`one`, `three`].
+* CEL expressions have access to the token claims through a CEL variable, `claims`.
+* `claims` is a map of claim names to claim values. For example, the `sub` claim value can be accessed as `claims.sub`.
+* Nested claims can be accessed using dot notation (`claims.foo.bar`).
+* The `valueExpression` value must not exceed 1024 characters in length.
+* The `valueExpression` value must not be empty.
+
+|`claimMappings.groups`
+|Configures how the groups of a cluster identity should be constructed from the claims in a JWT token issued by the identity provider. When referencing a claim, if the claim is present in the JWT token, its value must be a comma-separated list of groups.
+
+|`claimMappings.groups.claim`
+|Configures the JWT token claim whose value is assigned to the cluster identity field associated with this mapping.
+
+|`claimMappings.groups.prefix`
+|Configures the prefix that is applied to the cluster identity attribute during the process of mapping JWT claims to cluster identity attributes.
+
+|`claimMappings.uid`
+| An optional field for configuring the claim mapping used to construct the UID for the cluster identity. When omitted, this means the user has no opinion and the platform is left to choose a default, which is subject to change over time. The current default is to use the `sub` claim.
+
+|`claimMappings.uid.claim`
+|An optional field for specifying the JWT token claim that is used in the mapping. The value of this claim will be assigned to the field in which this mapping is associated. To specify the claim, use a single string value for `uid.claim`.
+
+You must set either `claim` or `expression`. Do not specify `claim` when `expression` is set. The value of `claim` must be at least 1 character and must not exceed 256 characters in length.
+
+|`claimMappings.uid.expression`
+|An optional field for specifying a CEL expression that produces a string value from JWT token claims. When using `uid.expression` the expression must result in a single string value.
+
+CEL expressions have access to the token claims through a CEL variable, `claims`. The `claims` variable is a map of claim names to claim values. For example, you can access the `sub` claim value as `claims.sub`. Nested claims can be accessed using dot notation for example, `claims.foo.bar`.
+
+You must set either `claim` or `expression`. Do not specify `expression` when `claim` is set. The value of `expression` must be at least 1 character and must not exceed 1024 characters in length.
+
+|`claimMappings.username`
+|Configures how the username of a cluster identity should be constructed from the claims in a JWT token issued by the identity provider.
+
+|`claimMappings.username.claim`
+|Configures the JWT token claim whose value is assigned to the cluster identity field associated with this mapping.
+
+|`claimMappings.username.prefix`
+|Configures the prefix that should be prepended to the value of the JWT claim. Must be set when `prefixPolicy` is set to `Prefix` and must be unset otherwise.
+
+|`claimMappings.username.prefix.prefixString`
+|Configures the prefix that is applied to the cluster identity username attribute during the process of mapping JWT claims to cluster identity attributes. Must not be an empty string (`""`).
+
+|`claimMappings.username.prefixPolicy`
+|Configures how a prefix should be applied to the value of the JWT claim specified in the `claim` field. Allowed values are `Prefix`, `NoPrefix`, and omitted (not provided or an empty string).
+
+When set to `Prefix`, the value specified in the prefix field is prepended to the value of the JWT claim. The prefix field must be set when `prefixPolicy` is `Prefix`.
+
+When set to `NoPrefix`, no prefix is prepended to the value of the JWT claim.
+
+When omitted, this means no opinion and the platform is left to choose any prefixes that are applied which is subject to change over time.
+
+Currently, the platform prepends `{issuerURL}#` to the value of the JWT claim
+when the claim is not `email`.
+
+|`claimValidationRules`
+|Configures the rules to be used by the Kubernetes API server for validating the claims in a JWT token issued by the identity provider. Validation rules are joined by an `AND` operation.
+
+|`claimValidationRules.requiredClaim`
+|Configures the required claim and value that the Kubernetes API server uses to validate if an incoming JWT is valid for this identity provider.
+
+|`claimValidationRules.requiredClaim.claim`
+|Configures the name of the required claim. When taken from the JWT claims, the claim must be a string value. Must not be an empty string (`""`).
+
+|`claimValidationRules.requiredClaim.requiredValue`
+|Configures the value that `claim` must have when taken from the incoming JWT claims. If the value in the JWT claims does not match, the token is rejected for authentication. Must not be an empty string (`""`).
+
+|`claimValidationRules.type`
+|Configures the type of the validation rule. Allowed values are `RequiredClaim` and omitted (not provided or an empty string).
+
+When set to `RequiredClaim`, the Kubernetes API server is configured to validate that the incoming JWT contains the required claim and that its value matches the required value. The default value is `RequiredClaim`.
+
+|`issuer`
+|A required field that configures how the platform interacts with the identity provider and how tokens issued from the identity provider are evaluated by the Kubernetes API server.
+
+|`issuer.audiences`
+|A required field that configures the acceptable audiences the JWT token, issued by the identity provider, must be issued to. At least one of the entries must match the `aud` claim in the JWT token. Must contain at least one entry and must not exceed 10 entries.
+
+|`issuer.issuerCertificateAuthority`
+|Configures the certificate authority, used by the Kubernetes API server, to validate the connection to the identity provider when fetching discovery information. When not specified, the system trust is used. When specified, it must reference a config map in the `openshift-config` namespace containing the PEM-encoded CA certificates under the `ca-bundle.crt` key in the `data` field of the config map.
+
+|`issuer.issuerCertificateAuthority.name`
+|The name of the referenced config map.
+
+|`issuer.issuerURL`
+|Configures the URL used to issue tokens by the identity provider. The Kubernetes API server determines how authentication tokens should be handled by matching the `iss` claim in the JWT to the issuerURL of configured identity providers. This field is required and must use the `https://` scheme.
+
+|`name`
+|A required field that configures the unique human-readable identifier associated with the identity provider. It is used to distinguish between multiple identity providers and has no impact on token validation or authentication mechanics. Must not be an empty string (`""`).
+
+|`oidcClients`
+|Configures how on-cluster, platform clients should request tokens from the identity provider. Must not exceed 20 entries and entries must have unique namespace/name pairs.
+
+|`oidcClients.clientID`
+|Configures the client identifier, from the identity provider, that the platform component uses for authentication requests made to the identity provider. The identity provider must accept this identifier for platform components to be able to use the identity provider as an authentication mode. Must not be an empty string (`""`).
+
+|`oidcClients.clientSecret`
+|Configures the client secret used by the platform component when making authentication requests to the identity provider.
+
+When not specified, no client secret is used when making authentication requests to the identity provider.
+
+When specified, it references a secret in the `openshift-config` namespace that contains the client secret in the `clientSecret` key of the `.data` field. The client secret is used when making authentication requests to the identity provider.
+
+Public clients do not require a client secret, but private clients do require a client secret to work with the identity provider.
+
+|`oidcClients.clientSecret.name`
+|The name of the referenced secret.
+
+|`oidcClients.componentName`
+|Specifies the name of the platform component being configured to use the identity provider as an authentication mode. It is used in combination with `componentNamespace` as a unique identifier. Must not be an empty string (`""`) and must not exceed 256 characters in length.
+
+|`oidcClients.componentNamespace`
+|Specifies the namespace in which the platform component being configured to use the identity provider as an authentication mode is running. It is used in combination with `componentName` as a unique identifier. Must not be an empty string (`""`) and must not exceed 63 characters in length.
+
+|`oidcClients.extraScopes`
+|Configures the extra scopes that should be requested by the platform component when making authentication requests to the identity provider. This is useful if you have configured claim mappings that require specific scopes to be requested beyond the standard OIDC scopes. When omitted, no additional scopes are requested.
+
+|===
+
+:leveloffset!:
+
+// Example OIDC provider configuration for CLI clients only
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * authentication/external-auth.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="external-auth-cli_{context}"]
+= Example OIDC provider configuration for CLI clients only
+
+[role="_abstract"]
+In {product-title} clusters where the web console is disabled, you can configure direct authentication with an external OIDC provider for a CLI client only. In these cases, users must authenticate with the cluster directly through the {oc-first} instead of through the web console.
+
+The following example OIDC provider configuration shows how to configure a CLI client without defining a web console client:
+
+.OIDC provider configuration with only a CLI client
+[source,yaml]
+----
+apiVersion: config.openshift.io/v1
+kind: Authentication
+metadata:
+# ...
+spec:
+  type: OIDC
+  webhookTokenAuthenticator: null
+  oidcProviders:
+  - claimMappings:
+      groups:
+        claim: groups
+        prefix: 'oidc-groups-test:'
+      username:
+        claim: email
+        prefixPolicy: Prefix
+        prefix:
+          prefixString: 'oidc-user-test:'
+    issuer:
+      audiences:
+      - my-cli-client-id
+      issuerURL: my-issuer-url
+    name: my-oidc-provider-name
+----
+
+:leveloffset!:
+
+// Disabling direct authentication
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * authentication/external-auth.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="external-auth-disabling_{context}"]
+= Disabling direct authentication
+
+If necessary, you can disable direct authentication for your cluster and revert back to authenticating with the built-in OpenShift OAuth server.
+
+.Prerequisites
+
+* You have access to the `kubeconfig` file generated by the installation program for the cluster.
+
+.Procedure
+
+. Ensure that you are using the `kubeconfig` file generated by the installation program, or another long-lived method of logging in as a cluster administrator.
+
+. Update the authentication configuration to use the built-in OpenShift OAuth server by running the following command:
++
+[source,terminal]
+----
+$ oc patch authentication.config/cluster --type=merge -p='
+spec:
+  type: "" <1>
+  oidcProviders: null <2>
+'
+----
+<1> Sets `type` to `""` to use the built-in OpenShift OAuth server. A value of `IntegratedOAuth` is also equivalent.
+<2> Removes the `oidcProviders` configuration.
+
+. Wait for the cluster to roll out new revisions to all nodes.
+
+.. Check the Kubernetes API server Operator status by running the following command:
++
+[source,terminal]
+----
+$ oc get co kube-apiserver
+----
++
+.Example output
+[source,terminal]
+----
+NAME             VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+kube-apiserver   4.21.0    True        True          False      85m     NodeInstallerProgressing: 2 node are at revision 12; 1 node is at revision 14
+----
++
+The message in the preceding example shows that one node has progressed to the new revision and two nodes have not yet updated. It can take 20 minutes or more to roll out the new revision to all nodes, depending on the size of your cluster.
+
+.. To troubleshoot any issues, you can also check the Cluster Authentication Operator and `kube-apiserver` pod logs for errors.
+
+. If necessary, restore any existing authentication configuration.
+
+.Verification
+
+* Verify that you can successfully log in to the {product-title} web console and {oc-first}.
+
+:leveloffset!:
