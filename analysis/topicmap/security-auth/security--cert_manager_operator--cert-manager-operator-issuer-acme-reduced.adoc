@@ -1,0 +1,1275 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="cert-manager-operator-issuer-acme"]
+= Configuring an ACME issuer
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: cert-manager-operator-issuer-acme
+
+toc::[]
+
+[role="_abstract"]
+The {cert-manager-operator} supports using Automated Certificate Management Environment (ACME) CA servers, such as _Let's Encrypt_, to issue certificates. Explicit credentials are configured by specifying the secret details in the `Issuer` API object. Ambient credentials are extracted from the environment, metadata services, or local files which are not explicitly configured in the `Issuer` API object.
+
+[NOTE]
+====
+The `Issuer` object is namespace scoped. It can only issue certificates from the same namespace. You can also use the `ClusterIssuer` object to issue certificates across all namespaces in the cluster.
+
+.Example YAML file that defines the `ClusterIssuer` object
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: acme-cluster-issuer
+spec:
+  acme:
+    ...
+----
+====
+
+[NOTE]
+====
+By default, you can use the `ClusterIssuer` object with ambient credentials. To use the `Issuer` object with ambient credentials, you must enable the `--issuer-ambient-credentials` setting for the cert-manager controller.
+====
+
+// About ACME issuers
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cert-manager-acme-about_{context}"]
+= About ACME issuers
+
+[role="_abstract"]
+The ACME issuer type for the {cert-manager-operator} represents an Automated Certificate Management Environment (ACME) certificate authority (CA) server. ACME CA servers rely on a _challenge_ to verify that a client owns the domain names that the certificate is being requested for. If the challenge is successful, the {cert-manager-operator} can issue the certificate. If the challenge fails, the {cert-manager-operator} does not issue the certificate.
+
+[NOTE]
+====
+Private DNS zones are not supported with _Let’s Encrypt_ and internet ACME servers.
+====
+
+:leveloffset!:
+
+// Supported ACME challenges types
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cert-manager-acme-challenges-types_{context}"]
+= Supported ACME challenges types
+
+[role="_abstract"]
+To validate domain ownership with ACME issuers, you can use the challenge types supported by the {cert-manager-operator}.
+
+The {cert-manager-operator} supports the following challenge types for ACME issuers:
+
+HTTP-01:: With the HTTP-01 challenge type, you provide a computed key at an HTTP URL endpoint in your domain. If the ACME CA server can get the key from the URL, it can validate you as the owner of the domain.
++
+For more information, see link:https://cert-manager.io/docs/configuration/acme/http01/[HTTP01] in the upstream cert-manager documentation.
+
+[NOTE]
+====
+HTTP-01 requires that the Let's Encrypt servers can access the route of the cluster. If an internal or private cluster is behind a proxy, the HTTP-01 validations for certificate issuance fail.
+
+The HTTP-01 challenge is restricted to port 80. For more information, see link:https://letsencrypt.org/docs/challenge-types/#http-01-challenge[HTTP-01 challenge] (Let's Encrypt).
+====
+
+DNS-01:: With the DNS-01 challenge type, you provide a computed key at a DNS TXT record. If the ACME CA server can get the key by DNS lookup, it can validate you as the owner of the domain.
++
+For more information, see link:https://cert-manager.io/docs/configuration/acme/dns01/[DNS01] in the upstream cert-manager documentation.
+
+:leveloffset!:
+
+// Supported DNS-01 providers
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cert-manager-acme-dns-providers_{context}"]
+= Supported DNS-01 providers
+
+[role="_abstract"]
+To configure DNS-01 challenges for ACME issuers, you can validate domain ownership by integrating with supported services, such as Amazon Route 53, Azure DNS, and Google Cloud DNS, or by using Webhooks.
+
+The {cert-manager-operator} supports the following DNS-01 providers for ACME issuers:
+
+* Amazon Route 53
+* Azure DNS
++
+[NOTE]
+====
+The {cert-manager-operator} does not support using Microsoft Entra ID pod identities to assign a managed identity to a pod.
+====
+* {gcp-full} DNS
+* Webhook
++
+--
+Red Hat tests and supports DNS providers using an external webhook with cert-manager on {product-title}. The following DNS providers are tested and supported with {product-title}:
+
+** link:https://github.com/jb-dk/cert-manager-webhook-ibmcis[cert-manager-webhook-ibmcis]
+
+[NOTE]
+====
+Using a DNS provider that is not listed might work with {product-title}, but the provider was not tested by Red Hat and therefore is not supported by Red Hat.
+====
+--
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve HTTP01 challenges
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-http01_{context}"]
+= Configuring an ACME issuer to solve HTTP-01 challenges
+
+[role="_abstract"]
+You can use {cert-manager-operator} to set up an ACME issuer to solve HTTP-01 challenges. This procedure uses _Let's Encrypt_ as the ACME CA server.
+
+.Prerequisites
+
+* You have access to the cluster as a user with the `cluster-admin` role.
+* You have a service that you want to expose. In this procedure, the service is named `sample-workload`.
+
+.Procedure
+
+. Create an ACME cluster issuer.
+
+.. Create a YAML file, `acme-cluster-issuer.yaml`, that defines the `ClusterIssuer` object:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: <cluster_issuer_name>
+spec:
+  acme:
+    preferredChain: ""
+    privateKeySecretRef:
+      name: <secret_for_private_key>
+    server: <url>
+    solvers:
+    - http01:
+        ingress:
+          ingressClassName: <ingress_class_name>
+----
++
+where:
++
+`<cluster_issuer_name>`:: Specifies a name for the cluster issuer.
+`<secret_for_private_key>`:: Specifies the name of secret to store the ACME account private key in.
+`<url>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<ingress_class_name>`:: Specifies the Ingress class, for example, `openshift-default`.
+
+.. Optional: If you create the object without specifying `ingressClassName`, use the following command to patch the existing ingress:
++
+[source,terminal]
+----
+$ oc patch ingress/<ingress-name> --type=merge --patch '{"spec":{"ingressClassName":"openshift-default"}}' -n <namespace>
+----
+
+.. Create the `ClusterIssuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f acme-cluster-issuer.yaml
+----
+
+. Create an Ingress to expose the service of the user workload.
+
+.. Create a YAML file, for example, `namespace.yaml`, that defines a `Namespace` object:
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <ingress_namespace>
+----
++
+Replace `<ingress_namespace>` with the namespace for the Ingress.
+
+.. Create the `Namespace` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f namespace.yaml
+----
+
+.. Create a YAML file, for example, `ingress.yaml`, that defines the `Ingress` object:
++
+[source,yaml]
+----
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <ingress_name>
+  namespace: <ingress_namespace>
+  annotations:
+    cert-manager.io/cluster-issuer: <cluster_issuer_name>
+spec:
+  ingressClassName: <ingress_class_name>
+  tls:
+  - hosts:
+    - <tls_hostname>
+    secretName: <secret_name>
+  rules:
+  - host: <hostname>
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: <service_name>
+            port:
+              number: 80
+----
++
+where:
++
+`<ingress_name>`:: Specifies the name of the Ingress.
+`<ingress_namespace>`:: Specifies the namespace that you created for the Ingress.
+`<cluster_issuer_name>`:: Specifies the cluster issuer that you created.
+`<ingress_class_name>`:: Specifies the Ingress class name.
+`<tls_hostname>`:: Specifies the Subject Alternative Name (SAN) to be associated with the certificate. This name is used to add DNS names to the certificate.
+`<secret_name>`:: Specifies the secret that stores the certificate.
+`<hostname>`:: Specifies the host name. You can use the `<host_name>.<cluster_ingress_domain>` syntax to take advantage of the `*.<cluster_ingress_domain>` wildcard DNS record and serving certificate for the cluster. For example, you might use `apps.<cluster_base_domain>`. Otherwise, you must ensure that a DNS record exists for the chosen hostname.
+`<service_name>`:: Specifies the name of the service to expose. This example uses a service named `sample-workload`.
+
+.. Create the `Ingress` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f ingress.yaml
+----
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve DNS01 challenges by using explicit credentials on AWS
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-explicit-aws_{context}"]
+= Configuring an ACME issuer by using explicit credentials for AWS Route53
+
+[role="_abstract"]
+You can use {cert-manager-operator} to set up an Automated Certificate Management Environment (ACME) issuer to solve DNS-01 challenges by using explicit credentials on AWS. This procedure uses _Let's Encrypt_ as the ACME certificate authority (CA) server and shows how to solve DNS-01 challenges with Amazon Route 53.
+
+.Prerequisites
+
+* You must provide the explicit `accessKeyID` and `secretAccessKey` credentials. For more information, see link:https://cert-manager.io/docs/configuration/acme/dns01/route53/[Route53] in the upstream cert-manager documentation.
++
+[NOTE]
+====
+You can use Amazon Route 53 with explicit credentials in an {product-title} cluster that is not running on AWS.
+====
+
+.Procedure
+
+. Optional: Override the name server settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` names servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project <issuer_namespace>
+----
+
+. Create a secret to store your AWS credentials in by running the following command:
++
+[source,terminal]
+----
+$ oc create secret -n my-issuer-namespace generic aws-secret \
+  --from-literal=awsSecretAccessKey=<aws_secret_access_key>
+----
++
+Replace `<aws_secret_access_key>` with your AWS secret access key.
+
+. Create an issuer:
+
+.. Create a YAML file that defines the `Issuer` object:
++
+.Example `issuer.yaml` file
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <issuer_name>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    server: <server>
+    email: "<email_address>"
+    privateKeySecretRef:
+      name: <secret_private_key>
+    solvers:
+    - dns01:
+        route53:
+          accessKeyID: <aws_key_id>
+          hostedZoneID: <hosted_zone_id>
+          region: <region_name>
+          secretAccessKeySecretRef:
+            name: "<aws_secret>"
+            key: "<aws_secret_access_key>"
+----
++
+where:
++
+`<issuer_name>`:: Specifies a name for the issuer.
+`<issuer_namespace>`:: Specifies the namespace that you created for the issuer.
+`server`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<email_address>`:: Specifies your email address.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<aws_key_id>`:: Specifies your AWS key ID.
+`<hosted_zone_id>`:: Specifies your hosted zone ID.
+`<region_name>`:: Specifies the AWS region name. For example, `us-east-1`.
+`<aws_secret>`:: Specifies the name of the secret you created.
+`<aws_secret_access_key>`:: Specifies the key in the secret you created that stores your AWS secret access key.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+//Configuring an ACME issuer to solve DNS01 challenges by using ambient credentials on AWS
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-ambient-aws_{context}"]
+= Configuring an ACME issuer by using ambient credentials on AWS
+
+[role="_abstract"]
+You can use {cert-manager-operator} to set up an ACME issuer to solve DNS-01 challenges by using ambient credentials on AWS. This procedure uses _Let's Encrypt_ as the ACME CA server and shows how to solve DNS-01 challenges with Amazon Route 53.
+
+.Prerequisites
+
+* If your cluster is configured to use the AWS Security Token Service (STS), you followed the instructions from the _Configuring cloud credentials for the cert-manager Operator for Red Hat OpenShift for the AWS Security Token Service cluster_ section.
+* If your cluster does not use the AWS STS, you followed the instructions from the _Configuring cloud credentials for the cert-manager Operator for Red Hat OpenShift on AWS_ section.
+
+.Procedure
+
+. Optional: Override the name server settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` name servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project <issuer_namespace>
+----
+
+. Modify the `CertManager` resource to add the `--issuer-ambient-credentials` argument:
++
+[source,terminal]
+----
+$ oc patch certmanager/cluster \
+  --type=merge \
+  -p='{"spec":{"controllerConfig":{"overrideArgs":["--issuer-ambient-credentials"]}}}'
+----
+
+. Create an issuer:
+
+.. Create a YAML file that defines the `Issuer` object:
++
+.Example `issuer.yaml` file
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <issuer_name>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    server: <server>
+    email: "<email_address>"
+    privateKeySecretRef:
+      name: <secret_private_key>
+    solvers:
+    - dns01:
+        route53:
+          hostedZoneID: <hosted_zone_id>
+          region: us-east-1
+----
++
+where:
++
+`<issuer_name>`:: Specifies a name for the issuer.
+`<issuer_namespace>`:: Specifies the namespace that you created for the issuer.
+`<server>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<email_address>`:: Specifies your email address.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<hosted_zone_id>`:: Specifies your hosted zone ID.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve DNS01 challenges by using explicit credentials on GCP
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-explicit-gcp_{context}"]
+= Configuring an ACME issuer by using explicit credentials for {gcp-full} DNS
+
+[role="_abstract"]
+You can use the {cert-manager-operator} to set up an ACME issuer to solve DNS-01 challenges by using explicit credentials on {gcp-short}. This procedure uses _Let's Encrypt_ as the ACME CA server and shows how to solve DNS-01 challenges with {gcp-full} DNS.
+
+.Prerequisites
+
+* You have set up a {gcp-full} service account with a desired role for {gcp-full} DNS. For more information, see link:https://cert-manager.io/docs/configuration/acme/dns01/google/[{gcp-full} DNS] in the upstream cert-manager documentation.
++
+[NOTE]
+====
+You can use {gcp-full} DNS with explicit credentials in an {product-title} cluster that is not running on {gcp-short}.
+====
+
+.Procedure
+
+. Optional: Override the name server settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` name servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project my-issuer-namespace
+----
+
+. Create a secret to store your {gcp-short} credentials by running the following command:
++
+[source,terminal]
+----
+$ oc create secret generic clouddns-dns01-solver-svc-acct --from-file=service_account.json=<path/to/gcp_service_account.json> -n my-issuer-namespace
+----
+
+. Create an issuer:
+
+.. Create a YAML file, for example, `issuer.yaml`, that defines the `Issuer` object:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <acme_dns01_clouddns_issuer>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    preferredChain: ""
+    privateKeySecretRef:
+      name: <secret_private_key>
+    server: <server>
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: <project_id>
+          serviceAccountSecretRef:
+            name: <secret>
+            key: <service_account.json>
+----
++
+where:
++
+`<acme_dns01_clouddns_issuer>`:: Specifies a name for the issuer.
+`<issuer_namespace>`:: Specifies your issuer namespace.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<server>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<project_id>`:: Specifies the name of the {gcp-short} project that contains the Cloud DNS zone.
+`<secret>`:: Specifies the name of the secret you created.
+`<service_account.json>`:: Specifies the key in the secret you created that stores your {gcp-short} secret access key.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve DNS01 challenges by using ambient credentials on GCP
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-ambient-gcp_{context}"]
+= Configuring an ACME issuer by using ambient credentials on {gcp-short}
+
+[role="_abstract"]
+You can use the {cert-manager-operator} to set up an ACME issuer to solve DNS-01 challenges by using ambient credentials on {gcp-short}. This procedure uses _Let's Encrypt_ as the ACME CA server and shows how to solve DNS-01 challenges with {gcp-full} DNS.
+
+.Prerequisites
+
+* If your cluster is configured to use {gcp-short} Workload Identity, you followed the instructions from the _Configuring cloud credentials for the {cert-manager-operator} with {gcp-short} Workload Identity_ section.
+* If your cluster does not use {gcp-short} Workload Identity, you followed the instructions from the _Configuring cloud credentials for the {cert-manager-operator} on {gcp-short}_ section.
+
+.Procedure
+
+. Optional: Override the name server settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` name servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project <issuer_namespace>
+----
+
+. Modify the `CertManager` resource to add the `--issuer-ambient-credentials` argument:
++
+[source,terminal]
+----
+$ oc patch certmanager/cluster \
+  --type=merge \
+  -p='{"spec":{"controllerConfig":{"overrideArgs":["--issuer-ambient-credentials"]}}}'
+----
+
+. Create an issuer:
+
+.. Create a YAML file that defines the `Issuer` object:
++
+.Example `issuer.yaml` file
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <issuer_name>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    preferredChain: ""
+    privateKeySecretRef:
+      name: <secret_private_key>
+    server: <server>
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: <gcp_project_id>
+----
++
+where:
++
+`<issuer_name>`:: Specifies a name for the issuer.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<server>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<gcp_project_id>`:: Specifies the name of the {gcp-short} project that contains the Cloud DNS zone.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+// Configuring an ACME issuer to solve DNS01 challenges by using explicit credentials on Microsoft Azure
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-operator-issuer-acme.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-acme-dns01-explicit-azure_{context}"]
+= Configuring an ACME issuer by using explicit credentials for Microsoft Azure DNS
+
+[role="_abstract"]
+You can use {cert-manager-operator} to set up an ACME issuer to solve DNS-01 challenges by using explicit credentials on Microsoft Azure. This procedure uses _Let's Encrypt_ as the ACME CA server and shows how to solve DNS-01 challenges with Azure DNS.
+
+.Prerequisites
+
+* You have set up a service principal with desired role for Azure DNS. For more information, see link:https://cert-manager.io/docs/configuration/acme/dns01/azuredns/[Azure DNS] in the upstream cert-manager documentation.
++
+[NOTE]
+====
+You can follow this procedure for an {product-title} cluster that is not running on Microsoft Azure.
+====
+
+.Procedure
+
+. Optional: Override the nameserver settings for the DNS-01 self check.
++
+This step is required only when the target public-hosted zone overlaps with the cluster's default private-hosted zone.
+
+.. Edit the `CertManager` resource by running the following command:
++
+[source,terminal]
+----
+$ oc edit certmanager cluster
+----
+
+.. Add a `spec.controllerConfig` section with the following override arguments:
++
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+----
++
+where:
++
+`--dns01-recursive-nameservers-only`:: Specifies recursive name servers instead of checking the authoritative name servers associated with that domain.
+`--dns01-recursive-nameservers=1.1.1.1:53`:: Specifies a comma-separated list of `<host>:<port>` name servers to query for the DNS-01 self check. You must use a `1.1.1.1:53` value to avoid the public and private zones overlapping.
+
+.. Save the file to apply the changes.
+
+. Optional: Create a namespace for the issuer:
++
+[source,terminal]
+----
+$ oc new-project my-issuer-namespace
+----
+
+. Create a secret to store your Azure credentials in by running the following command:
++
+[source,terminal]
+----
+$ oc create secret generic <secret_name> --from-literal=<azure_secret_access_key_name>=<azure_secret_access_key_value> \
+    -n my-issuer-namespace
+----
++
+* Replace `<secret_name>` with your secret name.
+* Replace `<azure_secret_access_key_name>` with your Azure secret access key name.
+* Replace `<azure_secret_access_key_value>` with your Azure secret key.
+
+. Create an issuer:
+
+.. Create a YAML file, for example, `issuer.yaml`, that defines the `Issuer` object:
++
+[source,yaml]
+----
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: <acme-dns01-azuredns-issuer>
+  namespace: <issuer_namespace>
+spec:
+  acme:
+    preferredChain: ""
+    privateKeySecretRef:
+      name: <secret_private_key>
+    server: <server>
+    solvers:
+    - dns01:
+        azureDNS:
+          clientID: <azure_client_id>
+          clientSecretSecretRef:
+            name: <secret_name>
+            key: <azure_secret_access_key_name>
+          subscriptionID: <azure_subscription_id>
+          tenantID: <azure_tenant_id>
+          resourceGroupName: <azure_dns_zone_resource_group>
+          hostedZoneName: <azure_dns_zone>
+          environment: AzurePublicCloud
+----
++
+where:
++
+`<acme-dns01-azuredns-issuer>`:: Specifies a name for the issuer.
+`<issuer_namespace>`:: Specifies your issuer namespace.
+`<secret_private_key>`:: Specifies the name of the secret to store the ACME account private key in.
+`<server>`:: Specifies the URL to access the ACME server's `directory` endpoint. This example uses the _Let's Encrypt_ staging environment.
+`<azure_client_id>`:: Specifies your Azure client ID.
+`<secret_name>`:: Specifies a name of the client secret.
+`<azure_secret_access_key_name>`:: Specifies the client secret key name.
+`<azure_subscription_id>`:: Specifies your Azure subscription ID.
+`<azure_tenant_id>`:: Specifies your Azure tenant ID.
+`<azure_dns_zone_resource_group>`:: Specifies the name of the Azure DNS zone resource group.
+`<azure_dns_zone>`:: Specifies the name of Azure DNS zone.
+
+.. Create the `Issuer` object by running the following command:
++
+[source,terminal]
+----
+$ oc create -f issuer.yaml
+----
+
+:leveloffset!:
+
+[role="_additional-resources"]
+[id="additional-resources_cert-manager-operator-issuer-acme"]
+== Additional resources
+
+* xref:../../security/cert_manager_operator/cert-manager-authenticate.adoc#cert-manager-configure-cloud-credentials-aws-sts_cert-manager-authenticate[Configuring cloud credentials for the {cert-manager-operator} for the AWS Security Token Service cluster]
+
+* xref:../../security/cert_manager_operator/cert-manager-authenticate.adoc#cert-manager-configure-cloud-credentials-aws-non-sts_cert-manager-authenticate[Configuring cloud credentials for the {cert-manager-operator} on AWS]
+
+* xref:../../security/cert_manager_operator/cert-manager-authenticate.adoc#cert-manager-configure-cloud-credentials-gcp-sts_cert-manager-authenticate[Configuring cloud credentials for the {cert-manager-operator} with {gcp-short} Workload Identity]
+
+* xref:../../security/cert_manager_operator/cert-manager-authenticate.adoc#cert-manager-configure-cloud-credentials-gcp-non-sts_cert-manager-authenticate[Configuring cloud credentials for the {cert-manager-operator} on {gcp-short}]

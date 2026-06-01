@@ -1,0 +1,663 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="understanding-compliance-operator"]
+= Understanding the Compliance Operator
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: understanding-compliance
+
+toc::[]
+
+The Compliance Operator lets {product-title} administrators describe the required compliance state of a cluster and provides them with an overview of gaps and ways to remediate them. The Compliance Operator assesses compliance of both the Kubernetes API resources of {product-title}, as well as the nodes running the cluster. The Compliance Operator uses OpenSCAP, a NIST-certified tool, to scan and enforce security policies provided by the content.
+
+[IMPORTANT]
+====
+The Compliance Operator is available for {op-system-first} deployments only.
+====
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-understanding.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="compliance_profiles_{context}"]
+= Compliance Operator profiles
+
+There are several profiles available as part of the Compliance Operator installation. You can use the `oc get` command to view available profiles, profile details, and specific rules.
+
+* View the available profiles:
++
+[source,terminal]
+----
+$ oc get profile.compliance -n openshift-compliance
+----
++
+.Example output
+[source,terminal]
+----
+NAME                       AGE     VERSION
+ocp4-cis                   3h49m   1.5.0
+ocp4-cis-1-4               3h49m   1.4.0
+ocp4-cis-1-5               3h49m   1.5.0
+ocp4-cis-node              3h49m   1.5.0
+ocp4-cis-node-1-4          3h49m   1.4.0
+ocp4-cis-node-1-5          3h49m   1.5.0
+ocp4-e8                    3h49m
+ocp4-high                  3h49m   Revision 4
+ocp4-high-node             3h49m   Revision 4
+ocp4-high-node-rev-4       3h49m   Revision 4
+ocp4-high-rev-4            3h49m   Revision 4
+ocp4-moderate              3h49m   Revision 4
+ocp4-moderate-node         3h49m   Revision 4
+ocp4-moderate-node-rev-4   3h49m   Revision 4
+ocp4-moderate-rev-4        3h49m   Revision 4
+ocp4-nerc-cip              3h49m
+ocp4-nerc-cip-node         3h49m
+ocp4-pci-dss               3h49m   3.2.1
+ocp4-pci-dss-3-2           3h49m   3.2.1
+ocp4-pci-dss-4-0           3h49m   4.0.0
+ocp4-pci-dss-node          3h49m   3.2.1
+ocp4-pci-dss-node-3-2      3h49m   3.2.1
+ocp4-pci-dss-node-4-0      3h49m   4.0.0
+ocp4-stig                  3h49m   V2R1
+ocp4-stig-node             3h49m   V2R1
+ocp4-stig-node-v1r1        3h49m   V1R1
+ocp4-stig-node-v2r1        3h49m   V2R1
+ocp4-stig-v1r1             3h49m   V1R1
+ocp4-stig-v2r1             3h49m   V2R1
+rhcos4-e8                  3h49m
+rhcos4-high                3h49m   Revision 4
+rhcos4-high-rev-4          3h49m   Revision 4
+rhcos4-moderate            3h49m   Revision 4
+rhcos4-moderate-rev-4      3h49m   Revision 4
+rhcos4-nerc-cip            3h49m
+rhcos4-stig                3h49m   V2R1
+rhcos4-stig-v1r1           3h49m   V1R1
+rhcos4-stig-v2r1           3h49m   V2R1
+----
++
+These profiles represent different compliance benchmarks. Each profile has the product name that it applies to added as a prefix to the profile’s name. `ocp4-e8` applies the Essential 8 benchmark to the {product-title} product, while `rhcos4-e8` applies the Essential 8 benchmark to the {op-system-first} product.
+
+* Run the following command to view the details of the `rhcos4-e8` profile:
++
+[source,terminal]
+----
+$ oc get -n openshift-compliance -oyaml profiles.compliance rhcos4-e8
+----
++
+.Example output
+[%collapsible]
+====
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+description: 'This profile contains configuration checks for Red Hat Enterprise Linux
+  CoreOS that align to the Australian Cyber Security Centre (ACSC) Essential Eight.
+  A copy of the Essential Eight in Linux Environments guide can be found at the ACSC
+  website: https://www.cyber.gov.au/acsc/view-all-content/publications/hardening-linux-workstations-and-servers'
+id: xccdf_org.ssgproject.content_profile_e8
+kind: Profile
+metadata:
+  annotations:
+    compliance.openshift.io/image-digest: pb-rhcos4hrdkm
+    compliance.openshift.io/product: redhat_enterprise_linux_coreos_4
+    compliance.openshift.io/product-type: Node
+  creationTimestamp: "2022-10-19T12:06:49Z"
+  generation: 1
+  labels:
+    compliance.openshift.io/profile-bundle: rhcos4
+  name: rhcos4-e8
+  namespace: openshift-compliance
+  ownerReferences:
+  - apiVersion: compliance.openshift.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ProfileBundle
+    name: rhcos4
+    uid: 22350850-af4a-4f5c-9a42-5e7b68b82d7d
+  resourceVersion: "43699"
+  uid: 86353f70-28f7-40b4-bf0e-6289ec33675b
+rules:
+- rhcos4-accounts-no-uid-except-zero
+- rhcos4-audit-rules-dac-modification-chmod
+- rhcos4-audit-rules-dac-modification-chown
+- rhcos4-audit-rules-execution-chcon
+- rhcos4-audit-rules-execution-restorecon
+- rhcos4-audit-rules-execution-semanage
+- rhcos4-audit-rules-execution-setfiles
+- rhcos4-audit-rules-execution-setsebool
+- rhcos4-audit-rules-execution-seunshare
+- rhcos4-audit-rules-kernel-module-loading-delete
+- rhcos4-audit-rules-kernel-module-loading-finit
+- rhcos4-audit-rules-kernel-module-loading-init
+- rhcos4-audit-rules-login-events
+- rhcos4-audit-rules-login-events-faillock
+- rhcos4-audit-rules-login-events-lastlog
+- rhcos4-audit-rules-login-events-tallylog
+- rhcos4-audit-rules-networkconfig-modification
+- rhcos4-audit-rules-sysadmin-actions
+- rhcos4-audit-rules-time-adjtimex
+- rhcos4-audit-rules-time-clock-settime
+- rhcos4-audit-rules-time-settimeofday
+- rhcos4-audit-rules-time-stime
+- rhcos4-audit-rules-time-watch-localtime
+- rhcos4-audit-rules-usergroup-modification
+- rhcos4-auditd-data-retention-flush
+- rhcos4-auditd-freq
+- rhcos4-auditd-local-events
+- rhcos4-auditd-log-format
+- rhcos4-auditd-name-format
+- rhcos4-auditd-write-logs
+- rhcos4-configure-crypto-policy
+- rhcos4-configure-ssh-crypto-policy
+- rhcos4-no-empty-passwords
+- rhcos4-selinux-policytype
+- rhcos4-selinux-state
+- rhcos4-service-auditd-enabled
+- rhcos4-sshd-disable-empty-passwords
+- rhcos4-sshd-disable-gssapi-auth
+- rhcos4-sshd-disable-rhosts
+- rhcos4-sshd-disable-root-login
+- rhcos4-sshd-disable-user-known-hosts
+- rhcos4-sshd-do-not-permit-user-env
+- rhcos4-sshd-enable-strictmodes
+- rhcos4-sshd-print-last-log
+- rhcos4-sshd-set-loglevel-info
+- rhcos4-sysctl-kernel-dmesg-restrict
+- rhcos4-sysctl-kernel-kptr-restrict
+- rhcos4-sysctl-kernel-randomize-va-space
+- rhcos4-sysctl-kernel-unprivileged-bpf-disabled
+- rhcos4-sysctl-kernel-yama-ptrace-scope
+- rhcos4-sysctl-net-core-bpf-jit-harden
+title: Australian Cyber Security Centre (ACSC) Essential Eight
+----
+====
+
+* Run the following command to view the details of the `rhcos4-audit-rules-login-events` rule:
++
+[source,terminal]
+----
+$ oc get -n openshift-compliance -oyaml rules rhcos4-audit-rules-login-events
+----
++
+.Example output
+[%collapsible]
+====
+[source,yaml]
+----
+apiVersion: compliance.openshift.io/v1alpha1
+checkType: Node
+description: |-
+  The audit system already collects login information for all users and root. If the auditd daemon is configured to use the augenrules program to read audit rules during daemon startup (the default), add the following lines to a file with suffix.rules in the directory /etc/audit/rules.d in order to watch for attempted manual edits of files involved in storing logon events:
+
+  -w /var/log/tallylog -p wa -k logins
+  -w /var/run/faillock -p wa -k logins
+  -w /var/log/lastlog -p wa -k logins
+
+  If the auditd daemon is configured to use the auditctl utility to read audit rules during daemon startup, add the following lines to /etc/audit/audit.rules file in order to watch for unattempted manual edits of files involved in storing logon events:
+
+  -w /var/log/tallylog -p wa -k logins
+  -w /var/run/faillock -p wa -k logins
+  -w /var/log/lastlog -p wa -k logins
+id: xccdf_org.ssgproject.content_rule_audit_rules_login_events
+kind: Rule
+metadata:
+  annotations:
+    compliance.openshift.io/image-digest: pb-rhcos4hrdkm
+    compliance.openshift.io/rule: audit-rules-login-events
+    control.compliance.openshift.io/NIST-800-53: AU-2(d);AU-12(c);AC-6(9);CM-6(a)
+    control.compliance.openshift.io/PCI-DSS: Req-10.2.3
+    policies.open-cluster-management.io/controls: AU-2(d),AU-12(c),AC-6(9),CM-6(a),Req-10.2.3
+    policies.open-cluster-management.io/standards: NIST-800-53,PCI-DSS
+  creationTimestamp: "2022-10-19T12:07:08Z"
+  generation: 1
+  labels:
+    compliance.openshift.io/profile-bundle: rhcos4
+  name: rhcos4-audit-rules-login-events
+  namespace: openshift-compliance
+  ownerReferences:
+  - apiVersion: compliance.openshift.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ProfileBundle
+    name: rhcos4
+    uid: 22350850-af4a-4f5c-9a42-5e7b68b82d7d
+  resourceVersion: "44819"
+  uid: 75872f1f-3c93-40ca-a69d-44e5438824a4
+rationale: Manual editing of these files may indicate nefarious activity, such as
+  an attacker attempting to remove evidence of an intrusion.
+severity: medium
+title: Record Attempts to Alter Logon and Logout Events
+warning: Manual editing of these files may indicate nefarious activity, such as an
+  attacker attempting to remove evidence of an intrusion.
+----
+====
+
+:leveloffset!:
+
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * security/compliance_operator/co-concepts/compliance-operator-understanding.adoc
+// * security/compliance_operator/co-scans/compliance-operator-supported-profiles.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="compliance_profile_types_{context}"]
+= Compliance Operator profile types
+
+Compliance Operator rules are organized into profiles. Profiles can target the Platform or Nodes for {product-title}, and some benchmarks include `rhcos4` Node profiles.
+
+Platform:: Platform profiles evaluate your {product-title} cluster components. For example, a Platform-level rule can confirm whether APIServer configurations are using strong encryption cyphers.
+
+Node:: Node profiles evaluate the OpenShift or {op-system} configuration of each host. You can use two Node profiles: `ocp4` Node profiles and `rhcos4` Node profiles. The `ocp4` Node profiles evaluate the OpenShift configuration of each host. For example, they can confirm whether `kubeconfig` files have the correct permissions to meet a compliance standard. The `rhcos4` Node profiles evaluate the {op-system-first} configuration of each host. For example, they can confirm whether the SSHD service is configured to disable password logins.
+
+[IMPORTANT]
+====
+For benchmarks that have Node and Platform profiles, such as PCI-DSS, you must run both profiles in your {product-title} environment.
+
+For benchmarks that have `ocp4` Platform, `ocp4` Node, and `rhcos4` Node profiles, such as FedRAMP High, you must run all three profiles in your {product-title} environment.
+====
+
+[NOTE]
+====
+In a cluster with many Nodes, both `ocp4` Node and `rhcos4` Node scans might take a long time to complete.
+====
+
+:leveloffset!:

@@ -1,0 +1,952 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="cert-manager-trust-manager"]
+= Distributing certificates by using trust-manager operand
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: cert-manager-trust-manager
+
+[role="_abstract"]
+The trust-manager operand simplifies the distribution of certificate authority (CA) certificates across {product-title} clusters. As an administrator, you can configure the operand according to the cluster requirements and manage trust bundles efficiently.
+
+:FeatureName: Distributing certificates by using trust manager
+:leveloffset: +1
+
+:_mod-docs-content-type: SNIPPET
+
+// When including this file, ensure that {FeatureName} is set immediately before
+// the include. Otherwise it will result in an incorrect replacement.
+
+:_mod-docs-content-type: SNIPPET
+
+[IMPORTANT]
+====
+[subs="attributes+"]
+{FeatureName} is a Technology Preview feature only. Technology Preview features are not supported with Red{nbsp}Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+
+For more information about the support scope of Red Hat Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope].
+====
+// Undefine {FeatureName} attribute, so that any mistakes are easily spotted
+:!FeatureName:
+
+:leveloffset!:
+
+The trust-manager operand provides the following benefits:
+
+* Distribution of CA certificates across your cluster as a Day 2 operation.
+
+* Consolidation of certificates from multiple sources, such as ConfigMaps, Secrets, inline data, and default CAs, into a single trust bundle.
+
+* Automatic updates to target objects whenever the underlying source certificates change.
+
+* Creation of trust bundles as secret objects for applications that explicitly require secrets instead of ConfigMap objects.
+
+* Automatic integration with the default trusted CA bundle of the cluster, requiring no manual configuration.
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-trust-manager.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-trust-manager-install_{context}"]
+= Installing the trust-manager operand
+
+[role="_abstract"]
+You can install the trust-manager operand to enable the automated distribution of trust bundles across your cluster namespaces. The trust-manager operand is not installed by default.
+
+:FeatureName: Distributing certificates by using trust manager
+:leveloffset: +1
+
+:_mod-docs-content-type: SNIPPET
+
+// When including this file, ensure that {FeatureName} is set immediately before
+// the include. Otherwise it will result in an incorrect replacement.
+
+:_mod-docs-content-type: SNIPPET
+
+[IMPORTANT]
+====
+[subs="attributes+"]
+{FeatureName} is a Technology Preview feature only. Technology Preview features are not supported with Red{nbsp}Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+
+For more information about the support scope of Red Hat Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope].
+====
+// Undefine {FeatureName} attribute, so that any mistakes are easily spotted
+:!FeatureName:
+
+:leveloffset: 1
+
+.Prerequisites
+
+* You have enabled one of the following feature sets on your cluster: `TechPreviewNoUpgrade`, `DevPreviewNoUpgrade`, `CustomNoUpgrade`, or `OKD`. For more information on enabling the feature set, see "Enabling features using feature gates".
+
+* You have access to the cluster with `cluster-admin` privileges.
+
+* You have installed {cert-manager-operator}.
+
+
+.Procedure
+
+. Enable the trust manager add-on feature in the Operator subscription by running the following command:
++
+[source,terminal]
+----
+oc -n cert-manager-operator patch subscription cert-manager-operator \
+  --type='merge' \
+  -p '{"spec":{"config":{"env":[{"name":"UNSUPPORTED_ADDON_FEATURES","value":"TrustManager=true"}]}}}'
+----
+
+. Create a YAML file, for example, `trust-manager.yaml`, that defines the `TrustManager` custom resource (CR) as shown in the following example:
++
+.Example trust-manager.yaml
+[source,yaml]
+----
+apiVersion: operator.openshift.io/v1alpha1
+kind: TrustManager
+metadata:
+  name: cluster
+spec:
+  trustManagerConfig:
+    logLevel: 2
+    logFormat: "text"
+    trustNamespace: "cert-manager"
+    filterExpiredCertificates: "Enabled"
+    secretTargets:
+      policy: "Custom"
+      authorizedSecrets:
+        - "my-trust-bundle"
+        - "app-ca-bundle"
+    defaultCAPackage:
+      policy: "Enabled"
+    resources: {}
+    affinity: {}
+    tolerations: []
+    nodeSelector: {}
+  controllerConfig:
+    labels:
+      environment: "production"
+      team: "platform"
+    annotations:
+      example.com/managed-by: "cert-manager-operator"
+----
++
+[NOTE]
+====
+Because you can create only one instance of `TrustManager` CR per cluster, the `metadata.name` field must be set to `cluster`.
+====
+
+. Create the `TrustManager` CR by running the following command:
++
+[source, terminal]
+----
+$ oc create -f trust-manager.yaml
+----
+
+.Verification
+
+* Verify that the `trust-manager` operand is running successfully by running the following command:
++
+[source,terminal]
+----
+$ oc get TrustManager cluster -o jsonpath='{.status.conditions}' | jq
+----
++
+.Example output
++
+[source,terminal]
+----
+[
+  {
+    "lastTransitionTime": "2026-03-27T11:54:50Z",
+    "message": "",
+    "reason": "Ready",
+    "status": "False",
+    "type": "Degraded"
+  },
+  {
+    "lastTransitionTime": "2026-03-27T11:54:50Z",
+    "message": "reconciliation successful",
+    "reason": "Ready",
+    "status": "True",
+    "type": "Ready"
+  }
+]
+----
++
+The `message` field in the output must have the value `reconciliation successful`.
+
+* Verify that the `trust-manager` deployment is running successfully in the `cert-manager` namespace:
++
+[source,terminal]
+----
+$ oc get Deployments -l "app.kubernetes.io/name=cert-manager-trust-manager" -n cert-manager
+----
++
+.Example output
++
+[source,terminal]
+----
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+trust-manager   1/1     1            1           109s
+----
+
+* Verify that the status of the pod is `Running` by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -l "app.kubernetes.io/name=cert-manager-trust-manager" -n cert-manager
+----
++
+.Example output
++
+[source,terminal]
+----
+NAME                             READY   STATUS    RESTARTS   AGE
+trust-manager-547bb59b4b-hd6mv    1/1     Running   0          24s
+----
+
+.Next Step
+
+* Configuring trust bundle
+
+:leveloffset!:
+
+[role="_additional-resources"]
+.Additional resources
+* xref:../../nodes/clusters/nodes-cluster-enabling-features.adoc#nodes-cluster-enabling-features[Enabling features using feature gates]
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-trust-manager.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-configure-trust-manager_{context}"]
+= Configuring trust bundle
+
+[role="_abstract"]
+After installing the trust-manager operand, you must use the Bundle custom resource (CR) to distribute certificate authority (CA) certificates across your cluster. A trust bundle combines certificate sources and maintains target `ConfigMap` and `Secret` objects across selected namespaces.
+
+If you configure your trust bundle to use the default CAs, you do not need to manually provision the source certificates. The controller reads them from the `cert-manager-operator-trusted-ca-bundle` ConfigMap, which is injected by the Cluster Network Operator (CNO) during the Operator installation.
+
+:FeatureName: Distributing certificates by using trust manager
+:leveloffset: +1
+
+:_mod-docs-content-type: SNIPPET
+
+// When including this file, ensure that {FeatureName} is set immediately before
+// the include. Otherwise it will result in an incorrect replacement.
+
+:_mod-docs-content-type: SNIPPET
+
+[IMPORTANT]
+====
+[subs="attributes+"]
+{FeatureName} is a Technology Preview feature only. Technology Preview features are not supported with Red{nbsp}Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+
+For more information about the support scope of Red Hat Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope].
+====
+// Undefine {FeatureName} attribute, so that any mistakes are easily spotted
+:!FeatureName:
+
+:leveloffset: 1
+
+.Prerequisites
+
+* You have access to the cluster with `cluster-admin` privileges.
+
+* You have installed `trust-manager` operand.
+
+.Procedure
+
+. To inject the trust bundle into a specific namespace, apply the required label by running the following command:
++
+[source,terminal]
+----
+$ oc patch namespace <namespace> --type=merge '{"metadata":{"labels":{"trust.cert-manager.io/inject":"true"}}}'
+----
++
+The trust-manager operand creates the target bundle in all namespaces that match the label selector defined in your `Bundle` CR.
+
+. Create a YAML file, for example, `bundle.yaml`, that defines the `Bundle` object as shown in the following example:
++
+[source,yaml]
+----
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: example-bundle
+spec:
+  sources:
+    - useDefaultCAs: true
+  target:
+    configMap:
+      key: ca-certificates.crt
+    secret:
+      key: ca-certificates.crt
+    namespaceSelector:
+      matchLabels:
+        trust.cert-manager.io/inject: "true"
+----
++
+For more information on bundle configurations, see link:https://cert-manager.io/docs/trust/trust-manager/#usage[trust-manager usage].
++
+[NOTE]
+====
+If your Bundle CR targets a `Secret` object, you must set the `spec.trustManagerConfig.secretTargets.policy` field in your TrustManager CR to `Custom` and add the name of target secret to the `spec.trustManagerConfig.secretTargets.authorizedSecrets` list. If the `spec.trustManagerConfig.secretTargets.policy` field is set to `Disabled`, the Bundle CR fails to create the target secret.
+====
+
+. Create the `Bundle` custom resource by running the following command:
++
+[source,terminal]
+----
+$ oc create -f bundle.yaml
+----
+
+.Verification
+
+* Verify the status of Bundle CR by running the following command:
++
+[source,terminal]
+----
+$ oc get Bundle example-bundle -o jsonpath='{.status.conditions}' | jq
+----
++
+In the output, the `reason` must be set to `Synced` and `status` must be set to `True`, as shown in the following example:
++
+[source,terminal]
+----
+[
+  {
+    "lastTransitionTime": "2026-03-27T12:03:42Z",
+    "message": "Successfully synced Bundle to namespaces that match this label selector: trust.cert-manager.io/inject=true",
+    "observedGeneration": 1,
+    "reason": "Synced",
+    "status": "True",
+    "type": "Synced"
+  }
+]
+----
+
+* Verify the target secret by running the following command:
++
+[source,terminal]
+----
+$ oc describe secret example-bundle -n trust-bundle-target
+----
++
+.Example output
++
+[source,terminal]
+----
+Name:         example-bundle
+Namespace:    trust-bundle-target
+Labels:       trust.cert-manager.io/bundle=example-bundle
+Annotations:  trust.cert-manager.io/hash: 55c00f8109c4c6b1ee4710aa53ad280355973f25444d6bb13a93851af0d8f5d8
+
+Type:  Opaque
+
+Data
+====
+ca-certificates.crt:  219257 bytes
+----
+
+* Verify the target ConfigMap by running the following command:
++
+[source,terminal]
+----
+$ oc get cm example-bundle -n trust-bundle-target
+----
++
+.Example output
++
+[source,terminal]
+----
+NAME             DATA   AGE
+example-bundle   1      4m25s
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-trust-manager.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cert-manager-trust-manager-uninstall_{context}"]
+= Uninstalling the trust-manager operand
+
+[role="_abstract"]
+You can uninstall the trust-manager operand by deleting the TrustManager custom resource (CR). Deleting the TrustManager CR stops the operator from reconciling trust-manager resources, but does not automatically remove the trust-manager deployment or its associated resources. You must manually delete these resources after deleting the CR if you need a complete cleanup.
+
+.Prerequisites
+
+* You have access to the cluster with `cluster-admin` privileges.
+* You have enabled the trust manager feature.
+* You have created the `TrustManager` custom resource.
+
+.Procedure
+
+. Delete any Bundle CRs that you created. Deleting a Bundle CR causes trust-manager to remove the corresponding target ConfigMap and Secret objects from the target namespaces.
+
+.. Fetch the list of bundles created by running the following command:
++
+[source,terminal]
+----
+$ oc get Bundle
+----
+
+.. Delete each Bundle in the list by running the following command:
++
+[source,terminal]
+----
+$ oc delete Bundle <bundle_name>
+----
+
+. Delete the `TrustManager` custom resource by running the following command:
++
+[source,terminal]
+----
+$ oc delete TrustManager cluster
+----
+
+. Delete all the labeled resources to complete the cleanup:
+
+.. Delete the namespace-scoped resources in the `cert-manager` namespace:
++
+[source,terminal]
+----
+$ oc delete deployments,services,serviceaccounts,configmaps,certificates,issuers -l "app.kubernetes.io/name=cert-manager-trust-manager" -n cert-manager
+----
+.. Delete the cluster-scoped resources:
++
+[source,terminal]
+----
+$ oc delete clusterroles,clusterrolebindings,validatingwebhookconfigurations -l "app.kubernetes.io/name=cert-manager-trust-manager"
+----
+.. If you configured a custom trust namespace, delete the role and role binding resources in that namespace:
++
+[source,terminal]
+----
+$ oc delete roles,rolebindings -l "app.kubernetes.io/name=cert-manager-trust-manager" -n <trust_namespace>
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/cert_manager_operator/cert-manager-trust-manager.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="cert-manager-trust-manager-fields_{context}"]
+= Trust manager custom resource fields
+
+[role="_abstract"]
+You can configure the behavior of the trust-manager operand by modifying the `TrustManager` custom resource (CR).
+
+:FeatureName: Distributing certificates by using trust manager
+:leveloffset: +1
+
+:_mod-docs-content-type: SNIPPET
+
+// When including this file, ensure that {FeatureName} is set immediately before
+// the include. Otherwise it will result in an incorrect replacement.
+
+:_mod-docs-content-type: SNIPPET
+
+[IMPORTANT]
+====
+[subs="attributes+"]
+{FeatureName} is a Technology Preview feature only. Technology Preview features are not supported with Red{nbsp}Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+
+For more information about the support scope of Red Hat Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope].
+====
+// Undefine {FeatureName} attribute, so that any mistakes are easily spotted
+:!FeatureName:
+
+:leveloffset: 1
+
+The following table lists the parameters for configuring trust-manager settings.
+
+[cols="3,1,5a",options="header"]
+|===
+|Field |Type |Description
+
+|`spec.controllerConfig.labels`
+|`object`
+|Optional. Specifies a list of key-value pairs to apply as labels to all resources created for the trust manager deployment.
+
+|`spec.controllerConfig.annotations`
+|`object`
+|Optional. Specifies a list of key-value pairs to apply as annotations to all resources created for the trust manager deployment.
+
+|`spec.trustManagerConfig.affinity`
+|`object`
+|Optional. Specifies the scheduling constraints for the trust manager pod. For more information, see link:https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/[Assigning Pods to Nodes].
+
+|`spec.trustManagerConfig.defaultCAPackage`
+|`object`
+|Optional. Configures the default CA package for trust manager. When enabled, the Operator uses the {product-title} trusted CA bundle injection mechanism.
+
+|`spec.trustManagerConfig.defaultCAPackage.policy`
+|`string`
+|Optional. Specifies whether the default CA package feature is enabled. When set to `Enabled`, the Operator configures the trusted CA bundle to trust manager. When set to `Disabled`, no default CA package is configured. The default value is `Disabled`.
+
+[NOTE]
+====
+To enable the `useDefaultCAs: true` setting in your Bundle CR, you must set the value to `Enabled`.
+====
+
+|`spec.trustManagerConfig.filterExpiredCertificates`
+|`string`
+|Optional. Specifies whether trust manager filters out expired certificates from trust bundles before distributing them. When set to `Enabled`, the expired certificates are removed from bundles. When set to `Disabled`, the expired certificates are included in bundles. The default value is `Disabled`.
+
+|`spec.trustManagerConfig.logLevel`
+|`integer`
+|Optional. Specifies the verbosity of trust manager logging. The minimum value is `1` and the maximum value is `5`. The default value is `1`.
+
+|`spec.trustManagerConfig.logFormat`
+|`string`
+|Optional. Specifies the output format for trust manager logging. The supported formats are `text` and `json`. The default value is `text`.
+
+|`spec.trustManagerConfig.nodeSelector`
+|`object`
+|Optional. Specifies the key-value pairs that limit which nodes can host the trust manager pod. You can specify a maximum of 50 node selectors. For more information, see link:https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/[Assigning Pods to Nodes].
+
+|`spec.trustManagerConfig.resources`
+|`object`
+|Optional. Defines the compute resource requirements for the trust manager pod.
+
+|`spec.trustManagerConfig.secretTargets`
+|`object`
+|Optional. Defines the configuration for writing trust bundles to `Secrets`.
+
+|`spec.trustManagerConfig.secretTargets.authorizedSecrets`
+|`array`
+|Optional. A list of specific secret names that trust manager is authorized to create and update.
+
+[NOTE]
+====
+If `spec.trustManagerConfig.secretTargets.policy` is set to `Custom`, you must specify a value. If `spec.trustManagerConfig.secretTargets.policy` is set to `Disabled`, you must not specify a value.
+====
+
+|`spec.trustManagerConfig.secretTargets.policy`
+|`string`
+|Optional. Specifies whether trust manager can write trust bundles to `Secrets`. When set to `Disabled`, trust manager cannot write trust bundles to `Secrets`. When set to `Custom`, trust manager is granted permission to create and update only the secrets listed in the `authorizedSecrets` parameter. The default value is `Disabled`.
+
+|`spec.trustManagerConfig.tolerations`
+|`array`
+|Optional. Allows the trust manager pod to be scheduled on nodes with specific taints. You can specify a maximum of 50 tolerations.
+
+|`spec.trustManagerConfig.trustNamespace`
+|`string`
+|Optional. Specifies the namespace where trust manager locates CA certificate sources, such as ConfigMaps and Secrets. This namespace must exist before you create the TrustManager custom resource. The default value is `cert-manager`.
+
+[NOTE]
+====
+You cannot change the value once set.
+====
+|===
+
+:leveloffset!:

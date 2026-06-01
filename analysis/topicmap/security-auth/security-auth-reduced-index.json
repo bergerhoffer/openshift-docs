@@ -1,0 +1,932 @@
+[
+  {
+    "topic": "Security and compliance overview",
+    "book": "security",
+    "path": "index.adoc",
+    "reduced": "security--index-reduced.adoc"
+  },
+  {
+    "topic": "Understanding container security",
+    "book": "security",
+    "path": "container_security/security-understanding.adoc",
+    "reduced": "security--container_security--security-understanding-reduced.adoc"
+  },
+  {
+    "topic": "Understanding host and VM security",
+    "book": "security",
+    "path": "container_security/security-hosts-vms.adoc",
+    "reduced": "security--container_security--security-hosts-vms-reduced.adoc"
+  },
+  {
+    "topic": "Hardening Red Hat Enterprise Linux CoreOS",
+    "book": "security",
+    "path": "container_security/security-hardening.adoc",
+    "reduced": "security--container_security--security-hardening-reduced.adoc"
+  },
+  {
+    "topic": "Container image signatures",
+    "book": "security",
+    "path": "container_security/security-container-signature.adoc",
+    "reduced": "security--container_security--security-container-signature-reduced.adoc"
+  },
+  {
+    "topic": "Hardening Fedora CoreOS",
+    "book": "security",
+    "path": "container_security/security-hardening.adoc",
+    "reduced": "security--container_security--security-hardening-reduced.adoc"
+  },
+  {
+    "topic": "Understanding compliance",
+    "book": "security",
+    "path": "container_security/security-compliance.adoc",
+    "reduced": "security--container_security--security-compliance-reduced.adoc"
+  },
+  {
+    "topic": "Securing container content",
+    "book": "security",
+    "path": "container_security/security-container-content.adoc",
+    "reduced": "security--container_security--security-container-content-reduced.adoc"
+  },
+  {
+    "topic": "Using container registries securely",
+    "book": "security",
+    "path": "container_security/security-registries.adoc",
+    "reduced": "security--container_security--security-registries-reduced.adoc"
+  },
+  {
+    "topic": "Securing the build process",
+    "book": "security",
+    "path": "container_security/security-build.adoc",
+    "reduced": "security--container_security--security-build-reduced.adoc"
+  },
+  {
+    "topic": "Deploying containers",
+    "book": "security",
+    "path": "container_security/security-deploy.adoc",
+    "reduced": "security--container_security--security-deploy-reduced.adoc"
+  },
+  {
+    "topic": "Securing the container platform",
+    "book": "security",
+    "path": "container_security/security-platform.adoc",
+    "reduced": "security--container_security--security-platform-reduced.adoc"
+  },
+  {
+    "topic": "Securing networks",
+    "book": "security",
+    "path": "container_security/security-network.adoc",
+    "reduced": "security--container_security--security-network-reduced.adoc"
+  },
+  {
+    "topic": "Securing attached storage",
+    "book": "security",
+    "path": "container_security/security-storage.adoc",
+    "reduced": "security--container_security--security-storage-reduced.adoc"
+  },
+  {
+    "topic": "Monitoring cluster events and logs",
+    "book": "security",
+    "path": "container_security/security-monitoring.adoc",
+    "reduced": "security--container_security--security-monitoring-reduced.adoc"
+  },
+  {
+    "topic": "Replacing the default ingress certificate",
+    "book": "security",
+    "path": "certificates/replacing-default-ingress-certificate.adoc",
+    "reduced": "security--certificates--replacing-default-ingress-certificate-reduced.adoc"
+  },
+  {
+    "topic": "Adding API server certificates",
+    "book": "security",
+    "path": "certificates/api-server.adoc",
+    "reduced": "security--certificates--api-server-reduced.adoc"
+  },
+  {
+    "topic": "Securing service traffic using service serving certificates",
+    "book": "security",
+    "path": "certificates/service-serving-certificate.adoc",
+    "reduced": "security--certificates--service-serving-certificate-reduced.adoc"
+  },
+  {
+    "topic": "Updating the CA bundle",
+    "book": "security",
+    "path": "certificates/updating-ca-bundle.adoc",
+    "reduced": "security--certificates--updating-ca-bundle-reduced.adoc"
+  },
+  {
+    "topic": "User-provided certificates for the API server",
+    "book": "security",
+    "path": "certificate_types_descriptions/user-provided-certificates-for-api-server.adoc",
+    "reduced": "security--certificate_types_descriptions--user-provided-certificates-for-api-server-reduced.adoc"
+  },
+  {
+    "topic": "Proxy certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/proxy-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--proxy-certificates-reduced.adoc"
+  },
+  {
+    "topic": "Service CA certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/service-ca-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--service-ca-certificates-reduced.adoc"
+  },
+  {
+    "topic": "Node certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/node-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--node-certificates-reduced.adoc"
+  },
+  {
+    "topic": "Bootstrap certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/bootstrap-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--bootstrap-certificates-reduced.adoc"
+  },
+  {
+    "topic": "etcd certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/etcd-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--etcd-certificates-reduced.adoc"
+  },
+  {
+    "topic": "OLM certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/olm-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--olm-certificates-reduced.adoc"
+  },
+  {
+    "topic": "Aggregated API client certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/aggregated-api-client-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--aggregated-api-client-certificates-reduced.adoc"
+  },
+  {
+    "topic": "Machine Config Operator certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/machine-config-operator-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--machine-config-operator-certificates-reduced.adoc"
+  },
+  {
+    "topic": "User-provided certificates for default ingress",
+    "book": "security",
+    "path": "certificate_types_descriptions/user-provided-certificates-for-default-ingress.adoc",
+    "reduced": "security--certificate_types_descriptions--user-provided-certificates-for-default-ingress-reduced.adoc"
+  },
+  {
+    "topic": "Ingress certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/ingress-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--ingress-certificates-reduced.adoc"
+  },
+  {
+    "topic": "Monitoring and cluster logging Operator component certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/monitoring-and-cluster-logging-operator-component-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--monitoring-and-cluster-logging-operator-component-certificates-reduced.adoc"
+  },
+  {
+    "topic": "Control plane certificates",
+    "book": "security",
+    "path": "certificate_types_descriptions/control-plane-certificates.adoc",
+    "reduced": "security--certificate_types_descriptions--control-plane-certificates-reduced.adoc"
+  },
+  {
+    "topic": "Compliance Operator overview",
+    "book": "security",
+    "path": "compliance_operator/co-overview.adoc",
+    "reduced": "security--compliance_operator--co-overview-reduced.adoc"
+  },
+  {
+    "topic": "Compliance Operator release notes",
+    "book": "security",
+    "path": "compliance_operator/compliance-operator-release-notes.adoc",
+    "reduced": "security--compliance_operator--compliance-operator-release-notes-reduced.adoc"
+  },
+  {
+    "topic": "Compliance Operator support",
+    "book": "security",
+    "path": "compliance_operator/co-support.adoc",
+    "reduced": "security--compliance_operator--co-support-reduced.adoc"
+  },
+  {
+    "topic": "Understanding the Compliance Operator",
+    "book": "security",
+    "path": "compliance_operator/co-concepts/compliance-operator-understanding.adoc",
+    "reduced": "security--compliance_operator--co-concepts--compliance-operator-understanding-reduced.adoc"
+  },
+  {
+    "topic": "Understanding the Custom Resource Definitions",
+    "book": "security",
+    "path": "compliance_operator/co-concepts/compliance-operator-crd.adoc",
+    "reduced": "security--compliance_operator--co-concepts--compliance-operator-crd-reduced.adoc"
+  },
+  {
+    "topic": "Installing the Compliance Operator",
+    "book": "security",
+    "path": "compliance_operator/co-management/compliance-operator-installation.adoc",
+    "reduced": "security--compliance_operator--co-management--compliance-operator-installation-reduced.adoc"
+  },
+  {
+    "topic": "Updating the Compliance Operator",
+    "book": "security",
+    "path": "compliance_operator/co-management/compliance-operator-updating.adoc",
+    "reduced": "security--compliance_operator--co-management--compliance-operator-updating-reduced.adoc"
+  },
+  {
+    "topic": "Managing the Compliance Operator",
+    "book": "security",
+    "path": "compliance_operator/co-management/compliance-operator-manage.adoc",
+    "reduced": "security--compliance_operator--co-management--compliance-operator-manage-reduced.adoc"
+  },
+  {
+    "topic": "Uninstalling the Compliance Operator",
+    "book": "security",
+    "path": "compliance_operator/co-management/compliance-operator-uninstallation.adoc",
+    "reduced": "security--compliance_operator--co-management--compliance-operator-uninstallation-reduced.adoc"
+  },
+  {
+    "topic": "Supported compliance profiles",
+    "book": "security",
+    "path": "compliance_operator/co-scans/compliance-operator-supported-profiles.adoc",
+    "reduced": "security--compliance_operator--co-scans--compliance-operator-supported-profiles-reduced.adoc"
+  },
+  {
+    "topic": "Compliance Operator scans",
+    "book": "security",
+    "path": "compliance_operator/co-scans/compliance-scans.adoc",
+    "reduced": "security--compliance_operator--co-scans--compliance-scans-reduced.adoc"
+  },
+  {
+    "topic": "Tailoring the Compliance Operator",
+    "book": "security",
+    "path": "compliance_operator/co-scans/compliance-operator-tailor.adoc",
+    "reduced": "security--compliance_operator--co-scans--compliance-operator-tailor-reduced.adoc"
+  },
+  {
+    "topic": "Retrieving Compliance Operator raw results",
+    "book": "security",
+    "path": "compliance_operator/co-scans/compliance-operator-raw-results.adoc",
+    "reduced": "security--compliance_operator--co-scans--compliance-operator-raw-results-reduced.adoc"
+  },
+  {
+    "topic": "Managing Compliance Operator remediation",
+    "book": "security",
+    "path": "compliance_operator/co-scans/compliance-operator-remediation.adoc",
+    "reduced": "security--compliance_operator--co-scans--compliance-operator-remediation-reduced.adoc"
+  },
+  {
+    "topic": "Performing advanced Compliance Operator tasks",
+    "book": "security",
+    "path": "compliance_operator/co-scans/compliance-operator-advanced.adoc",
+    "reduced": "security--compliance_operator--co-scans--compliance-operator-advanced-reduced.adoc"
+  },
+  {
+    "topic": "Troubleshooting Compliance Operator scans",
+    "book": "security",
+    "path": "compliance_operator/co-scans/compliance-operator-troubleshooting.adoc",
+    "reduced": "security--compliance_operator--co-scans--compliance-operator-troubleshooting-reduced.adoc"
+  },
+  {
+    "topic": "Using the oc-compliance plugin",
+    "book": "security",
+    "path": "compliance_operator/co-scans/oc-compliance-plug-in-using.adoc",
+    "reduced": "security--compliance_operator--co-scans--oc-compliance-plug-in-using-reduced.adoc"
+  },
+  {
+    "topic": "File Integrity Operator Overview",
+    "book": "security",
+    "path": "file_integrity_operator/fio-overview.adoc",
+    "reduced": "security--file_integrity_operator--fio-overview-reduced.adoc"
+  },
+  {
+    "topic": "File Integrity Operator release notes",
+    "book": "security",
+    "path": "file_integrity_operator/file-integrity-operator-release-notes.adoc",
+    "reduced": "security--file_integrity_operator--file-integrity-operator-release-notes-reduced.adoc"
+  },
+  {
+    "topic": "File Integrity Operator support",
+    "book": "security",
+    "path": "file_integrity_operator/fio-support.adoc",
+    "reduced": "security--file_integrity_operator--fio-support-reduced.adoc"
+  },
+  {
+    "topic": "Installing the File Integrity Operator",
+    "book": "security",
+    "path": "file_integrity_operator/file-integrity-operator-installation.adoc",
+    "reduced": "security--file_integrity_operator--file-integrity-operator-installation-reduced.adoc"
+  },
+  {
+    "topic": "Updating the File Integrity Operator",
+    "book": "security",
+    "path": "file_integrity_operator/file-integrity-operator-updating.adoc",
+    "reduced": "security--file_integrity_operator--file-integrity-operator-updating-reduced.adoc"
+  },
+  {
+    "topic": "Understanding the File Integrity Operator",
+    "book": "security",
+    "path": "file_integrity_operator/file-integrity-operator-understanding.adoc",
+    "reduced": "security--file_integrity_operator--file-integrity-operator-understanding-reduced.adoc"
+  },
+  {
+    "topic": "Configuring the File Integrity Operator",
+    "book": "security",
+    "path": "file_integrity_operator/file-integrity-operator-configuring.adoc",
+    "reduced": "security--file_integrity_operator--file-integrity-operator-configuring-reduced.adoc"
+  },
+  {
+    "topic": "Performing advanced File Integrity Operator tasks",
+    "book": "security",
+    "path": "file_integrity_operator/file-integrity-operator-advanced-usage.adoc",
+    "reduced": "security--file_integrity_operator--file-integrity-operator-advanced-usage-reduced.adoc"
+  },
+  {
+    "topic": "Troubleshooting the File Integrity Operator",
+    "book": "security",
+    "path": "file_integrity_operator/file-integrity-operator-troubleshooting.adoc",
+    "reduced": "security--file_integrity_operator--file-integrity-operator-troubleshooting-reduced.adoc"
+  },
+  {
+    "topic": "Uninstalling the File Integrity Operator",
+    "book": "security",
+    "path": "file_integrity_operator/fio-uninstalling.adoc",
+    "reduced": "security--file_integrity_operator--fio-uninstalling-reduced.adoc"
+  },
+  {
+    "topic": "Security Profiles Operator overview",
+    "book": "security",
+    "path": "security_profiles_operator/spo-overview.adoc",
+    "reduced": "security--security_profiles_operator--spo-overview-reduced.adoc"
+  },
+  {
+    "topic": "Security Profiles Operator release notes",
+    "book": "security",
+    "path": "security_profiles_operator/spo-release-notes.adoc",
+    "reduced": "security--security_profiles_operator--spo-release-notes-reduced.adoc"
+  },
+  {
+    "topic": "Security Profiles Operator support",
+    "book": "security",
+    "path": "security_profiles_operator/spo-support.adoc",
+    "reduced": "security--security_profiles_operator--spo-support-reduced.adoc"
+  },
+  {
+    "topic": "Understanding the Security Profiles Operator",
+    "book": "security",
+    "path": "security_profiles_operator/spo-understanding.adoc",
+    "reduced": "security--security_profiles_operator--spo-understanding-reduced.adoc"
+  },
+  {
+    "topic": "Enabling the Security Profiles Operator",
+    "book": "security",
+    "path": "security_profiles_operator/spo-enabling.adoc",
+    "reduced": "security--security_profiles_operator--spo-enabling-reduced.adoc"
+  },
+  {
+    "topic": "Managing seccomp profiles",
+    "book": "security",
+    "path": "security_profiles_operator/spo-seccomp.adoc",
+    "reduced": "security--security_profiles_operator--spo-seccomp-reduced.adoc"
+  },
+  {
+    "topic": "Managing SELinux profiles",
+    "book": "security",
+    "path": "security_profiles_operator/spo-selinux.adoc",
+    "reduced": "security--security_profiles_operator--spo-selinux-reduced.adoc"
+  },
+  {
+    "topic": "Advanced Security Profiles Operator tasks",
+    "book": "security",
+    "path": "security_profiles_operator/spo-advanced.adoc",
+    "reduced": "security--security_profiles_operator--spo-advanced-reduced.adoc"
+  },
+  {
+    "topic": "Advanced Audit Logging Framework",
+    "book": "security",
+    "path": "security_profiles_operator/spo-logging.adoc",
+    "reduced": "security--security_profiles_operator--spo-logging-reduced.adoc"
+  },
+  {
+    "topic": "Troubleshooting the Security Profiles Operator",
+    "book": "security",
+    "path": "security_profiles_operator/spo-troubleshooting.adoc",
+    "reduced": "security--security_profiles_operator--spo-troubleshooting-reduced.adoc"
+  },
+  {
+    "topic": "Uninstalling the Security Profiles Operator",
+    "book": "security",
+    "path": "security_profiles_operator/spo-uninstalling.adoc",
+    "reduced": "security--security_profiles_operator--spo-uninstalling-reduced.adoc"
+  },
+  {
+    "topic": "NBDE Tang Server Operator overview",
+    "book": "security",
+    "path": "nbde_tang_server_operator/nbde-tang-server-operator-overview.adoc",
+    "reduced": "security--nbde_tang_server_operator--nbde-tang-server-operator-overview-reduced.adoc"
+  },
+  {
+    "topic": "NBDE Tang Server Operator release notes",
+    "book": "security",
+    "path": "nbde_tang_server_operator/nbde-tang-server-operator-release-notes.adoc",
+    "reduced": "security--nbde_tang_server_operator--nbde-tang-server-operator-release-notes-reduced.adoc"
+  },
+  {
+    "topic": "Understanding the NBDE Tang Server Operator",
+    "book": "security",
+    "path": "nbde_tang_server_operator/nbde-tang-server-operator-understanding.adoc",
+    "reduced": "security--nbde_tang_server_operator--nbde-tang-server-operator-understanding-reduced.adoc"
+  },
+  {
+    "topic": "Installing the NBDE Tang Server Operator",
+    "book": "security",
+    "path": "nbde_tang_server_operator/nbde-tang-server-operator-installing.adoc",
+    "reduced": "security--nbde_tang_server_operator--nbde-tang-server-operator-installing-reduced.adoc"
+  },
+  {
+    "topic": "Configuring and managing Tang servers using the NBDE Tang Server Operator",
+    "book": "security",
+    "path": "nbde_tang_server_operator/nbde-tang-server-operator-configuring-managing.adoc",
+    "reduced": "security--nbde_tang_server_operator--nbde-tang-server-operator-configuring-managing-reduced.adoc"
+  },
+  {
+    "topic": "Identifying URL of a Tang server deployed with the NBDE Tang Server Operator",
+    "book": "security",
+    "path": "nbde_tang_server_operator/nbde-tang-server-operator-identifying-url.adoc",
+    "reduced": "security--nbde_tang_server_operator--nbde-tang-server-operator-identifying-url-reduced.adoc"
+  },
+  {
+    "topic": "Understanding secrets management",
+    "book": "security",
+    "path": "understanding-secrets-management.adoc",
+    "reduced": "security--understanding-secrets-management-reduced.adoc"
+  },
+  {
+    "topic": "cert-manager Operator for Red Hat OpenShift overview",
+    "book": "security",
+    "path": "cert_manager_operator/index.adoc",
+    "reduced": "security--cert_manager_operator--index-reduced.adoc"
+  },
+  {
+    "topic": "cert-manager Operator for Red Hat OpenShift release notes",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-operator-release-notes.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-operator-release-notes-reduced.adoc"
+  },
+  {
+    "topic": "Installing the cert-manager Operator for Red Hat OpenShift",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-operator-install.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-operator-install-reduced.adoc"
+  },
+  {
+    "topic": "Configuring the egress proxy",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-operator-proxy.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-operator-proxy-reduced.adoc"
+  },
+  {
+    "topic": "Customizing cert-manager by using the cert-manager Operator API fields",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-customizing-api-fields.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-customizing-api-fields-reduced.adoc"
+  },
+  {
+    "topic": "Authenticating the cert-manager Operator for Red Hat OpenShift",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-authenticate.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-authenticate-reduced.adoc"
+  },
+  {
+    "topic": "Configuring an ACME issuer",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-operator-issuer-acme.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-operator-issuer-acme-reduced.adoc"
+  },
+  {
+    "topic": "Configuring certificates with an issuer",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-creating-certificate.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-creating-certificate-reduced.adoc"
+  },
+  {
+    "topic": "Securing routes with the cert-manager Operator for Red Hat OpenShift",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-securing-routes.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-securing-routes-reduced.adoc"
+  },
+  {
+    "topic": "Integrating the cert-manager Operator with Istio-CSR",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-operator-integrating-istio.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-operator-integrating-istio-reduced.adoc"
+  },
+  {
+    "topic": "Network policy configuration for cert-manager Operator",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-nw-policy.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-nw-policy-reduced.adoc"
+  },
+  {
+    "topic": "Distributing certificates by using trust-manager operand",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-trust-manager.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-trust-manager-reduced.adoc"
+  },
+  {
+    "topic": "Monitoring the cert-manager Operator for Red Hat OpenShift",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-monitoring.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-monitoring-reduced.adoc"
+  },
+  {
+    "topic": "Configuring log levels for cert-manager and the cert-manager Operator for Red Hat OpenShift",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-log-levels.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-log-levels-reduced.adoc"
+  },
+  {
+    "topic": "Uninstalling the cert-manager Operator for Red Hat OpenShift",
+    "book": "security",
+    "path": "cert_manager_operator/cert-manager-operator-uninstall.adoc",
+    "reduced": "security--cert_manager_operator--cert-manager-operator-uninstall-reduced.adoc"
+  },
+  {
+    "topic": "Zero Trust Workload Identity Manager overview",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-overview.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-overview-reduced.adoc"
+  },
+  {
+    "topic": "Zero Trust Workload Identity Manager components",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-components.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-components-reduced.adoc"
+  },
+  {
+    "topic": "Zero Trust Workload Identity Manager release notes",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-release-notes.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-release-notes-reduced.adoc"
+  },
+  {
+    "topic": "Installing Zero Trust Workload Identity Manager",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-install.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-install-reduced.adoc"
+  },
+  {
+    "topic": "Deploying Zero Trust Workload Identity Manager operands",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-configuration.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-configuration-reduced.adoc"
+  },
+  {
+    "topic": "Configuring the egress proxy",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-proxy.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-proxy-reduced.adoc"
+  },
+  {
+    "topic": "Configuring Zero Trust Workload Identity Manager OIDC Federation",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-oidc-federation.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-oidc-federation-reduced.adoc"
+  },
+  {
+    "topic": "Configuring Zero Trust Workload Identity Manager SPIRE Federation",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-spire-federation.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-spire-federation-reduced.adoc"
+  },
+  {
+    "topic": "Enabling create-only mode for the Zero Trust Workload Identity Manager",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-reconciliation.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-reconciliation-reduced.adoc"
+  },
+  {
+    "topic": "Monitoring Zero Trust Workload Identity Manager",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-monitoring.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-monitoring-reduced.adoc"
+  },
+  {
+    "topic": "Uninstalling the Zero Trust Workload Identity Manager",
+    "book": "security",
+    "path": "zero_trust_workload_identity_manager/zero-trust-manager-uninstall.adoc",
+    "reduced": "security--zero_trust_workload_identity_manager--zero-trust-manager-uninstall-reduced.adoc"
+  },
+  {
+    "topic": "External Secrets Operator overview",
+    "book": "security",
+    "path": "external_secrets_operator/index.adoc",
+    "reduced": "security--external_secrets_operator--index-reduced.adoc"
+  },
+  {
+    "topic": "External Secrets Operator release notes",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-operator-release-notes.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-operator-release-notes-reduced.adoc"
+  },
+  {
+    "topic": "Installing the External Secrets Operator",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-operator-install.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-operator-install-reduced.adoc"
+  },
+  {
+    "topic": "Configuring Network Policy for the Operand",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-operator-config-net-policy.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-operator-config-net-policy-reduced.adoc"
+  },
+  {
+    "topic": "Configuring the egress proxy",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-operator-proxy.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-operator-proxy-reduced.adoc"
+  },
+  {
+    "topic": "Monitoring the External Secrets Operator for Red Hat OpenShift",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-monitoring.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-monitoring-reduced.adoc"
+  },
+  {
+    "topic": "Customizing the External Secrets Operator for Red Hat OpenShift",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-log-levels.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-log-levels-reduced.adoc"
+  },
+  {
+    "topic": "Uninstalling the External Secrets Operator",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-operator-uninstall.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-operator-uninstall-reduced.adoc"
+  },
+  {
+    "topic": "External Secrets Operator APIs",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-operator-api.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-operator-api-reduced.adoc"
+  },
+  {
+    "topic": "Migrating from the community External Secret Operator to the External Secret Operator For Red Hat OpenShift",
+    "book": "security",
+    "path": "external_secrets_operator/external-secrets-operator-migrate-downstream-upstream.adoc",
+    "reduced": "security--external_secrets_operator--external-secrets-operator-migrate-downstream-upstream-reduced.adoc"
+  },
+  {
+    "topic": "Viewing audit logs",
+    "book": "security",
+    "path": "audit-log-view.adoc",
+    "reduced": "security--audit-log-view-reduced.adoc"
+  },
+  {
+    "topic": "Configuring the audit log policy",
+    "book": "security",
+    "path": "audit-log-policy-config.adoc",
+    "reduced": "security--audit-log-policy-config-reduced.adoc"
+  },
+  {
+    "topic": "Configuring TLS security profiles",
+    "book": "security",
+    "path": "tls-security-profiles.adoc",
+    "reduced": "security--tls-security-profiles-reduced.adoc"
+  },
+  {
+    "topic": "Configuring seccomp profiles",
+    "book": "security",
+    "path": "seccomp-profiles.adoc",
+    "reduced": "security--seccomp-profiles-reduced.adoc"
+  },
+  {
+    "topic": "Allowing JavaScript-based access to the API server from additional hosts",
+    "book": "security",
+    "path": "allowing-javascript-access-api-server.adoc",
+    "reduced": "security--allowing-javascript-access-api-server-reduced.adoc"
+  },
+  {
+    "topic": "Scanning pods for vulnerabilities",
+    "book": "security",
+    "path": "pod-vulnerability-scan.adoc",
+    "reduced": "security--pod-vulnerability-scan-reduced.adoc"
+  },
+  {
+    "topic": "About disk encryption technology",
+    "book": "security",
+    "path": "network_bound_disk_encryption/nbde-about-disk-encryption-technology.adoc",
+    "reduced": "security--network_bound_disk_encryption--nbde-about-disk-encryption-technology-reduced.adoc"
+  },
+  {
+    "topic": "Tang server installation considerations",
+    "book": "security",
+    "path": "network_bound_disk_encryption/nbde-tang-server-installation-considerations.adoc",
+    "reduced": "security--network_bound_disk_encryption--nbde-tang-server-installation-considerations-reduced.adoc"
+  },
+  {
+    "topic": "Tang server encryption key management",
+    "book": "security",
+    "path": "network_bound_disk_encryption/nbde-managing-encryption-keys.adoc",
+    "reduced": "security--network_bound_disk_encryption--nbde-managing-encryption-keys-reduced.adoc"
+  },
+  {
+    "topic": "Disaster recovery considerations",
+    "book": "security",
+    "path": "network_bound_disk_encryption/nbde-disaster-recovery-considerations.adoc",
+    "reduced": "security--network_bound_disk_encryption--nbde-disaster-recovery-considerations-reduced.adoc"
+  },
+  {
+    "topic": "Authentication and authorization overview",
+    "book": "authentication",
+    "path": "index.adoc",
+    "reduced": "authentication--index-reduced.adoc"
+  },
+  {
+    "topic": "Understanding authentication",
+    "book": "authentication",
+    "path": "understanding-authentication.adoc",
+    "reduced": "authentication--understanding-authentication-reduced.adoc"
+  },
+  {
+    "topic": "Configuring the internal OAuth server",
+    "book": "authentication",
+    "path": "configuring-internal-oauth.adoc",
+    "reduced": "authentication--configuring-internal-oauth-reduced.adoc"
+  },
+  {
+    "topic": "Configuring OAuth clients",
+    "book": "authentication",
+    "path": "configuring-oauth-clients.adoc",
+    "reduced": "authentication--configuring-oauth-clients-reduced.adoc"
+  },
+  {
+    "topic": "Managing user-owned OAuth access tokens",
+    "book": "authentication",
+    "path": "managing-oauth-access-tokens.adoc",
+    "reduced": "authentication--managing-oauth-access-tokens-reduced.adoc"
+  },
+  {
+    "topic": "Understanding identity provider configuration",
+    "book": "authentication",
+    "path": "understanding-identity-provider.adoc",
+    "reduced": "authentication--understanding-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring an htpasswd identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-htpasswd-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-htpasswd-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring a Keystone identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-keystone-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-keystone-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring an LDAP identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-ldap-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-ldap-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring a basic authentication identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-basic-authentication-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-basic-authentication-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring a request header identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-request-header-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-request-header-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring a GitHub or GitHub Enterprise identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-github-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-github-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring a GitLab identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-gitlab-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-gitlab-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring a Google identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-google-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-google-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Configuring an OpenID Connect identity provider",
+    "book": "authentication",
+    "path": "identity_providers/configuring-oidc-identity-provider.adoc",
+    "reduced": "authentication--identity_providers--configuring-oidc-identity-provider-reduced.adoc"
+  },
+  {
+    "topic": "Enabling direct authentication with an OIDC identity provider",
+    "book": "authentication",
+    "path": "external-auth.adoc",
+    "reduced": "authentication--external-auth-reduced.adoc"
+  },
+  {
+    "topic": "Using RBAC to define and apply permissions",
+    "book": "authentication",
+    "path": "using-rbac.adoc",
+    "reduced": "authentication--using-rbac-reduced.adoc"
+  },
+  {
+    "topic": "Removing the kubeadmin user",
+    "book": "authentication",
+    "path": "remove-kubeadmin.adoc",
+    "reduced": "authentication--remove-kubeadmin-reduced.adoc"
+  },
+  {
+    "topic": "Understanding and creating service accounts",
+    "book": "authentication",
+    "path": "understanding-and-creating-service-accounts.adoc",
+    "reduced": "authentication--understanding-and-creating-service-accounts-reduced.adoc"
+  },
+  {
+    "topic": "Using service accounts in applications",
+    "book": "authentication",
+    "path": "using-service-accounts-in-applications.adoc",
+    "reduced": "authentication--using-service-accounts-in-applications-reduced.adoc"
+  },
+  {
+    "topic": "Using a service account as an OAuth client",
+    "book": "authentication",
+    "path": "using-service-accounts-as-oauth-client.adoc",
+    "reduced": "authentication--using-service-accounts-as-oauth-client-reduced.adoc"
+  },
+  {
+    "topic": "Scoping tokens",
+    "book": "authentication",
+    "path": "tokens-scoping.adoc",
+    "reduced": "authentication--tokens-scoping-reduced.adoc"
+  },
+  {
+    "topic": "Using bound service account tokens",
+    "book": "authentication",
+    "path": "bound-service-account-tokens.adoc",
+    "reduced": "authentication--bound-service-account-tokens-reduced.adoc"
+  },
+  {
+    "topic": "Managing security context constraints",
+    "book": "authentication",
+    "path": "managing-security-context-constraints.adoc",
+    "reduced": "authentication--managing-security-context-constraints-reduced.adoc"
+  },
+  {
+    "topic": "Understanding and managing pod security admission",
+    "book": "authentication",
+    "path": "understanding-and-managing-pod-security-admission.adoc",
+    "reduced": "authentication--understanding-and-managing-pod-security-admission-reduced.adoc"
+  },
+  {
+    "topic": "Impersonating the system:admin user",
+    "book": "authentication",
+    "path": "impersonating-system-admin.adoc",
+    "reduced": "authentication--impersonating-system-admin-reduced.adoc"
+  },
+  {
+    "topic": "Syncing LDAP groups",
+    "book": "authentication",
+    "path": "ldap-syncing.adoc",
+    "reduced": "authentication--ldap-syncing-reduced.adoc"
+  },
+  {
+    "topic": "About the Cloud Credential Operator",
+    "book": "authentication",
+    "path": "managing_cloud_provider_credentials/about-cloud-credential-operator.adoc",
+    "reduced": "authentication--managing_cloud_provider_credentials--about-cloud-credential-operator-reduced.adoc"
+  },
+  {
+    "topic": "Mint mode",
+    "book": "authentication",
+    "path": "managing_cloud_provider_credentials/cco-mode-mint.adoc",
+    "reduced": "authentication--managing_cloud_provider_credentials--cco-mode-mint-reduced.adoc"
+  },
+  {
+    "topic": "Passthrough mode",
+    "book": "authentication",
+    "path": "managing_cloud_provider_credentials/cco-mode-passthrough.adoc",
+    "reduced": "authentication--managing_cloud_provider_credentials--cco-mode-passthrough-reduced.adoc"
+  },
+  {
+    "topic": "Manual mode with long-term credentials for components",
+    "book": "authentication",
+    "path": "managing_cloud_provider_credentials/cco-mode-manual.adoc",
+    "reduced": "authentication--managing_cloud_provider_credentials--cco-mode-manual-reduced.adoc"
+  },
+  {
+    "topic": "Manual mode with short-term credentials for components",
+    "book": "authentication",
+    "path": "managing_cloud_provider_credentials/cco-short-term-creds.adoc",
+    "reduced": "authentication--managing_cloud_provider_credentials--cco-short-term-creds-reduced.adoc"
+  }
+]

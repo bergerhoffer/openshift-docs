@@ -1,0 +1,18 @@
+{
+  "main_jobs": 12,
+  "children_per_main_job": {
+    "Configure auditing and investigate security events": 2,
+    "Detect vulnerabilities and unauthorized file changes": 28,
+    "Demonstrate compliance with security profiles": 60,
+    "Encrypt sensitive data at rest": 8,
+    "Manage certificates and TLS for cluster services": 74,
+    "Manage secrets and cloud provider credentials": 40,
+    "Secure the container software supply chain": 8,
+    "Enforce what pods are allowed to run": 37,
+    "Configure workload and automation identities": 7,
+    "Assign and audit permissions with RBAC": 2,
+    "Control who can sign in to the cluster": 24,
+    "Understand OCP security layers and shared responsibility": 23
+  },
+  "total_records": 325
+}

@@ -1,0 +1,1478 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="spo-audit-logging_{context}"]
+= Advanced Audit Logging Framework
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.20
+:ocp-nplus1: 4.22
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.5.5
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.15
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hyperconvergeds.v1beta1.hco.kubevirt.io
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:context: spo-audit-logging
+
+toc::[]
+
+[role="_abstract"]
+The Advanced Audit Logging Framework provided in {product-title} Security Profiles Operator (SPO) 0.10.0 provides logging of container activities in an {op-system-first} container back to the hosting cluster. With the Advanced Audit Logging Framework, you can correlate an {product-title} user with their direct actions on the node during `oc exec`, `oc rsh`, and `oc debug` sessions. The advanced audit logging results in detailed logs in a JSON Lines format.
+
+[id="benefits-of-adv-aud-log_{context}"]
+== Benefits of Advanced Audit Logging Framework
+
+The `kubectl exec`, `oc exec`, `oc rsh` and `oc debug` commands do not pass user authentication details into the exec session on the container, making it hard to correlate Kubernetes user actions caused by actions on the host. The audit logger in SPO addresses this with mutating webhooks that inject the request UID from the Kubernetes API server as an environment variable into the session. Every request to the API server including the request to start a new exec session has a request UID. This request UID is then logged by the Advanced Audit Logging Framework. The request ID is used to correlate the activity with the API server audit logs, providing an audit trail within the node.
+
+With the addition of the Advanced Audit Logging Framework, SPO now has two use cases:
+
+	* Pod auditing
+	* Node auditing
+
+The use of privileged `seccompProfile` configuration is required only for the case of node auditing.
+
+[NOTE]
+====
+The Security Profiles Operator supports only {op-system-first} worker nodes appropriate to the version of {product-title} in use.
+
+Red Hat Enterprise Linux (RHEL) nodes are not supported.
+====
+
+[id="performance-considerations_{context}"]
+== Performance considerations
+
+It is important to consider the performance cost of using seccomp profiles for extensive logging. SPO is designed to minimize this impact by primarily logging only process creations and handling them asynchronously. This approach helps prevent logging from becoming a bottleneck on your nodes.
+
+The Advanced Audit Logging feature uses eBPF as a supplemental data source. While it is possible for eBPF to be used as a primary data source for this type of logging, that functionality is not currently a configurable feature within the Operator. For most use cases, the default asynchronous, process-creation-focused logging approach provides an excellent balance between security visibility and cluster performance.
+
+[id="prereq-adv-audit-logging_{context}"]
+== Prerequisites for use of the Advanced Audit Logging Framework
+
+Before enabling the Advanced Audit Logging Framework, ensure the following requirements are met.
+
+Security Profiles Operator version 0.10.0 or later is installed. Those instructions can be found at https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html/security_and_compliance/security-profiles-operator#spo-installing_spo-enabling[Installing the Security Profiles Operator]. The Advanced Audit Logging Framework requires Security Profiles Operator version 0.10.0 or later.
+
+For node debugging sessions:
+
+	* To audit `oc debug` node sessions, CRI-O version 1.33 or later is required. It is available in {product-title} 4.20 or later.
+	* The --privileged-seccomp-profile flag must be configured in CRI-O to apply `seccompProfiles` to privileged containers.
+	* The supported Linux used with the Advanced Audit Logging Framework is {op-system-first} running in a container in {product-title} 4.20 or later.
+
+If you are using the CRI-O runtime, you must configure it to allow `seccompProfile` to be applied to privileged containers. Add the following flag to your CRI-O runtime configuration: `--privileged-seccomp-profile=/var/lib/kubelet/seccomp/operator/profile1.json`. This is explained in more detail in the Advanced Audit Logging installation and enablement steps. The `--privileged-seccomp-profile` flag is available starting with OCP 4.20 and later.
+
+If you are using any version of SPO before 0.9.0, you must perform a link:http://access.redhat.com/articles/7130594[migration procedure] to install versions 0.9.0 or 0.10.0. The migration procedure converts SPO to operate on cluster-scoped resources.
+
+First-time installation of SPO version 0.10.0 does not require migration. Also, if you are currently on SPO 0.9.0, you do not require migration and can directly upgrade to SPO 0.10.0.
+
+
+[IMPORTANT]
+====
+Do not attempt to upgrade directly from SPO versions before 0.9.0 to either 0.9.0 or 0.10.0 if you are currently running SPO. You must perform the migration procedure to convert SPO for operation at the cluster level.
+
+This change allows Advanced Audit Logging of events inside the worker node.
+
+This capability is not provided for control nodes since SPO does not operate on `etcd` nodes.
+====
+
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="spo-log-enrich_{context}"]
+= The Audit JSON log enricher
+
+[role="_abstract"]
+The SPO Advanced Audit Logging Framework is enabled by the Audit JSON log enricher. Similar to the log enricher feature, the Audit JSON log enricher watches the `auditd` (`/var/log/audit/audit.log`) or the `syslog` (`/var/log/syslog`) daemons and generates a new audit log in JSON lines format.
+
+Each JSON line includes the following:
+
+* Timestamp: When the activity happened, shown in a standard ISO format
+* Executable Name: The name of the program that was run (`bash`, `ls`).
+* Linux Command Line Arguments (`cmdline`): The extra instructions given when the program was started (`ls -l /home`).
+* User and Group IDs (`UID/GID`): The identification numbers of the system user who ran the program.
+* System Calls (`syscalls`): A list of system calls (`syscalls`) that the process made
+
+This log format and configuration is similar to how Kubernetes records audit logs. This is useful for:
+
+* Seeing what users and automated processes are doing inside a pod.
+* Tracking when someone uses commands such as `kubectl exec` to enter a running container and run commands or scripts.
+* Monitoring activities in debug containers where users might run various tools.
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="spo-log-kube-api-compare_{context}"]
+= Kubernetes API log compared to Advanced Audit Logging output
+
+[role="_abstract"]
+To understand the value of Advanced Audit Logging, compare the Kubernetes API Server Audit Log to the Advanced Audit Logging output:
+
+.Kubernetes API Server Audit Log
+
+[source,yaml]
+----
+{
+  "kind": "Event",
+  "apiVersion": "audit.k8s.io/v1",
+  "level": "Metadata",
+  "auditID": "4d434cd4-xxxx-xxxx-xxxx-2d9aa46292ce",
+  "stage": "ResponseComplete",
+  "requestURI": "/api/v1/namespaces/test-namespace/pods/test-pod/exec?command=sh&command=-c&command=touch+/tmp/testfile.txt&container=nginx",
+  "verb": "create",
+  "user": {
+    "username": "kube:admin",
+    "groups": ["system:cluster-admins", "system:authenticated"]
+  },
+  "sourceIPs": ["xxx.xxx.xxx.xxx"],
+  "userAgent": "oc/4.19.0 (linux/amd64)",
+  "objectRef": {
+    "resource": "pods",
+    "namespace": "test-namespace",
+    "name": "test-pod",
+    "subresource": "exec"
+  },
+  "responseStatus": {
+    "code": 101
+  },
+  "requestReceivedTimestamp": "2026-02-16T14:01:06.056518Z",
+  "annotations": {
+    "authorization.k8s.io/decision": "allow",
+    "authorization.k8s.io/reason": "RBAC: allowed by ClusterRoleBinding...",
+    "execmetadata.spo.io/SPO_EXEC_REQUEST_UID": "aec3e0e1-xxxx-xxxx-xxxx-a7c58241f1a9"
+  }
+}
+----
+The correlation key is the `SPO_EXEC_REQUEST_UID` on the last line in the above file.
+
+.Advanced Audit Logging Output
+
+[source,yaml]
+----
+{
+  "auditID": "d586679d-xxxx-xxxx-xxxx-9dc8ab273065",
+  "cmdLine": "touch /tmp/testfile.txt ",		// Linux command with arguments
+  "executable": "/bin/dash",
+  "gid": 0,
+  "node": {
+    "name": "worker-1"
+  },
+  "pid": 144968,
+  "requestUID": "aec3e0e1-xxxx-xxxx-xxxx-a7c58241f1a9", // Correlation key
+  "resource": {
+    "container": "nginx",
+    "namespace": "test-namespace",
+    "pod": "test-pod"
+  },
+  "syscalls": ["execve"],
+  "timestamp": "2026-02-16T14:01:07.000Z",
+  "uid": 0,
+  "version": "spo/v1_alpha"
+}
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-enabling_{context}"]
+= Enabling Advanced Audit Logging
+
+[role="_abstract"]
+To enable Advanced Audit Logging, configure the Audit JSON log enricher and specify a set of filters to only log user activity.
+
+.Procedure
+. Enable the JSON enricher by running the following command:
++
+[source,terminal]
+----
+# kubectl -n openshift-security-profiles patch spod spod --type=merge -p '{"spec":{"enableJsonEnricher":true}}'
+----
+Monitor the SPOD pods for correct restart and wait for all SPOD pods to show `Running` before proceeding.
++
+. Check the pods for application of the change with the following command:
++
+[source,terminal]
+----
+$ oc get pods -n openshift-security-profiles -l name=spod -w
+----
+Wait until all SPOD pods show `Running` before proceeding.
++
+[NOTE]
+====
+Each configuration change triggers a restart of the SPOD pods. After applying a patch, wait for all SPOD pods to return to the `Running` state before continuing.
+====
++
+The Audit JSON log enricher uses eBPF as a supplemental data source. While processing `auditd` logs from `/var/log/audit/audit.log`, the enricher attempts to fetch ephemeral data from `/proc/<pid>` directories. Due to a race condition, these files might be deleted before they can be read. To ensure data completeness, the enricher falls back to fetching the necessary information from eBPF whenever it is not found in `/proc/<pid>`.
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-json-enrich_{context}"]
+= Audit JSON Log Enricher configuration
+
+[role="_abstract"]
+The Audit JSON Log Enricher requires some configuration to set interval, configure the destination of the log data and set the audit log file path. This procedure demonstrates how to set up and fine tune your Advanced Audit Logging Framework audit logs.
+
+[NOTE]
+====
+Each configuration change triggers a restart of the SPOD pods. After applying a patch, wait for all SPOD pods to return to the `Running` state before continuing.
+====
+
+Setting the audit log interval determines how often audit logs are created using the `auditLogIntervalSeconds` option.
+
+.Procedure
+
+. Configure the audit log interval to 30 seconds by using the following command:
++
+[source,terminal]
+----
+# kubectl -n openshift-security-profiles patch spod spod --type=merge -p '{"spec":{"enableJsonEnricher":true,"verbosity":0,"jsonEnricherOptions":{"auditLogIntervalSeconds":30}}}'
+----
++
+Wait until all SPOD pods show `Running` before proceeding. By default, audit logs go to your standard output in JSON lines format. You can send them to a file instead.
++
+Configure the security profiles operator to store the log file on the node. Update the security-profiles-operator-profile `ConfigMap` with two keys. This example `yaml` uses both keys to set up a host path volume at `/tmp/logs`.
+
+. Save this JSON in a file, such as `patch-volume-source.json` and check it using the following command:
++
+[source,terminal]
+----
+$ cat patch-volume-source.json
+----
++
+[source,yaml]
+----
+{
+  "data": {
+    "json-enricher-log-volume-mount-path": "/tmp/logs",
+    "json-enricher-log-volume-source.json": "{\"hostPath\": {\"path\": \"/tmp/logs\",\"type\": \"DirectoryOrCreate\"}}"
+  }
+}
+----
+** `json-enricher-log-volume-source.json`: Defines the type of volume (for example, a host path and empty directory) where logs will be stored. This must be a JSON string representing a `corev1.VolumeSource` object.
+** `json-enricher-log-volume-mount-path`: Specifies the directory path where the log file will be generated.
++
+. Update the config map by saving this JSON in this file called `patch-volume-source.json` and then update the config map with the following command:
++
+[source,terminal]
+----
+# kubectl patch configmap security-profiles-operator-profile -n openshift-security-profiles --patch-file patch-volume-source.json
+----
++
+Wait until all SPOD pods show `Running` before proceeding.
++
+. To set the audit log file path, configure the JSON log enricher with the full path to your audit log file by including the filename, using this command:
++
+[source,terminal]
+----
+# kubectl -n openshift-security-profiles patch spod spod --type=merge -p '{"spec":{"enableJsonEnricher":true,"verbosity":0,"jsonEnricherOptions":{"auditLogPath":"/tmp/logs/audit1.log"}}}'
+----
++
+Wait until all SPOD pods show `Running` before proceeding
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-tune-rot_{context}"]
+= Audit log file fine-tuning and rotation
+
+[role="_abstract"]
+For audit logging to a file, you can manage file size and how long each file is kept. These options are similar to link:https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/[Kubernetes API server log settings].
+
+.Procedure
+. You configure these by patching the JSON log enricher options:
++
+[source,terminal]
+----
+# kubectl -n openshift-security-profiles patch spod spod --type=merge -p '{"spec":{"enableJsonEnricher":true,"verbosity":0,"jsonEnricherOptions":{"auditLogPath":"/tmp/logs/audit1.log","auditLogMaxSize":500,"auditLogMaxBackups":2,"auditLogMaxAge":10}}}'
+----
+Wait until all SPOD pods show `Running` before proceeding.
+
+** `auditLogMaxSize`: The maximum size (in megabytes) a log file can reach before it's rotated (a new file is started).
+** `auditLogMaxBackups`: The maximum number of older, rotated log files to keep. Set to 0 for no limit.
+** `auditLogMaxAge`: The maximum number of days to keep old log files.
+
+. Increase the logging level for the JSON log enricher container to help with debugging. A value of `0` sets minimal logs. A value of `1` sets more detailed logs. You can choose either of these two levels and enable either level with the following command:
++
+[source,terminal]
+----
+# kubectl -n openshift-security-profiles patch spod spod --type=merge -p '{"spec":{"enableJsonEnricher":true, "verbosity": 1}}'
+----
+Wait until all SPOD pods show `Running` before proceeding.
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-adv-pod_{context}"]
+= Advanced Audit Logs for a specific pod
+
+[role="_abstract"]
+To enable single pod log activity, create a `SeccompProfile` to log specific syscalls such as `execve` and clone a `ProfileBinding` to automatically apply this profile to pods in a target namespace. The `SeccompProfile` applies to the cluster and the `ProfileBinding` applies to the workloads in that namespace.
+
+With CRI-O versions 1.33 and newer, starting with {product-title} 4.20, a feature was introduced to allow `SeccompProfiles` for privileged containers. You can apply the `SecompProfile` we created to the CRI-O configuration. The key is to configure the CRI-O runtime to use the profile by passing an additional flag.
+
+To do this, you must add the flag `–privileged-seccomp-profile` to the CRI-O runtime configuration. This step ensures that even privileged debugging pods are subject to the `SeccompProfile` logging, maintaining complete audit coverage.
+
+You must bind the profile to a namespace in order to apply it to a workload. This will automatically apply the profile to new pods in the default namespace.
+
+.Procedure
+
+. Create a file such as `profile1.yaml` with the following content:
++
+[source,yaml]
+----
+apiVersion: security-profiles-operator.x-k8s.io/v1beta1
+kind: SeccompProfile
+metadata:
+  name: profile1
+  namespace: openshift-security-profiles
+spec:
+  defaultAction: SCMP_ACT_ALLOW
+  syscalls:
+  - action: SCMP_ACT_LOG
+    names:
+      - execve
+      - clone
+      - getpid
+----
++
+This profile allows all normal actions (`defaultAction: SCMP_ACT_ALLOW`). It specifically tells the system to log when a process tries to run a new program (`execve`), create a new process (`clone`), or get its own process ID (`getpid`). These actions often indicate user interaction within a pod.
+
+. Use`kubectl apply` to apply this `SeccompProfile` profile to your cluster as in the following command:
++
+[source,terminal]
+----
+# kubectl apply -f profile1.yaml
+----
++
+[NOTE]
+====
+SPO must use the privileged `SeccompProfile`
+====
+
+. Create a file named `image_sec_comp.yaml` containing the following `yaml`:
++
+[source,yaml]
+----
+apiVersion: security-profiles-operator.x-k8s.io/v1alpha1
+kind: ProfileBinding
+metadata:
+  namespace: default
+  name: all-pod-binding
+spec:
+  profileRef:
+    kind: SeccompProfile
+    name: profile1
+  image: "*"
+----
+
+. Apply the binding using the following command:
++
+[source,terminal]
+----
+# kubectl apply -f image_sec_comp.yaml
+----
+
+. Label the namespace to activate it using the following command:
++
+[source,terminal]
+----
+# kubectl label ns default spo.x-k8s.io/enable-binding=true
+----
+
+. Create a pod using the profile:
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  securityContext:
+    SeccompProfile:
+      type: Localhost
+      localhostProfile: operator/profile1.json
+  containers:
+    - name: nginx
+      image: quay.io/security-profiles-operator/test-nginx:1.19.1
+----
+
+** type: `Localhost` means you are using a profile you have defined in the cluster.
+
+** localhostProfile: `operator/profile1.json` tells the pod to use the profile1 you created. The `operator/` part indicates where the Security Profiles Operator stores these profiles.
+
+. Apply the pod definition to create the pod by running the following command:
++
+[source,terminal]
+----
+# kubectl apply -f my-pod.yaml
+----
+. Exec/rsh into the pod and run the following command:
++
+[source,terminal]
+----
+# kubectl exec -it my-nginx-pod -- /bin/sh
+----
+. Create an empty file by running this command:
++
+[source,terminal]
+----
+# touch /tmp/audittest/demo-file
+----
++
+** To monitor the advanced audit log tail, use the following command:
++
+[source,terminal]
+----
+# kubectl -n openshift-security-profiles logs --since=1m --selector name=spod -c json-enricher --max-log-requests 6 -f
+----
++
+** Alternatively, to monitor or inspect the advanced audit log file, you need to identify the node on which the pod is scheduled:
++
+[source,terminal]
+----
+# kubectl get pod my-pod -o wide
+----
++
+The audit log file specified in the `auditLogPath` is written to the node's file system where the pod is running. To monitor or inspect the audit logs, you must access the node directly and check the file at the specified path such as `/tmp/logs/audit1.log`.
++
+. SSH to a node by using the following command:
++
+[source,terminal]
+----
+$ sudo ssh core@<node-name>
+----
+
+. View the audit log by using the following command:
++
+[source,terminal]
+----
+$ cat /tmp/logs/audit1.log
+----
++
+Example output
++
+[source,terminal]
+----
+{
+"auditID": "a1b2c3d4-e5f6-7890-abcd-111111111111",
+"cmdLine": "mkdir /tmp/audittest ",
+"executable": "/bin/bash",
+"gid": 0,
+"node": {"name": "worker-1"},
+"pid": 27184,
+"requestUID": "f011c4a3-b20e-44ed-bb91-23e03ae31b3e",
+"resource": {
+"container": "nginx",
+"namespace": "default",
+"pod": "my-pod"
+},
+"syscalls": ["getpid", "execve"],
+"timestamp": "2026-02-16T06:34:53.000Z",
+"uid": 0,
+"version": "spo/v1_alpha"
+}
+{
+"auditID": "a1b2c3d4-e5f6-7890-abcd-222222222222",
+"cmdLine": "touch /tmp/audittest/demo-file ",
+"executable": "/bin/bash",
+"gid": 0,
+"node": {"name": "worker-1"},
+"pid": 27274,
+"requestUID": "f011c4a3-b20e-44ed-bb91-23e03ae31b3e",
+"resource": {
+"container": "nginx",
+"namespace": "default",
+"pod": "my-pod"
+},
+"syscalls": ["getpid", "execve"],
+"timestamp": "2026-02-16T06:35:02.000Z",
+"uid": 0,
+"version": "spo/v1_alpha"
+}
+----
+By following above steps, you can enable and monitor audit logs in JSON lines format for your Kubernetes pods, giving you better visibility into their activities.
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-mon-audit_{context}"]
+= Monitoring the audit logs
+
+[role="_abstract"]
+There are two ways to monitor the advanced audit logs generated by the json-enricher container. By following these steps you can enable and monitor audit logs in JSON lines format for your Kubernetes pods, giving you better visibility into their activities.
+
+.Procedure
+. To monitor the advanced audit log tail use the following command:
++
+[source,terminal]
+----
+# kubectl -n openshift-security-profiles logs --since=1m --selector name=spod -c json-enricher --max-log-requests 6 -f
+----
++
+. To monitor the advanced audit log file, it is specified in the `auditLogPath` and written to the node's file system where the pod is running. To monitor or inspect the audit logs, you must access the node directly and check the file at the specified path such as `/tmp/logs/audit1.log`.
++
+. Identify the node on which the pod is scheduled using the following command:
++
+[source,terminal]
+----
+# kubectl get pod my-pod -o wide
+----
++
+. SSH to a node with the following command:
++
+[source,terminal]
+----
+$ sudo ssh core@<node-name>
+----
++
+. View the audit log with the following command:
++
+[source,terminal]
+----
+$ cat /tmp/logs/audit1.log
+----
++
+The example output should look like this:
++
+[source,terminal]
+----
+{
+"auditID": "a1b2c3d4-e5f6-7890-abcd-111111111111",
+"cmdLine": "mkdir /tmp/audittest ",
+"executable": "/bin/bash",
+"gid": 0,
+"node": {"name": "worker-1"},
+"pid": 27184,
+"requestUID": "f011c4a3-b20e-44ed-bb91-23e03ae31b3e",
+"resource": {
+"container": "nginx",
+"namespace": "default",
+"pod": "my-pod"
+},
+"syscalls": ["getpid", "execve"],
+"timestamp": "2026-02-16T06:34:53.000Z",
+"uid": 0,
+"version": "spo/v1_alpha"
+}
+{
+"auditID": "a1b2c3d4-e5f6-7890-abcd-222222222222",
+"cmdLine": "touch /tmp/audittest/demo-file ",
+"executable": "/bin/bash",
+"gid": 0,
+"node": {"name": "worker-1"},
+"pid": 27274,
+"requestUID": "f011c4a3-b20e-44ed-bb91-23e03ae31b3e",
+"resource": {
+"container": "nginx",
+"namespace": "default",
+"pod": "my-pod"
+},
+"syscalls": ["getpid", "execve"],
+"timestamp": "2026-02-16T06:35:02.000Z",
+"uid": 0,
+"version": "spo/v1_alpha"
+}
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-debug_{context}"]
+= Auditing node debugging sessions
+
+[role="_abstract"]
+To audit kubectl debug sessions, you must enable privileged `seccomp` profiles in CRI-O.
+
+If you are using the CRI-O runtime, you must configure it to allow `seccomp` profiles on privileged containers by adding the `--privileged-seccomp-profile=/var/lib/kubelet/seccomp/operator/profile1.json` flag to your CRI-O runtime configuration.
+
+[NOTE]
+====
+The `--privileged-seccomp-profile` flag is available starting with {product-title} 4.20 or later and CRI-O version 1.33 or later.
+====
+
+.Procedure
+. SSH into the target node using the following command:
++
+[source,terminal]
+----
+# ssh core@<node_ip_address>
+----
++
+. Check to see if the files are there:
++
+[source,terminal]
+----
+# ls /var/lib/kubelet/seccomp/operator/
+----
++
+Example output
++
+[source,terminal]
+----
+# kubelet-config.json  profile1.json
+----
++
+. Stop the `kubelet` with the following commands:
++
+[source,terminal]
+----
+# systemctl stop kubelet
+----
++
+. Stop CRI-O with the command:
++
+[source,terminal]
+----
+# systemctl stop crio
+----
++
+. Set the CRI-O options with the following command:
++
+[source,terminal]
+----
+# echo "CRIO_CONFIG_OPTIONS --privileged-seccomp-profile=/var/lib/kubelet/seccomp/operator/profile1.json" > /etc/sysconfig/crio
+----
++
+. Now restart the cubelet with this command:
++
+[source,terminal]
+----
+# systemctl start kubelet
+----
++
+. Restart CRI-O with this command:
++
+[source,terminal]
+----
+# systemctl start crio
+----
++
+. To audit kubectl debug sessions, run the following command:
++
+[source,terminal]
+----
+# kubectl debug node/<node_name> -it --image=ubuntu -- bash
+----
++
+Create the file on the container for the debugging information.
+. `chroot` to the host with this command:
++
+[source,terminal]
+----
+# chroot /host
+----
++
+. Go into the `/tmp` directory with this command:
++
+[source,terminal]
+----
+# cd /tmp
+----
++
+. Create an empty file named `demonodedebug` with this command:
++
+[source,terminal]
+----
+# touch demonodedebug
+----
++
+. Exit the node with the command:
++
+[source,terminal]
+----
+# exit
+----
++
+. To monitor the logs, SSH to a node with this command:
++
+[source,terminal]
+----
+$ sudo ssh core@<node_name>
+----
+. View the audit log using this command:
++
+[source,terminal]
+----
+$ cat /tmp/logs/audit1.log
+----
++
+Example output:
++
+[source,yaml]
+----
+{
+  "auditID": "edce381a-998d-4f3f-99d8-d0c4d0c8a613",
+  "cmdLine": "touch demonodedebug",
+  "executable": "/usr/bin/bash",
+  "gid": 0,
+  "node": {"name": "worker-1"},
+  "pid": 99086,
+  "resource": {
+    "container": "container-00",
+    "namespace": "openshift-security-profiles",
+    "pod": "worker-1-debug"
+  },
+  "syscalls": ["execve", "getpid"],
+  "timestamp": "2026-02-12T13:50:11.000Z",
+  "uid": 0,
+  "version": "spo/v1_alpha"
+}
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-correlate_{context}"]
+= Correlate with Kubernetes audit logs
+
+[role="_abstract"]
+Use the `requestUID` from the Security Profiles Operator (SPO) log to find the corresponding API server log entry, confirming who initiated the session.
+
+.Procedure
+. Start the pod by running the following command:
++
+[source,terminal]
+----
+$ oc exec my-pod -c nginx -- sh -c "touch /tmp/testfile.txt"
+----
++
+. Identify the node where the pod is running:
++
+[source,terminal]
+----
+$ NODE=$(oc get pod my-pod -o jsonpath='{.spec.nodeName}')
+----
++
+. Access the node and check the JSON enriched audit log using the following commands:
++
+[source,terminal]
+----
+# oc debug node/$NODE
+# chroot /host
+# grep "testfile" /tmp/logs/audit1.log | jq .
+----
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="spo-log-enrich-out_{context}"]
+= Audit JSON Log Enricher Output
+
+[role="_abstract"]
+The Audit JSON Log Enricher captures two entries for this exec session, the SPO-EXEC_REQUEST_UID injection and the command run on the pod. They are connected by looking for the common `UID` value.
+
+. The first listing is the container runtime wrapper.
++
+[source,yaml]
+----
+{
+  "auditID": "062e2bd2-xxxx-xxxx-xxxx-57fb39d65a99",
+  "cmdLine": "env SPO_EXEC_REQUEST_UID=aec3e0e1-xxxx-xxxx-xxxx-a7c58241f1a9 sh -c touch /tmp/testfile.txt ",
+  "executable": "/usr/bin/crun",
+  "pid": 144966,
+  "requestUID": "aec3e0e1-xxxx-xxxx-xxxx-a7c58241f1a9",
+  "resource": {
+    "container": "nginx",
+    "namespace": "default",
+    "pod": "my-pod"
+  },
+  "node": {
+    "name": "worker-1"
+  },
+  "syscalls": ["execve", "getpid", "clone"],
+  "timestamp": "2026-02-16T14:01:07.000Z"
+}
+----
++
+. The second listing is the actual command executed.
++
+[source,yaml]
+----
+{
+  "auditID": "d586679d-xxxx-xxxx-xxxx-9dc8ab273065",
+  "cmdLine": "touch /tmp/testfile.txt ",
+  "executable": "/bin/dash",
+  "pid": 144968,
+  "requestUID": "aec3e0e1-xxxx-xxxx-xxxx-a7c58241f1a9", // Correlation key
+  "resource": {
+    "container": "nginx",
+    "namespace": "default",
+    "pod": "my-pod"
+  },
+  "node": {
+    "name": "worker-1"
+  },
+  "syscalls": ["execve"],
+  "timestamp": "2026-02-16T14:01:07.000Z"
+}
+----
++
+. You can search the Kubernetes API audit log by using the `requestUID` with the following command:
++
+[source,terminal]
+----
+$ oc adm node-logs --role=master --path=kube-apiserver/audit.log | grep request_UID
+----
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="spo-log-kube-api-out_{context}"]
+= Kubernetes API audit log output
+
+[role="_abstract"]
+The output of the Kubernetes API audit log is YAML. It contains the `SPO_EXEC_REQUEST_UID` field which provides the correlation key with which you can search the Advanced Audit Logging output.
+
+[source,yaml]
+----
+{
+  "kind": "Event",
+  "apiVersion": "audit.k8s.io/v1",
+  "level": "Metadata",
+  "auditID": "4d434cd4-xxxx-xxxx-xxxx-2d9aa46292ce",
+  "stage": "ResponseComplete",
+  "requestURI": "/api/v1/namespaces/test-namespace/pods/test-pod/exec?command=sh&command=-c&command=touch+/tmp/testfile.txt&container=nginx",
+  "verb": "create",
+  "user": {
+    "username": "kube:admin",
+    "groups": ["system:cluster-admins", "system:authenticated"]
+  },
+  "sourceIPs": ["xxx.xxx.xxx.xxx"],
+  "userAgent": "oc/4.19.0 (linux/amd64)",
+  "objectRef": {
+    "resource": "pods",
+    "namespace": "default",
+    "name": "my-pod",
+    "subresource": "exec"
+  },
+  "responseStatus": {
+    "code": 101
+  },
+  "requestReceivedTimestamp": "2026-02-16T14:01:06.056518Z",
+  "annotations": {
+    "authorization.k8s.io/decision": "allow",
+    "authorization.k8s.io/reason": "RBAC: allowed by ClusterRoleBinding...",
+    "execmetadata.spo.io/SPO_EXEC_REQUEST_UID": "aec3e0e1-xxxx-xxxx-xxxx-a7c58241f1a9"
+}
+----
+
+The final field in this example, `SPO_EXEC_REQUEST_UID` is the correlation key.
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="spo-log-corr-key_{context}"]
+= Correlation key
+
+[role="_abstract"]
+The connection of the two correlation keys enables administrators to establish a complete audit trail. Who executed a command, from Kubernetes API audit log `kube:admin` at IP `xxx.xxx.xxx.xxx` and what the command did at the system level, can be found in the SPO JSON Enricher log `touch /tmp/testfile.txt`.
+
+The `requestUID` field in Audit JSON Enricher logs matches the `annotations.execmetadata.spo.io/SPO_EXEC_REQUEST_UID` annotation in the Kubernetes API audit log.
+
+[source,text]
+----
+aec3e0e1-xxxx-xxxx-xxxx-a7c58241f1a9
+----
+
+
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-corr-log_{context}"]
+= Correlating with API Server Audit Log
+
+[role="_abstract"]
+By default, when you use the `kubectl exec` command to access a pod or container, Kubernetes does not pass the user's authentication details into that session's environment. This means the Audit JSON log enricher cannot provide audit information for `exec` commands. The `UID` or `GID` shown, maps to the system user. In most cases this would be the root user.
+
+To address this, the Audit JSON log enricher relies on mutating webhooks (`execmetadata.spo.io` and `nodedebuggingpod.spo.io`). The webhook injects the exec `requestUID` as an environment variable into the `exec` session. When the administrator enables audit logging on the API server, the webhooks add the `SPO_EXEC_REQUEST_UID` audit annotation. The API server audit log contains this information. This request ID is also available in the JSON lines produced by the Audit JSON log enricher, specifically within the `requestUID` field.
+
+By default, these webhooks are enabled for all namespaces with the Audit JSON log enricher enabled. To reduce the scope of this webhook you can disable it for certain namespaces.
+
+.Procedure
+
+. Edit the spod security profile by running the following command:
++
+[source,terminal]
+----
+$ oc edit spod spod -n openshift-security-profiles
+----
++
+. Add `webhookOptions` to the `spec`. Locate the `spec` section and add the following `webhookOptions` block to instruct the webhook to apply to a specific namespace.
++
+[source,yaml]
+----
+spec:
+  webhookOptions:
+    - name: execmetadata.spo.io # or nodedebuggingpod.spo.io
+      namespaceSelector:
+      #...add rules
+----
++
+After saving your changes, the Operator reconfigures the mutating webhook, allowing request details to be passed into `oc exec` sessions cluster-wide.
+
+:leveloffset!:
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="spo-log-webhook_{context}"]
+= Using the mutating webhook
+
+[role="_abstract"]
+This webhook injects the environment variable `SPO_EXEC_REQUEST_UID` into your exec request. If a container in your pod already defines an environment variable with this exact name, the webhook injected value will override it for this exec session.
+
+When you use `kubectl debug node/<node_name>`, the `nodedebuggingpod.spo.io` webhook automatically injects the `SPO_EXEC_REQUEST_UID` environment variable into the debug pod.
+
+[id="debug-pod_{context}"]
+== The Debug Pod
+
+This webhook primarily identifies kubectl debug pods by the label `app.kubernetes.io/managed-by: kubectl-debug`, which is added by the kubectl client. Because this label might vary across different Kubernetes client implementations, such as how `oc debug` in OpenShift uses `debug.openshift.io/managed-by: oc-debug`, you might need to configure additional `webhookOptions` to ensure the webhook catches all relevant debug pods.
+
+For example, to add oc debug pods, use the following `yaml`:
+
+[source,terminal]
+----
+# ... (rest of your spod configuration)
+spec:
+  webhookOptions:
+    - name: nodedebuggingpodmetada.spo.io
+      objectSelector:
+        matchLabels: # Use matchLabels for exact matching
+          debug.openshift.io/managed-by: "oc-debug"
+# ... (other webhook rule details such as rules, clientConfig, etc.)
+----
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * security/security_profiles_operator/spo-logging.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="spo-log-disable_{context}"]
+= Disabling Advanced Audit Logging
+
+[role="_abstract"]
+You can disable advanced audit logging and revert all configurations by deleting the test pod, the `seccompProfile`, the JSON Log Enricher and resetting all `spod` pod options.
+
+.Procedure
+
+. Delete the test pod with the following command:
++
+[source,terminal]
+----
+oc delete pod my-pod
+----
+. Delete the `seccompProfile` using this command:
++
+[source,terminal]
+----
+oc delete seccompprofile profile1 -n openshift-security-profiles
+----
+. Disable the JSON Log Enricher and reset all options:
++
+[source,terminal]
+----
+oc patch spod spod -n openshift-security-profiles --type merge -p '{ "spec": { "enableJsonEnricher": false, "jsonEnricherOptions": { "auditLogPath": "", "auditLogMaxSize": 0, "auditLogMaxBackups": 0, "auditLogMaxAge": 0, "auditLogIntervalSeconds": 0 } }}'
+----
+. Wait for `spod` pods to restart. Run the following command to check:
++
+[source,terminal]
+----
+oc get pods -n openshift-security-profiles -l name=spod -w
+----
++
+Wait until all `spod` pods show `Running`.
+. Revert the ConfigMap volume patch with the following command:
++
+[source,terminal]
+----
+oc patch configmap security-profiles-operator-profile -n openshift-security-profiles --type merge -p '{"data":{"patch-volume-source.json":""}}'
+----
+. Verify that the configuration has been successfully updated:
++
+[source,terminal]
+----
+oc get spod spod -n openshift-security-profiles -o jsonpath='{.spec.enableJsonEnricher}'
+----
+Expected output:
++
+[source,terminal]
+----
+false
+----
+
+:leveloffset!:
+
+
+// [role="_additional-resources"]
+// [id="additional-resources_spo-logging"]
+== Additional resources
+
+* xref:../../security/security_profiles_operator/spo-advanced.adoc#spo-log-enricher_spo-advanced[Using the log enricher]
+* xref:../../security/security_profiles_operator/spo-understanding.adoc#spo-about_spo-understanding[About security profiles]
+* xref:../../security/security_profiles_operator/spo-troubleshooting.adoc#spo-inspecting-seccomp-profiles_spo-troubleshooting[Troubleshoot the Security Profiles Operator]
+* xref:../../security/security_profiles_operator/spo-uninstalling.adoc#spo-uninstalling[Uninstalling SPO]
