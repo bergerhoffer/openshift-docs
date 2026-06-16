@@ -43,3 +43,5 @@ Topics:
     File: reschedule-pods
   - Name: Extend scheduling behavior with a secondary scheduler
     File: secondary-scheduler
+  - Name: Symlink job
+    File: new-job-symlink

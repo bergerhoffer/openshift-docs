@@ -1,0 +1,15 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="secondary-scheduler"]
+= Some new job that lives in jobs directory
+include::_attributes/common-attributes.adoc[]
+:context: secondary-scheduler
+
+toc::[]
+
+[role="_abstract"]
+Test abstract
+
+== Test section again
+
+// About the {secondary-scheduler-operator}
+include::modules/nodes-secondary-scheduler-about.adoc[leveloffset=+2]
