@@ -1,0 +1,952 @@
+{
+  "product": "OpenShift Container Platform",
+  "product_short": "OCP",
+  "docs_repo": "/home/ahoffer/git/review-openshift-docs/openshift-docs",
+  "generated": "2026-07-15",
+  "entries": [
+    {
+      "entry_number": 1,
+      "entry_name": "Discover CLI tools",
+      "entry_slug": "discover-cli-tools",
+      "entry_type": null,
+      "landing_category": "Discover",
+      "job_statement": "When I am new to OpenShift or evaluating CLI options, I want to understand the available CLI tools, their purposes, and their current support status, so I can choose the right tool for my workflow.",
+      "stages": [
+        {
+          "number": 1,
+          "name": "CLI tools overview"
+        },
+        {
+          "number": 2,
+          "name": "Tool comparison and selection"
+        },
+        {
+          "number": 3,
+          "name": "Deprecated and removed tools"
+        }
+      ],
+      "content_gaps": [
+        {
+          "impact": "Medium",
+          "description": "No comparison matrix or decision guide for choosing between tools"
+        }
+      ],
+      "guides": [
+        {
+          "guide_name": "CLI tools overview",
+          "guide_dir": "cli_reference",
+          "master_adoc": "cli_reference/index.adoc",
+          "stage": "CLI tools overview",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-tools-list.adoc",
+              "title": "List of CLI tools",
+              "jtbd_title": "List of CLI tools",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Developer CLI (odo)",
+          "guide_dir": "cli_reference",
+          "master_adoc": "cli_reference/odo-important-update.adoc",
+          "stage": "Deprecated and removed tools",
+          "modules": []
+        }
+      ],
+      "reassignments": [
+        {
+          "module": "cli_reference/odo-important-update.adoc",
+          "from": "Developer CLI (odo) standalone section",
+          "to": "Discover CLI tools",
+          "reason": "odo deprecation notice belongs in tool evaluation context, not as a dead-end page"
+        }
+      ]
+    },
+    {
+      "entry_number": 2,
+      "entry_name": "Install and get started with the OpenShift CLI",
+      "entry_slug": "install-get-started-cli",
+      "entry_type": null,
+      "landing_category": "Get Started",
+      "job_statement": "When I need to start using the OpenShift CLI, I want to install it on my operating system, authenticate to a cluster, and perform basic operations, so I can begin managing my cluster and applications from the command line.",
+      "stages": [
+        {
+          "number": 1,
+          "name": "Install the CLI"
+        },
+        {
+          "number": 2,
+          "name": "Authenticate and run first commands"
+        },
+        {
+          "number": 3,
+          "name": "Use help and manage sessions"
+        }
+      ],
+      "content_gaps": [],
+      "guides": [
+        {
+          "guide_name": "Getting started with the OpenShift CLI",
+          "guide_dir": "cli_reference/openshift_cli",
+          "master_adoc": "cli_reference/openshift_cli/getting-started-cli.adoc",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-about-cli.adoc",
+              "title": "About the OpenShift CLI",
+              "jtbd_title": "About the OpenShift CLI",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli.adoc",
+              "title": "Installing the OpenShift CLI",
+              "jtbd_title": "Install the OpenShift CLI",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-portal.adoc",
+              "title": "Installing the OpenShift CLI by downloading the binary from the Customer Portal",
+              "jtbd_title": "Install the OpenShift CLI by downloading the binary from the Customer Portal",
+              "module_type": "CONCEPT",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-linux.adoc",
+              "title": "Installing the OpenShift CLI on Linux",
+              "jtbd_title": "Install the OpenShift CLI on Linux",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+3"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-windows.adoc",
+              "title": "Installing the OpenShift CLI on Windows",
+              "jtbd_title": "Install the OpenShift CLI on Windows",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+3"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-macos.adoc",
+              "title": "Installing the OpenShift CLI on macOS",
+              "jtbd_title": "Install the OpenShift CLI on macOS",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+3"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-web-console.adoc",
+              "title": "Installing the OpenShift CLI by downloading the binary from the web console",
+              "jtbd_title": "Install the OpenShift CLI by downloading the binary from the web console",
+              "module_type": "CONCEPT",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-web-console-linux.adoc",
+              "title": "Installing the OpenShift CLI on Linux using the web console",
+              "jtbd_title": "Install the OpenShift CLI on Linux using the web console",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+3"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-web-console-windows.adoc",
+              "title": "Installing the OpenShift CLI on Windows using the web console",
+              "jtbd_title": "Install the OpenShift CLI on Windows using the web console",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+3"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-web-console-macos.adoc",
+              "title": "Installing the OpenShift CLI on macOS using the web console",
+              "jtbd_title": "Install the OpenShift CLI on macOS using the web console",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+3"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-rpm.adoc",
+              "title": "Installing the OpenShift CLI by using an RPM",
+              "jtbd_title": "Install the OpenShift CLI by using an RPM",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-installing-cli-brew.adoc",
+              "title": "Installing the OpenShift CLI by using Homebrew",
+              "jtbd_title": "Install the OpenShift CLI by using Homebrew",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-logging-in.adoc",
+              "title": "Logging in to the OpenShift CLI",
+              "jtbd_title": "Log in to the OpenShift CLI",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-logging-in-web.adoc",
+              "title": "Logging in to the OpenShift CLI using a web browser",
+              "jtbd_title": "Log in to the OpenShift CLI using a web browser",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-using-cli.adoc",
+              "title": "Using the OpenShift CLI",
+              "jtbd_title": "Use the OpenShift CLI",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-using-cli-project.adoc",
+              "title": "Creating a project",
+              "jtbd_title": "Create a project",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-using-cli-new-app.adoc",
+              "title": "Creating a new application",
+              "jtbd_title": "Create a new application",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-using-cli-pods.adoc",
+              "title": "Viewing pods",
+              "jtbd_title": "View pods",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-using-cli-pod-logs.adoc",
+              "title": "Viewing pod logs",
+              "jtbd_title": "View pod logs",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-using-cli-current-project.adoc",
+              "title": "Viewing the current project",
+              "jtbd_title": "View the current project",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-using-cli-project-status.adoc",
+              "title": "Viewing the status of the current project",
+              "jtbd_title": "View the status of the current project",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-using-cli-list-api-resources.adoc",
+              "title": "Listing supported API resources",
+              "jtbd_title": "List supported API resources",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-getting-help.adoc",
+              "title": "Getting help",
+              "jtbd_title": "Get help",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-logging-out.adoc",
+              "title": "Logging out of the OpenShift CLI",
+              "jtbd_title": "Log out of the OpenShift CLI",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        }
+      ],
+      "reassignments": []
+    },
+    {
+      "entry_number": 3,
+      "entry_name": "Configure the CLI environment",
+      "entry_slug": "configure-cli-environment",
+      "entry_type": null,
+      "landing_category": "Configure",
+      "job_statement": "When I have the OpenShift CLI installed, I want to configure my shell environment, manage authentication profiles, and understand multi-cluster access, so I can work efficiently across clusters and sessions.",
+      "stages": [
+        {
+          "number": 1,
+          "name": "Quick shell setup"
+        },
+        {
+          "number": 2,
+          "name": "Understand oc vs kubectl"
+        },
+        {
+          "number": 3,
+          "name": "Multi-cluster profile management"
+        }
+      ],
+      "content_gaps": [],
+      "guides": [
+        {
+          "guide_name": "Configuring the OpenShift CLI",
+          "guide_dir": "cli_reference/openshift_cli",
+          "master_adoc": "cli_reference/openshift_cli/configuring-cli.adoc",
+          "stage": "Quick shell setup",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-configuring-completion.adoc",
+              "title": "Enabling tab completion for Bash",
+              "jtbd_title": "Enable tab completion for Bash",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-configuring-completion-zsh.adoc",
+              "title": "Enabling tab completion for Zsh",
+              "jtbd_title": "Enable tab completion for Zsh",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/cli-configuring-kubeconfig-using-cli.adoc",
+              "title": "Accessing kubeconfig by using the oc CLI",
+              "jtbd_title": "Access kubeconfig by using the oc CLI",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Usage of oc and kubectl commands",
+          "guide_dir": "cli_reference/openshift_cli",
+          "master_adoc": "cli_reference/openshift_cli/usage-oc-kubectl.adoc",
+          "stage": "Understand oc vs kubectl",
+          "modules": [
+            {
+              "path": "cli_reference/modules/oc-usage-oc.adoc",
+              "title": "The oc binary",
+              "jtbd_title": "The oc binary",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/oc-usage-kubectl.adoc",
+              "title": "The kubectl binary",
+              "jtbd_title": "The kubectl binary",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Managing CLI profiles",
+          "guide_dir": "cli_reference/openshift_cli",
+          "master_adoc": "cli_reference/openshift_cli/managing-cli-profiles.adoc",
+          "stage": "Multi-cluster profile management",
+          "modules": [
+            {
+              "path": "cli_reference/modules/about-cli-profiles-switch.adoc",
+              "title": "About switching between CLI profiles",
+              "jtbd_title": "Switch between CLI profiles",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/manual-configuration-of-cli-profiles-example.adoc",
+              "title": "Manually configuring CLI profiles",
+              "jtbd_title": "Manually configure CLI profiles",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/manual-configuration-of-cli-profiles.adoc",
+              "title": "Manual configuration of CLI profiles",
+              "jtbd_title": "Manual configuration of CLI profiles",
+              "module_type": "REFERENCE",
+              "leveloffset": "+2"
+            },
+            {
+              "path": "cli_reference/modules/load-and-merge-rules.adoc",
+              "title": "Load and merge rules",
+              "jtbd_title": "Load and merge rules",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            }
+          ]
+        }
+      ],
+      "reassignments": [
+        {
+          "module": "cli_reference/openshift_cli/usage-oc-kubectl.adoc",
+          "from": "Standalone oc-vs-kubectl page",
+          "to": "Configure the CLI environment",
+          "reason": "Users encounter the oc-vs-kubectl question during configuration, not initial discovery"
+        }
+      ]
+    },
+    {
+      "entry_number": 4,
+      "entry_name": "Extend the CLI with plugins",
+      "entry_slug": "extend-cli-plugins",
+      "entry_type": null,
+      "landing_category": "Extend",
+      "job_statement": "When I need CLI functionality beyond the default oc commands, I want to extend the CLI through custom plugins or the CLI Manager Operator, so I can add specialized tooling to my workflow.",
+      "stages": [
+        {
+          "number": 1,
+          "name": "Write and install a custom plugin"
+        },
+        {
+          "number": 2,
+          "name": "Use the CLI Manager for centralized plugin management"
+        },
+        {
+          "number": 3,
+          "name": "Manage CLI Manager lifecycle"
+        }
+      ],
+      "content_gaps": [],
+      "guides": [
+        {
+          "guide_name": "Extending the OpenShift CLI with plugins",
+          "guide_dir": "cli_reference/openshift_cli",
+          "master_adoc": "cli_reference/openshift_cli/extending-cli-plugins.adoc",
+          "stage": "Write and install a custom plugin",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-extending-plugins-writing.adoc",
+              "title": "Writing CLI plugins",
+              "jtbd_title": "Write CLI plugins",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-extending-plugins-installing.adoc",
+              "title": "Installing and using CLI plugins",
+              "jtbd_title": "Install and use CLI plugins",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "OpenShift CLI Manager overview",
+          "guide_dir": "cli_reference/cli_manager",
+          "master_adoc": "cli_reference/cli_manager/index.adoc",
+          "stage": "Use the CLI Manager for centralized plugin management",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-manager-about.adoc",
+              "title": "About the {cli-manager}",
+              "jtbd_title": "About the CLI Manager",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "OpenShift CLI Manager release notes",
+          "guide_dir": "cli_reference/cli_manager",
+          "master_adoc": "cli_reference/cli_manager/cli-manager-release-notes.adoc",
+          "stage": "Use the CLI Manager for centralized plugin management",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-manager-rn-0-2-0.adoc",
+              "title": "{cli-manager} 0.2.0 (Technology Preview)",
+              "jtbd_title": "CLI Manager 0.2.0 release notes",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-manager-rn-0-1-1.adoc",
+              "title": "{cli-manager} 0.1.1 (Technology Preview)",
+              "jtbd_title": "CLI Manager 0.1.1 release notes",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Installing the OpenShift CLI Manager",
+          "guide_dir": "cli_reference/cli_manager",
+          "master_adoc": "cli_reference/cli_manager/cli-manager-install.adoc",
+          "stage": "Use the CLI Manager for centralized plugin management",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-manager-installing.adoc",
+              "title": "Installing the {cli-manager}",
+              "jtbd_title": "Install the CLI Manager",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-manager-custom-index-krew.adoc",
+              "title": "Adding the {cli-manager} custom index to Krew",
+              "jtbd_title": "Add the CLI Manager custom index to Krew",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-manager-adding-plugin-yaml.adoc",
+              "title": "Adding a plugin to the {cli-manager}",
+              "jtbd_title": "Add a plugin to the CLI Manager",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Using the OpenShift CLI Manager",
+          "guide_dir": "cli_reference/cli_manager",
+          "master_adoc": "cli_reference/cli_manager/cli-manager-using.adoc",
+          "stage": "Use the CLI Manager for centralized plugin management",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-manager-installing-plugins.adoc",
+              "title": "Installing CLI plugins with the {cli-manager}",
+              "jtbd_title": "Install CLI plugins with the CLI Manager",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-manager-upgrading-plugin.adoc",
+              "title": "Upgrading a plugin with the {cli-manager}",
+              "jtbd_title": "Upgrade a plugin with the CLI Manager",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-manager-updating-plugin.adoc",
+              "title": "Updating CLI plugins with the {cli-manager}",
+              "jtbd_title": "Update CLI plugins with the CLI Manager",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-manager-uninstall-plugin.adoc",
+              "title": "Uninstalling a CLI plugin with the {cli-manager}",
+              "jtbd_title": "Uninstall a CLI plugin with the CLI Manager",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Uninstalling the OpenShift CLI Manager",
+          "guide_dir": "cli_reference/cli_manager",
+          "master_adoc": "cli_reference/cli_manager/cli-manager-uninstall.adoc",
+          "stage": "Manage CLI Manager lifecycle",
+          "modules": [
+            {
+              "path": "cli_reference/modules/cli-manager-uninstalling.adoc",
+              "title": "Uninstalling the {cli-manager}",
+              "jtbd_title": "Uninstall the CLI Manager",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/cli-manager-remove-resources.adoc",
+              "title": "Removing {cli-manager} resources",
+              "jtbd_title": "Remove CLI Manager resources",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        }
+      ],
+      "reassignments": []
+    },
+    {
+      "entry_number": 5,
+      "entry_name": "Look up oc developer commands",
+      "entry_slug": "look-up-dev-commands",
+      "entry_type": null,
+      "landing_category": "Reference",
+      "job_statement": "When I am developing and deploying applications on OpenShift, I want to find the right oc commands organized by purpose, so I can efficiently manage the full application lifecycle from the command line.",
+      "stages": [
+        {
+          "number": 1,
+          "name": "Create and deploy applications"
+        },
+        {
+          "number": 2,
+          "name": "Manage deployments and scaling"
+        },
+        {
+          "number": 3,
+          "name": "Inspect and manage resources"
+        },
+        {
+          "number": 4,
+          "name": "Debug and troubleshoot applications"
+        },
+        {
+          "number": 5,
+          "name": "Configure application settings"
+        },
+        {
+          "number": 6,
+          "name": "Manage container images"
+        },
+        {
+          "number": 7,
+          "name": "Authenticate and check permissions"
+        }
+      ],
+      "content_gaps": [
+        {
+          "impact": "High",
+          "description": "No conceptual overview exists for the developer command reference. High-impact pre-migration blocker: a parent topic must be authored before restructuring."
+        }
+      ],
+      "guides": [
+        {
+          "guide_name": "OpenShift CLI developer command reference",
+          "guide_dir": "cli_reference/openshift_cli",
+          "master_adoc": "cli_reference/openshift_cli/developer-cli-commands.adoc",
+          "modules": [
+            {
+              "path": "cli_reference/modules/oc-by-example-content.adoc",
+              "title": "OpenShift CLI (oc) developer commands",
+              "jtbd_title": "OpenShift CLI (oc) developer commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            }
+          ]
+        }
+      ],
+      "reassignments": []
+    },
+    {
+      "entry_number": 6,
+      "entry_name": "Look up oc administrator commands",
+      "entry_slug": "look-up-admin-commands",
+      "entry_type": null,
+      "landing_category": "Reference",
+      "job_statement": "When I need to perform administrative operations on my OpenShift cluster, I want to find the right oc adm commands organized by operational purpose, so I can manage nodes, security, and cluster maintenance efficiently from the command line.",
+      "stages": [
+        {
+          "number": 1,
+          "name": "Manage nodes"
+        },
+        {
+          "number": 2,
+          "name": "Manage security and access control"
+        },
+        {
+          "number": 3,
+          "name": "Maintain and troubleshoot the cluster"
+        }
+      ],
+      "content_gaps": [],
+      "guides": [
+        {
+          "guide_name": "OpenShift CLI administrator command reference",
+          "guide_dir": "cli_reference/openshift_cli",
+          "master_adoc": "cli_reference/openshift_cli/administrator-cli-commands.adoc",
+          "modules": [
+            {
+              "path": "cli_reference/modules/oc-adm-by-example-content.adoc",
+              "title": "OpenShift CLI (oc) administrator commands",
+              "jtbd_title": "OpenShift CLI (oc) administrator commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            }
+          ]
+        }
+      ],
+      "reassignments": []
+    },
+    {
+      "entry_number": 7,
+      "entry_name": "Install and use companion CLIs",
+      "entry_slug": "companion-clis",
+      "entry_type": null,
+      "landing_category": "Integrate",
+      "job_statement": "When I need to manage specific OpenShift platform services from the command line, I want to install and use the purpose-built CLI for that service, so I can perform specialized tasks like pipeline management, serverless deployment, GitOps, Operator catalog building, or hosted cluster provisioning.",
+      "stages": [
+        {
+          "number": 1,
+          "name": "Pipelines CLI (tkn)"
+        },
+        {
+          "number": 2,
+          "name": "opm CLI"
+        },
+        {
+          "number": 3,
+          "name": "Hosted control planes CLI (hcp)"
+        },
+        {
+          "number": 4,
+          "name": "Knative CLI (kn)"
+        },
+        {
+          "number": 5,
+          "name": "GitOps CLI (argocd)"
+        }
+      ],
+      "content_gaps": [
+        {
+          "impact": "Medium",
+          "description": "kn and argocd sections are stubs that redirect to other product documentation"
+        }
+      ],
+      "guides": [
+        {
+          "guide_name": "Knative CLI (kn) for use with OpenShift Serverless",
+          "guide_dir": "cli_reference",
+          "master_adoc": "cli_reference/kn-cli-tools.adoc",
+          "stage": "Knative CLI (kn)",
+          "modules": []
+        },
+        {
+          "guide_name": "Installing tkn",
+          "guide_dir": "cli_reference/tkn_cli",
+          "master_adoc": "cli_reference/tkn_cli/installing-tkn.adoc",
+          "stage": "Pipelines CLI (tkn)",
+          "modules": [
+            {
+              "path": "cli_reference/modules/op-installing-tkn-on-linux.adoc",
+              "title": "Installing the {pipelines-title} CLI on Linux",
+              "jtbd_title": "Install the Pipelines CLI on Linux",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-installing-tkn-on-linux-using-rpm.adoc",
+              "title": "Installing the {pipelines-title} CLI on Linux using an RPM",
+              "jtbd_title": "Install the Pipelines CLI on Linux using an RPM",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-installing-tkn-on-windows.adoc",
+              "title": "Installing the {pipelines-title} CLI on Windows",
+              "jtbd_title": "Install the Pipelines CLI on Windows",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-installing-tkn-on-macos.adoc",
+              "title": "Installing the {pipelines-title} CLI on macOS",
+              "jtbd_title": "Install the Pipelines CLI on macOS",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Configuring tkn",
+          "guide_dir": "cli_reference/tkn_cli",
+          "master_adoc": "cli_reference/tkn_cli/op-configuring-tkn.adoc",
+          "stage": "Pipelines CLI (tkn)",
+          "modules": [
+            {
+              "path": "cli_reference/modules/op-tkn-enabling-tab-completion.adoc",
+              "title": "Enabling tab completion",
+              "jtbd_title": "Enable tab completion for tkn",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Basic tkn commands",
+          "guide_dir": "cli_reference/tkn_cli",
+          "master_adoc": "cli_reference/tkn_cli/op-tkn-reference.adoc",
+          "stage": "Pipelines CLI (tkn)",
+          "modules": [
+            {
+              "path": "cli_reference/modules/op-tkn-utility-commands.adoc",
+              "title": "Utility commands",
+              "jtbd_title": "Utility commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-pipeline-management.adoc",
+              "title": "Pipelines management commands",
+              "jtbd_title": "Pipeline management commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-pipeline-run.adoc",
+              "title": "Pipeline run commands",
+              "jtbd_title": "Pipeline run commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-task-management.adoc",
+              "title": "Task management commands",
+              "jtbd_title": "Task management commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-task-run.adoc",
+              "title": "Task run commands",
+              "jtbd_title": "Task run commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-condition-management.adoc",
+              "title": "Condition management commands",
+              "jtbd_title": "Condition management commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-pipeline-resource-management.adoc",
+              "title": "Pipeline Resource management commands",
+              "jtbd_title": "Pipeline resource management commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-clustertask-management.adoc",
+              "title": "ClusterTask management commands",
+              "jtbd_title": "ClusterTask management commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-trigger-management.adoc",
+              "title": "Trigger management commands",
+              "jtbd_title": "Trigger management commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/op-tkn-hub-interaction.adoc",
+              "title": "Hub interaction commands",
+              "jtbd_title": "Hub interaction commands",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "GitOps CLI (argocd) for use with OpenShift GitOps",
+          "guide_dir": "cli_reference",
+          "master_adoc": "cli_reference/gitops-argocd-cli-tools.adoc",
+          "stage": "GitOps CLI (argocd)",
+          "modules": []
+        },
+        {
+          "guide_name": "Installing the opm CLI",
+          "guide_dir": "cli_reference/opm",
+          "master_adoc": "cli_reference/opm/cli-opm-install.adoc",
+          "stage": "opm CLI",
+          "modules": [
+            {
+              "path": "cli_reference/modules/olm-about-opm.adoc",
+              "title": "About the opm CLI",
+              "jtbd_title": "About the opm CLI",
+              "module_type": "CONCEPT",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/olm-installing-opm.adoc",
+              "title": "Installing the opm CLI",
+              "jtbd_title": "Install the opm CLI",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "opm CLI reference",
+          "guide_dir": "cli_reference/opm",
+          "master_adoc": "cli_reference/opm/cli-opm-ref.adoc",
+          "stage": "opm CLI",
+          "modules": [
+            {
+              "path": "cli_reference/modules/opm-cli-ref-generate.adoc",
+              "title": "generate",
+              "jtbd_title": "generate",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/opm-cli-ref-index.adoc",
+              "title": "index",
+              "jtbd_title": "index",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/opm-cli-ref-init.adoc",
+              "title": "init",
+              "jtbd_title": "init",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/opm-cli-ref-migrate.adoc",
+              "title": "migrate",
+              "jtbd_title": "migrate",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/opm-cli-ref-render.adoc",
+              "title": "render",
+              "jtbd_title": "render",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/opm-cli-ref-serve.adoc",
+              "title": "serve",
+              "jtbd_title": "serve",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/opm-cli-ref-validate.adoc",
+              "title": "validate",
+              "jtbd_title": "validate",
+              "module_type": "REFERENCE",
+              "leveloffset": "+1"
+            }
+          ]
+        },
+        {
+          "guide_name": "Hosted control planes CLI",
+          "guide_dir": "cli_reference",
+          "master_adoc": "cli_reference/hcp-cli-ref.adoc",
+          "stage": "Hosted control planes CLI (hcp)",
+          "modules": [
+            {
+              "path": "cli_reference/modules/hcp-cli-terminal.adoc",
+              "title": "Installing the {hcp} command-line interface from the terminal",
+              "jtbd_title": "Install the hcp CLI from the terminal",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/hcp-cli-console.adoc",
+              "title": "Installing the {hcp} command-line interface by using the web console",
+              "jtbd_title": "Install the hcp CLI by using the web console",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            },
+            {
+              "path": "cli_reference/modules/hcp-cli-gateway.adoc",
+              "title": "Installing the {hcp} command-line interface by using the content gateway",
+              "jtbd_title": "Install the hcp CLI by using the content gateway",
+              "module_type": "PROCEDURE",
+              "leveloffset": "+1"
+            }
+          ]
+        }
+      ],
+      "reassignments": []
+    }
+  ]
+}

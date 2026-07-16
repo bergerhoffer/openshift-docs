@@ -1,0 +1,1663 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="cli-getting-started"]
+= Getting started with the OpenShift CLI
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.21
+:ocp-nplus1: 4.23
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.6.0
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-version-1-6: 1.6.0
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.17
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:external-secrets-console-plugin: External Secrets Management Console Plug-in
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hco
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:KMS: Kubernetes KMS v2
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:bmaas-first: Red{nbsp}Hat Bare Metal as a Service for OpenShift
+:_mod-docs-content-type: ATTRIBUTES
+//adding attribute content type to silence vale
+// General Service Delivery Attributes attributes
+:toc:
+:toc-title:
+:experimental:
+:imagesdir: images
+:OCP: OpenShift Container Platform
+:OCP-short: OpenShift
+:ocp-version: 4.19
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-first: Red Hat Enterprise Linux CoreOS (RHCOS)
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:hybrid-console: Red Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+:AWS: Amazon Web Services (AWS)
+:GCP: Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+:openshift-networking: Red Hat OpenShift Networking
+:product-registry: OpenShift image registry
+:kebab: image:kebab.png[title="Options menu"]
+:rhq-short: Red{nbsp}Hat Quay
+:SMProductName: Red Hat OpenShift Service Mesh
+:pipelines-title: Red Hat OpenShift Pipelines
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:autonode: Red{nbsp}Hat build of Karpenter
+//logging
+:logging-title: logging for Red Hat OpenShift
+:logging-title-uc: Logging for Red Hat OpenShift
+:logging: logging
+:logging-uc: Logging
+:clo: Red Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:logging-sd: Red Hat OpenShift Logging
+:log-plug: logging Console Plugin
+//Serverless
+:ServerlessProductName: OpenShift Serverless
+:rh-openstack-first: Red Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoda: Red Hat OpenShift Database Access
+:rhoda-short: RHODA
+:rhods: Red Hat OpenShift Data Science
+:osd: OpenShift Dedicated
+:VirtProductName: OpenShift Virtualization
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red Hat OpenShift Local
+:openshift-dev-spaces-productname: Red Hat OpenShift Dev Spaces
+// ROSA with HCP specific attributes
+:product-title-short: ROSA with HCP
+:dedicated: OpenShift Dedicated
+:hcp: hosted control planes
+:hcp-title-first: Red Hat OpenShift Service on AWS
+:hcp-title: ROSA with HCP
+:rosa-classic-title: Red Hat OpenShift Service on AWS (classic architecture)
+:rosa-classic-short: ROSA (classic)
+:rosa-title: Red Hat OpenShift Service on AWS
+:rosa-short: ROSA with HCP
+:egress-zero: egress zero
+:egress-zero-title: {product-title} clusters with {egress-zero}
+:classic-short: {rosa-classic-short}
+:rosa-cli-first: pass:quotes[ROSA command-line interface (CLI) (`rosa`)]
+:rosa-cli: ROSA CLI
+:context: cli-developer-commands
+
+toc::[]
+
+[role="_abstract"]
+Install and configure the {oc-first} to manage {product-title} clusters and deploy applications directly from a terminal.
+
+// About the CLI
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cli-about-cli_{context}"]
+= About the OpenShift CLI
+
+[role="_abstract"]
+With the {oc-first}, you can create applications and manage {product-title} projects from a terminal.
+
+The OpenShift CLI is ideal in the following situations:
+
+* Working directly with project source code.
+* Scripting {product-title} operations
+* Managing projects while restricted by bandwidth resources and the web console is unavailable.
+
+:leveloffset!:
+
+// Installing the OpenShift CLI
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cli-installing-cli_{context}"]
+= Installing the OpenShift CLI
+
+[role="_abstract"]
+To interact with a {product-title} cluster from the terminal, install the {oc-first}. Depending on your operating system, you can install `oc` by downloading the binary from the Customer Portal or {product-title} web console, by using an RPM, or by using Homebrew.
+
+
+:leveloffset!:
+
+// Installing the OpenShift CLI by downloading the binary from the Customer Portal
+:leveloffset: +2
+
+:_mod-docs-content-type: CONCEPT
+[id="cli-installing-cli-portal_{context}"]
+= Installing the OpenShift CLI by downloading the binary from the Customer Portal
+
+[role="_abstract"]
+You can download the {oc-first} from the Customer Portal and install it to interact with {product-title} clusters from a terminal on Linux, Windows, or macOS.
+
+:leveloffset!:
+
+// Installing the OpenShift CLI on Linux
+:leveloffset: +3
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+// * installing/installing_aws/installing-aws-user-infra.adoc
+// * installing/installing_aws/installing-aws-customizations.adoc
+// * installing/installing_aws/installing-aws-default.adoc
+// * installing/installing_aws/installing-aws-china.adoc
+// * installing/installing_aws/installing-aws-government-region.adoc
+// * installing/installing_aws/installing-aws-secret-region.adoc
+// * installing/installing_aws/installing-aws-private.adoc
+// * installing/installing_aws/installing-aws-vpc.adoc
+// * installing/installing_aws/installing-aws-localzone.adoc
+// * installing/installaing_aws/installing-aws-wavelength-zone.adoc
+// * installing/installing_aws/installing-restricted-networks-aws-installer-provisioned.adoc
+// * installing/installing_aws/installing-aws-outposts-remote-workers.adocs
+// * installing/installing_azure/installing-azure-customizations.adoc
+// * installing/installing_azure/installing-azure-default.adoc
+// * installing/installing_azure/installing-azure-government-region.adoc
+// * installing/installing_azure/installing-azure-private.adoc
+// * installing/installing_azure/installing-azure-vnet.adoc
+// * installing/installing_azure/installing-azure-user-infra.adoc
+// * installing/installing_bare_metal/upi/installing-bare-metal.adoc
+// * installing/installing_gcp/installing-gcp-customizations.adoc
+// * installing/installing_gcp/installing-gcp-private.adoc
+// * installing/installing_gcp/installing-gcp-default.adoc
+// * installing/installing_gcp/installing-gcp-vpc.adoc
+// * installing/installing_gcp/installing-gcp-user-infra.adoc
+// * installing/installing_gcp/installing-restricted-networks-gcp-installer-provisioned.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-customizations.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-vpc.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-private.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-restricted.adoc
+// * installing/install_config/installing-restricted-networks-preparations.adoc
+// * openshift_images/samples-operator-alt-registry.adoc
+// * updating/updating-restricted-network-cluster/mirroring-image-repository.adoc
+// * microshift_cli_ref/microshift-oc-cli-install.adoc
+// * updating/updating_a_cluster/updating_disconnected_cluster/mirroring-image-repository.adoc
+// * installing/installing-nutanix-installer-provisioned.adoc
+// * installing/installing-restricted-networks-nutanix-installer-provisioned.adoc
+// * installing/installing_ibm_powervc/installing-ibm-powervc-installer-custom.adoc
+// * installing/installing_ibm_powervs/installing-ibm-power-vs-private-cluster.adoc
+// * installing/installing_ibm_powervs/installing-restricted-networks-ibm-power-vs.adoc
+// * installing/installing_ibm_powervs/installing-ibm-powervs-vpc.adoc
+// * installing/installing-restricted-networks-azure-installer-provisioned.adoc
+// * installing/installing_azure/installing-restricted-networks-azure-user-provisioned.adoc
+// * installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.adoc
+// * installing/installing_vsphere/upi/upi-vsphere-preparing-to-install.adoc
+// * installing/installing_ibm_z/upi-ibm-z-preparing-to-install.adoc
+// AMQ docs link to this; do not change anchor
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-installing-cli-linux_{context}"]
+= Installing the OpenShift CLI on Linux
+
+[role="_abstract"]
+To manage your cluster and deploy applications from the command line on Linux, install the {oc-first} binary. You can download the {oc-first} from the Red{nbsp} Customer Portal.
+
+[IMPORTANT]
+====
+If you installed an earlier version of `oc`, you cannot use it to complete all of the commands in {product-title}.
+
+Download and install the new version of `oc`.
+====
+
+.Procedure
+
+. Navigate to the link:https://access.redhat.com/downloads/content/290[Download {product-title}] page on the Red{nbsp}Hat Customer Portal.
+
+. Select the architecture from the *Product Variant* list.
+
+. Select the appropriate version from the *Version* list.
+
+. Click *Download Now* next to the *OpenShift v{product-version} Linux Clients* entry and save the file.
+. Unpack the archive:
++
+[source,terminal]
+----
+$ tar xvf <file>
+----
+
+. Place the `oc` binary in a directory that is on your `PATH`.
++
+To check your `PATH`, execute the following command:
++
+[source,terminal]
+----
+$ echo $PATH
+----
+
+.Verification
+
+* After you install the OpenShift CLI, it is available using the `oc` command:
++
+[source,terminal]
+----
+$ oc <command>
+----
+
+
+:leveloffset!:
+
+// Installing the OpenShift CLI on Windows
+:leveloffset: +3
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+// * installing/installing_aws/installing-aws-user-infra.adoc
+// * installing/installing_aws/installing-aws-customizations.adoc
+// * installing/installing_aws/installing-aws-default.adoc
+// * installing/installing_aws/installing-aws-china.adoc
+// * installing/installing_aws/installing-aws-government-region.adoc
+// * installing/installing_aws/installing-aws-secret-region.adoc
+// * installing/installing_aws/installing-aws-private.adoc
+// * installing/installing_aws/installing-aws-vpc.adoc
+// * installing/installing_aws/installing-aws-localzone.adoc
+// * installing/installaing_aws/installing-aws-wavelength-zone.adoc
+// * installing/installing_aws/installing-restricted-networks-aws-installer-provisioned.adoc
+// * installing/installing_aws/installing-aws-outposts-remote-workers.adocs
+// * installing/installing_azure/installing-azure-customizations.adoc
+// * installing/installing_azure/installing-azure-default.adoc
+// * installing/installing_azure/installing-azure-government-region.adoc
+// * installing/installing_azure/installing-azure-private.adoc
+// * installing/installing_azure/installing-azure-vnet.adoc
+// * installing/installing_azure/installing-azure-user-infra.adoc
+// * installing/installing_bare_metal/upi/installing-bare-metal.adoc
+// * installing/installing_gcp/installing-gcp-customizations.adoc
+// * installing/installing_gcp/installing-gcp-private.adoc
+// * installing/installing_gcp/installing-gcp-default.adoc
+// * installing/installing_gcp/installing-gcp-vpc.adoc
+// * installing/installing_gcp/installing-gcp-user-infra.adoc
+// * installing/installing_gcp/installing-restricted-networks-gcp-installer-provisioned.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-customizations.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-vpc.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-private.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-restricted.adoc
+// * installing/install_config/installing-restricted-networks-preparations.adoc
+// * openshift_images/samples-operator-alt-registry.adoc
+// * updating/updating-restricted-network-cluster/mirroring-image-repository.adoc
+// * microshift_cli_ref/microshift-oc-cli-install.adoc
+// * updating/updating_a_cluster/updating_disconnected_cluster/mirroring-image-repository.adoc
+// * installing/installing-nutanix-installer-provisioned.adoc
+// * installing/installing-restricted-networks-nutanix-installer-provisioned.adoc
+// * installing/installing_ibm_powervc/installing-ibm-powervc-installer-custom.adoc
+// * installing/installing_ibm_powervs/installing-ibm-power-vs-private-cluster.adoc
+// * installing/installing_ibm_powervs/installing-restricted-networks-ibm-power-vs.adoc
+// * installing/installing_ibm_powervs/installing-ibm-powervs-vpc.adoc
+// * installing/installing-restricted-networks-azure-installer-provisioned.adoc
+// * installing/installing_azure/installing-restricted-networks-azure-user-provisioned.adoc
+// * installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.adoc
+// * installing/installing_vsphere/upi/upi-vsphere-preparing-to-install.adoc
+// * installing/installing_ibm_z/upi-ibm-z-preparing-to-install.adoc
+// AMQ docs link to this; do not change anchor
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-installing-cli-windows_{context}"]
+= Installing the OpenShift CLI on Windows
+
+[role="_abstract"]
+To manage your cluster and deploy applications from the command line on Windows, install the {oc-first} binary. You can download the {oc-first} from the Red{nbsp} Customer Portal.
+
+[IMPORTANT]
+====
+If you installed an earlier version of `oc`, you cannot use it to complete all of the commands in {product-title}.
+
+Download and install the new version of `oc`.
+====
+
+.Procedure
+
+. Navigate to the link:https://access.redhat.com/downloads/content/290[Download {product-title}] page on the Red{nbsp}Hat Customer Portal.
+
+. Select the appropriate version from the *Version* list.
+
+. Click *Download Now* next to the *OpenShift v{product-version} Windows Client* entry and save the file.
+. Extract the archive with a ZIP program.
+
+. Move the `oc` binary to a directory that is on your `PATH` variable.
++
+To check your `PATH` variable, open the command prompt and execute the following command:
++
+[source,terminal]
+----
+C:\> path
+----
+
+.Verification
+
+* After you install the OpenShift CLI, it is available using the `oc` command:
++
+[source,terminal]
+----
+C:\> oc <command>
+----
+
+
+:leveloffset!:
+
+// Installing the OpenShift CLI on macOS
+:leveloffset: +3
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+// * installing/installing_aws/installing-aws-user-infra.adoc
+// * installing/installing_aws/installing-aws-customizations.adoc
+// * installing/installing_aws/installing-aws-default.adoc
+// * installing/installing_aws/installing-aws-china.adoc
+// * installing/installing_aws/installing-aws-government-region.adoc
+// * installing/installing_aws/installing-aws-secret-region.adoc
+// * installing/installing_aws/installing-aws-private.adoc
+// * installing/installing_aws/installing-aws-vpc.adoc
+// * installing/installing_aws/installing-aws-localzone.adoc
+// * installing/installaing_aws/installing-aws-wavelength-zone.adoc
+// * installing/installing_aws/installing-restricted-networks-aws-installer-provisioned.adoc
+// * installing/installing_aws/installing-aws-outposts-remote-workers.adocs
+// * installing/installing_azure/installing-azure-customizations.adoc
+// * installing/installing_azure/installing-azure-default.adoc
+// * installing/installing_azure/installing-azure-government-region.adoc
+// * installing/installing_azure/installing-azure-private.adoc
+// * installing/installing_azure/installing-azure-vnet.adoc
+// * installing/installing_azure/installing-azure-user-infra.adoc
+// * installing/installing_bare_metal/upi/installing-bare-metal.adoc
+// * installing/installing_gcp/installing-gcp-customizations.adoc
+// * installing/installing_gcp/installing-gcp-private.adoc
+// * installing/installing_gcp/installing-gcp-default.adoc
+// * installing/installing_gcp/installing-gcp-vpc.adoc
+// * installing/installing_gcp/installing-gcp-user-infra.adoc
+// * installing/installing_gcp/installing-restricted-networks-gcp-installer-provisioned.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-customizations.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-vpc.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-private.adoc
+// * installing/installing_ibm_cloud/installing-ibm-cloud-restricted.adoc
+// * installing/install_config/installing-restricted-networks-preparations.adoc
+// * openshift_images/samples-operator-alt-registry.adoc
+// * updating/updating-restricted-network-cluster/mirroring-image-repository.adoc
+// * microshift_cli_ref/microshift-oc-cli-install.adoc
+// * updating/updating_a_cluster/updating_disconnected_cluster/mirroring-image-repository.adoc
+// * installing/installing-nutanix-installer-provisioned.adoc
+// * installing/installing-restricted-networks-nutanix-installer-provisioned.adoc
+// * installing/installing_ibm_powervc/installing-ibm-powervc-installer-custom.adoc
+// * installing/installing_ibm_powervs/installing-ibm-power-vs-private-cluster.adoc
+// * installing/installing_ibm_powervs/installing-restricted-networks-ibm-power-vs.adoc
+// * installing/installing_ibm_powervs/installing-ibm-powervs-vpc.adoc
+// * installing/installing-restricted-networks-azure-installer-provisioned.adoc
+// * installing/installing_azure/installing-restricted-networks-azure-user-provisioned.adoc
+// * installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.adoc
+// * installing/installing_vsphere/upi/upi-vsphere-preparing-to-install.adoc
+// * installing/installing_ibm_z/upi-ibm-z-preparing-to-install.adoc
+// AMQ docs link to this; do not change anchor
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-installing-cli-macos_{context}"]
+= Installing the OpenShift CLI on macOS
+
+[role="_abstract"]
+To manage your cluster and deploy applications from the command line on macOS, install the {oc-first} binary. You can download the {oc-first} from the Red{nbsp} Customer Portal.
+
+[IMPORTANT]
+====
+If you installed an earlier version of `oc`, you cannot use it to complete all of the commands in {product-title}.
+
+Download and install the new version of `oc`.
+====
+
+.Procedure
+
+. Navigate to the link:https://access.redhat.com/downloads/content/290[Download {product-title}] page on the Red{nbsp}Hat Customer Portal.
+
+. Select the architecture from the *Product Variant* list.
+
+. Select the appropriate version from the *Version* list.
+
+. Click *Download Now* next to the *OpenShift v{product-version} macOS Clients* entry and save the file.
++
+[NOTE]
+====
+For macOS arm64, choose the *OpenShift v{product-version} macOS arm64 Client* entry.
+====
+. Unpack and unzip the archive.
+
+. Move the `oc` binary to a directory on your `PATH` variable.
++
+To check your `PATH` variable, open a terminal and execute the following command:
++
+[source,terminal]
+----
+$ echo $PATH
+----
+
+.Verification
+
+* Verify your installation by using an `oc` command:
++
+[source,terminal]
+----
+$ oc <command>
+----
+
+
+:leveloffset!:
+
+// Installing the CLI by using the web console
+:leveloffset: +2
+
+
+:_mod-docs-content-type: CONCEPT
+[id="cli-installing-cli-web-console_{context}"]
+= Installing the OpenShift CLI by downloading the binary from the web console
+
+[role="_abstract"]
+You can download the {oc-first} from the web {product-title} console and install it to interact with {product-title} clusters from a terminal on Linux, Windows, or macOS.
+
+[IMPORTANT]
+====
+If you installed an earlier version of `oc`, you cannot use it to complete all
+of the commands in
+{product-title} {product-version}.
+Download and
+install the new version of `oc`.
+====
+
+
+:leveloffset!:
+
+// Installing the CLI on Linux by using the web console
+:leveloffset: +3
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-installing-cli-web-console-macos-linux_{context}"]
+= Installing the OpenShift CLI on Linux using the web console
+
+[role="_abstract"]
+To manage your cluster and deploy applications from the command line on Linux, install the {oc-first} binary. You can download the {oc-first} from the web console.
+
+.Procedure
+. From the web console, click *?*.
++
+image::click-question-mark.png[]
+. Click *Command Line Tools*.
++
+image::CLI-list.png[]
+. Select appropriate `oc` binary for your Linux platform, and then click *Download oc for Linux*.
+
+. Save the file.
+. Unpack the archive.
+
++
+[source,terminal]
+----
+$ tar xvf <file>
+----
+. Move the `oc` binary to a directory that is on your `PATH`.
++
+To check your `PATH`, execute the following command:
++
+[source,terminal]
+----
+$ echo $PATH
+----
+
+.Verification
+
+* After you install the OpenShift CLI, you can use the `oc` command:
++
+[source,terminal]
+----
+$ oc <command>
+----
+
+
+:leveloffset!:
+
+// Installing the CLI on Windows by using the web console
+:leveloffset: +3
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-installing-cli-web-console-macos-windows_{context}"]
+= Installing the OpenShift CLI on Windows using the web console
+
+[role="_abstract"]
+To manage your cluster and deploy applications from the command line on Windows, install the {oc-first} binary. You can download the {oc-first} from the web console.
+
+.Procedure
+. From the web console, click *?*.
++
+image::click-question-mark.png[]
+. Click *Command Line Tools*.
++
+image::CLI-list.png[]
+. Select the `oc` binary for Windows platform, and then click *Download oc for Windows for x86_64*.
+. Save the file.
+. Unzip the archive with a ZIP program.
+
+. Move the `oc` binary to a directory that is on your `PATH`.
++
+To check your `PATH`, open the command prompt and execute the following command:
++
+[source,terminal]
+----
+C:\> path
+----
+
+.Verification
+
+* After you install the OpenShift CLI, you can use the `oc` command:
++
+[source,terminal]
+----
+C:\> oc <command>
+----
+
+
+:leveloffset!:
+
+// Installing the CLI on macOS by using the web console
+:leveloffset: +3
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-installing-cli-web-console-macos_{context}"]
+= Installing the OpenShift CLI on macOS using the web console
+
+
+[role="_abstract"]
+To manage your cluster and deploy applications from the command line on macOS, install the {oc-first} binary. You can download the {oc-first} from the web console.
+
+.Procedure
+. From the web console, click *?*.
++
+image::click-question-mark.png[]
+. Click *Command Line Tools*.
++
+image::CLI-list.png[]
+. Select the `oc` binary for macOS platform, and then click *Download oc for Mac for x86_64*.
++
+[NOTE]
+====
+For macOS arm64, click *Download oc for Mac for ARM 64*.
+====
+
+. Save the file.
+. Unpack and unzip the archive.
+. Move the `oc` binary to a directory on your PATH.
++
+To check your `PATH`, open a terminal and execute the following command:
++
+[source,terminal]
+----
+$ echo $PATH
+----
+
+.Verification
+
+* After you install the OpenShift CLI, you can use the `oc` command:
++
+[source,terminal]
+----
+$ oc <command>
+----
+
+
+:leveloffset!:
+
+// Installing the CLI by using an RPM
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+// * microshift_cli_ref/microshift_oc_cli_install.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-installing-cli-rpm_{context}"]
+= Installing the OpenShift CLI by using an RPM
+
+[role="_abstract"]
+For {op-system-base-full}, you can install the {oc-first} as an RPM if you have an active {product-title} subscription on your Red Hat account.
+
+[IMPORTANT]
+====
+You must install `oc` for {op-system-base} 9 by downloading the binary. Installing `oc` by using an RPM package is not supported on {op-system-base-full} 9.
+====
+
+.Prerequisites
+
+* You must have root or sudo privileges.
+
+.Procedure
+
+. Register with Red Hat Subscription Manager:
++
+[source,terminal]
+----
+# subscription-manager register
+----
+
+. Pull the latest subscription data:
++
+[source,terminal]
+----
+# subscription-manager refresh
+----
+
+. List the available subscriptions:
++
+[source,terminal]
+----
+# subscription-manager list --available --matches '*OpenShift*'
+----
+
+. In the output for the previous command, find the pool ID for
+an {product-title}
+subscription and attach the subscription to the registered system:
++
+[source,terminal]
+----
+# subscription-manager attach --pool=<pool_id>
+----
+
+. Enable the repositories required by
+{product-title} {product-version}.
++
+[source,terminal,subs="attributes+"]
+----
+# subscription-manager repos --enable="rhocp-{product-version}-for-rhel-8-x86_64-rpms"
+----
+
+. Install the `openshift-clients` package:
++
+[source,terminal]
+----
+# yum install openshift-clients
+----
+
+.Verification
+
+* Verify your installation by using an `oc` command:
++
+[source,terminal]
+----
+$ oc <command>
+----
+
+:leveloffset!:
+
+
+// Installing the CLI by using Homebrew
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+// * microshift_cli_ref/microshift_oc_cli_install.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-installing-cli-brew_{context}"]
+= Installing the OpenShift CLI by using Homebrew
+
+[role="_abstract"]
+For macOS, you can install the OpenShift CLI (`oc`) by using the link:https://brew.sh[Homebrew] package manager.
+
+.Prerequisites
+
+* You must have Homebrew (`brew`) installed.
+
+.Procedure
+
+* Install the link:https://formulae.brew.sh/formula/openshift-cli[openshift-cli] package by running the following command:
++
+[source,terminal]
+----
+$ brew install openshift-cli
+----
+
+.Verification
+
+* Verify your installation by using an `oc` command:
++
+[source,terminal]
+----
+$ oc <command>
+----
+
+:leveloffset!:
+
+// Logging in to the CLI
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-logging-in_{context}"]
+= Logging in to the OpenShift CLI
+
+[role="_abstract"]
+You can log in to the OpenShift CLI (`oc`) to access and manage your cluster.
+
+[NOTE]
+====
+To access a cluster that is accessible only over an HTTP proxy server, you can set the `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` variables.
+These environment variables are respected by the `oc` CLI so that all communication with the cluster goes through the HTTP proxy.
+
+Authentication headers are sent only when using HTTPS transport.
+====
+
+.Prerequisites
+
+* You must have access to a {product-title} cluster.
+* The {oc-first} is installed.
+
+.Procedure
+
+. Enter the `oc login` command and pass in a user name:
++
+[source,terminal]
+----
+$ oc login -u user1
+----
+
+. When prompted, enter the required information:
++
+.Example output
+[source,terminal]
+----
+Server [https://localhost:8443]: https://openshift.example.com:6443
+The server uses a certificate signed by an unknown authority.
+You can bypass the certificate check, but any data you send to the server could be intercepted by others.
+Use insecure connections? (y/n): y
+
+Authentication required for https://openshift.example.com:6443 (openshift)
+Username: user1
+Password:
+Login successful.
+
+You don't have any projects. You can try to create a new project, by running
+
+    oc new-project <projectname>
+
+Welcome! See 'oc help' to get started.
+----
++
+--
+** For the `Server` prompt, enter the {product-title} server URL.
+** For the `Use insecure connections?` prompt, enter whether to use insecure connections.
+** For the `Username` prompt, enter the username to log in with.
+** For the `Password` prompt, enter the user's password.
+--
++
+[NOTE]
+====
+If you are logged in to the web console, you can generate an `oc login` command that includes your token and server information. You can use the command to log in to the
+OpenShift CLI (`oc`) without the interactive prompts. To generate the command, select *Copy login command* from the username drop-down menu at the top right of the web console.
+====
++
+You can now create a project or issue other commands for managing your cluster.
+
+:leveloffset!:
+
+// Logging in to the CLI by using the web
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-logging-in-web_{context}"]
+= Logging in to the OpenShift CLI using a web browser
+
+[role="_abstract"]
+You can log in to the {oc-first} with the help of a web browser to access and manage your cluster. This allows you to avoid inserting your access token into the command line.
+
+[WARNING]
+====
+Logging in to the CLI through the web browser runs a server on localhost with HTTP, not HTTPS; use with caution on multi-user workstations.
+====
+
+.Prerequisites
+
+* You must have access to an {product-title} cluster.
+* You must have installed the OpenShift CLI (`oc`).
+* You must have a browser installed.
+
+.Procedure
+
+. Enter the `oc login` command with the `--web` flag:
++
+[source,terminal]
+----
+$ oc login <cluster_url> --web
+----
++
+Optionally, you can specify the server URL and callback port. For example, `oc login <cluster_url> --web --callback-port 8280 localhost:8443`.
+
+. The web browser opens automatically. If it does not, click the link in the command output. If you do not specify the {product-title} server `oc` tries to open the web console of the cluster specified in the current `oc` configuration file. If no `oc` configuration exists, `oc` prompts interactively for the server URL.
++
+.Example output
+
+[source,terminal]
+----
+Opening login URL in the default browser: https://openshift.example.com
+Opening in existing browser session.
+----
+
+. If more than one identity provider is available, select your choice from the options provided.
+
+. Enter your username and password into the corresponding browser fields. After you are logged in, the browser displays the text `access token received successfully; please return to your terminal`.
+
+. Check the CLI for a login confirmation.
++
+.Example output
+
+[source,terminal]
+----
+Login successful.
+
+You don't have any projects. You can try to create a new project, by running
+
+    oc new-project <projectname>
+
+----
++
+[NOTE]
+====
+The web console defaults to the profile used in the previous session. To switch between Administrator and Developer profiles, log out of the {product-title} web console and clear the cache.
+====
++
+You can now create a project or issue other commands for managing your cluster.
+
+:leveloffset!:
+
+// Using the CLI
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="cli-using-cli_{context}"]
+= Using the OpenShift CLI
+
+[role="_abstract"]
+Review how to complete common tasks with the {oc-first}.
+
+:leveloffset!:
+
+// Creating a project
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-using-cli-project_{context}"]
+= Creating a project
+
+[role="_abstract"]
+Use the `oc new-project` command to create a new project.
+
+.Procedure
+
+* Create a new project by running the following command:
++
+[source,terminal]
+----
+$ oc new-project my-project
+----
++
+.Example output
+[source,terminal]
+----
+Now using project "my-project" on server "https://openshift.example.com:6443".
+----
+
+:leveloffset!:
+
+// Creating a new application
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-using-cli-new-app_{context}"]
+= Creating a new application
+
+[role="_abstract"]
+Use the `oc new-app` command to create a new application.
+
+.Procedure
+
+* Create a new application by running the following command:
++
+[source,terminal]
+----
+$ oc new-app https://github.com/sclorg/cakephp-ex
+----
++
+.Example output
+[source,terminal]
+----
+--> Found image 40de956 (9 days old) in imagestream "openshift/php" under tag "7.2" for "php"
+
+...
+
+    Run 'oc status' to view your app.
+----
+
+:leveloffset!:
+
+// Viewing pods
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-using-cli-pods_{context}"]
+= Viewing pods
+
+[role="_abstract"]
+Use the `oc get pods` command to view the pods for the current project.
+
+[NOTE]
+====
+When you run `oc` inside a pod and do not specify a namespace, the namespace of the pod is used by default.
+====
+
+.Procedure
+
+* View pods for the current project by running the following command:
++
+[source,terminal]
+----
+$ oc get pods -o wide
+----
++
+.Example output
+[source,terminal]
+----
+NAME                  READY   STATUS      RESTARTS   AGE     IP            NODE                           NOMINATED NODE
+cakephp-ex-1-build    0/1     Completed   0          5m45s   10.131.0.10   ip-10-0-141-74.ec2.internal    <none>
+cakephp-ex-1-deploy   0/1     Completed   0          3m44s   10.129.2.9    ip-10-0-147-65.ec2.internal    <none>
+cakephp-ex-1-ktz97    1/1     Running     0          3m33s   10.128.2.11   ip-10-0-168-105.ec2.internal   <none>
+----
+
+:leveloffset!:
+
+// Viewing pod logs
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-using-cli-pod-logs_{context}"]
+= Viewing pod logs
+
+[role="_abstract"]
+Use the `oc logs` command to view logs for a particular pod.
+
+.Procedure
+
+* View logs for a pod by running the following command:
++
+[source,terminal]
+----
+$ oc logs cakephp-ex-1-deploy
+----
++
+.Example output
+[source,terminal]
+----
+--> Scaling cakephp-ex-1 to 1
+--> Success
+----
+
+:leveloffset!:
+
+// Viewing the current project
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-using-cli-current-project_{context}"]
+= Viewing the current project
+
+[role="_abstract"]
+Use the `oc project` command to view the current project.
+
+.Procedure
+
+* View the current project by running the following command:
++
+[source,terminal]
+----
+$ oc project
+----
++
+.Example output
+[source,terminal]
+----
+Using project "my-project" on server "https://openshift.example.com:6443".
+----
+
+:leveloffset!:
+
+// Viewing the status of the current project
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-using-cli-project-status_{context}"]
+= Viewing the status of the current project
+
+[role="_abstract"]
+Use the `oc status` command to view information about the current project, such as services, deployments, and build configs.
+
+.Procedure
+
+* View the status of the current project by running the following command:
++
+[source,terminal]
+----
+$ oc status
+----
++
+.Example output
+[source,terminal]
+----
+In project my-project on server https://openshift.example.com:6443
+
+svc/cakephp-ex - 172.30.236.80 ports 8080, 8443
+  dc/cakephp-ex deploys istag/cakephp-ex:latest <-
+    bc/cakephp-ex source builds https://github.com/sclorg/cakephp-ex on openshift/php:7.2
+    deployment #1 deployed 2 minutes ago - 1 pod
+
+3 infos identified, use 'oc status --suggest' to see details.
+----
+
+:leveloffset!:
+
+// Listing supported API resources
+:leveloffset: +2
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-using-cli-list-api-resources_{context}"]
+= Listing supported API resources
+
+[role="_abstract"]
+Use the `oc api-resources` command to view the list of supported API resources on the server.
+
+.Procedure
+
+* View the supported API resources by running the following command:
++
+[source,terminal]
+----
+$ oc api-resources
+----
++
+.Example output
+[source,terminal]
+----
+NAME                                  SHORTNAMES       APIGROUP                              NAMESPACED   KIND
+bindings                                                                                     true         Binding
+componentstatuses                     cs                                                     false        ComponentStatus
+configmaps                            cm                                                     true         ConfigMap
+...
+----
+
+:leveloffset!:
+
+// Getting help
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-getting-help_{context}"]
+= Getting help
+
+[role="_abstract"]
+Review the ways to  get help with CLI commands and {product-title} resources.
+
+.Procedure
+
+* Use `oc help` to get a list and description of all available CLI commands:
++
+.Example: Get general help for the CLI
+[source,terminal]
+----
+$ oc help
+----
++
+.Example output
+[source,terminal]
+----
+OpenShift Client
+
+This client helps you develop, build, deploy, and run your applications on any OpenShift or Kubernetes compatible
+platform. It also includes the administrative commands for managing a cluster under the 'adm' subcommand.
+
+Usage:
+  oc [flags]
+
+Basic Commands:
+  login           Log in to a server
+  new-project     Request a new project
+  new-app         Create a new application
+
+...
+----
+
+* Use the `--help` flag to get help about a specific CLI command:
++
+.Example: Get help for the `oc create` command
+[source,terminal]
+----
+$ oc create --help
+----
++
+.Example output
+[source,terminal]
+----
+Create a resource by filename or stdin
+
+JSON and YAML formats are accepted.
+
+Usage:
+  oc create -f FILENAME [flags]
+
+...
+----
+
+* Use the `oc explain` command to view the description and fields for a
+particular resource:
++
+.Example: View documentation for the `Pod` resource
+[source,terminal]
+----
+$ oc explain pods
+----
++
+.Example output
+[source,terminal]
+----
+KIND:     Pod
+VERSION:  v1
+
+DESCRIPTION:
+     Pod is a collection of containers that can run on a host. This resource is
+     created by clients and scheduled onto hosts.
+
+FIELDS:
+   apiVersion	<string>
+     APIVersion defines the versioned schema of this representation of an
+     object. Servers should convert recognized schemas to the latest internal
+     value, and may reject unrecognized values. More info:
+     https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
+
+...
+----
+
+:leveloffset!:
+
+// Logging out of the CLI
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/openshift_cli/getting-started.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="cli-logging-out_{context}"]
+= Logging out of the OpenShift CLI
+
+[role="_abstract"]
+You can log out the {oc-first} to end your current session.
+
+.Procedure
+
+* Use the `oc logout` command.
++
+[source,terminal]
+----
+$ oc logout
+----
++
+.Example output
+[source,terminal]
+----
+Logged "user1" out on "https://openshift.example.com"
+----
++
+This deletes the saved authentication token from the server and removes it from
+your configuration file.
+
+:leveloffset!:

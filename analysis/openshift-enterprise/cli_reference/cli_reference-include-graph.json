@@ -1,0 +1,701 @@
+[
+  {
+    "assembly": "index.adoc",
+    "assembly_name": "CLI tools overview",
+    "sub_dir": "",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-tools-list.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "openshift_cli/getting-started-cli.adoc",
+    "assembly_name": "Getting started with the OpenShift CLI",
+    "sub_dir": "openshift_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "_attributes/attributes-openshift-dedicated.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-about-cli.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-installing-cli.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-portal.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-linux.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+3"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-windows.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+3"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-macos.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+3"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-web-console.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-web-console-linux.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+3"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-web-console-windows.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+3"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-web-console-macos.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+3"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-rpm.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-installing-cli-brew.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-logging-in.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-logging-in-web.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-using-cli.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-using-cli-project.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-using-cli-new-app.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-using-cli-pods.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-using-cli-pod-logs.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-using-cli-current-project.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-using-cli-project-status.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-using-cli-list-api-resources.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-getting-help.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-logging-out.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "openshift_cli/configuring-cli.adoc",
+    "assembly_name": "Configuring the OpenShift CLI",
+    "sub_dir": "openshift_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-configuring-completion.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-configuring-completion-zsh.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/cli-configuring-kubeconfig-using-cli.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "openshift_cli/usage-oc-kubectl.adoc",
+    "assembly_name": "Usage of oc and kubectl commands",
+    "sub_dir": "openshift_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/oc-usage-oc.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/oc-usage-kubectl.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "openshift_cli/managing-cli-profiles.adoc",
+    "assembly_name": "Managing CLI profiles",
+    "sub_dir": "openshift_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/about-cli-profiles-switch.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/manual-configuration-of-cli-profiles-example.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/manual-configuration-of-cli-profiles.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+2"
+      },
+      {
+        "module_path": "modules/load-and-merge-rules.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "openshift_cli/extending-cli-plugins.adoc",
+    "assembly_name": "Extending the OpenShift CLI with plugins",
+    "sub_dir": "openshift_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-extending-plugins-writing.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-extending-plugins-installing.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "openshift_cli/developer-cli-commands.adoc",
+    "assembly_name": "OpenShift CLI developer command reference",
+    "sub_dir": "openshift_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/oc-by-example-content.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "openshift_cli/administrator-cli-commands.adoc",
+    "assembly_name": "OpenShift CLI administrator command reference",
+    "sub_dir": "openshift_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/oc-adm-by-example-content.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "cli_manager/index.adoc",
+    "assembly_name": "OpenShift CLI Manager overview",
+    "sub_dir": "cli_manager",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "snippets/technology-preview.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-manager-about.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "cli_manager/cli-manager-release-notes.adoc",
+    "assembly_name": "OpenShift CLI Manager release notes",
+    "sub_dir": "cli_manager",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "snippets/technology-preview.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-manager-rn-0-2-0.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-manager-rn-0-1-1.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "cli_manager/cli-manager-install.adoc",
+    "assembly_name": "Installing the Openshift CLI Manager",
+    "sub_dir": "cli_manager",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "snippets/technology-preview.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-manager-installing.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-manager-custom-index-krew.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-manager-adding-plugin-yaml.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "cli_manager/cli-manager-using.adoc",
+    "assembly_name": "Using the OpenShift CLI Manager",
+    "sub_dir": "cli_manager",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "snippets/technology-preview.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-manager-installing-plugins.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-manager-upgrading-plugin.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-manager-updating-plugin.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-manager-uninstall-plugin.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "cli_manager/cli-manager-uninstall.adoc",
+    "assembly_name": "Uninstalling the OpenShift CLI Manager",
+    "sub_dir": "cli_manager",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "snippets/technology-preview.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/cli-manager-uninstalling.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/cli-manager-remove-resources.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "odo-important-update.adoc",
+    "assembly_name": "Developer CLI (odo)",
+    "sub_dir": "",
+    "includes": [
+      {
+        "module_path": "_attributes/attributes-openshift-dedicated.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      }
+    ]
+  },
+  {
+    "assembly": "kn-cli-tools.adoc",
+    "assembly_name": "Knative CLI (kn) for use with OpenShift Serverless",
+    "sub_dir": "",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      }
+    ]
+  },
+  {
+    "assembly": "tkn_cli/installing-tkn.adoc",
+    "assembly_name": "Installing tkn",
+    "sub_dir": "tkn_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "snippets/technology-preview.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "snippets/technology-preview.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/op-installing-tkn-on-linux.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-installing-tkn-on-linux-using-rpm.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-installing-tkn-on-windows.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-installing-tkn-on-macos.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "tkn_cli/op-configuring-tkn.adoc",
+    "assembly_name": "Configuring tkn",
+    "sub_dir": "tkn_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/op-tkn-enabling-tab-completion.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "tkn_cli/op-tkn-reference.adoc",
+    "assembly_name": "Basic tkn commands",
+    "sub_dir": "tkn_cli",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/op-tkn-utility-commands.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-pipeline-management.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-pipeline-run.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-task-management.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-task-run.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-condition-management.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-pipeline-resource-management.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-clustertask-management.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-trigger-management.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/op-tkn-hub-interaction.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "gitops-argocd-cli-tools.adoc",
+    "assembly_name": "GitOps CLI (argocd) for use with OpenShift GitOps",
+    "sub_dir": "",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      }
+    ]
+  },
+  {
+    "assembly": "opm/cli-opm-install.adoc",
+    "assembly_name": "Installing the opm CLI",
+    "sub_dir": "opm",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/olm-about-opm.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/olm-installing-opm.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "opm/cli-opm-ref.adoc",
+    "assembly_name": "opm CLI reference",
+    "sub_dir": "opm",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "snippets/deprecated-feature.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/opm-cli-ref-generate.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/opm-cli-ref-index.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/opm-cli-ref-init.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/opm-cli-ref-migrate.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/opm-cli-ref-render.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/opm-cli-ref-serve.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/opm-cli-ref-validate.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  },
+  {
+    "assembly": "hcp-cli-ref.adoc",
+    "assembly_name": "Hosted control planes CLI",
+    "sub_dir": "",
+    "includes": [
+      {
+        "module_path": "_attributes/common-attributes.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": null
+      },
+      {
+        "module_path": "modules/hcp-cli-terminal.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/hcp-cli-console.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      },
+      {
+        "module_path": "modules/hcp-cli-gateway.adoc",
+        "module_type": "UNKNOWN",
+        "leveloffset": "+1"
+      }
+    ]
+  }
+]

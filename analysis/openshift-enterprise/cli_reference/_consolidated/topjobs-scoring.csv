@@ -1,0 +1,8 @@
+entry_number,entry_name,entry_slug,landing_category,persona,job_type,main_jobs_absorbed,guides_count,modules_count
+1,Discover CLI tools,discover-cli-tools,Discover,"Cluster administrator, Developer",consumption,1,2,1
+2,Install and get started with the OpenShift CLI,install-get-started-cli,Get Started,"Cluster administrator, Developer",core,2,1,22
+3,Configure the CLI environment,configure-cli-environment,Configure,"Developer, Cluster administrator",core,2,3,7
+4,Extend the CLI with plugins,extend-cli-plugins,Extend,"Developer, Cluster administrator",core,2,6,11
+5,Look up oc developer commands,look-up-dev-commands,Reference,Developer,core,1,1,1
+6,Look up oc administrator commands,look-up-admin-commands,Reference,Cluster administrator,core,1,1,1
+7,Install and use companion CLIs,companion-clis,Integrate,"Developer, Cluster administrator, Operator author",core,5,8,25

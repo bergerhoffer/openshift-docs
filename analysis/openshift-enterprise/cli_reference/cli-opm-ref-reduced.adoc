@@ -1,0 +1,962 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="cli-opm-ref"]
+= opm CLI reference
+:_mod-docs-content-type: ATTRIBUTES
+// The {product-title} attribute provides the context-sensitive name of the relevant OpenShift distribution, for example, "OpenShift Container Platform" or "OKD". The {product-version} attribute provides the product version relative to the distribution, for example "4.9".
+// {product-title} and {product-version} are parsed when AsciiBinder queries the _distro_map.yml file in relation to the base branch of a pull request.
+// See https://github.com/openshift/openshift-docs/blob/main/contributing_to_docs/doc_guidelines.adoc#product-name-and-version for more information on this topic.
+// Other common attributes are defined in the following lines:
+:data-uri:
+:icons:
+:experimental:
+:toc: macro
+:toc-title:
+:imagesdir: images
+:prewrap!:
+// n-1 and n+1 OCP versions relative to the current branch's {product-version} attr
+:ocp-nminus1: 4.21
+:ocp-nplus1: 4.23
+// Operating system attributes
+:op-system-first: Red{nbsp}Hat Enterprise Linux CoreOS (RHCOS)
+:op-system: RHCOS
+:op-system-lowercase: rhcos
+:op-system-base: RHEL
+:op-system-base-full: Red{nbsp}Hat Enterprise Linux (RHEL)
+:op-system-version: 9.x
+:op-system-version-9: 9
+:op-system-ai: Red{nbsp}Hat Enterprise Linux AI
+:tsb-name: Template Service Broker
+:kebab: image:kebab.png[title="Options menu"]
+:ai-full: Assisted Installer
+:cluster-manager-first: Red Hat OpenShift Cluster Manager
+:cluster-manager: OpenShift Cluster Manager
+:cluster-manager-url: link:https://console.redhat.com/openshift[OpenShift Cluster Manager]
+:cluster-manager-url-pull: link:https://console.redhat.com/openshift/install/pull-secret[pull secret from Red Hat OpenShift Cluster Manager]
+:insights-advisor-url: link:https://console.redhat.com/openshift/insights/advisor/[Advisor]
+:insights-operator: Insights Operator
+:red-hat-lightspeed: Red{nbsp}Hat Lightspeed
+:hybrid-console: Red{nbsp}Hat Hybrid Cloud Console
+:hybrid-console-second: Hybrid Cloud Console
+:hybrid-console-url: link:https://console.redhat.com[Red Hat Hybrid Cloud Console]
+// OADP attributes
+:velero-domain: velero.io
+:velero-version: 1.16
+:oadp-first: OpenShift API for Data Protection (OADP)
+:oadp-full: OpenShift API for Data Protection
+:oadp-short: OADP
+:oadp-version: 1.6.0
+:oadp-version-1-3: 1.3.6
+:oadp-version-1-4: 1.4.6
+:oadp-version-1-5: 1.5.5
+:oadp-version-1-6: 1.6.0
+:oadp-bsl-api: backupstoragelocations.velero.io
+:velero-overview: link:https://{velero-domain}/docs/v{velero-version}/locations/[Overview of backup and snapshot locations in the Velero documentation]
+:velero-link: link:https://{velero-domain}/docs/v{velero-version}/[Velero {velero-version}]
+:velero-cli-install: link:https://{velero-domain}/docs/v{velero-version}/basic-install/#install-the-cli["Install the CLI" on the Velero website]
+:velero-1.12: link:https://{velero-domain}/docs/v1.12/[1.12]
+:velero-1.14: link:https://{velero-domain}/docs/v1.14/[1.14]
+:velero-1.16: link:https://{velero-domain}/docs/v1.16/[1.16]
+:oc-first: pass:quotes[OpenShift CLI (`oc`)]
+:product-registry: OpenShift image registry
+:product-mirror-registry: Mirror registry for Red Hat OpenShift
+:rh-storage-first: Red Hat OpenShift Data Foundation
+:rh-storage: OpenShift Data Foundation
+:rh-rhacm-title: Red{nbsp}Hat Advanced Cluster Management
+:rh-rhacm-first: Red{nbsp}Hat Advanced Cluster Management (RHACM)
+:rh-rhacm: RHACM
+:rh-rhacm-version: 2.17
+:osc: OpenShift sandboxed containers
+:osc-operator: OpenShift sandboxed containers Operator
+:cert-manager-operator: cert-manager Operator for Red Hat OpenShift
+:external-secrets-operator: External Secrets Operator for Red Hat OpenShift
+:external-secrets-operator-short: External Secrets Operator
+:external-secrets-console-plugin: External Secrets Management Console Plug-in
+:secondary-scheduler-operator-full: Secondary Scheduler Operator for Red Hat OpenShift
+:secondary-scheduler-operator: Secondary Scheduler Operator
+:descheduler-operator: Kube Descheduler Operator
+:cli-manager: CLI Manager Operator
+:lws-operator: Leader Worker Set Operator
+:js-operator: JobSet Operator
+//Kueue
+:kueue-name: Red{nbsp}Hat build of Kueue
+:kueue-op: Red Hat Build of Kueue Operator
+:ms: Red{nbsp}Hat build of MicroShift (MicroShift)
+// Backup and restore
+:launch: image:app-launcher.png[title="Application Launcher"]
+:mtv-first: Migration Toolkit for Virtualization (MTV)
+:mtv-short: MTV
+:mtv-full: Migration Toolkit for Virtualization
+:mtv-version: 2.8
+// builds (Valid only in 4.11 and later)
+:builds-v2title: Builds for Red Hat OpenShift
+:builds-v2shortname: OpenShift Builds v2
+:builds-v1shortname: OpenShift Builds v1
+//gitops
+:gitops-title: Red{nbsp}Hat OpenShift GitOps
+:gitops-shortname: GitOps
+:gitops-ver: 1.1
+:rh-app-icon: image:red-hat-applications-menu-icon.jpg[title="Red Hat applications"]
+//pipelines
+:pipelines-title: Red{nbsp}Hat OpenShift Pipelines
+:pipelines-shortname: OpenShift Pipelines
+:pipelines-ver: pipelines-1.18
+:pipelines-version-number: 1.18
+:tekton-chains: Tekton Chains
+:tekton-hub: Tekton Hub
+:artifact-hub: Artifact Hub
+:pac: Pipelines as Code
+//odo
+:odo-title: odo
+//OpenShift Kubernetes Engine
+:oke: OpenShift Kubernetes Engine
+//OpenShift Platform Plus
+:opp: OpenShift Platform Plus
+//openshift virtualization (cnv)
+:VirtProductName: OpenShift Virtualization
+:VirtVersion: 4.22
+:HCOVersion: 4.22.0
+:HCOVersionPrev: 4.21.0
+:HCOCliKind: hco
+:CNVNamespace: openshift-cnv
+:CNVOperatorDisplayName: OpenShift Virtualization Operator
+:CNVSubscriptionSpecSource: redhat-operators
+:CNVSubscriptionSpecName: kubevirt-hyperconverged
+:IBMFusionFirst: IBM Fusion Access for SAN
+:FusionSAN: Fusion Access for SAN
+:delete: image:delete.png[title="Delete"]
+// openshift virtualization engine (ove)
+:ove-first: Red{nbsp}Hat OpenShift Virtualization Engine
+:ove: OpenShift Virtualization Engine
+//distributed tracing
+:DTProductName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:DTShortName: Distributed Tracing Platform
+:DTProductVersion: 3.1
+// keeping Jaeger... attributes because of observability/otel/snippets/distr-tracing-assembly-tip-for-jaeger-replacements.adoc and the OSSM v2 docs lifecycle
+:JaegerName: Red{nbsp}Hat OpenShift Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerShortName: Distributed Tracing Platform (Jaeger)
+:JaegerOperator: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:JaegerVersion: 1.53.0
+:KMS: Kubernetes KMS v2
+:OTELName: Red{nbsp}Hat build of OpenTelemetry
+:OTELShortName: Red{nbsp}Hat build of OpenTelemetry
+:OTELOperator: Red{nbsp}Hat build of OpenTelemetry Operator
+:OTELVersion: 0.93.0
+:TempoName: Red{nbsp}Hat OpenShift Distributed Tracing Platform
+:TempoShortName: Distributed Tracing Platform
+:TempoOperator: Tempo Operator
+:TempoVersion: 2.3.1
+//telco
+//lightspeed
+:ols-official: Red{nbsp}Hat OpenShift Lightspeed
+:ols: OpenShift Lightspeed
+//logging
+:logging: logging
+:logging-uc: Logging
+:for: for Red{nbsp}Hat OpenShift
+:clo: Red{nbsp}Hat OpenShift Logging Operator
+:loki-op: Loki Operator
+:es-op: OpenShift Elasticsearch Operator
+:log-plug: logging Console plugin
+//observability
+:ObservabilityLongName: Red{nbsp}Hat OpenShift Observability
+:ObservabilityShortName: Observability
+// Cluster Monitoring Operator
+:cmo-first: Cluster Monitoring Operator (CMO)
+:cmo-full: Cluster Monitoring Operator
+:cmo-short: CMO
+//monitoring stack
+:monitoring-title-c: Monitoring stack
+:monitoring-title: monitoring stack
+//power monitoring
+:PM-title-c: Power monitoring for Red Hat OpenShift
+:PM-title: power monitoring for Red Hat OpenShift
+:PM-shortname: power monitoring
+:PM-shortname-c: Power monitoring
+:PM-operator: Power Monitoring Operator
+:PM-kepler: Kepler
+//serverless
+:ServerlessProductName: OpenShift Serverless
+:ServerlessProductShortName: Serverless
+:ServerlessOperatorName: OpenShift Serverless Operator
+:FunctionsProductName: OpenShift Serverless Functions
+//service mesh v2
+:product-dedicated: Red{nbsp}Hat OpenShift Dedicated
+:product-rosa: Red{nbsp}Hat OpenShift Service on AWS
+:SMProductName: Red{nbsp}Hat OpenShift Service Mesh
+:SMProductShortName: Service Mesh
+:SMProductVersion: 2.6.13
+:MaistraVersion: 2.6
+:KialiProduct: Kiali Operator provided by Red Hat
+:SMPlugin: OpenShift Service Mesh Console (OSSMC) plugin
+:SMPluginShort: OSSMC plugin
+//Service Mesh v1
+:SMProductVersion1x: 1.1.18.2
+//Windows containers
+:productwinc: Red{nbsp}Hat OpenShift support for Windows Containers
+// Red Hat Quay Container Security Operator
+:rhq-cso: Red{nbsp}Hat Quay Container Security Operator
+// Red Hat Quay
+:quay: Red{nbsp}Hat Quay
+:sno: single-node OpenShift
+:sno-caps: Single-node OpenShift
+:sno-okd: single-node OKD
+:sno-caps-okd: Single-node OKD
+//TALO and Redfish events Operators
+:cgu-operator-first: Topology Aware Lifecycle Manager (TALM)
+:cgu-operator-full: Topology Aware Lifecycle Manager
+:cgu-operator: TALM
+:redfish-operator: Bare Metal Event Relay
+//Formerly known as CodeReady Containers and CodeReady Workspaces
+:openshift-local-productname: Red{nbsp}Hat OpenShift Local
+:openshift-dev-spaces-productname: Red{nbsp}Hat OpenShift Dev Spaces
+:factory-prestaging-tool: factory-precaching-cli tool
+:factory-prestaging-tool-caps: Factory-precaching-cli tool
+:openshift-networking: Red Hat OpenShift Networking
+// TODO - this probably needs to be different for OKD
+//ifdef::openshift-origin[]
+//:openshift-networking: OKD Networking
+//endif::[]
+// logical volume manager storage
+:lvms-first: Logical Volume Manager (LVM) Storage
+:lvms: LVM Storage
+//Version-agnostic OLM
+:olm-first: Operator Lifecycle Manager (OLM)
+:olm: OLM
+//Initial version of OLM that shipped with OCP 4, aka "v0" and f/k/a "existing" during OLM v1's pre-4.18 TP phase
+:olmv0: OLM (Classic)
+:olmv0-caps: OLM (Classic)
+:olmv0-first: Operator Lifecycle Manager (OLM) Classic
+:olmv0-first-caps: Operator Lifecycle Manager (OLM) Classic
+//Next-gen (OCP 4.14+) Operator Lifecycle Manager, f/k/a "1.0"
+:olmv1: OLM v1
+:olmv1-first: Operator Lifecycle Manager (OLM) v1
+//
+:ztp-first: GitOps Zero Touch Provisioning (ZTP)
+:ztp: GitOps ZTP
+:3no: three-node OpenShift
+:3no-caps: Three-node OpenShift
+:run-once-operator: Run Once Duration Override Operator
+// Web terminal
+:web-terminal-op: Web Terminal Operator
+:devworkspace-op: DevWorkspace Operator
+:secrets-store-driver: Secrets Store CSI driver
+:secrets-store-operator: Secrets Store CSI Driver Operator
+// Cluster Observability Operator
+:coo-first: Cluster Observability Operator (COO)
+:coo-full: Cluster Observability Operator
+:coo-short: COO
+// ODF
+:odf-first: Red{nbsp}Hat OpenShift Data Foundation (ODF)
+:odf-full: Red{nbsp}Hat OpenShift Data Foundation
+:odf-short: ODF
+:rh-dev-hub: Red Hat Developer Hub
+// IBU
+:lcao: Lifecycle Agent
+// Cloud provider names
+// Alibaba Cloud
+:alibaba: Alibaba Cloud
+// Amazon Web Services (AWS)
+:aws-first: Amazon Web Services (AWS)
+:aws-full: Amazon Web Services
+:aws-short: AWS
+// Google Cloud
+//as of Oct 15 2025, the only acceptable name is Google Cloud
+:gcp-first: Google Cloud
+:gcp-full: Google Cloud
+:gcp-short: Google Cloud
+// IBM general
+:ibm-name: IBM(R)
+:ibm-title: IBM
+// IBM Cloud
+:ibm-cloud-name: IBM Cloud(R)
+:ibm-cloud-title: IBM Cloud
+// IBM Cloud Bare Metal (Classic)
+:ibm-cloud-bm: IBM Cloud(R) Bare Metal (Classic)
+:ibm-cloud-bm-title: IBM Cloud Bare Metal (Classic)
+//IBM Cloud Object Storage (COS)
+:ibm-cloud-object-storage: IBM Cloud Object Storage (COS)
+// IBM Power
+:ibm-power-name: IBM Power(R)
+:ibm-power-title: IBM Power
+:ibm-power-server-name: IBM Power(R) Virtual Server
+:ibm-power-server-title: IBM Power Virtual Server
+:ibm-power-vc-name: IBM PowerVC
+:ibm-power-vc-title: IBM(R) Power(R) Virtualization Center
+// IBM zSystems
+:ibm-z-name: IBM Z(R)
+:ibm-z-title: IBM Z
+:ibm-linuxone-name: IBM(R) LinuxONE
+:ibm-linuxone-title: IBM LinuxONE
+// Microsoft Azure
+:azure-first: Microsoft Azure
+:azure-full: Microsoft Azure
+:azure-short: Azure
+//Oracle
+:oci-first: Oracle(R) Cloud Infrastructure (OCI)
+:oci-first-no-rt: Oracle Cloud Infrastructure (OCI)
+:oci: OCI
+:oci-ccm-full: Oracle Cloud Controller Manager (CCM)
+:oci-ccm: Oracle CCM
+:oci-csi-full: Oracle Container Storage Interface (CSI)
+:oci-csi: Oracle CSI
+:ocid-first: Oracle(R) Cloud Identifier (OCID)
+:ocid: OCID
+:ocvs-first: Oracle(R) Cloud VMware Solution (OCVS)
+:ocvs: OCVS
+:oci-c3: Oracle(R) Compute Cloud@Customer
+:oci-c3-no-rt: Oracle Compute Cloud@Customer
+:oci-c3-short: Compute Cloud@Customer
+:oci-pca: Oracle(R) Private Cloud Appliance
+:oci-pca-no-rt: Oracle Private Cloud Appliance
+:oci-pca-short: Private Cloud Appliance
+:oci-distributed: Oracle(R) Distributed Cloud
+:oci-distributed-no-rt: Oracle Distributed Cloud
+:oci-edge: Oracle(R) Edge Cloud
+:oci-edge-no-rt: Oracle Edge Cloud
+:oda-first: Oracle Database Appliance (ODA)
+:oda: Oracle Database Appliance
+:oda-short: ODA
+// Red Hat OpenStack Platform (RHOSP)/OpenStack
+:rh-openstack-first: Red{nbsp}Hat OpenStack Platform (RHOSP)
+:rh-openstack: RHOSP
+:rhoso-first: Red{nbsp}Hat OpenStack Services on OpenShift (RHOSO)
+:rhoso: RHOSO
+// VMware vSphere
+:vmw-first: VMware vSphere
+:vmw-full: VMware vSphere
+:vmw-short: vSphere
+//Token-based auth products
+//AWS Security Token Service
+:sts-first: Security Token Service (STS)
+:sts-full: Security Token Service
+:sts-short: STS
+//Microsoft Entra Workload ID (FKA Azure Active Directory Workload Identities)
+:entra-first: Microsoft Entra Workload ID
+:entra-short: Workload ID
+//Google Cloud Platform Workload Identity
+:gcp-wid-first: Google Cloud Platform Workload Identity
+:gcp-wid-short: GCP Workload Identity
+// Cluster API terminology
+// Cluster CAPI Operator
+:cluster-capi-operator: Cluster CAPI Operator
+// Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-first: Cluster API Provider Amazon Web Services (AWS)
+:cap-aws-short: Cluster API Provider AWS
+// Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-first: Cluster API Provider Google Cloud Platform (GCP)
+:cap-gcp-short: Cluster API Provider GCP
+// Cluster API Provider IBM Cloud
+:cap-ibm-first: Cluster API Provider IBM Cloud
+:cap-ibm-short: Cluster API Provider IBM Cloud
+// Cluster API Provider Kubevirt
+:cap-kubevirt-first: Cluster API Provider Kubevirt
+:cap-kubevirt-short: Cluster API Provider Kubevirt
+// Cluster API Provider Microsoft Azure
+:cap-azure-first: Cluster API Provider Microsoft Azure
+:cap-azure-short: Cluster API Provider Azure
+// Cluster API Provider Nutanix
+:cap-nutanix-first: Cluster API Provider Nutanix
+:cap-nutanix-short: Cluster API Provider Nutanix
+// Cluster API Provider OpenStack
+:cap-openstack-first: Cluster API Provider OpenStack
+:cap-openstack-short: Cluster API Provider OpenStack
+// Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-first: Cluster API Provider Oracle Cloud Infrastructure (OCI)
+:cap-oci-short: Cluster API Provider OCI
+// Cluster API Provider VMware vSphere
+:cap-vsphere-first: Cluster API Provider VMware vSphere
+:cap-vsphere-short: Cluster API Provider vSphere
+// Cluster API Provider Metal3
+:cap-bare-metal-first: Cluster API Provider Metal3
+:cap-bare-metal-short: Cluster API Provider Metal3
+// Hosted control planes related attributes
+:hcp-capital: Hosted control planes
+:hcp: hosted control planes
+:mce: multicluster engine for Kubernetes Operator
+:mce-short: multicluster engine Operator
+//AI names; OpenShift AI can be used as the family name
+:rhoai-full: Red{nbsp}Hat OpenShift AI
+:rhoai: RHOAI
+:rhoai-diy: Red{nbsp}Hat OpenShift AI Self-Managed
+:rhoai-cloud: Red{nbsp}Hat OpenShift AI Cloud Service
+:ai-first: artificial intelligence (AI)
+//RHEL AI attribute listed with RHEL family
+//zero trust workload identity manager
+:zero-trust-full: Zero Trust Workload Identity Manager
+:spiffe-full: Secure Production Identity Framework for Everyone (SPIFFE)
+:svid-full: SPIFFE Verifiable Identity Document (SVID)
+:spire-full: SPIFFE Runtime Environment
+// Formerly on-cluster image layering
+:image-mode-os-caps: Image mode for OpenShift
+:image-mode-os-lower: image mode for OpenShift
+// Formerly on-cluster layering
+:image-mode-os-on-caps: On-cluster image mode
+:image-mode-os-on-lower: on-cluster image mode
+// Formerly out-of-cluster layering
+:image-mode-os-out-caps: Out-of-cluster image mode
+:image-mode-os-out-lower: out-of-cluster image mode
+// Use after feature GAs in 4.21?? In 4.20, the Operator isn't used :attribute-based-full: Attribute-Based GPU Allocation in OpenShift with the NVIDIA GPU Operator
+:attribute-based-full: Attribute-Based GPU Allocation
+:attribute-based-short: Attribute-Based GPU Allocation
+//Support log gather operator
+:support-log-gather: Support Log Gather
+:bmaas-first: Red{nbsp}Hat Bare Metal as a Service for OpenShift
+:context: cli-opm-ref
+
+toc::[]
+
+The `opm` command-line interface (CLI) is a tool for creating and maintaining Operator catalogs.
+
+.`opm` CLI syntax
+[source,terminal]
+----
+$ opm <command> [<subcommand>] [<argument>] [<flags>]
+----
+
+[WARNING]
+====
+The `opm` CLI is not forward compatible. The version of the `opm` CLI used to generate catalog content must be earlier than or equal to the version used to serve the content on a cluster.
+====
+
+.Global flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-skip-tls-verify`
+|Skip TLS certificate verification for container image registries while pulling bundles or indexes.
+
+|`--use-http`
+|When you pull bundles, use plain HTTP for container image registries.
+
+|===
+
+:FeatureName: The SQLite-based catalog format, including the related CLI commands,
+:_mod-docs-content-type: SNIPPET
+
+// When including this file, ensure that {FeatureName} is set immediately before
+// the include. Otherwise it will result in an incorrect replacement.
+
+[IMPORTANT]
+====
+[subs="attributes+"]
+{FeatureName} is a deprecated feature. Deprecated functionality is still included in {product-title} and continues to be supported; however, it will be removed in a future release of this product and is not recommended for new deployments.
+
+For the most recent list of major functionality that has been deprecated or removed within {product-title}, refer to the _Deprecated and removed features_ section of the {product-title} release notes.
+====
+// Undefine {FeatureName} attribute, so that any mistakes are easily spotted
+:!FeatureName:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/opm/cli-opm-ref.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="opm-cli-ref-generate_{Context}"]
+= generate
+
+Generate various artifacts for declarative config indexes.
+
+.Command syntax
+[source,terminal]
+----
+$ opm generate <subcommand> [<flags>]
+----
+
+.`generate` subcommands
+[options="header",cols="1,3"]
+|===
+|Subcommand |Description
+
+|`dockerfile`
+|Generate a Dockerfile for a declarative config index.
+|===
+
+.`generate` flags
+[options="header",cols="1,3"]
+|===
+|Flags |Description
+
+|`-h`, `--help`
+|Help for generate.
+
+|===
+
+
+[id="opm-cli-ref-generate-dockerfile_{context}"]
+== dockerfile
+
+Generate a Dockerfile for a declarative config index.
+
+[IMPORTANT]
+====
+This command creates a Dockerfile in the same directory as the `<dcRootDir>` (named `<dcDirName>.Dockerfile`) that is used to build the index. If a Dockerfile with the same name already exists, this command fails.
+
+When specifying extra labels, if duplicate keys exist, only the last value of each duplicate key gets added to the generated Dockerfile.
+====
+
+.Command syntax
+[source,terminal]
+----
+$ opm generate dockerfile <dcRootDir> [<flags>]
+----
+
+.`generate dockerfile` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-i,` `--binary-image` (string)
+|Image in which to build catalog. The default value is `quay.io/operator-framework/opm:latest`.
+
+|`-l`, `--extra-labels` (string)
+|Extra labels to include in the generated Dockerfile. Labels have the form `key=value`.
+
+|`-h`, `--help`
+|Help for Dockerfile.
+
+|===
+
+[NOTE]
+====
+To build with the official Red Hat image, use the `registry.redhat.io/openshift4/ose-operator-registry-rhel9:v{product-version}` value with the `-i` flag.
+====
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/opm/cli-opm-ref.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="opm-cli-ref-index_{context}"]
+= index
+
+Generate Operator index for SQLite database format container images from pre-existing Operator bundles.
+
+[IMPORTANT]
+====
+As of {product-title} 4.11, the default Red Hat-provided Operator catalog releases in the file-based catalog format. The default Red Hat-provided Operator catalogs for {product-title} 4.6 through 4.10 released in the deprecated SQLite database format.
+
+The `opm` subcommands, flags, and functionality related to the SQLite database format are also deprecated and will be removed in a future release. The features are still supported and must be used for catalogs that use the deprecated SQLite database format.
+
+Many of the `opm` subcommands and flags for working with the SQLite database format, such as `opm index prune`, do not work with the file-based catalog format.
+
+For more information about working with file-based catalogs, see "Additional resources".
+====
+
+.Command syntax
+[source,terminal]
+----
+$ opm index <subcommand> [<flags>]
+----
+
+.`index` subcommands
+[options="header",cols="1,3"]
+|===
+|Subcommand |Description
+
+|`add`
+|Add Operator bundles to an index.
+
+|`prune`
+|Prune an index of all but specified packages.
+
+|`prune-stranded`
+|Prune an index of stranded bundles, which are bundles that are not associated with a particular image.
+
+|`rm`
+|Delete an entire Operator from an index.
+
+|===
+
+[id="opm-cli-ref-index-add_{context}"]
+== add
+
+Add Operator bundles to an index.
+
+.Command syntax
+[source,terminal]
+----
+$ opm index add [<flags>]
+----
+
+.`index add` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-i`, `--binary-image`
+|Container image for on-image `opm` command
+
+|`-u`, `--build-tool` (string)
+|Tool to build container images: `podman` (the default value) or `docker`. Overrides part of the `--container-tool` flag.
+
+|`-b`, `--bundles` (strings)
+|Comma-separated list of bundles to add.
+
+|`-c`, `--container-tool` (string)
+|Tool to interact with container images, such as for saving and building: `docker` or `podman`.
+
+|`-f`, `--from-index` (string)
+|Previous index to add to.
+
+|`--generate`
+|If enabled, only creates the Dockerfile and saves it to local disk.
+
+|`--mode` (string)
+|Graph update mode that defines how channel graphs are updated: `replaces` (the default value), `semver`, or `semver-skippatch`.
+
+|`-d`, `--out-dockerfile` (string)
+|Optional: If generating the Dockerfile, specify a file name.
+
+|`--permissive`
+|Allow registry load errors.
+
+|`-p`, `--pull-tool` (string)
+|Tool to pull container images: `none` (the default value), `docker`, or `podman`. Overrides part of the `--container-tool` flag.
+
+|`-t`, `--tag` (string)
+|Custom tag for container image being built.
+
+|===
+
+[id="opm-cli-ref-index-prune_{context}"]
+== prune
+
+Prune an index of all but specified packages.
+
+.Command syntax
+[source,terminal]
+----
+$ opm index prune [<flags>]
+----
+
+.`index prune` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-i`, `--binary-image`
+|Container image for on-image `opm` command
+
+|`-c`, `--container-tool` (string)
+|Tool to interact with container images, such as for saving and building: `docker` or `podman`.
+
+|`-f`, `--from-index` (string)
+|Index to prune.
+
+|`--generate`
+|If enabled, only creates the Dockerfile and saves it to local disk.
+
+|`-d`, `--out-dockerfile` (string)
+|Optional: If generating the Dockerfile, specify a file name.
+
+|`-p`, `--packages` (strings)
+|Comma-separated list of packages to keep.
+
+|`--permissive`
+|Allow registry load errors.
+
+|`-t`, `--tag` (string)
+|Custom tag for container image being built.
+
+|===
+
+[id="opm-cli-ref-index-prune-stranded_{context}"]
+== prune-stranded
+
+Prune an index of stranded bundles, which are bundles that are not associated with a particular image.
+
+.Command syntax
+[source,terminal]
+----
+$ opm index prune-stranded [<flags>]
+----
+
+.`index prune-stranded` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-i`, `--binary-image`
+|Container image for on-image `opm` command
+
+|`-c`, `--container-tool` (string)
+|Tool to interact with container images, such as for saving and building: `docker` or `podman`.
+
+|`-f`, `--from-index` (string)
+|Index to prune.
+
+|`--generate`
+|If enabled, only creates the Dockerfile and saves it to local disk.
+
+|`-d`, `--out-dockerfile` (string)
+|Optional: If generating the Dockerfile, specify a file name.
+
+|`-p`, `--packages` (strings)
+|Comma-separated list of packages to keep.
+
+|`--permissive`
+|Allow registry load errors.
+
+|`-t`, `--tag` (string)
+|Custom tag for container image being built.
+
+|===
+
+[id="opm-cli-ref-index-rm_{context}"]
+== rm
+
+Delete an entire Operator from an index.
+
+.Command syntax
+[source,terminal]
+----
+$ opm index rm [<flags>]
+----
+
+.`index rm` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-i`, `--binary-image`
+|Container image for on-image `opm` command
+
+|`-u`, `--build-tool` (string)
+|Tool to build container images: `podman` (the default value) or `docker`. Overrides part of the `--container-tool` flag.
+
+|`-c`, `--container-tool` (string)
+|Tool to interact with container images, such as for saving and building: `docker` or `podman`.
+
+|`-f`, `--from-index` (string)
+|Previous index to delete from.
+
+|`--generate`
+|If enabled, only creates the Dockerfile and saves it to local disk.
+
+|`-o`, `--operators` (strings)
+|Comma-separated list of Operators to delete.
+
+|`-d`, `--out-dockerfile` (string)
+|Optional: If generating the Dockerfile, specify a file name.
+
+|`-p`, `--packages` (strings)
+|Comma-separated list of packages to keep.
+
+|`--permissive`
+|Allow registry load errors.
+
+|`-p`, `--pull-tool` (string)
+|Tool to pull container images: `none` (the default value), `docker`, or `podman`. Overrides part of the `--container-tool` flag.
+
+|`-t`, `--tag` (string)
+|Custom tag for container image being built.
+
+|===
+
+:leveloffset!:
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../operators/understanding/olm-packaging-format.adoc#olm-file-based-catalogs_olm-packaging-format[Operator Framework packaging format]
+* xref:../../operators/admin/olm-managing-custom-catalogs.adoc#olm-managing-custom-catalogs-fb[Managing custom catalogs]
+* xref:../../disconnected/installing-mirroring-disconnected.adoc#installing-mirroring-disconnected[Mirroring images for a disconnected installation using the oc-mirror plugin]
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/opm/cli-opm-ref.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="opm-cli-ref-init_{context}"]
+= init
+
+Generate an `olm.package` declarative config blob.
+
+.Command syntax
+[source,terminal]
+----
+$ opm init <package_name> [<flags>]
+----
+
+.`init` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-c`, `--default-channel` (string)
+|The channel that subscriptions will default to if unspecified.
+
+|`-d`, `--description` (string)
+|Path to the Operator's `README.md` or other documentation.
+
+|`-i`, `--icon` (string)
+|Path to package's icon.
+
+|`-o`, `--output` (string)
+|Output format: `json` (the default value) or `yaml`.
+
+|===
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/opm/cli-opm-ref.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="opm-cli-ref-migrate_{context}"]
+= migrate
+
+Migrate a SQLite database format index image or database file to a file-based catalog.
+
+:FeatureName: The SQLite-based catalog format, including the related CLI commands,
+:_mod-docs-content-type: SNIPPET
+
+// When including this file, ensure that {FeatureName} is set immediately before
+// the include. Otherwise it will result in an incorrect replacement.
+
+[IMPORTANT]
+====
+[subs="attributes+"]
+{FeatureName} is a deprecated feature. Deprecated functionality is still included in {product-title} and continues to be supported; however, it will be removed in a future release of this product and is not recommended for new deployments.
+
+For the most recent list of major functionality that has been deprecated or removed within {product-title}, refer to the _Deprecated and removed features_ section of the {product-title} release notes.
+====
+// Undefine {FeatureName} attribute, so that any mistakes are easily spotted
+:!FeatureName:
+
+.Command syntax
+[source,terminal]
+----
+$ opm migrate <index_ref> <output_dir> [<flags>]
+----
+
+.`migrate` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-o`, `--output` (string)
+|Output format: `json` (the default value) or `yaml`.
+
+|===
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/opm/cli-opm-ref.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="opm-cli-ref-render_{context}"]
+= render
+
+Generate a declarative config blob from the provided index images, bundle images, and SQLite database files.
+
+.Command syntax
+[source,terminal]
+----
+$ opm render <index_image | bundle_image | sqlite_file> [<flags>]
+----
+
+.`render` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`-o`, `--output` (string)
+|Output format: `json` (the default value) or `yaml`.
+
+|===
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/opm/cli-opm-ref.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="opm-cli-ref-server_{context}"]
+= serve
+
+Serve declarative configs via a GRPC server.
+
+[NOTE]
+====
+The declarative config directory is loaded by the `serve` command at startup. Changes made to the declarative config after this command starts are not reflected in the served content.
+====
+
+.Command syntax
+[source,terminal]
+----
+$ opm serve <source_path> [<flags>]
+----
+
+.`serve` flags
+[options="header",cols="1,3"]
+|===
+|Flag |Description
+
+|`--cache-dir` (string)
+|If this flag is set, it syncs and persists the server cache directory.
+
+|`--cache-enforce-integrity`
+|Exits with an error if the cache is not present or is invalidated. The default value is `true` when the `--cache-dir` flag is set and the `--cache-only` flag is `false`. Otherwise, the default is `false`.
+
+|`--cache-only`
+|Syncs the serve cache and exits without serving.
+
+|`--debug`
+|Enables debug logging.
+
+|`h`, `--help`
+|Help for serve.
+
+|`-p`, `--port` (string)
+|The port number for the service. The default value is `50051`.
+
+|`--pprof-addr` (string)
+|The address of the startup profiling endpoint. The format is `Addr:Port`.
+
+|`-t`, `--termination-log` (string)
+|The path to a container termination log file. The default value is `/dev/termination-log`.
+
+|===
+
+:leveloffset!:
+
+:leveloffset: +1
+
+// Module included in the following assemblies:
+//
+// * cli_reference/opm/cli-opm-ref.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="opm-cli-ref-validate_{context}"]
+= validate
+
+Validate the declarative config JSON file(s) in a given directory.
+
+.Command syntax
+[source,terminal]
+----
+$ opm validate <directory> [<flags>]
+----
+
+:leveloffset!:

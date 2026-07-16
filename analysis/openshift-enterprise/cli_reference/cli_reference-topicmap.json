@@ -1,0 +1,126 @@
+{
+  "Name": "CLI tools",
+  "Dir": "cli_reference",
+  "Distros": "openshift-enterprise,openshift-origin,openshift-online",
+  "Topics": [
+    {
+      "Name": "CLI tools overview",
+      "File": "index"
+    },
+    {
+      "Name": "OpenShift CLI (oc)",
+      "Dir": "openshift_cli",
+      "Topics": [
+        {
+          "Name": "Getting started with the OpenShift CLI",
+          "File": "getting-started-cli"
+        },
+        {
+          "Name": "Configuring the OpenShift CLI",
+          "File": "configuring-cli"
+        },
+        {
+          "Name": "Usage of oc and kubectl commands",
+          "File": "usage-oc-kubectl"
+        },
+        {
+          "Name": "Managing CLI profiles",
+          "File": "managing-cli-profiles"
+        },
+        {
+          "Name": "Extending the OpenShift CLI with plugins",
+          "File": "extending-cli-plugins"
+        },
+        {
+          "Name": "OpenShift CLI developer command reference",
+          "File": "developer-cli-commands"
+        },
+        {
+          "Name": "OpenShift CLI administrator command reference",
+          "File": "administrator-cli-commands",
+          "Distros": "openshift-enterprise,openshift-origin"
+        }
+      ]
+    },
+    {
+      "Name": "OpenShift CLI Manager",
+      "Dir": "cli_manager",
+      "Topics": [
+        {
+          "Name": "OpenShift CLI Manager overview",
+          "File": "index"
+        },
+        {
+          "Name": "OpenShift CLI Manager release notes",
+          "File": "cli-manager-release-notes"
+        },
+        {
+          "Name": "Installing the Openshift CLI Manager",
+          "File": "cli-manager-install"
+        },
+        {
+          "Name": "Using the OpenShift CLI Manager",
+          "File": "cli-manager-using"
+        },
+        {
+          "Name": "Uninstalling the OpenShift CLI Manager",
+          "File": "cli-manager-uninstall"
+        }
+      ]
+    },
+    {
+      "Name": "Developer CLI (odo)",
+      "File": "odo-important-update",
+      "Distros": "openshift-enterprise,openshift-origin,openshift-online"
+    },
+    {
+      "Name": "Knative CLI (kn) for use with OpenShift Serverless",
+      "File": "kn-cli-tools",
+      "Distros": "openshift-enterprise,openshift-origin"
+    },
+    {
+      "Name": "Pipelines CLI (tkn)",
+      "Dir": "tkn_cli",
+      "Distros": "openshift-enterprise",
+      "Topics": [
+        {
+          "Name": "Installing tkn",
+          "File": "installing-tkn"
+        },
+        {
+          "Name": "Configuring tkn",
+          "File": "op-configuring-tkn"
+        },
+        {
+          "Name": "Basic tkn commands",
+          "File": "op-tkn-reference"
+        }
+      ]
+    },
+    {
+      "Name": "GitOps CLI (argocd) for use with OpenShift GitOps",
+      "File": "gitops-argocd-cli-tools",
+      "Distros": "openshift-enterprise"
+    },
+    {
+      "Name": "opm CLI",
+      "Dir": "opm",
+      "Distros": "openshift-enterprise,openshift-origin",
+      "Topics": [
+        {
+          "Name": "Installing the opm CLI",
+          "File": "cli-opm-install"
+        },
+        {
+          "Name": "opm CLI reference",
+          "File": "cli-opm-ref"
+        }
+      ]
+    },
+    {
+      "Name": "Hosted control planes CLI",
+      "File": "hcp-cli-ref",
+      "Distros": "openshift-enterprise,openshift-origin"
+    }
+  ]
+}
